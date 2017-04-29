@@ -137,8 +137,6 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  To jest jakaœ nasza wa¿na zmiana.
-
   const uint8_t* colors[] = {WS2812_red, WS2812_blue, WS2812_green, WS2812_yellow, WS2812_off};
   while (1)
   {
