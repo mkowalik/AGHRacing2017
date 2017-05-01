@@ -97,6 +97,19 @@ const uint8_t WS2812_test[] = {
 
 uint8_t tab[9*9];
 
+uint8_t digits[] = {
+		0b00111111,	//0
+		0b00000110,	//1
+		0b01011011,	//2
+		0b01001111,	//3
+		0b01100110,	//4
+		0b01101101,	//5
+		0b01111101,	//6
+		0b00000111,	//7
+		0b01111111,	//8
+		0b01101111 	//9
+};
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -143,13 +156,11 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-//  for (uint8_t n=0; n<8; n++){
 
 	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_RESET);
 
 	  for (uint8_t i=0; i<9; i++){
-//		  memcpy(tab+(i*9), WS2812_test, 9);
 		  if (i<n){
 			  memcpy(tab+(i*9), colors[k%4], 9);
 		  } else {
@@ -182,10 +193,23 @@ int main(void)
 
 	  m++;
 
+	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_SET);
+
+	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_SET);
+
+	  uint8_t val = digits[k%10];
+	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
+	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
+
+	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_RESET);
+
 
 	  HAL_GPIO_TogglePin(LED_DEBUG1_GPIO_Port, LED_DEBUG1_Pin);
 	  HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
 	  HAL_Delay(100);
+
+
 
   }
   /* USER CODE END 3 */
