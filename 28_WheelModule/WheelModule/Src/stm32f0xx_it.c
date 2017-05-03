@@ -36,10 +36,14 @@
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
+#define SHOCK_ABS_APPROX_DEGREE 4
+const uint16_t shock_abs_coeff[SHOCK_ABS_APPROX_DEGREE]={0,0,0,1};
 
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern ADC_HandleTypeDef hadc;
+extern TIM_HandleTypeDef htim16;
 
 /******************************************************************************/
 /*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
@@ -122,6 +126,49 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f0xx.s).                    */
 /******************************************************************************/
+
+/**
+* @brief This function handles ADC interrupt.
+*/
+
+
+void ADC1_IRQHandler(void)
+{
+
+  /* USER CODE BEGIN ADC1_IRQn 0 */
+
+  /* USER CODE END ADC1_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc);
+  /* USER CODE BEGIN ADC1_IRQn 1 */
+  if(ADC1->ISR & ADC_ISR_EOC){
+
+		uint16_t measurement = ADC1->DR;
+
+		uint32_t shock_abs_deflection=0;
+		uint8_t i;
+		for(i=0 ; i<SHOCK_ABS_APPROX_DEGREE ; i++){
+
+			shock_abs_deflection += measurement*shock_abs_coeff[i];
+		}
+
+		//TODO send 'measurement' variable over CAN
+	}
+  /* USER CODE END ADC1_IRQn 1 */
+}
+
+/**
+* @brief This function handles TIM16 global interrupt.
+*/
+void TIM16_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM16_IRQn 0 */
+
+  /* USER CODE END TIM16_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim16);
+  /* USER CODE BEGIN TIM16_IRQn 1 */
+  ADC1->CR |= ADC_CR_ADSTART;
+  /* USER CODE END TIM16_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 
