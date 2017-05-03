@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : CAN.c
+  * File Name          : USART.c
   * Description        : This file provides code for the configuration
-  *                      of the CAN instances.
+  *                      of the USART instances.
   ******************************************************************************
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
@@ -33,96 +33,114 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "can.h"
+#include "usart.h"
 
 #include "gpio.h"
 
 /* USER CODE BEGIN 0 */
-
+volatile fifo_t periphTxFifo;
+volatile fifo_t periphRxFifo;
 /* USER CODE END 0 */
 
-CAN_HandleTypeDef hcan;
+UART_HandleTypeDef huart1;
 
-/* CAN init function */
-void MX_CAN_Init(void)
+/* USART1 init function */
+
+void MX_USART1_UART_Init(void)
 {
 
-  hcan.Instance = CAN1;
-  hcan.Init.Prescaler = 16;
-  hcan.Init.Mode = CAN_MODE_NORMAL;
-  hcan.Init.SJW = CAN_SJW_1TQ;
-  hcan.Init.BS1 = CAN_BS1_1TQ;
-  hcan.Init.BS2 = CAN_BS2_1TQ;
-  hcan.Init.TTCM = DISABLE;
-  hcan.Init.ABOM = DISABLE;
-  hcan.Init.AWUM = DISABLE;
-  hcan.Init.NART = DISABLE;
-  hcan.Init.RFLM = DISABLE;
-  hcan.Init.TXFP = DISABLE;
-  if (HAL_CAN_Init(&hcan) != HAL_OK)
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
   {
     Error_Handler();
   }
 
 }
 
-void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
+void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct;
-  if(canHandle->Instance==CAN1)
+  if(uartHandle->Instance==USART1)
   {
-  /* USER CODE BEGIN CAN1_MspInit 0 */
+  /* USER CODE BEGIN USART1_MspInit 0 */
 
-  /* USER CODE END CAN1_MspInit 0 */
+  /* USER CODE END USART1_MspInit 0 */
     /* Peripheral clock enable */
-    __HAL_RCC_CAN1_CLK_ENABLE();
+    __HAL_RCC_USART1_CLK_ENABLE();
   
-    /**CAN GPIO Configuration    
-    PA11     ------> CAN_RX
-    PA12     ------> CAN_TX 
+    /**USART1 GPIO Configuration    
+    PA9     ------> USART1_TX
+    PA10     ------> USART1_RX 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_11;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_12;
+    GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_10;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF1_USART1;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN CAN1_MspInit 1 */
+  /* USER CODE BEGIN USART1_MspInit 1 */
 
-  /* USER CODE END CAN1_MspInit 1 */
+  /* USER CODE END USART1_MspInit 1 */
   }
 }
 
-void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
+void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
 
-  if(canHandle->Instance==CAN1)
+  if(uartHandle->Instance==USART1)
   {
-  /* USER CODE BEGIN CAN1_MspDeInit 0 */
+  /* USER CODE BEGIN USART1_MspDeInit 0 */
 
-  /* USER CODE END CAN1_MspDeInit 0 */
+  /* USER CODE END USART1_MspDeInit 0 */
     /* Peripheral clock disable */
-    __HAL_RCC_CAN1_CLK_DISABLE();
+    __HAL_RCC_USART1_CLK_DISABLE();
   
-    /**CAN GPIO Configuration    
-    PA11     ------> CAN_RX
-    PA12     ------> CAN_TX 
+    /**USART1 GPIO Configuration    
+    PA9     ------> USART1_TX
+    PA10     ------> USART1_RX 
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11|GPIO_PIN_12);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9|GPIO_PIN_10);
 
   }
-  /* USER CODE BEGIN CAN1_MspDeInit 1 */
+  /* USER CODE BEGIN USART1_MspDeInit 1 */
 
-  /* USER CODE END CAN1_MspDeInit 1 */
+  /* USER CODE END USART1_MspDeInit 1 */
 } 
 
 /* USER CODE BEGIN 1 */
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+	message_t Message;
 
+	if(huart == &huart1){
+		if(Fifo_PullElement((fifo_t *) &periphTxFifo, &Message) == 0){
+			Message.message.header.control = 1;
+			Message.message.header.range = wirelessRange;
+			Message.message.data.control.speed = nRF24Speed;
+			Message.message.data.control.filterNum = 0;
+		}
+		HAL_UART_Transmit_IT(&huart1, (uint8_t *) &Message, MESSAGE_SIZE);
+	}
+
+}
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	static message_t Message;
+
+	if(huart == &huart1){
+		Fifo_PushElement((fifo_t *) &periphRxFifo, &Message);
+		HAL_UART_Receive_IT(&huart1, (uint8_t *) &Message, MESSAGE_SIZE);
+	}
+}
 /* USER CODE END 1 */
 
 /**

@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : CAN.c
+  * File Name          : USART.h
   * Description        : This file provides code for the configuration
-  *                      of the CAN instances.
+  *                      of the USART instances.
   ******************************************************************************
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
@@ -31,99 +31,40 @@
   *
   ******************************************************************************
   */
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __usart_H
+#define __usart_H
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "can.h"
+#include "stm32f0xx_hal.h"
+#include "main.h"
 
-#include "gpio.h"
+/* USER CODE BEGIN Includes */
+#include <tele.h>
+/* USER CODE END Includes */
 
-/* USER CODE BEGIN 0 */
+extern UART_HandleTypeDef huart1;
 
-/* USER CODE END 0 */
+/* USER CODE BEGIN Private defines */
+extern volatile fifo_t periphTxFifo;
+extern volatile fifo_t periphRxFifo;
+/* USER CODE END Private defines */
 
-CAN_HandleTypeDef hcan;
+extern void Error_Handler(void);
 
-/* CAN init function */
-void MX_CAN_Init(void)
-{
+void MX_USART1_UART_Init(void);
 
-  hcan.Instance = CAN1;
-  hcan.Init.Prescaler = 16;
-  hcan.Init.Mode = CAN_MODE_NORMAL;
-  hcan.Init.SJW = CAN_SJW_1TQ;
-  hcan.Init.BS1 = CAN_BS1_1TQ;
-  hcan.Init.BS2 = CAN_BS2_1TQ;
-  hcan.Init.TTCM = DISABLE;
-  hcan.Init.ABOM = DISABLE;
-  hcan.Init.AWUM = DISABLE;
-  hcan.Init.NART = DISABLE;
-  hcan.Init.RFLM = DISABLE;
-  hcan.Init.TXFP = DISABLE;
-  if (HAL_CAN_Init(&hcan) != HAL_OK)
-  {
-    Error_Handler();
-  }
+/* USER CODE BEGIN Prototypes */
 
+/* USER CODE END Prototypes */
+
+#ifdef __cplusplus
 }
-
-void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
-{
-
-  GPIO_InitTypeDef GPIO_InitStruct;
-  if(canHandle->Instance==CAN1)
-  {
-  /* USER CODE BEGIN CAN1_MspInit 0 */
-
-  /* USER CODE END CAN1_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_CAN1_CLK_ENABLE();
-  
-    /**CAN GPIO Configuration    
-    PA11     ------> CAN_RX
-    PA12     ------> CAN_TX 
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_11;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_12;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN CAN1_MspInit 1 */
-
-  /* USER CODE END CAN1_MspInit 1 */
-  }
-}
-
-void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
-{
-
-  if(canHandle->Instance==CAN1)
-  {
-  /* USER CODE BEGIN CAN1_MspDeInit 0 */
-
-  /* USER CODE END CAN1_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_CAN1_CLK_DISABLE();
-  
-    /**CAN GPIO Configuration    
-    PA11     ------> CAN_RX
-    PA12     ------> CAN_TX 
-    */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11|GPIO_PIN_12);
-
-  }
-  /* USER CODE BEGIN CAN1_MspDeInit 1 */
-
-  /* USER CODE END CAN1_MspDeInit 1 */
-} 
-
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
+#endif
+#endif /*__ usart_H */
 
 /**
   * @}
