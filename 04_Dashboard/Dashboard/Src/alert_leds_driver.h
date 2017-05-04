@@ -9,12 +9,13 @@
 #define ALERT_LEDS_DRIVER_H_
 
 #include "stm32f0xx_hal.h"
+#include "fixed_point.h"
 
 void AlertLeds_Driver_init();
-void AlertLeds_Driver_displayCLTAlert(AlertType_TypeDef type, uint8_t blinking);
-void AlertLeds_Driver_displayBattAlert(AlertType_TypeDef type, uint8_t blinking);
-void AlertLeds_Driver_displayFuelAlert(AlertType_TypeDef type, uint8_t blinking);
-void AlertLeds_Driver_displayOilAlert(AlertType_TypeDef type, uint8_t blinking);
+void AlertLeds_Driver_displayCLT(FixedPoint cltValue);
+void AlertLeds_Driver_displayBatt(FixedPoint battValue);
+void AlertLeds_Driver_displayFuel(FixedPoint fuelValue);
+void AlertLeds_Driver_displayOilPres(FixedPoint oilPresValue);
 
 
 
