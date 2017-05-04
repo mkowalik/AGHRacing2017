@@ -39,6 +39,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "string.h"
+#include "ws2812_middleware.h"
 
 /* USER CODE END Includes */
 
@@ -60,43 +61,6 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
-const uint8_t WS2812_reset[] = {
-	0b00000000, 0b00000000, 0b00000000,
-	0b00000000, 0b00000000, 0b00000000,
-	0b00000000, 0b00000000, 0b00000000};
-
-const uint8_t WS2812_off[] = {
-	0b10010010, 0b01001001, 0b00100100,
-	0b10010010, 0b01001001, 0b00100100,
-	0b10010010, 0b01001001, 0b00100100};
-
-const uint8_t WS2812_red[] = {
-	0b10010010, 0b01001001, 0b00100100,
-	0b11011011, 0b01101101, 0b10110110,
-	0b10010010, 0b01001001, 0b00100100};
-
-const uint8_t WS2812_blue[] = {
-	0b10010010, 0b01001001, 0b00100100,
-	0b10010010, 0b01001001, 0b00100100,
-	0b11011011, 0b01101101, 0b10110110};
-
-const uint8_t WS2812_green[] = {
-	0b11011011, 0b01101101, 0b10110110,
-	0b10010010, 0b01001001, 0b00100100,
-	0b10010010, 0b01001001, 0b00100100};
-
-const uint8_t WS2812_yellow[] = {
-	0b11011011, 0b01101101, 0b10110110, //YELLOW
-	0b11011011, 0b01101101, 0b10110110,
-	0b10010010, 0b01001001, 0b00100100};
-
-const uint8_t WS2812_test[] = {
-	0b10101010, 0b10101010, 0b10101010, //YELLOW
-	0b10101010, 0b10101010, 0b10101010,
-	0b10101010, 0b10101010, 0b10101010};
-
-uint8_t tab[9*9];
-
 uint8_t digits[] = {
 		0b00111111,	//0
 		0b00000110,	//1
@@ -109,6 +73,8 @@ uint8_t digits[] = {
 		0b01111111,	//8
 		0b01101111 	//9
 };
+
+LedColor_TypeDef colors[] = {RED_COLOR, YELLOW_COLOR, GREEN_COLOR, BLUE_COLOR};
 
 /* USER CODE END 0 */
 
@@ -135,40 +101,33 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
 
-  for (uint8_t i=0; i<9; i++){
-	  memcpy(tab+(i*9), WS2812_reset, 9);
-  }
-  HAL_SPI_Transmit(&hspi1, tab, 9*9, 100);
+  WS2812_Middleware_init();
 
-  uint8_t n = 1;
-  uint8_t up = 1;
-  uint8_t m = 0;
   uint8_t k = 0;
+  uint8_t n = 0;
+  uint8_t up = 1;
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  const uint8_t* colors[] = {WS2812_red, WS2812_blue, WS2812_green, WS2812_yellow, WS2812_off};
   while (1)
   {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
 
-	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_RESET);
+	  LedColor_TypeDef colors_tab[9];
 
 	  for (uint8_t i=0; i<9; i++){
 		  if (i<n){
-			  memcpy(tab+(i*9), colors[k%4], 9);
+			  colors_tab[i] = colors[k%4];
 		  } else {
-			  memcpy(tab+(i*9), WS2812_off, 9);
+			  colors_tab[i] = OFF_COLOR;
 		  }
 	  }
 
-	  HAL_SPI_Transmit(&hspi1, tab, 9*9, 200);
+	  WS2812_Middleware_turnOnLeds(colors_tab, 9, RPM_LEDS_CHANNEL);
 
 	  if (n==9) up=0;
 	  if (n==0) {
@@ -182,17 +141,13 @@ int main(void)
 		  n--;
 	  }
 
-	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_RESET);
-
 	  for (uint8_t i=0; i<4; i++){
-		  memcpy(tab+(i*9), colors[(m+i)%5], 9);
+		  colors_tab[i] = colors[(k+i)%4];
 	  }
 
-	  HAL_SPI_Transmit(&hspi1, tab, 4*9, 200);
+	  WS2812_Middleware_turnOnLeds(colors_tab, 4, ALERT_LEDS_CHANNEL);
 
-	  m++;
-
+	  /*
 	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_RESET);
 	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_SET);
 
@@ -202,7 +157,7 @@ int main(void)
 	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
 	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
 
-	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_RESET);*/
 
 
 	  HAL_GPIO_TogglePin(LED_DEBUG1_GPIO_Port, LED_DEBUG1_Pin);
