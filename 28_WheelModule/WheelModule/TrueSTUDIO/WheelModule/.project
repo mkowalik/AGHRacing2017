@@ -71,11 +71,7 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
-		<link>
-			<name />
-			<type />
-			<location />
-		</link>
+		
 	<link>
 			<name>Drivers/CMSIS</name>
 			<type>2</type>
@@ -204,5 +200,17 @@
 			<name>Application/User/gpio.c</name>
 			<type>1</type>
 			<location>PARENT-2-PROJECT_LOC/Src/gpio.c</location>
+		</link><link>
+			<name>Application/TrueSTUDIO/startup_stm32f042x6.s</name>
+			<type>1</type>
+			<location>PARENT-1-PROJECT_LOC/startup_stm32f042x6.s</location>
+		</link><link>
+			<name>Drivers/CMSIS/system_stm32f0xx.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/system_stm32f0xx.c</location>
+		</link><link>
+			<name>Application/User/tim.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/tim.c</location>
 		</link></linkedResources>
 </projectDescription>

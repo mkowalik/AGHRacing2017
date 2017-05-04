@@ -36,6 +36,7 @@
 #include "adc.h"
 #include "can.h"
 #include "i2c.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
@@ -60,6 +61,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -82,6 +84,7 @@ int main(void)
   MX_ADC_Init();
   MX_CAN_Init();
   MX_I2C1_Init();
+  MX_TIM16_Init();
 
   /* USER CODE BEGIN 2 */
 
