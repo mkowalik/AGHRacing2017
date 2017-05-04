@@ -14,7 +14,7 @@
 
 #define	WS2812_MAX_SIZE		9 * WS2812_COLOR_SIZE
 
-volatile uint8_t WS2812_reset[] = {	//size = 21 bytes
+static const uint8_t WS2812_reset[] = {	//size = 21 bytes
 	0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000,
@@ -72,10 +72,10 @@ void WS2812_Middleware_turnOnLeds(LedColor_TypeDef* ledColors, uint8_t size, uin
 
 		case OFF_COLOR:
 		default:
-			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_off,		WS2812_COLOR_SIZE);
+			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_off,	WS2812_COLOR_SIZE);
 			break;
 		case RED_COLOR:
-			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_red,		WS2812_COLOR_SIZE);
+			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_red,	WS2812_COLOR_SIZE);
 			break;
 		case YELLOW_COLOR:
 			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_yellow,	WS2812_COLOR_SIZE);
@@ -84,7 +84,7 @@ void WS2812_Middleware_turnOnLeds(LedColor_TypeDef* ledColors, uint8_t size, uin
 			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_green,	WS2812_COLOR_SIZE);
 			break;
 		case BLUE_COLOR:
-			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_blue,		WS2812_COLOR_SIZE);
+			memcpy(WS2812_toSendTab+(i*WS2812_COLOR_SIZE), (uint8_t*)WS2812_blue,	WS2812_COLOR_SIZE);
 			break;
 
 		}

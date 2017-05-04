@@ -40,6 +40,7 @@
 /* USER CODE BEGIN Includes */
 #include "string.h"
 #include "ws2812_middleware.h"
+#include "rpm_leds_driver.h"
 
 /* USER CODE END Includes */
 
@@ -117,19 +118,11 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
+	  RPMLeds_Driver_displayRPM(8500+(n*500));
+
 	  LedColor_TypeDef colors_tab[9];
 
-	  for (uint8_t i=0; i<9; i++){
-		  if (i<n){
-			  colors_tab[i] = colors[k%4];
-		  } else {
-			  colors_tab[i] = OFF_COLOR;
-		  }
-	  }
-
-	  WS2812_Middleware_turnOnLeds(colors_tab, 9, RPM_LEDS_CHANNEL);
-
-	  if (n==9) up=0;
+	  if (n==10) up=0;
 	  if (n==0) {
 		  up=1;
 		  k++;
