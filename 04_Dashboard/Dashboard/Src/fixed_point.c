@@ -7,14 +7,16 @@
 
 #include "fixed_point.h"
 
-FixedPoint FixedPoint_constr(int32_t value, int32_t divider, int32_t offset, uint8_t fractionalBits){	//TODO implement offset
+FixedPoint FixedPoint_constr(int32_t valueConverted, int32_t divider, int32_t multiplier, int32_t offset, uint8_t fractionalBits){
 
 	FixedPoint ret;
 
 	ret.fractionalBits = fractionalBits;
 
-	ret.integer = (value/divider) << fractionalBits;					//integer part of the number
-	ret.integer |= ((value%divider) * (1<<fractionalBits)) / divider;	//(rest of division * 2^fractionalBits) / divider
+	valueConverted -= offset;
+
+	ret.integer = ((valueConverted * divider)/multiplier) << fractionalBits;						//integer part of the number
+	ret.integer |= (((valueConverted * divider) % multiplier) * (1<<fractionalBits)) / multiplier;	//fractional part of the number
 
 	return ret;
 

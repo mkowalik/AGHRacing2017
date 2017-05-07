@@ -17,7 +17,7 @@ typedef struct {
 	uint8_t	fractionalBits;
 } FixedPoint;
 
-FixedPoint FixedPoint_constr(int32_t value, int32_t divider, int32_t offset, uint8_t fractionalBits);
+FixedPoint FixedPoint_constr(int32_t valueConverted, int32_t divider, int32_t multiplier, int32_t offset, uint8_t fractionalBits);
 uint8_t FixedPoint_a_equal_b(FixedPoint a, FixedPoint b);
 uint8_t FixedPoint_a_lessorequal_b(FixedPoint a, FixedPoint b);
 uint8_t FixedPoint_a_greaterorequal_b(FixedPoint a, FixedPoint b);

@@ -97,7 +97,6 @@ int main(void)
   AlertLeds_Driver_init();
   RPMLeds_Driver_init();
 
-  uint8_t k = 0;
   uint8_t n = 0;
   uint8_t up = 1;
 
@@ -112,10 +111,10 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
 	  RPMLeds_Driver_displayRPM(8500+(n*500));
-	  AlertLeds_Driver_displayCLT(FixedPoint_constr((n*10)<<12, 1<<12, 0, 12));
-	  AlertLeds_Driver_displayBatt(FixedPoint_constr((n+5)<<12, 1<<12, 0, 12));
-	  AlertLeds_Driver_displayFuel(FixedPoint_constr(n<<12, 1<<12, 0, 12));
-	  AlertLeds_Driver_displayOilPres(FixedPoint_constr(n<<12, 1<<12, 0, 12));
+	  AlertLeds_Driver_displayCLT(FixedPoint_constr((n*10)<<12, 1, 1<<12, 0, 12));
+	  AlertLeds_Driver_displayBatt(FixedPoint_constr((n+5)<<12, 1, 1<<12, 0, 12));
+	  AlertLeds_Driver_displayFuel(FixedPoint_constr(n<<12, 1, 1<<12, 0, 12));
+	  AlertLeds_Driver_displayOilPres(FixedPoint_constr(n<<12, 1, 1<<12, 0, 12));
 
 	  GearDisplay_Driver_displayGear(n, n==0);
 
@@ -127,7 +126,6 @@ int main(void)
 	  if (n==10) up=0;
 	  if (n==0) {
 		  up=1;
-		  k++;
 	  }
 
 	  if (up){
