@@ -67,6 +67,8 @@ void WS2812_Middleware_init(){
 
 void WS2812_Middleware_turnOnLeds(LedColor_TypeDef* ledColors, uint8_t size, uint8_t channel) {
 
+	WS2812_Middleware_sendReset(channel);
+
 	for (uint8_t i=0; i<size; i++){
 		switch(ledColors[i]){
 

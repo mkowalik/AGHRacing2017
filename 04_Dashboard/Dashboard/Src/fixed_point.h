@@ -10,13 +10,19 @@
 
 #include "stm32f0xx_hal.h"
 
+//TODO for construction FixedPoint objects
+
 typedef struct {
 	int32_t	integer;
-	uint8_t	decimalDigits;
+	uint8_t	fractionalBits;
 } FixedPoint;
 
-uint8_t a_greater_b(FixedPoint a, FixedPoint b);
-uint8_t a_less_b(FixedPoint a, FixedPoint b);
+FixedPoint FixedPoint_constr(int32_t value, int32_t divider, int32_t offset, uint8_t fractionalBits);
+uint8_t FixedPoint_a_equal_b(FixedPoint a, FixedPoint b);
+uint8_t FixedPoint_a_lessorequal_b(FixedPoint a, FixedPoint b);
+uint8_t FixedPoint_a_greaterorequal_b(FixedPoint a, FixedPoint b);
+uint8_t FixedPoint_a_greater_b(FixedPoint a, FixedPoint b);
+uint8_t FixedPoint_a_less_b(FixedPoint a, FixedPoint b);
 
 #endif /* FIXED_POINT_H_ */
 

@@ -32,12 +32,16 @@
 
 #define RPM_LED_NUMBER	9
 
+static LedColor_TypeDef RPMLeds_Driver_displayLEDColors[9];
 
 void RPMLeds_Driver_init(){
+	for (uint8_t i=0; i<RPM_LED_NUMBER; i++){
+		RPMLeds_Driver_displayLEDColors[i] = OFF_COLOR;
+	}
+
+	WS2812_Middleware_turnOnLeds(RPMLeds_Driver_displayLEDColors, RPM_LED_NUMBER, RPM_LEDS_CHANNEL);
 
 }
-
-static LedColor_TypeDef RPMLeds_Driver_displayLEDColors[9];
 
 void RPMLeds_Driver_displayRPM(uint16_t rpmValue){
 

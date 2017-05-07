@@ -41,6 +41,8 @@
 #include "string.h"
 #include "ws2812_middleware.h"
 #include "rpm_leds_driver.h"
+#include "alert_leds_driver.h"
+#include "fixed_point.h"
 
 /* USER CODE END Includes */
 
@@ -104,6 +106,9 @@ int main(void)
 
   WS2812_Middleware_init();
 
+  AlertLeds_Driver_init();
+  RPMLeds_Driver_init();
+
   uint8_t k = 0;
   uint8_t n = 0;
   uint8_t up = 1;
@@ -119,8 +124,27 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
 	  RPMLeds_Driver_displayRPM(8500+(n*500));
+	  AlertLeds_Driver_displayCLT(FixedPoint_constr((n*10)<<12, 1<<12, 0, 12));
+	  AlertLeds_Driver_displayBatt(FixedPoint_constr((n+5)<<12, 1<<12, 0, 12));
+	  AlertLeds_Driver_displayFuel(FixedPoint_constr(n<<12, 1<<12, 0, 12));
+	  AlertLeds_Driver_displayOilPres(FixedPoint_constr(n<<12, 1<<12, 0, 12));
 
-	  LedColor_TypeDef colors_tab[9];
+
+	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_SET);
+
+	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_SET);
+
+	  uint8_t val = digits[n%10];
+	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
+	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
+
+	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_RESET);
+
+
+	  HAL_GPIO_TogglePin(LED_DEBUG1_GPIO_Port, LED_DEBUG1_Pin);
+	  HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
+	  HAL_Delay(1000);
 
 	  if (n==10) up=0;
 	  if (n==0) {
@@ -133,29 +157,6 @@ int main(void)
 	  } else {
 		  n--;
 	  }
-
-	  for (uint8_t i=0; i<4; i++){
-		  colors_tab[i] = colors[(k+i)%4];
-	  }
-
-	  WS2812_Middleware_turnOnLeds(colors_tab, 4, ALERT_LEDS_CHANNEL);
-
-	  /*
-	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_SET);
-
-	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_SET);
-
-	  uint8_t val = digits[k%10];
-	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
-	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
-
-	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_RESET);*/
-
-
-	  HAL_GPIO_TogglePin(LED_DEBUG1_GPIO_Port, LED_DEBUG1_Pin);
-	  HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
-	  HAL_Delay(100);
 
 
 
