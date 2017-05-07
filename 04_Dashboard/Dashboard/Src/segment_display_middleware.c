@@ -21,11 +21,19 @@ static const uint8_t digits[] = {
 		0b01101111 	//9
 };
 
-void SegmentDisplay_Middleware_displayDigit(uint8_t digit){
+static const uint8_t dot_mask = (0b10000000);
+
+void SegmentDisplay_Middleware_displayDigit(uint8_t digit, uint8_t dot){
 
 	digit = digit>9 ? 9 : digit;
 
-	SPI_MuxDriver_TransmitData(&(digits[digit]), 1, SEGMENT_DISPLAY_CHANNEL, DISPLAY_SELECT_PORT, DISPLAY_SELECT_PIN);
+	uint8_t val = digits[digit];
+
+	if (dot){
+		val |= dot_mask;
+	}
+
+	SPI_MuxDriver_TransmitData(&(val), 1, SEGMENT_DISPLAY_CHANNEL, DISPLAY_SELECT_PORT, DISPLAY_SELECT_PIN);
 
 }
 

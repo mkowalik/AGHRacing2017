@@ -117,7 +117,7 @@ int main(void)
 	  AlertLeds_Driver_displayFuel(FixedPoint_constr(n<<12, 1<<12, 0, 12));
 	  AlertLeds_Driver_displayOilPres(FixedPoint_constr(n<<12, 1<<12, 0, 12));
 
-	  GearDisplay_Driver_displayGear(n);
+	  GearDisplay_Driver_displayGear(n, n==0);
 
 
 	  HAL_GPIO_TogglePin(LED_DEBUG1_GPIO_Port, LED_DEBUG1_Pin);

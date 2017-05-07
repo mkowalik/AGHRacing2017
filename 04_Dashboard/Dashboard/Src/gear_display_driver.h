@@ -13,6 +13,6 @@
 #define MAX_GEAR_VALUE	5
 
 void GearDisplay_Driver_init();
-void GearDisplay_Driver_displayGear(uint8_t gear);
+void GearDisplay_Driver_displayGear(uint8_t gear, uint8_t neutral);
 
 #endif /* GEAR_DISPLAY_DRIVER_H_ */
