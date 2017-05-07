@@ -43,6 +43,7 @@
 #include "rpm_leds_driver.h"
 #include "alert_leds_driver.h"
 #include "fixed_point.h"
+#include "gear_display_driver.h"
 
 /* USER CODE END Includes */
 
@@ -63,19 +64,6 @@ void Error_Handler(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
-uint8_t digits[] = {
-		0b00111111,	//0
-		0b00000110,	//1
-		0b01011011,	//2
-		0b01001111,	//3
-		0b01100110,	//4
-		0b01101101,	//5
-		0b01111101,	//6
-		0b00000111,	//7
-		0b01111111,	//8
-		0b01101111 	//9
-};
 
 LedColor_TypeDef colors[] = {RED_COLOR, YELLOW_COLOR, GREEN_COLOR, BLUE_COLOR};
 
@@ -129,22 +117,12 @@ int main(void)
 	  AlertLeds_Driver_displayFuel(FixedPoint_constr(n<<12, 1<<12, 0, 12));
 	  AlertLeds_Driver_displayOilPres(FixedPoint_constr(n<<12, 1<<12, 0, 12));
 
-
-	  HAL_GPIO_WritePin(SlaveSelect_0_GPIO_Port, SlaveSelect_0_Pin, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(SlaveSelect_1_GPIO_Port, SlaveSelect_1_Pin, GPIO_PIN_SET);
-
-	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_SET);
-
-	  uint8_t val = digits[n%10];
-	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
-	  HAL_SPI_Transmit(&hspi1, &val, 1, 100);
-
-	  HAL_GPIO_WritePin(DisplaySelect_GPIO_Port, DisplaySelect_Pin, GPIO_PIN_RESET);
+	  GearDisplay_Driver_displayGear(n);
 
 
 	  HAL_GPIO_TogglePin(LED_DEBUG1_GPIO_Port, LED_DEBUG1_Pin);
 	  HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
-	  HAL_Delay(1000);
+	  HAL_Delay(300);
 
 	  if (n==10) up=0;
 	  if (n==0) {

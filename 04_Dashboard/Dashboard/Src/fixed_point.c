@@ -7,7 +7,7 @@
 
 #include "fixed_point.h"
 
-FixedPoint FixedPoint_constr(int32_t value,uint32_t divider, int32_t offset, uint8_t fractionalBits){	//TODO implement offset
+FixedPoint FixedPoint_constr(int32_t value, int32_t divider, int32_t offset, uint8_t fractionalBits){	//TODO implement offset
 
 	FixedPoint ret;
 

@@ -132,6 +132,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/fixed_point.h</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gear_display_driver.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/gear_display_driver.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/gear_display_driver.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/gear_display_driver.h</locationURI>
+		</link>
+		<link>
 			<name>Application/User/gpio.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/gpio.c</locationURI>
@@ -150,6 +160,16 @@
 			<name>Application/User/rpm_leds_driver.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/rpm_leds_driver.h</locationURI>
+		</link>
+		<link>
+			<name>Application/User/segment_display_middleware.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/segment_display_middleware.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/segment_display_middleware.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/segment_display_middleware.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/spi.c</name>
