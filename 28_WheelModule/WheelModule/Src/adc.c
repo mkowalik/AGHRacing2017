@@ -36,12 +36,14 @@
 #include "adc.h"
 
 #include "gpio.h"
+#include "dma.h"
 
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc;
+DMA_HandleTypeDef hdma_adc;
 
 /* ADC init function */
 void MX_ADC_Init(void)
@@ -58,11 +60,12 @@ void MX_ADC_Init(void)
   hadc.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc.Init.LowPowerAutoWait = DISABLE;
   hadc.Init.LowPowerAutoPowerOff = DISABLE;
-  hadc.Init.ContinuousConvMode = DISABLE;
+  hadc.Init.ContinuousConvMode = ENABLE;
   hadc.Init.DiscontinuousConvMode = DISABLE;
+  hadc.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc.Init.DMAContinuousRequests = DISABLE;
-  hadc.Init.Overrun = ADC_OVR_DATA_PRESERVED;
+  hadc.Init.DMAContinuousRequests = ENABLE;
+  hadc.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
   if (HAL_ADC_Init(&hadc) != HAL_OK)
   {
     Error_Handler();
@@ -72,7 +75,7 @@ void MX_ADC_Init(void)
     */
   sConfig.Channel = ADC_CHANNEL_2;
   sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
-  sConfig.SamplingTime = ADC_SAMPLETIME_13CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -100,9 +103,23 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(SHOCK_ABS_GPIO_Port, &GPIO_InitStruct);
 
-    /* Peripheral interrupt init */
-    HAL_NVIC_SetPriority(ADC1_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(ADC1_IRQn);
+    /* Peripheral DMA init*/
+  
+    hdma_adc.Instance = DMA1_Channel1;
+    hdma_adc.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_adc.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_adc.Init.MemInc = DMA_MINC_DISABLE;
+    hdma_adc.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    hdma_adc.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_adc.Init.Mode = DMA_NORMAL;
+    hdma_adc.Init.Priority = DMA_PRIORITY_MEDIUM;
+    if (HAL_DMA_Init(&hdma_adc) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(adcHandle,DMA_Handle,hdma_adc);
+
   /* USER CODE BEGIN ADC1_MspInit 1 */
 
   /* USER CODE END ADC1_MspInit 1 */
@@ -125,9 +142,8 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     */
     HAL_GPIO_DeInit(SHOCK_ABS_GPIO_Port, SHOCK_ABS_Pin);
 
-    /* Peripheral interrupt Deinit*/
-    HAL_NVIC_DisableIRQ(ADC1_IRQn);
-
+    /* Peripheral DMA DeInit*/
+    HAL_DMA_DeInit(adcHandle->DMA_Handle);
   }
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
 

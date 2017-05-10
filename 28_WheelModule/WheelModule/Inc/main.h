@@ -48,7 +48,6 @@
 #define DEBUG_OUT_Pin GPIO_PIN_3
 #define DEBUG_OUT_GPIO_Port GPIOB
 
-
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

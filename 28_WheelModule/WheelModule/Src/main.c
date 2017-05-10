@@ -35,6 +35,7 @@
 #include "stm32f0xx_hal.h"
 #include "adc.h"
 #include "can.h"
+#include "dma.h"
 #include "i2c.h"
 #include "tim.h"
 #include "gpio.h"
@@ -61,6 +62,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
+extern volatile uint16_t shock_adc_regval;
 
 /* USER CODE END 0 */
 
@@ -81,12 +83,22 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_ADC_Init();
   MX_CAN_Init();
   MX_I2C1_Init();
   MX_TIM16_Init();
 
   /* USER CODE BEGIN 2 */
+
+  if( HAL_ADC_Start(&hadc1) != HAL_OK){
+	  return 0;
+  }
+
+  if (HAL_ADC_Start_DMA(&hadc1, (uint16_t*)&shock_adc_regval, 1) != HAL_OK){
+	  return 0;
+  }
+
 
   /* USER CODE END 2 */
 

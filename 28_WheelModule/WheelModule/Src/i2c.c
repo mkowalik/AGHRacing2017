@@ -68,6 +68,13 @@ void MX_I2C1_Init(void)
     Error_Handler();
   }
 
+    /**Configure Digital filter 
+    */
+  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c1, 0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
 }
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)

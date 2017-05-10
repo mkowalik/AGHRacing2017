@@ -36,14 +36,26 @@
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
-#define SHOCK_ABS_APPROX_DEGREE 4
-const uint16_t shock_abs_coeff[SHOCK_ABS_APPROX_DEGREE]={0,0,0,1};
+#define SHOCK_ABS_APPROX_DEGREE 2		// degree of polynomial used for approximation
+#define SHOCK_ABS_MAX_DEG	64
+
+const static uint16_t shock_abs_coeff[SHOCK_ABS_APPROX_DEGREE+1]={-31,3742,1373};	//polynomial coefficents (multiplied by 1000)
+
+const static uint16_t shock_calib_lowval = 1000;	//must be known at compile time -  will vary on different modules
+const static uint16_t shock_calib_highval = 2000;	//must be known at compile time -  will vary on different modules
+
+const static uint16_t difference = shock_calib_highval-shock_calib_lowval;	//calculated at compile time
+const static uint32_t scale = (difference)/SHOCK_ABS_MAX_DEG;
+
+const volatile uint16_t shock_adc_regval;
+
 
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern ADC_HandleTypeDef hadc;
+extern DMA_HandleTypeDef hdma_adc;
 extern TIM_HandleTypeDef htim16;
+
 
 /******************************************************************************/
 /*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
@@ -128,32 +140,17 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-* @brief This function handles ADC interrupt.
+* @brief This function handles DMA1 channel 1 interrupt.
 */
-
-
-void ADC1_IRQHandler(void)
+void DMA1_Channel1_IRQHandler(void)
 {
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
 
-  /* USER CODE BEGIN ADC1_IRQn 0 */
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc);
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
-  /* USER CODE END ADC1_IRQn 0 */
-  HAL_ADC_IRQHandler(&hadc);
-  /* USER CODE BEGIN ADC1_IRQn 1 */
-  if(ADC1->ISR & ADC_ISR_EOC){
-
-		uint16_t measurement = ADC1->DR;
-
-		uint32_t shock_abs_deflection=0;
-		uint8_t i;
-		for(i=0 ; i<SHOCK_ABS_APPROX_DEGREE ; i++){
-
-			shock_abs_deflection += measurement*shock_abs_coeff[i];
-		}
-
-		//TODO send 'measurement' variable over CAN
-	}
-  /* USER CODE END ADC1_IRQn 1 */
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 
 /**
@@ -166,7 +163,15 @@ void TIM16_IRQHandler(void)
   /* USER CODE END TIM16_IRQn 0 */
   HAL_TIM_IRQHandler(&htim16);
   /* USER CODE BEGIN TIM16_IRQn 1 */
-  ADC1->CR |= ADC_CR_ADSTART;
+
+  uint16_t measurement = shock_adc_regval; //get adc result
+  measurement = ((measurement - shock_calib_lowval) / scale); //scale into 0->70 degree range in order to use polynomial coeffs
+
+  measurement = (shock_abs_coeff[0]*measurement*measurement) + shock_abs_coeff[1]*measurement + shock_abs_coeff[0]; //compute result in micro meters
+  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	   // due to coeffs being mux'd by 1000
+
+  //TODO send measurement over CAN
+
   /* USER CODE END TIM16_IRQn 1 */
 }
 
