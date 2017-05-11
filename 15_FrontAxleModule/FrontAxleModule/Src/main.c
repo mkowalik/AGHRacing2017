@@ -35,6 +35,7 @@
 #include "stm32f0xx_hal.h"
 #include "can.h"
 #include "i2c.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
@@ -80,6 +81,7 @@ int main(void)
   MX_GPIO_Init();
   MX_CAN_Init();
   MX_I2C1_Init();
+  MX_TIM17_Init();
 
   /* USER CODE BEGIN 2 */
 
