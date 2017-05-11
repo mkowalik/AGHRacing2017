@@ -40,7 +40,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "tm_stm32_mpu6050.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -67,7 +67,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+	TM_MPU6050_t MPU6050_Data;
+	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -87,7 +88,16 @@ int main(void)
   MX_TIM3_Init();
 
   /* USER CODE BEGIN 2 */
-
+  TM_MPU6050_Init(&MPU6050_Data, TM_MPU6050_Device_0, TM_MPU6050_Accelerometer_8G, TM_MPU6050_Gyroscope_250s, TM_MPU6050_Bandwidth_94Hz);
+  TM_MPU6050_EnableInterrupts(&MPU6050_Data);
+  TM_MPU6050_GeneralCallib(&MPU6050_Data);
+  //TM_MPU6050_FastCallib(&MPU6050_Data);
+  MPU6050_Data.Accelerometer_Offset.x = 0;
+  MPU6050_Data.Accelerometer_Offset.y = 0;
+  MPU6050_Data.Accelerometer_Offset.z = 0;
+  MPU6050_Data.Gyroscope_Offset.x = 0;
+  MPU6050_Data.Gyroscope_Offset.y = 0;
+  MPU6050_Data.Gyroscope_Offset.z = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -97,6 +107,12 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
+	if(MPU6050_Interrupts.F.DataReady){
+		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
+		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
+		TM_MPU6050_CompensateRawData(&MPU6050_Data);
+	}
 
   }
   /* USER CODE END 3 */
