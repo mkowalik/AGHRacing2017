@@ -47,6 +47,9 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+uint8_t Received[35]; // Tablica przechowywujaca odebrane dane
+uint8_t Data[40]; // Tablica przechowujaca wysylana wiadomosc
+uint16_t size = 0; // Rozmiar wysylanej wiadomosci
 
 /* USER CODE END PV */
 
@@ -56,7 +59,17 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+ size = sprintf(Data, "%s\n\r",Received);//Odebrana wiadomosc
 
+ //HAL_UART_Transmit_IT(&huart1, Data, size); // Rozpoczecie nadawania danych z wykorzystaniem przerwan
+ HAL_UART_Receive_IT(&huart1, Received, 35); // Ponowne wlaczenie nasluchiwania i zapis do Received
+ //Write data to SD CARD
+ if(HAL_SD_GetStatus(*hsd))
+ {
+	 HAL_SD_WriteBlocks(*hsd,*Received,12,512,1);
+ }
+}
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -86,7 +99,12 @@ int main(void)
   MX_RTC_Init();
 
   /* USER CODE BEGIN 2 */
-
+  // Na pewno brakuje weryfikacji poprawnego uruchomienia, ale do tego potrzebny mi jest modul
+  size = sprintf(data, "$PMTK104*37<CR><LF>", cnt); // FULL COLD START
+  HAL_UART_Transmit(&huart1, data, size,1); // Rozpoczecie nadawania danych z wykorzystaniem przerwan
+  size = sprintf(data, "$PMTK314,0,1,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,1,0*2Ｄ<CR><LF>", cnt); // Odbior tylko danych dot. polozenia
+  HAL_UART_Transmit(&huart1, data, size,1); // Rozpoczecie nadawania danych z wykorzystaniem przerwan
+  HAL_UART_Receive_IT(&huart1, Received, 45);
   /* USER CODE END 2 */
 
   /* Infinite loop */
