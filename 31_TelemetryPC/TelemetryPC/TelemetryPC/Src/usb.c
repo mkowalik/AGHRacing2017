@@ -9,14 +9,13 @@
 #include "UART_communication.h"
 #include "usart.h"
 
-static message_t UART_payload_Tx;
-static message_t UART_payload_Rx;
+static uint8_t UART_payload_Tx[32];
+static uint8_t UART_payload_Rx[32];
 
 void USB_EstablishConnection(void){
 	uint8_t cReceivedMessage[UART_RECEIVER_SIZE];
 	int8_t connectionEstablished = 0;
 	uint8_t connectedMsg[] = "CONNECTED";
-	uint8_t boardID[] = "AGH_Telemetry";
 	uint8_t recChar;
 
 	do{
@@ -33,10 +32,6 @@ void USB_EstablishConnection(void){
 			if((tokenNumber != 0) && (token[0].type == KEYWORD)){
 				switch(token[0].value.keyword){
 
-					case ID:
-						UART_SendStr(boardID);
-						break;
-
 					case CONNECT:
 						UART_SendStr(connectedMsg);
 						connectionEstablished = 1;
@@ -52,7 +47,6 @@ void USB_EstablishConnection(void){
 
 	} while(connectionEstablished == 0);
 	HAL_Delay(200);
-	HAL_NVIC_EnableIRQ(USART2_IRQn);
 	UART_StartTx_IT((uint8_t *) &UART_payload_Tx);
 	UART_StartRx_IT((uint8_t *) &UART_payload_Rx);
 }

@@ -13,6 +13,7 @@
 
 #define NULL_SIGN			(0)
 #define MAX_COMMAND_SIZE	8
+#define MESSAGE_SIZE	32
 
 typedef struct{
 	uint8_t data[UART_RECEIVER_SIZE];
@@ -102,3 +103,4 @@ void ReceiverBuffer_Clear(void){
 	receiverBuffer.charCounter = 0;
 	receiverBuffer.status = EMPTY;
 }
+

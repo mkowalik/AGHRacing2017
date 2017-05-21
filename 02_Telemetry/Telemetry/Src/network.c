@@ -48,7 +48,7 @@ typedef struct{
 typedef struct{
 	network_data_t		data;
 	Network_settings_t 	settings;
-} Network_frame_t;
+} Network_payload_t;
 
 /* FIFO */
 static volatile network_data_t networkTxFifoArray[NETWORK_FIFO_SIZE];
@@ -59,13 +59,13 @@ static volatile Fifo_Handle_t networkRxFifo;
 
 static volatile packetLostStat_t packetLostStat;
 static volatile uint8_t payload_length;
-static volatile Network_settings_t networkSettings;
+volatile Network_settings_t networkSettings;
 
 static volatile uint8_t txReceived;
 static volatile uint8_t rxReceived;
 static volatile nRF24_TXResult tx_res;
-static volatile nRF24_RXResult pipe;
 static volatile nRF24_STATUS_RXFIFO_t rx_res;
+static volatile nRF24_RXResult pipe;
 
 DeviceType_t device;
 
@@ -93,11 +93,12 @@ Network_StatusTypeDef Network_Init(Network_t * network, uint8_t addr[], uint8_t 
 	return Network_OK;
 }
 
-void Network_SetName(Network_t * network, uint8_t addr[], uint8_t addrLen){
+Network_StatusTypeDef Network_SetName(Network_t * network, uint8_t addr[], uint8_t addrLen){
 	network->deviceAddressLen = addrLen;
 	for(uint8_t i = 0; i< addrLen; i++){
 		network->deviceAddress[i] = addr[i];
 	}
+	return Network_OK;
 }
 
 Network_StatusTypeDef Network_Find(Network_t * foundNetwork){
@@ -108,7 +109,6 @@ Network_StatusTypeDef Network_Find(Network_t * foundNetwork){
 Network_StatusTypeDef Network_SetUpClient(Network_t * network){
 
 	nRF24_CE_L();
-	nRF24_SetPowerMode(nRF24_PWR_DOWN);
 
 	device = Client;
 	network->dataRate = Network_DR_250kbps;
@@ -135,10 +135,9 @@ Network_StatusTypeDef Network_SetUpClient(Network_t * network){
 
 Network_StatusTypeDef Network_SetUpServer(Network_t * network){
 
-	Network_frame_t nRF24_payload;
+	Network_payload_t nRF24_payload;
 
 	nRF24_CE_L();
-	nRF24_SetPowerMode(nRF24_PWR_DOWN);
 
 	device = Server;
 	network->dataRate = Network_DR_250kbps;
@@ -164,7 +163,7 @@ Network_StatusTypeDef Network_SetUpServer(Network_t * network){
 	nRF24_ClearIRQFlags();
 	// Wake the transceiver
 	nRF24_SetPowerMode(nRF24_PWR_UP);
-	HAL_Delay(5);
+	HAL_Delay(10);
 
 	nRF24_payload.settings.param.datapresent = 0;
 	nRF24_payload.settings.param.speed = Network_DataRateConv(network->dataRate);
@@ -196,9 +195,6 @@ Network_StatusTypeDef Network_Connect(Network_t * network, uint32_t timeout){
 }
 
 Network_StatusTypeDef Network_Disconnect(Network_t * network);
-
-Network_StatusTypeDef Network_IsConnectedToServer(void);
-Network_StatusTypeDef Network_IsClientConnected(void);
 
 Network_StatusTypeDef Network_Receive(uint8_t * data, uint8_t * dataLen){
 	if(Fifo_OK == Fifo_PullElement( (Fifo_Handle_t *) &networkRxFifo, data)){
@@ -279,7 +275,7 @@ static nRF24_DataRate_t Network_DataRateConv(Network_DR_t dataRate){
 void Network_InterruptHandler(void){
 
 	uint8_t status;
-	Network_frame_t nRF24_payload;
+	Network_payload_t nRF24_payload;
 
 	switch(device){
 

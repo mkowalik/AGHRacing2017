@@ -85,8 +85,7 @@ nRF24_StatusTypeDef nRF24_Init(uint32_t timeout) {
 
 	uint32_t tickstart = HAL_GetTick();
 
-	nRF24_GPIO_Init();
-	while(!nRF24_Check()){
+	while(nRF24_OK != nRF24_Check()){
 		if((HAL_GetTick()-tickstart) > timeout){
 			return nRF24_TIMEOUT;
 		}
@@ -558,61 +557,4 @@ void nRF24_TransmitPacketIRQ(uint8_t *pBuf, uint8_t length){
 	nRF24_WritePayload(pBuf, length);
 	// Start a transmission by asserting CE pin (must be held at least 10us)
 	nRF24_CE_H();
-}
-
-void nRF24_SetUpRx(uint8_t channel, nRF24_DataRate_t nRF24DataRate, uint8_t nRF24_ADDR[], uint8_t addrLength, uint8_t payloadLenght){
-	nRF24_SetRFChannel(channel);
-	// Set data rate
-	nRF24_SetDataRate(nRF24DataRate);
-	// Set CRC scheme
-	nRF24_SetCRCScheme(nRF24_CRC_2byte);
-	// Set address width, its common for all pipes (RX and TX)
-	nRF24_SetAddrWidth(addrLength);
-	nRF24_SetDataRate(nRF24DataRate);
-	nRF24_SetAddr(nRF24_PIPE1, nRF24_ADDR); // program address for pipe
-	nRF24_SetRXPipe(nRF24_PIPE1, nRF24_AA_ON, payloadLenght); // Auto-ACK: enabled, payload length: 10 bytes
-	// Set TX power for Auto-ACK (maximum, to ensure that transmitter will hear ACK reply)
-	nRF24_SetTXPower(nRF24_TXPWR_0dBm);
-	nRF24_SetOperationalMode(nRF24_MODE_RX);
-	// Clear any pending IRQ flags
-	nRF24_ClearIRQFlags();
-	// Wake the transceiver
-	nRF24_SetPowerMode(nRF24_PWR_UP);
-}
-
-void nRF24_SetUpTx(uint8_t channel, nRF24_DataRate_t nRF24DataRate, uint8_t nRF24_ADDR[], uint8_t addrLength, uint8_t payloadLenght){
-	nRF24_SetRFChannel(channel);
-	// Set data rate
-	nRF24_SetDataRate(nRF24DataRate);
-	// Set CRC scheme
-	nRF24_SetCRCScheme(nRF24_CRC_2byte);
-	// Set address width, its common for all pipes (RX and TX)
-	nRF24_SetAddrWidth(addrLength);
-	nRF24_SetDataRate(nRF24DataRate);
-	nRF24_SetAddr(nRF24_PIPETX, nRF24_ADDR); // program TX address
-	nRF24_SetAddr(nRF24_PIPE0, nRF24_ADDR); // program address for pipe#0, must be same as TX (for Auto-ACK)
-	// Set TX power (maximum)
-	nRF24_SetTXPower(nRF24_TXPWR_0dBm);
-	// Configure auto retransmit: 10 retransmissions with pause of 2500us in between
-	nRF24_SetAutoRetr(nRF24_ARD_500us, 15);
-	// Enable Auto-ACK for pipe#0 (for ACK packets)
-	nRF24_EnableAA(nRF24_PIPE0);
-	// Set operational mode (PTX == transmitter)
-	nRF24_SetOperationalMode(nRF24_MODE_TX);
-	// Clear any pending IRQ flags
-	nRF24_ClearIRQFlags();
-	// Wake the transceiver
-	nRF24_SetPowerMode(nRF24_PWR_UP);
-}
-
-void nRF24_PowerUp(void){
-	nRF24_SetPowerMode(nRF24_PWR_UP);
-}
-
-inline void nRF24_PowerUpRadio(void){
-	nRF24_CE_H();
-}
-
-inline void nRF24_PowerDownRadio(void){
-	nRF24_CE_L();
 }

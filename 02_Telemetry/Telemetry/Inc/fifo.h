@@ -10,55 +10,25 @@
 
 #include "stm32f0xx_hal.h"
 
-#define FIFO_SIZE		100
-
-typedef union{
-	struct message{
-		struct header{
-			uint8_t reserved	: 3;
-			uint8_t range		: 2;
-			uint8_t control 	: 1;
-			uint8_t canFrames	: 2;
-		} header;
-
-		union data{
-			struct can{
-				uint8_t IDl;
-				uint8_t IDh			: 3;
-				uint8_t dataLength	: 4;
-				uint8_t reserved	: 1;
-				uint8_t data[8];
-			} can[3];
-
-			struct control{
-				uint8_t	txPermission: 1;
-				uint8_t	filterNum	: 6;
-				uint8_t reserved	: 1;
-				uint8_t speed;
-				struct filter{
-				    uint8_t IDl;
-				    uint8_t IDh			: 3;
-				    uint8_t onReq		: 1;
-				    uint8_t onState     : 1;
-					uint8_t reserved	: 3;
-				} filter[14];
-			} control;
-
-		} data;
-	} message;
-
-	uint8_t payload[31];
-} message_t;
+typedef enum{
+  Fifo_OK       	= 0x00,
+  Fifo_EMPTY		= 0x01,
+  Fifo_FULL			= 0x02
+} Fifo_StatusTypeDef;
 
 typedef struct{
-	message_t fifo[FIFO_SIZE];
-	uint16_t firstEl;
-	uint16_t lastEl;
-	uint16_t elementsInFifo;
-} fifo_t;
+	int8_t *pcHead;
+	int8_t *pcTail;
+	int8_t *pcWriteTo;
+	int8_t *pcReadFrom;
 
-void Fifo_Init(fifo_t * fifo);
-uint8_t Fifo_PullElement(fifo_t * fifo, message_t * Element);
-uint8_t Fifo_PushElement(fifo_t * fifo, message_t * newElement);
+	uint32_t uxLength;
+	uint32_t uxItemSize;
+	volatile uint32_t uxMessagesWaiting;
+} Fifo_Handle_t;
+
+Fifo_Handle_t Fifo_Init(void * array, uint32_t elementSize, uint32_t fifoSize);
+Fifo_StatusTypeDef Fifo_PullElement(Fifo_Handle_t * fifo, void * Element);
+Fifo_StatusTypeDef Fifo_PushElement(Fifo_Handle_t * fifo, void * newElement);
 
 #endif /* FIFO_H_ */

@@ -6,7 +6,7 @@
 #define NULL_SIGN			(0)
 #define MAX_TOKEN_NUMBER 	1
 
-typedef enum {ID, CONNECT} keywordCode_t;
+typedef enum {CONNECT} keywordCode_t;
 typedef enum {KEYWORD, NUMBER, STRING} tokenType_t;
 typedef enum {OK, ERROR_} result_t;
 typedef union {
@@ -23,8 +23,6 @@ typedef struct{
 void ReplaceCharactersInString(uint8_t string[], uint8_t oldChar, uint8_t newChar);
 void DecodeMsg(uint8_t * string);
 void CopyString(uint8_t source[], uint8_t destination[]);
-//result_t eHexStringToUInt(uint8_t string[], uint32_t * value);
-//void UIntToHexStr(uint32_t value, uint8_t string[]);
 void AppendString(uint8_t sourceString[], uint8_t destinationString[]);
 
 extern token_t token[MAX_TOKEN_NUMBER];

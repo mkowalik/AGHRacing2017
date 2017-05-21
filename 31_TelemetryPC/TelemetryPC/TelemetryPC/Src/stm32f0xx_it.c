@@ -40,6 +40,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern UART_HandleTypeDef huart4;
 
 /******************************************************************************/
 /*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
@@ -135,6 +136,20 @@ void EXTI4_15_IRQHandler(void)
   /* USER CODE BEGIN EXTI4_15_IRQn 1 */
 
   /* USER CODE END EXTI4_15_IRQn 1 */
+}
+
+/**
+* @brief This function handles USART3 to USART8 global interrupts / USART3 wake-up interrupt through EXTI line 28.
+*/
+void USART3_8_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART3_8_IRQn 0 */
+
+  /* USER CODE END USART3_8_IRQn 0 */
+  HAL_UART_IRQHandler(&huart4);
+  /* USER CODE BEGIN USART3_8_IRQn 1 */
+
+  /* USER CODE END USART3_8_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

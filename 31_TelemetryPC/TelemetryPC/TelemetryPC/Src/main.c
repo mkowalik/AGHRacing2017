@@ -39,7 +39,9 @@
 
 /* USER CODE BEGIN Includes */
 #include "network.h"
+#include "FTDI.h"
 #include <usb.h>
+#include "CAN_data.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -59,7 +61,7 @@ void Error_Handler(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+Network_t network;
 /* USER CODE END 0 */
 
 int main(void)
@@ -67,7 +69,12 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	smStates_t state;
-	Network_t network;
+
+	uint8_t message[32];
+	uint8_t messageSize;
+
+	CanData_payload_t TxMessage;
+	CanData_payload_t RxMessage;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -90,9 +97,9 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   state = WaitForUSBConnection;
-//  state = WaitForWirelessConnection;
+  FTDI_Init();
   static const uint8_t nRF24_ADDR[] = { 'A', 'G', 'H' };
-  Network_Init(&network, (uint8_t *) nRF24_ADDR, 3);
+  while(Network_OK != Network_Init(&network, (uint8_t *) nRF24_ADDR, 3)){}
   Network_SetUpClient(&network);
   while(Network_Connect(&network, 100) != Network_OK){
 
@@ -103,11 +110,23 @@ int main(void)
 	switch(state){
 
 	case WaitForUSBConnection:
-		USB_EstablishConnection();
+		HAL_UART_Transmit_IT(&huart4, TxMessage.payload, 32);
+		HAL_UART_Receive_IT(&huart4, RxMessage.payload, 32);
+		//USB_EstablishConnection();
 		state = WirelessHandler;
 		break;
 
 	case WirelessHandler:
+
+		if(Network_OK == Network_Receive(RxMessage.payload, &messageSize)){
+			if(RxMessage.message.header.control == 0){
+				FTDI_Send(RxMessage.payload, messageSize);
+			}
+		}
+
+		if(FTDI_OK == FTDI_Receive(TxMessage.payload, &messageSize)){
+			Network_Send(TxMessage.payload, messageSize);
+		}
 
 		break;
 	}

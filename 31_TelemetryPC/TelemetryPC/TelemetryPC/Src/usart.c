@@ -41,14 +41,9 @@
 #include "UART_communication.h"
 #include "network.h"
 #include "fifo.h"
+#include "FTDI.h"
 
-#define UART_FIFO_SIZE		100
-/* FIFO */
-static volatile UART_data_t uartTxFifoArray[UART_FIFO_SIZE];
-static volatile UART_data_t uartRxFifoArray[UART_FIFO_SIZE];
-static volatile Fifo_Handle_t uartTxFifo;
-static volatile Fifo_Handle_t uartRxFifo;
-/* FIFO */
+extern Network_t network;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart4;
@@ -114,9 +109,11 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     GPIO_InitStruct.Alternate = GPIO_AF4_USART4;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+    /* Peripheral interrupt init */
+    HAL_NVIC_SetPriority(USART3_8_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(USART3_8_IRQn);
   /* USER CODE BEGIN USART4_MspInit 1 */
-	Fifo_Init( (void *) uartTxFifoArray, sizeof(UART_data_t), UART_FIFO_SIZE);
-	Fifo_Init( (void *) uartRxFifoArray, sizeof(UART_data_t), UART_FIFO_SIZE);
+
   /* USER CODE END USART4_MspInit 1 */
   }
 }
@@ -142,6 +139,9 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_7);
 
+    /* Peripheral interrupt Deinit*/
+    HAL_NVIC_DisableIRQ(USART3_8_IRQn);
+
   }
   /* USER CODE BEGIN USART4_MspDeInit 1 */
 
@@ -150,27 +150,32 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 /* USER CODE BEGIN 1 */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
-	UART_payload_t Message;
+
+	FTDI_payload_t Message;
 
 	if(huart == &huart4){
-		if(Fifo_PullElement( (Fifo_Handle_t *) &uartTxFifo, &Message) == 0){
-//			Message.message.header.control = 1;
-//			Message.message.header.range = wirelessRange;
-//			Message.message.data.control.speed = nRF24Speed;
-//			Message.message.data.control.filterNum = 0;
+		if(Fifo_PullElement( (Fifo_Handle_t *) &ftdiTxFifo, &Message) == Fifo_OK){
+			Message.settings.datapresent = 1;
 		}
+		else{
+			Message.settings.datapresent = 0;
+		}
+		Message.settings.range = Network_GetRange();
+		Message.settings.speed = Network_GetDataRate(&network);
 		HAL_UART_Transmit_IT(&huart4, (uint8_t *) &Message, MESSAGE_SIZE);
 	}
 
 }
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-	static UART_payload_t Message;
+
+	static FTDI_payload_t Message;
 
 	if(huart == &huart4){
-		Fifo_PushElement( (Fifo_Handle_t *) &uartRxFifo, &Message);
+		Fifo_PushElement( (Fifo_Handle_t *) &ftdiRxFifo, &Message);
 		HAL_UART_Receive_IT(&huart4, (uint8_t *) &Message, MESSAGE_SIZE);
 	}
 }
+
 /* USER CODE END 1 */
 
 /**

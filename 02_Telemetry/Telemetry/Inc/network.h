@@ -46,14 +46,12 @@ typedef struct{
 } Network_t;
 
 Network_StatusTypeDef Network_Init(Network_t * network, uint8_t addr[], uint8_t addrLen);
-void Network_SetName(Network_t * network, uint8_t addr[], uint8_t addrLen);
+Network_StatusTypeDef Network_SetName(Network_t * network, uint8_t addr[], uint8_t addrLen);
 Network_StatusTypeDef Network_Find(Network_t * foundNetwork);
 Network_StatusTypeDef Network_SetUpServer(Network_t * network);
 Network_StatusTypeDef Network_SetUpClient(Network_t * network);
 Network_StatusTypeDef Network_Connect(Network_t * network, uint32_t timeout);
 Network_StatusTypeDef Network_Disconnect(Network_t * network);
-Network_StatusTypeDef Network_IsConnectedToServer(void);
-Network_StatusTypeDef Network_IsClientConnected(void);
 Network_StatusTypeDef Network_Receive(uint8_t * data, uint8_t * dataLen);
 Network_StatusTypeDef Network_Send(uint8_t * data, uint8_t dataLen);
 Network_DR_t Network_GetDataRate(Network_t * network);

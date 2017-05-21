@@ -2,7 +2,7 @@
 #include "decoder.h"
 
 #define MAX_KEYWORD_LENGHT 10
-#define MAX_KEYWORD_NUMBER 2
+#define MAX_KEYWORD_NUMBER 1
 
 typedef struct{
 	keywordCode_t code;
@@ -10,7 +10,6 @@ typedef struct{
 } keyword_t;
 
 keyword_t keywordList[MAX_KEYWORD_NUMBER] ={
-	{ID, "ID"},
 	{CONNECT, "CONNECT"}
 };
 

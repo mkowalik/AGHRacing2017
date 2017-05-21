@@ -5,40 +5,55 @@
  *      Author: Wojciech
  */
 
-#include <fifo.h>
+#include "fifo.h"
+#include <string.h>
+#include <stdio.h>
 
-void Fifo_Init(fifo_t * fifo){
-	fifo->elementsInFifo = 0;
-	fifo->firstEl = 1;
-	fifo->lastEl = 0;
+Fifo_Handle_t Fifo_Init(void * array, uint32_t elementSize, uint32_t fifoSize){
+
+	Fifo_Handle_t handle;
+
+	handle.uxItemSize = elementSize;
+	handle.uxMessagesWaiting = 0;
+	handle.uxLength = fifoSize;
+	handle.pcHead = ( ( int8_t * ) array );
+	handle.pcTail = handle.pcHead + (handle.uxLength * handle.uxItemSize);
+	handle.pcWriteTo = handle.pcHead;
+	handle.pcReadFrom = handle.pcHead + ( ( handle.uxLength - ( uint32_t ) 1U ) * handle.uxItemSize );
+
+	return handle;
 }
 
-uint8_t Fifo_PullElement(fifo_t * fifo, message_t * Element){
+Fifo_StatusTypeDef Fifo_PullElement(Fifo_Handle_t * fifo, void * Element){
 
-	if(fifo->elementsInFifo == 0){
-		return 0;
+	if(fifo->uxMessagesWaiting == 0){
+		return Fifo_EMPTY;
 	}
 
-	*Element = fifo->fifo[fifo->firstEl];
-	fifo->firstEl++;
-	if(fifo->firstEl == FIFO_SIZE){
-		fifo->firstEl = 0;
+	fifo->pcReadFrom += fifo->uxItemSize;
+	if(fifo->pcReadFrom >= fifo->pcTail){
+		fifo->pcReadFrom = fifo->pcHead;
 	}
-	fifo->elementsInFifo--;
-	return 1;
+
+	(void) memcpy( (void *) Element, (void *) fifo->pcReadFrom, (size_t) fifo->uxItemSize);
+
+	fifo->uxMessagesWaiting--;
+	return Fifo_OK;
 }
 
-uint8_t Fifo_PushElement(fifo_t * fifo, message_t * newElement){
+Fifo_StatusTypeDef Fifo_PushElement(Fifo_Handle_t * fifo, void * newElement){
 
-	if(fifo->elementsInFifo == FIFO_SIZE){
-		return 0;
+	if(fifo->uxMessagesWaiting == fifo->uxLength){
+		return Fifo_FULL;
 	}
 
-	fifo->lastEl++;
-	if(fifo->lastEl == FIFO_SIZE){
-		fifo->lastEl = 0;
+	( void ) memcpy( ( void * ) fifo->pcWriteTo, newElement, ( size_t ) fifo->uxItemSize );
+
+	fifo->pcWriteTo += fifo->uxItemSize;
+	if( fifo->pcWriteTo >= fifo->pcTail ){
+		fifo->pcWriteTo = fifo->pcHead;
 	}
-	fifo->fifo[fifo->lastEl] = *newElement;
-	fifo->elementsInFifo++;
-	return 1;
+
+	fifo->uxMessagesWaiting++;
+	return Fifo_OK;
 }

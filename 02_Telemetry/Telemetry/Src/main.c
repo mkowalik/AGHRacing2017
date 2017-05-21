@@ -34,12 +34,11 @@
 #include "main.h"
 #include "stm32f0xx_hal.h"
 #include "spi.h"
-#include "usart.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include <tele.h>
-#include <usb.h>
+#include "network.h"
+#include "CAN_data.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -66,8 +65,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  smStates_t state;
-  message_t Message;
+	CanData_payload_t TxMessage;
+	CanData_payload_t RxMessage;
+	uint8_t dataLen = 31;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -81,46 +81,38 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
-  MX_USART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
-  Tele_Init(&periphTxFifo, &periphRxFifo);
-  //HAL_TIM_Base_Start_IT(&htim14);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  state = WirelessHandler;
-
-	Message.message.header.canFrames = 1;
-	Message.message.header.control = 0;
-	Message.message.data.can[0].IDl = 1;
-	Message.message.data.can[0].dataLength = 1;
-	Message.message.data.can[0].data[0] = 0;
-
+  Network_t network;
+  static const uint8_t nRF24_ADDR[] = { 'A', 'G', 'H' };
+  while(Network_OK != Network_Init(&network, (uint8_t *) nRF24_ADDR, 3)){}
+  Network_SetUpServer(&network);
+  int i = 0;
   while (1){
+	  HAL_Delay(100);
 
-	//State machine start
-	switch(state){
+	  TxMessage.message.header.canFrames = 3;
+	  TxMessage.message.header.control = 0;
 
-	case WaitForUSBConnection:
-		USB_EstablishConnection();
-		state = WirelessHandler;
-		break;
+	  TxMessage.message.data.can[0].IDl = 1;
+	  TxMessage.message.data.can[0].dataLength = 1;
+	  TxMessage.message.data.can[0].data[0] = i;
 
-	case WirelessHandler:
-		Tele_Handler();
-		Message.message.data.can[0].data[0]++;
-		Message.message.data.can[0].IDl++;
-		if(Message.message.data.can[0].IDl == 7){
-			Message.message.data.can[0].IDl = 1;
-		}
-		Fifo_PushElement((fifo_t *) &periphRxFifo, &Message);
-		HAL_Delay(1);
-		//if USB lost connection'
-		// smState = WaitForUSBConnection
-		break;
-	}
+	  TxMessage.message.data.can[1].IDl = 2;
+	  TxMessage.message.data.can[1].dataLength = 1;
+	  TxMessage.message.data.can[1].data[1] = i;
+
+	  TxMessage.message.data.can[2].IDl = 3;
+	  TxMessage.message.data.can[2].dataLength = 1;
+	  TxMessage.message.data.can[2].data[2] = i;
+
+	  Network_Send(TxMessage.payload, dataLen);
+	  i++;
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -137,7 +129,6 @@ void SystemClock_Config(void)
 
   RCC_OscInitTypeDef RCC_OscInitStruct;
   RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_PeriphCLKInitTypeDef PeriphClkInit;
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
@@ -162,13 +153,6 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1;
-  PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK1;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
   }
