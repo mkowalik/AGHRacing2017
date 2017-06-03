@@ -7,11 +7,14 @@
 
 #ifndef FTDI_H_
 #define FTDI_H_
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 #include "network.h"
 #include "fifo.h"
 
-#define MESSAGE_SIZE		32
+#define FTDI_MESSAGE_SIZE		32
 
 typedef enum{
   FTDI_OK       = 0x00,
@@ -21,19 +24,7 @@ typedef enum{
 } FTDI_StatusTypeDef;
 
 typedef struct{
-	uint8_t range			: 2;
-	uint8_t datapresent		: 1;
-	uint8_t speed			: 3;
-	uint8_t reserved1		: 2;
-} FTDI_settings_t;
-
-typedef struct{
-	uint8_t data[31];
-} FTDI_data_t;
-
-typedef struct{
-	FTDI_data_t			data;
-	FTDI_settings_t 	settings;
+	uint8_t data[FTDI_MESSAGE_SIZE];
 } FTDI_payload_t;
 
 extern volatile Fifo_Handle_t ftdiTxFifo;
@@ -43,4 +34,7 @@ void FTDI_Init(void);
 FTDI_StatusTypeDef FTDI_Receive(uint8_t * data, uint8_t * dataLen);
 FTDI_StatusTypeDef FTDI_Send(uint8_t * data, uint8_t dataLen);
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* FTDI_H_ */

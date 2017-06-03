@@ -56,7 +56,6 @@ const volatile uint16_t shock_adc_regval;
 extern DMA_HandleTypeDef hdma_adc;
 extern TIM_HandleTypeDef htim16;
 
-
 /******************************************************************************/
 /*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
 /******************************************************************************/

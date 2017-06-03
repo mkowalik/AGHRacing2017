@@ -12,16 +12,20 @@
 #define NETWORK_FIFO_SIZE	100
 
 typedef struct{
+
 	union{
+
 		struct{
 			uint8_t packLostCnt : 4;
 			uint8_t autoRetrCnt	: 4;
 		} nibbles;
 
 		uint8_t otx;
+
 	} nRFInto;
 
 	uint16_t packLostCnt;
+
 } packetLostStat_t;
 
 typedef union{

@@ -7,6 +7,9 @@
 
 #ifndef UART_COMMUNICATION_H_
 #define UART_COMMUNICATION_H_
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 #include "stdio.h"
 #include "network.h"
@@ -42,4 +45,7 @@ receiverStatus_t ReceiverBuffer_GetStatus(void);
 void ReceiverBuffer_PutCharacterToBuffer(uint8_t newChar);
 void ReceiverBuffer_Clear(void);
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* UART_COMMUNICATION_H_ */

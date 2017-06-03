@@ -7,7 +7,6 @@
 
 #include "fifo.h"
 #include <string.h>
-#include <stdio.h>
 
 Fifo_Handle_t Fifo_Init(void * array, uint32_t elementSize, uint32_t fifoSize){
 
@@ -27,7 +26,7 @@ Fifo_Handle_t Fifo_Init(void * array, uint32_t elementSize, uint32_t fifoSize){
 Fifo_StatusTypeDef Fifo_PullElement(Fifo_Handle_t * fifo, void * Element){
 
 	if(fifo->uxMessagesWaiting == 0){
-		return Fifo_EMPTY;
+		return FIFO_EMPTY;
 	}
 
 	fifo->pcReadFrom += fifo->uxItemSize;
@@ -38,13 +37,13 @@ Fifo_StatusTypeDef Fifo_PullElement(Fifo_Handle_t * fifo, void * Element){
 	(void) memcpy( (void *) Element, (void *) fifo->pcReadFrom, (size_t) fifo->uxItemSize);
 
 	fifo->uxMessagesWaiting--;
-	return Fifo_OK;
+	return FIFO_OK;
 }
 
 Fifo_StatusTypeDef Fifo_PushElement(Fifo_Handle_t * fifo, void * newElement){
 
 	if(fifo->uxMessagesWaiting == fifo->uxLength){
-		return Fifo_FULL;
+		return FIFO_FULL;
 	}
 
 	( void ) memcpy( ( void * ) fifo->pcWriteTo, newElement, ( size_t ) fifo->uxItemSize );
@@ -55,5 +54,5 @@ Fifo_StatusTypeDef Fifo_PushElement(Fifo_Handle_t * fifo, void * newElement){
 	}
 
 	fifo->uxMessagesWaiting++;
-	return Fifo_OK;
+	return FIFO_OK;
 }

@@ -7,13 +7,16 @@
 
 #ifndef FIFO_H_
 #define FIFO_H_
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
-#include "stm32f0xx_hal.h"
+#include <stdio.h>
 
 typedef enum{
-  Fifo_OK       	= 0x00,
-  Fifo_EMPTY		= 0x01,
-  Fifo_FULL			= 0x02
+  FIFO_OK       	= 0x00,
+  FIFO_EMPTY		= 0x01,
+  FIFO_FULL			= 0x02
 } Fifo_StatusTypeDef;
 
 typedef struct{
@@ -31,4 +34,7 @@ Fifo_Handle_t Fifo_Init(void * array, uint32_t elementSize, uint32_t fifoSize);
 Fifo_StatusTypeDef Fifo_PullElement(Fifo_Handle_t * fifo, void * Element);
 Fifo_StatusTypeDef Fifo_PushElement(Fifo_Handle_t * fifo, void * newElement);
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* FIFO_H_ */
