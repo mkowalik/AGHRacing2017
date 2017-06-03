@@ -9,13 +9,9 @@
 
 static CanRxMsgTypeDef rx_msg;
 
-static FIFOQueue msgQueue
+static FIFOQueue* pMsgQueue;
 
-
-
-void CAN_ReceiverDriver_init(FIFOQueue* msgQueueArg){
-
-	msgQueue = msgQueueArg;
+static void filtersConfiguration(){
 
 	CAN_FilterConfTypeDef filterConfig;
 
@@ -35,7 +31,7 @@ void CAN_ReceiverDriver_init(FIFOQueue* msgQueueArg){
 
 	HAL_CAN_ConfigFilter(&hcan, &filterConfig);
 
-	// filterConfig keeps previous configuration
+	// filterConfig keeps previous configuration in unchanged fields
 	filterConfig.FilterNumber = 		1;
 
 	filterConfig.FilterMaskIdLow = 		RPM_CAN_CHANNEL;
@@ -45,20 +41,27 @@ void CAN_ReceiverDriver_init(FIFOQueue* msgQueueArg){
 
 	HAL_CAN_ConfigFilter(&hcan, &filterConfig);
 
+}
+
+void CAN_ReceiverDriver_init(FIFOQueue* pMsgQueueArg){
+
+	pMsgQueue = pMsgQueueArg;
+
+	filtersConfiguration();
+
 	hcan.pRxMsg = &rx_msg;
 
-	HAL_CAN_Receive_IT(hcan_ptr, CAN_FIFO0);
+	HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 
 }
 
-void CAN_ReceiverDriver_receiveITHandler(CAN_HandleTypeDef* hcan){
+void CAN_ReceiverDriver_receiveITHandler(){
 
-	if (hcan->pRxMsg->IDE != CAN_USED_IDE) return; //TODO nie return tylko olej i uruchom ponownie HAL_CAN_Receive_IT
-	if (hcan->pRxMsg->RTR != CAN_RTR_DATA) return; //TODO tu te¿
+	if (hcan.pRxMsg->IDE != CAN_USED_ID) return; //TODO nie return tylko olej i uruchom ponownie HAL_CAN_Receive_IT
+	if (hcan.pRxMsg->RTR != CAN_RTR_DATA) return; //TODO tu te¿
 
-	//TODO zapisz wiadomosc do kolejki
+	FIFOQueue_enqueue(pMsgQueue, *(hcan.pRxMsg));
 
-
-	HAL_CAN_Receive_IT(CAN_HandleTypeDef* hcan)
+	HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 
 }

@@ -107,6 +107,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/startup_stm32f042x6.s</locationURI>
 		</link>
 		<link>
+			<name>Application/User/actual_data_provider.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/actual_data_provider.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/actual_data_provider.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/actual_data_provider.h</locationURI>
+		</link>
+		<link>
 			<name>Application/User/alert_leds_driver.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/alert_leds_driver.c</locationURI>
@@ -130,6 +140,16 @@
 			<name>Application/User/can_receiver_driver.h</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.h</locationURI>
+		</link>
+		<link>
+			<name>Application/User/fifo_queue.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/fifo_queue.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/fifo_queue.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/fifo_queue.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/fixed_point.c</name>
