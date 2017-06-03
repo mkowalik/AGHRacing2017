@@ -122,6 +122,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/can.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/can_receiver_driver.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/can_receiver_driver.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.h</locationURI>
+		</link>
+		<link>
 			<name>Application/User/fixed_point.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/fixed_point.c</locationURI>
