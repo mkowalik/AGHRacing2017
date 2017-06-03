@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=E:/Dokumenty/Studia/AGH Racing/RepoGit/AGHRacing2017/28_WheelModule/WheelModule/Inc
+HeaderPath=D:/AGH_Racing/AGHRacing2017Local/28_WheelModule/WheelModule/Inc
 HeaderFiles=gpio.h;adc.h;can.h;i2c.h;stm32f0xx_it.h;stm32f0xx_hal_conf.h;main.h;tim.h;dma.h;
-SourcePath=E:/Dokumenty/Studia/AGH Racing/RepoGit/AGHRacing2017/28_WheelModule/WheelModule/Src
+SourcePath=D:/AGH_Racing/AGHRacing2017Local/28_WheelModule/WheelModule/Src
 SourceFiles=gpio.h;adc.h;can.h;i2c.h;stm32f0xx_it.h;stm32f0xx_hal_conf.h;main.h;gpio.c;adc.c;can.c;i2c.c;stm32f0xx_it.c;stm32f0xx_hal_msp.c;main.c;tim.h;tim.c;dma.h;dma.c;
 
 [PreviousLibFiles]

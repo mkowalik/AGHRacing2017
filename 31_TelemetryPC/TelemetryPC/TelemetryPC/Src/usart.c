@@ -4,6 +4,11 @@
   * Description        : This file provides code for the configuration
   *                      of the USART instances.
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -40,10 +45,9 @@
 /* USER CODE BEGIN 0 */
 #include "UART_communication.h"
 #include "network.h"
-#include "fifo.h"
 #include "FTDI.h"
 
-extern Network_t network;
+extern Network_t * MyNetwork = &network[0];
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart4;
@@ -65,7 +69,7 @@ void MX_USART4_UART_Init(void)
   huart4.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
   if (HAL_UART_Init(&huart4) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
 }
@@ -109,7 +113,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     GPIO_InitStruct.Alternate = GPIO_AF4_USART4;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-    /* Peripheral interrupt init */
+    /* USART4 interrupt Init */
     HAL_NVIC_SetPriority(USART3_8_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(USART3_8_IRQn);
   /* USER CODE BEGIN USART4_MspInit 1 */
@@ -139,13 +143,12 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_7);
 
-    /* Peripheral interrupt Deinit*/
+    /* USART4 interrupt Deinit */
     HAL_NVIC_DisableIRQ(USART3_8_IRQn);
-
-  }
   /* USER CODE BEGIN USART4_MspDeInit 1 */
 
   /* USER CODE END USART4_MspDeInit 1 */
+  }
 } 
 
 /* USER CODE BEGIN 1 */
@@ -154,25 +157,26 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 	FTDI_payload_t Message;
 
 	if(huart == &huart4){
-		if(Fifo_PullElement( (Fifo_Handle_t *) &ftdiTxFifo, &Message) == Fifo_OK){
-			Message.settings.datapresent = 1;
+		if(Fifo_PullElement( (Fifo_Handle_t *) &ftdiTxFifo, &Message) == FIFO_OK){
+			((Network_frame_t *)&Message)->settings.param.datapresent = 1;
 		}
 		else{
-			Message.settings.datapresent = 0;
+			((Network_frame_t *)&Message)->settings.param.datapresent = 0;
 		}
-		Message.settings.range = Network_GetRange();
-		Message.settings.speed = Network_GetDataRate(&network);
-		HAL_UART_Transmit_IT(&huart4, (uint8_t *) &Message, MESSAGE_SIZE);
+		((Network_frame_t *)&Message)->settings.param.range = Network_GetRange(MyNetwork);
+		((Network_frame_t *)&Message)->settings.param.speed = Network_GetDataRate(MyNetwork);
+		HAL_UART_Transmit_IT(&huart4, (uint8_t *) &Message, FTDI_MESSAGE_SIZE);
 	}
 
 }
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
 	static FTDI_payload_t Message;
 
 	if(huart == &huart4){
 		Fifo_PushElement( (Fifo_Handle_t *) &ftdiRxFifo, &Message);
-		HAL_UART_Receive_IT(&huart4, (uint8_t *) &Message, MESSAGE_SIZE);
+		HAL_UART_Receive_IT(&huart4, (uint8_t *) &Message, FTDI_MESSAGE_SIZE);
 	}
 }
 

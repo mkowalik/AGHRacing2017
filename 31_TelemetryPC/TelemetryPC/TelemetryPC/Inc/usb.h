@@ -7,7 +7,13 @@
 
 #ifndef USB_H_
 #define USB_H_
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 void USB_EstablishConnection(void);
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* USB_H_ */

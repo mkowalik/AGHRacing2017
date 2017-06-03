@@ -11,53 +11,18 @@
 
 #define NETWORK_FIFO_SIZE	100
 
-typedef struct{
-	union{
-		struct{
-			uint8_t packLostCnt : 4;
-			uint8_t autoRetrCnt	: 4;
-		} nibbles;
+/* FIFO */
+typedef struct NetworkFIFO{
+	network_data_t networkTxFifoArray[NETWORK_FIFO_SIZE];
+	network_data_t networkRxFifoArray[NETWORK_FIFO_SIZE];
+	Fifo_Handle_t networkTxFifo;
+	Fifo_Handle_t networkRxFifo;
+} NetworkFIFO_t;
 
-		uint8_t otx;
-	} nRFInto;
-
-	uint16_t packLostCnt;
-} packetLostStat_t;
-
-typedef union{
-
-	struct{
-		uint8_t	channel			: 7;
-		uint8_t channelChopping	: 1;
-	} channel;
-
-	struct{
-		uint8_t range			: 2;
-		uint8_t datapresent		: 1;
-		uint8_t speed			: 3;
-		uint8_t reserved2		: 1;
-		uint8_t channelChopping	: 1;
-	} param;
-
-} Network_settings_t;
-
-typedef struct{
-	uint8_t data[31];
-} network_data_t;
-
-typedef struct{
-	network_data_t		data;
-	Network_settings_t 	settings;
-} Network_frame_t;
+static volatile NetworkFIFO_t NetworkFIFO[NETWORK_NUMBER];
 
 /* FIFO */
-static volatile network_data_t networkTxFifoArray[NETWORK_FIFO_SIZE];
-static volatile network_data_t networkRxFifoArray[NETWORK_FIFO_SIZE];
-static volatile Fifo_Handle_t networkTxFifo;
-static volatile Fifo_Handle_t networkRxFifo;
-/* FIFO */
 
-static volatile packetLostStat_t packetLostStat;
 static volatile uint8_t payload_length;
 static volatile Network_settings_t networkSettings;
 
@@ -67,19 +32,27 @@ static volatile nRF24_TXResult tx_res;
 static volatile nRF24_RXResult pipe;
 static volatile nRF24_STATUS_RXFIFO_t rx_res;
 
-DeviceType_t device;
+Network_t network[MAX_NETWORK_NUMBER];
 
-static nRF24_DataRate_t Network_DataRateConv(Network_DR_t dataRate);
+static nRF24_DataRate_t Network_DataRateConv(Network_t * network);
+
+void Network_DeviceInit(void){
+	for(uint8_t networkCtr = 0; networkCtr < MAX_NETWORK_NUMBER; networkCtr++){
+		network[networkCtr].ID = networkCtr;
+	}
+}
 
 Network_StatusTypeDef Network_Init(Network_t * network, uint8_t addr[], uint8_t addrLen){
 
-	HAL_NVIC_DisableIRQ(EXTI4_15_IRQn);
+	network->nRF24device = &nRF24Devices[network->ID];
 
-	if(nRF24_Init(10) != nRF24_OK){
+	nRF24_DIS_IRQ(network->nRF24device);
+
+	if(nRF24_Init(network->nRF24device, 10) != nRF24_OK){
 		return Network_TIMEOUT;
 	}
 
-	HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
+	nRF24_ENA_IRQ(network->nRF24device);
 
 	Network_SetName(network, addr, addrLen);
 
@@ -87,8 +60,8 @@ Network_StatusTypeDef Network_Init(Network_t * network, uint8_t addr[], uint8_t 
 	network->dataRate = Network_DR_0bps;
 	payload_length = 32;
 
-	networkTxFifo = Fifo_Init( (void *) networkTxFifoArray, sizeof(network_data_t), NETWORK_FIFO_SIZE);
-	networkRxFifo = Fifo_Init( (void *) networkRxFifoArray, sizeof(network_data_t), NETWORK_FIFO_SIZE);
+	NetworkFIFO[network->ID].networkTxFifo = Fifo_Init( (void *) NetworkFIFO[network->ID].networkTxFifoArray, sizeof(network_data_t), NETWORK_FIFO_SIZE);
+	NetworkFIFO[network->ID].networkRxFifo = Fifo_Init( (void *) NetworkFIFO[network->ID].networkRxFifoArray, sizeof(network_data_t), NETWORK_FIFO_SIZE);
 
 	return Network_OK;
 }
@@ -107,72 +80,79 @@ Network_StatusTypeDef Network_Find(Network_t * foundNetwork){
 
 Network_StatusTypeDef Network_SetUpClient(Network_t * network){
 
-	nRF24_CE_L();
-	nRF24_SetPowerMode(nRF24_PWR_DOWN);
+	nRF24_CE_L(network->nRF24device);
+	nRF24_SetPowerMode(network->nRF24device, nRF24_PWR_DOWN);
 
-	device = Client;
+	network->deviceType = Client;
 	network->dataRate = Network_DR_250kbps;
 
-	nRF24_SetRFChannel(network->channel);
+	nRF24_SetRFChannel(network->nRF24device, network->channel);
 	// Set data rate
-	nRF24_SetDataRate(Network_DataRateConv(network->dataRate));
+	nRF24_SetDataRate(network->nRF24device, Network_DataRateConv(network));
 	// Set CRC scheme
-	nRF24_SetCRCScheme(nRF24_CRC_2byte);
+	nRF24_SetCRCScheme(network->nRF24device, nRF24_CRC_2byte);
 	// Set address width, its common for all pipes (RX and TX)
-	nRF24_SetAddrWidth(network->deviceAddressLen);
-	nRF24_SetAddr(nRF24_PIPE1, network->deviceAddress); // program address for pipe
-	nRF24_SetRXPipe(nRF24_PIPE1, nRF24_AA_ON, payload_length); // Auto-ACK: enabled, payload length: 10 bytes
+	nRF24_SetAddrWidth(network->nRF24device, network->deviceAddressLen);
+	nRF24_SetAddr(network->nRF24device, nRF24_PIPE1, network->deviceAddress); // program address for pipe
+	nRF24_SetRXPipe(network->nRF24device, nRF24_PIPE1, nRF24_AA_ON, payload_length); // Auto-ACK: enabled, payload length: 10 bytes
 	// Set TX power for Auto-ACK (maximum, to ensure that transmitter will hear ACK reply)
-	nRF24_SetTXPower(nRF24_TXPWR_0dBm);
-	nRF24_SetOperationalMode(nRF24_MODE_RX);
+	nRF24_SetTXPower(network->nRF24device, nRF24_TXPWR_0dBm);
+	nRF24_SetOperationalMode(network->nRF24device, nRF24_MODE_RX);
 	// Clear any pending IRQ flags
-	nRF24_ClearIRQFlags();
+	nRF24_ClearIRQFlags(network->nRF24device);
 	// Wake the transceiver
-	nRF24_SetPowerMode(nRF24_PWR_UP);
+	nRF24_SetPowerMode(network->nRF24device, nRF24_PWR_UP);
 
 	return Network_OK;
+}
+
+void Network_ClientChangeDataRate(Network_t * network, Network_DR_t dataRate){
+	Network_Disconnect(network);
+	network->dataRate = dataRate;
+	nRF24_SetDataRate(network->nRF24device, Network_DataRateConv(network));
+	nRF24_CE_H(network->nRF24device);
 }
 
 Network_StatusTypeDef Network_SetUpServer(Network_t * network){
 
 	Network_frame_t nRF24_payload;
 
-	nRF24_CE_L();
-	nRF24_SetPowerMode(nRF24_PWR_DOWN);
+	nRF24_CE_L(network->nRF24device);
+	nRF24_SetPowerMode(network->nRF24device, nRF24_PWR_DOWN);
 
-	device = Server;
+	network->deviceType = Server;
 	network->dataRate = Network_DR_250kbps;
 
-	nRF24_SetRFChannel(network->channel);
+	nRF24_SetRFChannel(network->nRF24device, network->channel);
 	// Set data rate
-	nRF24_SetDataRate(Network_DataRateConv(network->dataRate));
+	nRF24_SetDataRate(network->nRF24device, Network_DataRateConv(network));
 	// Set CRC scheme
-	nRF24_SetCRCScheme(nRF24_CRC_2byte);
+	nRF24_SetCRCScheme(network->nRF24device, nRF24_CRC_2byte);
 	// Set address width, its common for all pipes (RX and TX)
-	nRF24_SetAddrWidth(network->deviceAddressLen);
-	nRF24_SetAddr(nRF24_PIPETX, network->deviceAddress); // program TX address
-	nRF24_SetAddr(nRF24_PIPE0, network->deviceAddress); // program address for pipe#0, must be same as TX (for Auto-ACK)
+	nRF24_SetAddrWidth(network->nRF24device, network->deviceAddressLen);
+	nRF24_SetAddr(network->nRF24device, nRF24_PIPETX, network->deviceAddress); // program TX address
+	nRF24_SetAddr(network->nRF24device, nRF24_PIPE0, network->deviceAddress); // program address for pipe#0, must be same as TX (for Auto-ACK)
 	// Set TX power (maximum)
-	nRF24_SetTXPower(nRF24_TXPWR_0dBm);
+	nRF24_SetTXPower(network->nRF24device, nRF24_TXPWR_0dBm);
 	// Configure auto retransmit: 10 retransmissions with pause of 2500us in between
-	nRF24_SetAutoRetr(nRF24_ARD_500us, 15);
+	nRF24_SetAutoRetr(network->nRF24device, nRF24_ARD_500us, 15);
 	// Enable Auto-ACK for pipe#0 (for ACK packets)
-	nRF24_EnableAA(nRF24_PIPE0);
+	nRF24_EnableAA(network->nRF24device, nRF24_PIPE0);
 	// Set operational mode (PTX == transmitter)
-	nRF24_SetOperationalMode(nRF24_MODE_TX);
+	nRF24_SetOperationalMode(network->nRF24device, nRF24_MODE_TX);
 	// Clear any pending IRQ flags
-	nRF24_ClearIRQFlags();
+	nRF24_ClearIRQFlags(network->nRF24device);
 	// Wake the transceiver
-	nRF24_SetPowerMode(nRF24_PWR_UP);
+	nRF24_SetPowerMode(network->nRF24device, nRF24_PWR_UP);
 	HAL_Delay(5);
 
 	nRF24_payload.settings.param.datapresent = 0;
-	nRF24_payload.settings.param.speed = Network_DataRateConv(network->dataRate);
+	nRF24_payload.settings.param.speed = Network_DataRateConv(network);
 	nRF24_payload.settings.param.range = Network_Range_0;
 	// Transfer a data from the specified buffer to the TX FIFO
-	nRF24_WritePayload((uint8_t *) &nRF24_payload, payload_length);
+	nRF24_WritePayload(network->nRF24device, (uint8_t *) &nRF24_payload, payload_length);
 	// Start a transmission by asserting CE pin (must be held at least 10us)
-	nRF24_CE_H();
+	nRF24_CE_H(network->nRF24device);
 
 	return Network_OK;
 }
@@ -181,9 +161,9 @@ Network_StatusTypeDef Network_Connect(Network_t * network, uint32_t timeout){
 
 	uint32_t tickstart = HAL_GetTick();
 
-	nRF24_ClearIRQFlags();
+	nRF24_ClearIRQFlags(network->nRF24device);
 	rxReceived = 0;
-	nRF24_CE_H();
+	nRF24_CE_H(network->nRF24device);
 	while(!rxReceived){
 		if((HAL_GetTick()-tickstart) > timeout){
 			return Network_TIMEOUT;
@@ -195,23 +175,27 @@ Network_StatusTypeDef Network_Connect(Network_t * network, uint32_t timeout){
 	return Network_ERROR;
 }
 
-Network_StatusTypeDef Network_Disconnect(Network_t * network);
+void Network_Disconnect(Network_t * network){
+	nRF24_CE_L(network->nRF24device);
+	nRF24_ClearIRQFlags(network->nRF24device);
+}
 
 Network_StatusTypeDef Network_IsConnectedToServer(void);
+
 Network_StatusTypeDef Network_IsClientConnected(void);
 
-Network_StatusTypeDef Network_Receive(uint8_t * data, uint8_t * dataLen){
-	if(Fifo_OK == Fifo_PullElement( (Fifo_Handle_t *) &networkRxFifo, data)){
-		*dataLen = networkRxFifo.uxItemSize;
+Network_StatusTypeDef Network_Receive(Network_t * network, uint8_t * data, uint8_t * dataLen){
+	if(FIFO_OK == Fifo_PullElement( (Fifo_Handle_t *) &(NetworkFIFO[network->ID].networkRxFifo), data)){
+		*dataLen = NetworkFIFO[network->ID].networkRxFifo.uxItemSize;
 		return Network_OK;
 	}
 	*dataLen = 0;
 	return Network_ERROR;
 }
 
-Network_StatusTypeDef Network_Send(uint8_t * data, uint8_t dataLen){
-	if(dataLen == networkTxFifo.uxItemSize){
-		if(Fifo_OK == Fifo_PushElement( (Fifo_Handle_t *) &networkTxFifo, data)){
+Network_StatusTypeDef Network_Send(Network_t * network, uint8_t * data, uint8_t dataLen){
+	if(dataLen == NetworkFIFO[network->ID].networkTxFifo.uxItemSize){
+		if(FIFO_OK == Fifo_PushElement( (Fifo_Handle_t *) &(NetworkFIFO[network->ID].networkTxFifo), data)){
 			return Network_OK;
 		}
 		return Network_ERROR;
@@ -227,17 +211,17 @@ uint8_t Network_GetChannel(Network_t * network){
 	return network->channel;
 }
 
-Network_Range_t Network_GetRange(void){
+Network_Range_t Network_GetRange(Network_t * network){
 
 	static Network_Range_t range;
 
-	switch(device){
+	switch(network->deviceType){
 
 	case Server:
-		if(packetLostStat.nRFInto.nibbles.autoRetrCnt < 6){
+		if(network->packetLostStat.nRFInto.nibbles.autoRetrCnt < 6){
 			return Network_Range_3;
 		}
-		else if(packetLostStat.nRFInto.nibbles.autoRetrCnt < 11){
+		else if(network->packetLostStat.nRFInto.nibbles.autoRetrCnt < 11){
 			return Network_Range_2;
 		}
 		else{
@@ -258,8 +242,9 @@ Network_Range_t Network_GetRange(void){
 	}
 }
 
-static nRF24_DataRate_t Network_DataRateConv(Network_DR_t dataRate){
-	switch(dataRate){
+static nRF24_DataRate_t Network_DataRateConv(Network_t * network){
+
+	switch(network->dataRate){
 
 	case Network_DR_250kbps:
 		return nRF24_DR_250kbps;
@@ -276,28 +261,32 @@ static nRF24_DataRate_t Network_DataRateConv(Network_DR_t dataRate){
 	}
 }
 
-void Network_InterruptHandler(void){
+void Network_InterruptHandler(Network_t * network){
 
 	uint8_t status;
 	Network_frame_t nRF24_payload;
 
-	switch(device){
+	switch(network->deviceType){
 
 	case Client:
-		if(nRF24_GetStatus_RXFIFO() != nRF24_STATUS_RXFIFO_EMPTY){
+		if(nRF24_GetStatus_RXFIFO(network->nRF24device) != nRF24_STATUS_RXFIFO_EMPTY){
 			rx_res = nRF24_STATUS_RXFIFO_DATA;
-			pipe = nRF24_ReadPayload((uint8_t *) &nRF24_payload, (uint8_t *) &payload_length);
-			if(nRF24_payload.settings.param.datapresent){
-				if(Fifo_PushElement( (Fifo_Handle_t *) &networkRxFifo, &(nRF24_payload.data) ) == Fifo_FULL){
+			pipe = nRF24_ReadPayload(network->nRF24device, (uint8_t *) &nRF24_payload, (uint8_t *) &payload_length);
+			if(nRF24_payload.settings.param.channelChopping){
+
+			}
+			else{
+				if(nRF24_payload.settings.param.datapresent){
+					if(Fifo_PushElement( (Fifo_Handle_t *) &(NetworkFIFO[network->ID].networkRxFifo), &(nRF24_payload.data) ) == FIFO_FULL){
+					}
 				}
 			}
-			networkSettings = nRF24_payload.settings;
 		}
 		rxReceived = 1;
 		break;
 
 	case Server:
-		status = nRF24_GetStatus();
+		status = nRF24_GetStatus(network->nRF24device);
 		if (status & nRF24_FLAG_MAX_RT) {
 			// Auto retransmit counter exceeds the programmed maximum limit (FIFO is not removed)
 			tx_res =  nRF24_TX_MAXRT;
@@ -307,29 +296,29 @@ void Network_InterruptHandler(void){
 			tx_res = nRF24_TX_SUCCESS;
 
 			nRF24_payload.settings = networkSettings;
-			nRF24_payload.settings.param.range = Network_GetRange();
-			if(Fifo_PullElement( (Fifo_Handle_t *) &networkTxFifo, &(nRF24_payload.data) ) == Fifo_EMPTY){
+			nRF24_payload.settings.param.range = Network_GetRange(network);
+			if(Fifo_PullElement( (Fifo_Handle_t *) &(NetworkFIFO[network->ID].networkTxFifo), &(nRF24_payload.data) ) == FIFO_EMPTY){
 				nRF24_payload.settings.param.datapresent = 0;
 			}
 			else{
 				nRF24_payload.settings.param.datapresent = 1;
 			}
-			nRF24_TransmitPacketIRQ((uint8_t *) &nRF24_payload ,payload_length);
+			nRF24_TransmitPacketIRQ(network->nRF24device, (uint8_t *) &nRF24_payload ,payload_length);
 		}
 		else{
 			//some banana happens, flush fifo
-			nRF24_FlushTX();
+			nRF24_FlushTX(network->nRF24device);
 			tx_res = nRF24_TX_ERROR;
 		}
 
 		/* Get information about number of lost packets and number of retransmits */
-		packetLostStat.nRFInto.otx = nRF24_GetRetransmitCounters();
-		packetLostStat.packLostCnt += packetLostStat.nRFInto.nibbles.packLostCnt;
-		nRF24_ResetPLOS();
+		network->packetLostStat.nRFInto.otx = nRF24_GetRetransmitCounters(network->nRF24device);
+		network->packetLostStat.packLostCnt += network->packetLostStat.nRFInto.nibbles.packLostCnt;
+		nRF24_ResetPLOS(network->nRF24device);
 
 		txReceived = 1;
 		break;
 	}
 
-	nRF24_ClearIRQFlags();
+	nRF24_ClearIRQFlags(network->nRF24device);
 }

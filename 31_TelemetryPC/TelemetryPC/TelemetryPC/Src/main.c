@@ -3,6 +3,11 @@
   * File Name          : main.c
   * Description        : Main program body
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -53,7 +58,6 @@ typedef enum {WaitForUSBConnection, WirelessHandler} smStates_t;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -61,7 +65,7 @@ void Error_Handler(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-Network_t network;
+Network_t * MyNetwork = &network[0];
 /* USER CODE END 0 */
 
 int main(void)
@@ -82,8 +86,16 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
   /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -99,9 +111,9 @@ int main(void)
   state = WaitForUSBConnection;
   FTDI_Init();
   static const uint8_t nRF24_ADDR[] = { 'A', 'G', 'H' };
-  while(Network_OK != Network_Init(&network, (uint8_t *) nRF24_ADDR, 3)){}
-  Network_SetUpClient(&network);
-  while(Network_Connect(&network, 100) != Network_OK){
+  while(Network_OK != Network_Init(MyNetwork, (uint8_t *) nRF24_ADDR, 3)){}
+  Network_SetUpClient(MyNetwork);
+  while(Network_Connect(MyNetwork, 100) != Network_OK){
 
   }
   while (1){
@@ -118,14 +130,14 @@ int main(void)
 
 	case WirelessHandler:
 
-		if(Network_OK == Network_Receive(RxMessage.payload, &messageSize)){
+		if(Network_OK == Network_Receive(MyNetwork, RxMessage.payload, &messageSize)){
 			if(RxMessage.message.header.control == 0){
 				FTDI_Send(RxMessage.payload, messageSize);
 			}
 		}
 
 		if(FTDI_OK == FTDI_Receive(TxMessage.payload, &messageSize)){
-			Network_Send(TxMessage.payload, messageSize);
+			Network_Send(MyNetwork, TxMessage.payload, messageSize);
 		}
 
 		break;
@@ -158,7 +170,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Initializes the CPU, AHB and APB busses clocks 
@@ -171,7 +183,7 @@ void SystemClock_Config(void)
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Enables the Clock Security System 
@@ -199,14 +211,14 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void Error_Handler(void)
+void _Error_Handler(char * file, int line)
 {
-  /* USER CODE BEGIN Error_Handler */
+  /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
   }
-  /* USER CODE END Error_Handler */ 
+  /* USER CODE END Error_Handler_Debug */ 
 }
 
 #ifdef USE_FULL_ASSERT
