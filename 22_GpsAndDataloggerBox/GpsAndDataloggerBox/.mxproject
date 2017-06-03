@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=F:/AGHRacing/GIT_CODE/22_GpsAndDataloggerBox/GpsAndDataloggerBox/Inc
+HeaderPath=F:/AGHRacing/GIT_CODE/AGHRacing2017/22_GpsAndDataloggerBox/GpsAndDataloggerBox/Inc
 HeaderFiles=gpio.h;can.h;sdio.h;usart.h;stm32f1xx_it.h;stm32f1xx_hal_conf.h;;main.h;rtc.h;tim.h;
-SourcePath=F:/AGHRacing/GIT_CODE/22_GpsAndDataloggerBox/GpsAndDataloggerBox/Src
+SourcePath=F:/AGHRacing/GIT_CODE/AGHRacing2017/22_GpsAndDataloggerBox/GpsAndDataloggerBox/Src
 SourceFiles=gpio.h;can.h;sdio.h;usart.h;stm32f1xx_it.h;stm32f1xx_hal_conf.h;mxconstants.h;gpio.c;can.c;sdio.c;usart.c;stm32f1xx_it.c;stm32f1xx_hal_msp.c;main.c;;main.h;rtc.h;rtc.c;tim.h;tim.c;
 
 [PreviousLibFiles]

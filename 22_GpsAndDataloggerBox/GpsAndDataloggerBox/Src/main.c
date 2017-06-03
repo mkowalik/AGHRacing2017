@@ -85,7 +85,6 @@ int main(void)
   MX_SDIO_SD_Init();
   MX_USART1_UART_Init();
   MX_RTC_Init();
-  MX_USART2_UART_Init();
   MX_TIM4_Init();
 
   /* USER CODE BEGIN 2 */
