@@ -7,14 +7,14 @@
 
 #include "fifo_queue.h"
 
-void FIFOQueue_init(FIFOQueue* self, ELEMENT_TYPE* pTabPtrArg, uint16_t size){
+void FIFOQueue_init(volatile FIFOQueue* self, volatile ELEMENT_TYPE* pTabPtrArg, uint16_t size){
 	self->pTabPtr = pTabPtrArg;
 	self->size = size;
 	self->firstElement = 0;
 	self->arterLastElement = 0;
 }
 
-FIFOStatus FIFOQueue_enqueue(FIFOQueue* self, ELEMENT_TYPE element){
+FIFOStatus FIFOQueue_enqueue(volatile FIFOQueue* self, ELEMENT_TYPE element){
 
 	//TODO prawdopodobnie sie wysypie jak bedzie uzywane w przerwaniu, a bedzie
 
@@ -28,7 +28,7 @@ FIFOStatus FIFOQueue_enqueue(FIFOQueue* self, ELEMENT_TYPE element){
 
 }
 
-FIFOStatus FIFOQueue_dequeue(FIFOQueue* self, ELEMENT_TYPE* pRetElement){
+FIFOStatus FIFOQueue_dequeue(volatile FIFOQueue* self, ELEMENT_TYPE* pRetElement){
 
 	if (FIFOQueue_elementsNumber(self) == 0) return FIFOStatus_Empty;
 
@@ -44,8 +44,14 @@ FIFOStatus FIFOQueue_dequeue(FIFOQueue* self, ELEMENT_TYPE* pRetElement){
 	return FIFOStatus_OK;
 }
 
-uint16_t FIFOQueue_elementsNumber(FIFOQueue* self){
+uint16_t FIFOQueue_elementsNumber(volatile FIFOQueue* self){
 
 	return self->arterLastElement - self->firstElement;
+
+}
+
+uint8_t FIFOQueue_full(volatile FIFOQueue* self){
+
+	return ((FIFOQueue_elementsNumber(self)) >= (self->size));
 
 }

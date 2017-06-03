@@ -8,11 +8,13 @@
 #include "actual_data_provider.h"
 #include "fifo_queue.h"
 #include "can_receiver_driver.h"
+#include "rtc.h"
 
 #define BUFFER_SIZE		256
 
-static CanRxMsgTypeDef msgTabBuffer[BUFFER_SIZE];
-static FIFOQueue msgQueue;
+static volatile CanRxMsgTypeDef msgTabBuffer[BUFFER_SIZE];
+static RTC_TimeTypeDef msgArrivalTime[BUFFER_SIZE];
+static volatile FIFOQueue msgQueue;
 static uint16_t actualDataStorage[DATA_CHANNELS_NUMBER];
 
 #define RPM_CAN_BYTE_OFFSET		0
@@ -57,6 +59,10 @@ void ActualDataProvider_init(){
 	FIFOQueue_init(&msgQueue, msgTabBuffer, BUFFER_SIZE);
 	CAN_ReceiverDriver_init(&msgQueue);
 	//TODO initialisation of CAN IRQ Handler
+}
+
+RTC_TimeTypeDef ActualDataProvider_getDataArrivalTime(Channel_TypeDef channel){
+	return msgArrivalTime[channel];
 }
 
 uint16_t ActualDataProvider_getValue(Channel_TypeDef channel){
@@ -165,6 +171,8 @@ static void ActualDataProvider_saveData(CanRxMsgTypeDef* pMsg, Channel_TypeDef c
 		actualDataStorage[channel] |= (dataLower & 0xFF00);
 	}
 
+	HAL_RTC_GetTime(&hrtc, &(msgArrivalTime[channel]), RTC_FORMAT_BCD);
+
 }
 
 void ActualDataProvider_thread(){
@@ -191,4 +199,8 @@ void ActualDataProvider_thread(){
 			break;
 		}
 	}
+
+	CAN_ReceiverDriver_queueProcessedNotifier();
+
 }
+

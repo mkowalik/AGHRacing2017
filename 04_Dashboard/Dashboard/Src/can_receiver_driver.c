@@ -9,7 +9,9 @@
 
 static CanRxMsgTypeDef rx_msg;
 
-static FIFOQueue* pMsgQueue;
+static volatile FIFOQueue* pMsgQueue;
+
+uint8_t waitingForInterrupt = 0;
 
 static void filtersConfiguration(){
 
@@ -43,7 +45,7 @@ static void filtersConfiguration(){
 
 }
 
-void CAN_ReceiverDriver_init(FIFOQueue* pMsgQueueArg){
+void CAN_ReceiverDriver_init(volatile FIFOQueue* pMsgQueueArg){
 
 	pMsgQueue = pMsgQueueArg;
 
@@ -52,6 +54,7 @@ void CAN_ReceiverDriver_init(FIFOQueue* pMsgQueueArg){
 	hcan.pRxMsg = &rx_msg;
 
 	HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+	waitingForInterrupt = 1;
 
 }
 
@@ -60,8 +63,21 @@ void CAN_ReceiverDriver_receiveITHandler(){
 	if (hcan.pRxMsg->IDE != CAN_USED_ID) return; //TODO nie return tylko olej i uruchom ponownie HAL_CAN_Receive_IT
 	if (hcan.pRxMsg->RTR != CAN_RTR_DATA) return; //TODO tu te¿
 
-	FIFOQueue_enqueue(pMsgQueue, *(hcan.pRxMsg));
+	if (FIFOQueue_enqueue(pMsgQueue, *(hcan.pRxMsg))==FIFOStatus_OK){
+		HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+		waitingForInterrupt = 1;
+	} else {
+		waitingForInterrupt = 0;
+	}
 
-	HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+
+}
+
+void CAN_ReceiverDriver_queueProcessedNotifier(){
+
+	if (waitingForInterrupt == 0) {
+		HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+		waitingForInterrupt = 1;
+	}
 
 }

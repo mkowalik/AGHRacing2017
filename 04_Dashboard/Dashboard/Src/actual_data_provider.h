@@ -24,6 +24,7 @@ typedef enum {
 #define DATA_CHANNELS_NUMBER	6
 
 void ActualDataProvider_init();
+RTC_TimeTypeDef ActualDataProvider_getDataArrivalTime(Channel_TypeDef channel);
 uint16_t ActualDataProvider_getValue(Channel_TypeDef channel);
 uint16_t ActualDataProvider_getMultiplier(Channel_TypeDef channel);
 uint16_t ActualDataProvider_getDivider(Channel_TypeDef channel);

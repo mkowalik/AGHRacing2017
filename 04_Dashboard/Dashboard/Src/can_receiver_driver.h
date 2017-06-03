@@ -20,7 +20,8 @@
 #define GEAR_CAN_CHANNEL				0x080
 
 
-void CAN_ReceiverDriver_init(FIFOQueue* psgQueueArg);
+void CAN_ReceiverDriver_init(volatile FIFOQueue* psgQueueArg);
 void CAN_ReceiverDriver_receiveITHandler();
+void CAN_ReceiverDriver_queueProcessedNotifier();
 
 #endif /* CAN_RECEIVER_DRIVER_H_ */

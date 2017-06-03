@@ -20,16 +20,17 @@ typedef enum {
 } FIFOStatus;
 
 typedef struct {
-	ELEMENT_TYPE* pTabPtr;
+	volatile ELEMENT_TYPE* pTabPtr;
 	uint16_t size;
-	uint16_t firstElement;
-	uint16_t arterLastElement;
+	volatile uint16_t firstElement;
+	volatile uint16_t arterLastElement;
 } FIFOQueue;
 
-void FIFOQueue_init(FIFOQueue* self, ELEMENT_TYPE* pTabArg, uint16_t size);
-FIFOStatus FIFOQueue_enqueue(FIFOQueue* self, ELEMENT_TYPE element);
-FIFOStatus FIFOQueue_dequeue(FIFOQueue* self, ELEMENT_TYPE* pRetElement);
-uint16_t FIFOQueue_elementsNumber(FIFOQueue* self);
+void FIFOQueue_init(volatile FIFOQueue* self, volatile ELEMENT_TYPE* pTabArg, uint16_t size);
+FIFOStatus FIFOQueue_enqueue(volatile FIFOQueue* self, ELEMENT_TYPE element);
+FIFOStatus FIFOQueue_dequeue(volatile FIFOQueue* self, ELEMENT_TYPE* pRetElement);
+uint16_t FIFOQueue_elementsNumber(volatile FIFOQueue* self);
+uint8_t FIFOQueue_full(volatile FIFOQueue* self);
 
 
 
