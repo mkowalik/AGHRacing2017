@@ -44,27 +44,6 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include "Gearbox.h"
-
-#define ADD_STATE(var, state)		var = (GearboxState)(var | state)
-#define REMOVE_STATE(var, state)	var = (GearboxState)(var & (~state))
-#define ELAPSED_TIME(prev_tick)		(HAL_GetTick() - prev_tick)
-
-enum GearboxState {
-	IDLE = 0x00,
-	GEAR_UP = 0x01,
-	GEAR_DOWN = 0x02
-};
-
-enum CanAdresses {
-	CAN_GEAR_UP_SW = 0x00,
-	CAN_GEAR_DOWN_SW = 0x01
-};
-
-const uint16_t GEAR_UP_LONG_CLICK = 2000, GEAR_DOWN_LONG_CLICK = 2000, SW_DELAY = 200;
-
-Gearbox gearbox;
-volatile GearboxState gearbox_state = IDLE;
 
 /* USER CODE END Includes */
 
@@ -84,7 +63,7 @@ void SystemClock_Config(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-CanRxMsgTypeDef can_rx;
+
 /* USER CODE END 0 */
 
 int main(void)
@@ -112,13 +91,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_CAN_Init();
   MX_ADC_Init();
+  MX_CAN_Init();
   MX_TIM2_Init();
 
+
   /* USER CODE BEGIN 2 */
-  hcan.pRxMsg = &can_rx;
-  HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 
   /* USER CODE END 2 */
 
@@ -129,25 +107,9 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-		if( gearbox_state & GEAR_UP) {
-			gearbox.shiftUP();
-			REMOVE_STATE(gearbox_state, GEAR_UP);
-		}
-
-		if( gearbox_state & GEAR_DOWN) {
-			gearbox.shiftDOWN();
-			REMOVE_STATE(gearbox_state, GEAR_DOWN);
-		}
 
   }
   /* USER CODE END 3 */
-
-}
-
-void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *hcan)
-{
-
-
 
 }
 

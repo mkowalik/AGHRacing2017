@@ -64,11 +64,13 @@
 #define GEAR_CUT_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
-
+#ifdef __cplusplus
+ void _Error_Handler(const char *, int);
+#else
 /* USER CODE END Private defines */
 
 void _Error_Handler(char *, int);
-
+#endif
 #define Error_Handler() _Error_Handler(__FILE__, __LINE__)
 
 /**
