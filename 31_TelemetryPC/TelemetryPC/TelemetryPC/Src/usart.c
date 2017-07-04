@@ -47,7 +47,7 @@
 #include "network.h"
 #include "FTDI.h"
 
-extern Network_t * MyNetwork = &network[0];
+extern Network_t * MyNetwork;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart4;
@@ -58,7 +58,7 @@ void MX_USART4_UART_Init(void)
 {
 
   huart4.Instance = USART4;
-  huart4.Init.BaudRate = 115200;
+  huart4.Init.BaudRate = 2000000;
   huart4.Init.WordLength = UART_WORDLENGTH_8B;
   huart4.Init.StopBits = UART_STOPBITS_1;
   huart4.Init.Parity = UART_PARITY_NONE;
@@ -154,7 +154,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 /* USER CODE BEGIN 1 */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 
-	FTDI_payload_t Message;
+	static FTDI_frame_t Message;
 
 	if(huart == &huart4){
 		if(Fifo_PullElement( (Fifo_Handle_t *) &ftdiTxFifo, &Message) == FIFO_OK){
@@ -165,6 +165,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 		}
 		((Network_frame_t *)&Message)->settings.param.range = Network_GetRange(MyNetwork);
 		((Network_frame_t *)&Message)->settings.param.speed = Network_GetDataRate(MyNetwork);
+
 		HAL_UART_Transmit_IT(&huart4, (uint8_t *) &Message, FTDI_MESSAGE_SIZE);
 	}
 
@@ -172,7 +173,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
-	static FTDI_payload_t Message;
+	static FTDI_frame_t Message;
 
 	if(huart == &huart4){
 		Fifo_PushElement( (Fifo_Handle_t *) &ftdiRxFifo, &Message);

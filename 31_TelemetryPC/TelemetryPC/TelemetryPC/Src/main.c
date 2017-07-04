@@ -39,6 +39,7 @@
 #include "main.h"
 #include "stm32f0xx_hal.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -52,7 +53,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-typedef enum {WaitForUSBConnection, WirelessHandler} smStates_t;
+typedef enum {WaitForUSBConnection, WaitForWirelessConnection, WirelessHandler} smStates_t;
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE END PV */
 
@@ -74,11 +75,12 @@ int main(void)
   /* USER CODE BEGIN 1 */
 	smStates_t state;
 
-	uint8_t message[32];
 	uint8_t messageSize;
 
 	CanData_payload_t TxMessage;
 	CanData_payload_t RxMessage;
+
+	uint8_t startChar;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -101,6 +103,7 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI1_Init();
   MX_USART4_UART_Init();
+  MX_TIM7_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -110,21 +113,30 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   state = WaitForUSBConnection;
   FTDI_Init();
-  static const uint8_t nRF24_ADDR[] = { 'A', 'G', 'H' };
-  while(Network_OK != Network_Init(MyNetwork, (uint8_t *) nRF24_ADDR, 3)){}
+  Network_DeviceInit();
+  static uint8_t address[] = { 'A', 'G', 'H'};
+  while(Network_OK != Network_Init(MyNetwork, (uint8_t *) &address, 3)){}
   Network_SetUpClient(MyNetwork);
-  while(Network_Connect(MyNetwork, 100) != Network_OK){
 
-  }
+  HAL_TIM_Base_Start_IT(&htim7);
+	int a;
   while (1){
 
 	//State machine start
 	switch(state){
 
 	case WaitForUSBConnection:
+		HAL_UART_Receive(&huart4, &startChar, 1, HAL_MAX_DELAY);
 		HAL_UART_Transmit_IT(&huart4, TxMessage.payload, 32);
 		HAL_UART_Receive_IT(&huart4, RxMessage.payload, 32);
 		//USB_EstablishConnection();
+		state = WaitForWirelessConnection;
+		break;
+
+	case WaitForWirelessConnection:
+		while(Network_Connect(MyNetwork, 100) != Network_OK){
+			a++;
+		}
 		state = WirelessHandler;
 		break;
 

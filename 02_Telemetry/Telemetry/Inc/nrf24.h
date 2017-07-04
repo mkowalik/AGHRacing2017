@@ -1,5 +1,8 @@
 #ifndef __NRF24_H
 #define __NRF24_H
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 #include "nrf24_hal.h"
 #include "nRF24L01p.h"
@@ -16,45 +19,44 @@ typedef enum
 } nRF24_StatusTypeDef;
 
 // Function prototypes
-nRF24_StatusTypeDef nRF24_Init(uint32_t timeout);
-uint8_t nRF24_Check(void);
+nRF24_StatusTypeDef nRF24_Init(nRF24_Device_t * device, uint32_t timeout);
+uint8_t nRF24_Check(nRF24_Device_t * device);
 
-void nRF24_SetPowerMode(uint8_t mode);
-void nRF24_SetOperationalMode(uint8_t mode);
-nRF24_StatusTypeDef nRF24_SetRFChannel(uint8_t channel);
-nRF24_StatusTypeDef nRF24_SetAutoRetr(nRF24_ardDelay_t ard, uint8_t arc);
-nRF24_StatusTypeDef nRF24_SetAddrWidth(uint8_t addrWidth);
-nRF24_StatusTypeDef nRF24_SetAddr(nRF24_pipe_t pipe, const uint8_t *addr);
-void nRF24_SetTXPower(uint8_t tx_pwr);
-void nRF24_SetDataRate(uint8_t data_rate);
-void nRF24_SetCRCScheme(uint8_t scheme);
-nRF24_StatusTypeDef nRF24_SetRXPipe(nRF24_pipe_t pipe, nRF24_autoAcknowledgment_t aaState, uint8_t payloadLen);
-nRF24_StatusTypeDef nRF24_ClosePipe(nRF24_pipe_t pipe);
-nRF24_StatusTypeDef nRF24_EnableAA(uint8_t pipe);
-void nRF24_DisableAA(uint8_t pipe);
+void nRF24_SetPowerMode(nRF24_Device_t * device, uint8_t mode);
+void nRF24_SetOperationalMode(nRF24_Device_t * device, uint8_t mode);
+nRF24_StatusTypeDef nRF24_SetRFChannel(nRF24_Device_t * device, uint8_t channel);
+nRF24_StatusTypeDef nRF24_SetAutoRetr(nRF24_Device_t * device, nRF24_ardDelay_t ard, uint8_t arc);
+nRF24_StatusTypeDef nRF24_SetAddrWidth(nRF24_Device_t * device, uint8_t addrWidth);
+nRF24_StatusTypeDef nRF24_SetAddr(nRF24_Device_t * device, nRF24_pipe_t pipe, const uint8_t *addr);
+void nRF24_SetTXPower(nRF24_Device_t * device, uint8_t tx_pwr);
+void nRF24_SetDataRate(nRF24_Device_t * device, uint8_t data_rate);
+void nRF24_SetCRCScheme(nRF24_Device_t * device, uint8_t scheme);
+nRF24_StatusTypeDef nRF24_SetRXPipe(nRF24_Device_t * device, nRF24_pipe_t pipe, nRF24_autoAcknowledgment_t aaState, uint8_t payloadLen);
+nRF24_StatusTypeDef nRF24_ClosePipe(nRF24_Device_t * device, nRF24_pipe_t pipe);
+nRF24_StatusTypeDef nRF24_EnableAA(nRF24_Device_t * device, uint8_t pipe);
+void nRF24_DisableAA(nRF24_Device_t * device, uint8_t pipe);
 
-uint8_t nRF24_GetStatus(void);
-uint8_t nRF24_GetIRQFlags(void);
-uint8_t nRF24_GetStatus_RXFIFO(void);
-uint8_t nRF24_GetStatus_TXFIFO(void);
-uint8_t nRF24_GetRXSource(void);
-uint8_t nRF24_GetRetransmitCounters(void);
+uint8_t nRF24_GetStatus(nRF24_Device_t * device);
+uint8_t nRF24_GetIRQFlags(nRF24_Device_t * device);
+uint8_t nRF24_GetStatus_RXFIFO(nRF24_Device_t * device);
+uint8_t nRF24_GetStatus_TXFIFO(nRF24_Device_t * device);
+uint8_t nRF24_GetRXSource(nRF24_Device_t * device);
+uint8_t nRF24_GetRetransmitCounters(nRF24_Device_t * device);
+uint8_t nRf24_ReadRPD(nRF24_Device_t * device);
 
-void nRF24_ResetPLOS(void);
-void nRF24_FlushTX(void);
-void nRF24_FlushRX(void);
-void nRF24_ClearIRQFlags(void);
+void nRF24_ResetPLOS(nRF24_Device_t * device);
+void nRF24_FlushTX(nRF24_Device_t * device);
+void nRF24_FlushRX(nRF24_Device_t * device);
+void nRF24_ClearIRQFlags(nRF24_Device_t * device);
+void nRF24_EnableACKPayload(nRF24_Device_t * device, nRF24_pipe_t pipe);
 
-void nRF24_WritePayload(uint8_t *pBuf, uint8_t length);
-nRF24_RXResult nRF24_ReadPayload(uint8_t *pBuf, uint8_t *length);
-void nRF24_TransmitPacketIRQ(uint8_t *pBuf, uint8_t length);
+void nRF24_WriteACKPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length, nRF24_pipe_t pipe);
+void nRF24_WritePayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length);
+nRF24_RXResult nRF24_ReadPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t *length);
+nRF24_RXResult nRF24_ReadDynamicPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t *length);
+void nRF24_TransmitPacketIRQ(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length);
 
-
-void nRF24_SetUpRx(uint8_t channel, nRF24_DataRate_t nRF24DataRate, uint8_t nRF24_ADDR[], uint8_t addrLength, uint8_t payloadLenght);
-void nRF24_SetUpTx(uint8_t channel, nRF24_DataRate_t nRF24DataRate, uint8_t nRF24_ADDR[], uint8_t addrLength, uint8_t payloadLenght);
-
-#define nRF24_RX_ON()   nRF24_CE_H();
-#define nRF24_RX_OFF()  nRF24_CE_L();
-
-
+#ifdef __cplusplus
+}
+#endif
 #endif // __NRF24_H

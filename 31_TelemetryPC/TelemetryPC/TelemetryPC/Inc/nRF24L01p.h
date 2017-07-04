@@ -71,6 +71,8 @@
 #define nRF24_MASK_TXFIFO          (uint8_t)0x30 // Mask for TX FIFO status bits [5:4] in FIFO_STATUS register
 #define nRF24_MASK_PLOS_CNT        (uint8_t)0xF0 // Mask for PLOS_CNT[7:4] bits in OBSERVE_TX register
 #define nRF24_MASK_ARC_CNT         (uint8_t)0x0F // Mask for ARC_CNT[3:0] bits in OBSERVE_TX register
+#define nRF24_MASK_EN_DPL		   (uint8_t)0x04 // Mask for enabling dynamic payload length
+#define nRF24_MASK_EN_ACK_PAY	   (uint8_t)0x02 // Mask for enabling payload with ack
 
 #define nRF24_TEST_ADDR            "nRF24"
 
