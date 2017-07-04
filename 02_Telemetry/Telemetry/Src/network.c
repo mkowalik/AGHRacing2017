@@ -330,7 +330,7 @@ void Network_InterruptHandler(Network_t * network){
 	Network_frame_t nRF24_payload;
 
 	switch(network->deviceType){
-
+	//testowanie duplexu
 	case Client:
 		if(nRF24_GetStatus_RXFIFO(network->nRF24device) != nRF24_STATUS_RXFIFO_EMPTY){
 			network->rx_res = nRF24_STATUS_RXFIFO_DATA;
