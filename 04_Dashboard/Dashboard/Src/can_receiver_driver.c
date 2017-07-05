@@ -6,12 +6,18 @@
  */
 
 #include "can_receiver_driver.h"
+#include "can.h"
 
 static CanRxMsgTypeDef rx_msg;
 
 static volatile FIFOQueue* pMsgQueue;
 
 uint8_t waitingForInterrupt = 0;
+
+// Overriding weak function from stm32f0xx_hal_can.c file
+void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
+	CAN_ReceiverDriver_receiveITHandler();
+}
 
 static void filtersConfiguration(){
 
@@ -25,18 +31,18 @@ static void filtersConfiguration(){
 
 	filterConfig.FilterNumber = 		0;
 
-	filterConfig.FilterMaskIdLow = 		GEAR_CAN_CHANNEL;
-	filterConfig.FilterMaskIdHigh = 	CLT_OIL_PRESSURE_CAN_CHANNEL;
-	filterConfig.FilterMaskIdLow = 		BATT_VOLTAGE_CAN_CHANNEL;
-	filterConfig.FilterMaskIdHigh = 	FUEL_LEVEL_CAN_CHANNEL;
+	filterConfig.FilterMaskIdLow = 		GEAR_CAN_CHANNEL;				// channel list 0
+	filterConfig.FilterMaskIdHigh = 	CLT_OIL_PRESSURE_CAN_CHANNEL;	// channel list 1
+	filterConfig.FilterMaskIdLow = 		BATT_VOLTAGE_CAN_CHANNEL;		// channel list 2
+	filterConfig.FilterMaskIdHigh = 	FUEL_LEVEL_CAN_CHANNEL;			// channel list 3
 
 
 	HAL_CAN_ConfigFilter(&hcan, &filterConfig);
 
-	// filterConfig keeps previous configuration in unchanged fields
+	// filterConfig keeps previous configuration with unchanged fields
 	filterConfig.FilterNumber = 		1;
 
-	filterConfig.FilterMaskIdLow = 		RPM_CAN_CHANNEL;
+	filterConfig.FilterMaskIdLow = 		RPM_CAN_CHANNEL;				// channel list 4
 	filterConfig.FilterMaskIdHigh = 	0;
 	filterConfig.FilterMaskIdLow = 		0;
 	filterConfig.FilterMaskIdHigh = 	0;
@@ -60,16 +66,15 @@ void CAN_ReceiverDriver_init(volatile FIFOQueue* pMsgQueueArg){
 
 void CAN_ReceiverDriver_receiveITHandler(){
 
-	if (hcan.pRxMsg->IDE != CAN_USED_ID) return; //TODO nie return tylko olej i uruchom ponownie HAL_CAN_Receive_IT
-	if (hcan.pRxMsg->RTR != CAN_RTR_DATA) return; //TODO tu te¿
-
-	if (FIFOQueue_enqueue(pMsgQueue, *(hcan.pRxMsg))==FIFOStatus_OK){
+	if ((hcan.pRxMsg->IDE != CAN_USED_ID) || (hcan.pRxMsg->RTR != CAN_RTR_DATA)) {
+		HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+		waitingForInterrupt = 1;
+	} else if (FIFOQueue_enqueue(pMsgQueue, *(hcan.pRxMsg))==FIFOStatus_OK){
 		HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 		waitingForInterrupt = 1;
 	} else {
 		waitingForInterrupt = 0;
 	}
-
 
 }
 

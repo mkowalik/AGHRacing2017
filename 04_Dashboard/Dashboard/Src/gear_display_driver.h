@@ -14,5 +14,6 @@
 
 void GearDisplay_Driver_init();
 void GearDisplay_Driver_displayGear(uint8_t gear, uint8_t neutral);
+void GearDisplay_Driver_offDisplay();
 
 #endif /* GEAR_DISPLAY_DRIVER_H_ */

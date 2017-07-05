@@ -9,7 +9,7 @@
 #include "segment_display_middleware.h"
 
 void GearDisplay_Driver_init(){
-	SegmentDisplay_Middleware_displayDigit(0, 1);
+	SegmentDisplay_Middleware_offDisplay();
 }
 
 void GearDisplay_Driver_displayGear(uint8_t gear, uint8_t neutral){
@@ -18,4 +18,8 @@ void GearDisplay_Driver_displayGear(uint8_t gear, uint8_t neutral){
 
 	SegmentDisplay_Middleware_displayDigit(gear, neutral);
 
+}
+
+void GearDisplay_Driver_offDisplay(){
+	SegmentDisplay_Middleware_offDisplay();
 }

@@ -132,11 +132,11 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 
 /* USER CODE BEGIN 1 */
 
-void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
-
-	CAN_ReceiverDriver_receiveITHandler();
-
-}
+//void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
+//
+//	CAN_ReceiverDriver_receiveITHandler();
+//
+//}
 
 /* USER CODE END 1 */
 

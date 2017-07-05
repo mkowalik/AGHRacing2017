@@ -35,11 +35,8 @@
 static LedColor_TypeDef RPMLeds_Driver_displayLEDColors[9];
 
 void RPMLeds_Driver_init(){
-	for (uint8_t i=0; i<RPM_LED_NUMBER; i++){
-		RPMLeds_Driver_displayLEDColors[i] = OFF_COLOR;
-	}
 
-	WS2812_Middleware_turnOnLeds(RPMLeds_Driver_displayLEDColors, RPM_LED_NUMBER, RPM_LEDS_CHANNEL);
+	RPMLeds_Driver_offDisplay();
 
 }
 
@@ -65,6 +62,17 @@ void RPMLeds_Driver_displayRPM(uint16_t rpmValue){
 		if (rpmValue>LED_7_VALUE) RPMLeds_Driver_displayLEDColors[7] = LED_7_COLOR;
 		if (rpmValue>LED_8_VALUE) RPMLeds_Driver_displayLEDColors[8] = LED_8_COLOR;
 
+	}
+
+	WS2812_Middleware_turnOnLeds(RPMLeds_Driver_displayLEDColors, RPM_LED_NUMBER, RPM_LEDS_CHANNEL);
+
+}
+
+
+void RPMLeds_Driver_offDisplay(){
+
+	for (uint8_t i=0; i<RPM_LED_NUMBER; i++){
+		RPMLeds_Driver_displayLEDColors[i] = OFF_COLOR;
 	}
 
 	WS2812_Middleware_turnOnLeds(RPMLeds_Driver_displayLEDColors, RPM_LED_NUMBER, RPM_LEDS_CHANNEL);

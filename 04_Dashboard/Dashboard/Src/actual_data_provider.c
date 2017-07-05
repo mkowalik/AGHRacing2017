@@ -9,8 +9,9 @@
 #include "fifo_queue.h"
 #include "can_receiver_driver.h"
 #include "rtc.h"
+#include "main.h"
 
-#define BUFFER_SIZE		256
+#define BUFFER_SIZE		128
 
 static volatile CanRxMsgTypeDef msgTabBuffer[BUFFER_SIZE];
 static RTC_TimeTypeDef msgArrivalTime[BUFFER_SIZE];
@@ -53,12 +54,9 @@ static uint16_t actualDataStorage[DATA_CHANNELS_NUMBER];
 #define GEAR_DIVIDER				1
 #define GEAR_OFFSET					0
 
-
-
 void ActualDataProvider_init(){
 	FIFOQueue_init(&msgQueue, msgTabBuffer, BUFFER_SIZE);
 	CAN_ReceiverDriver_init(&msgQueue);
-	//TODO initialisation of CAN IRQ Handler
 }
 
 RTC_TimeTypeDef ActualDataProvider_getDataArrivalTime(Channel_TypeDef channel){
@@ -158,8 +156,10 @@ uint16_t ActualDataProvider_getOffset(Channel_TypeDef channel){
 
 static void ActualDataProvider_saveData(CanRxMsgTypeDef* pMsg, Channel_TypeDef channel, uint8_t byteOffset, uint8_t byteLength){
 
-	if (((uint8_t) pMsg->DLC) < (byteOffset + byteLength)) return;	//TODO error handling
-	if (pMsg->RTR != CAN_RTR_DATA) return; //TODO error handling
+	if ( ((uint8_t) pMsg->DLC) < (byteOffset + byteLength) ){
+		_Warning_Handler(__FILE__, __LINE__);
+		return;
+	}
 
 	uint16_t dataHigher = pMsg->Data[byteOffset];
 	uint16_t dataLower;

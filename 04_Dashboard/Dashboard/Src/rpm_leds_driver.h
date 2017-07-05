@@ -12,5 +12,6 @@
 
 void RPMLeds_Driver_init();
 void RPMLeds_Driver_displayRPM(uint16_t rpmValue);
+void RPMLeds_Driver_offDisplay();
 
 #endif /* RPM_LEDS_DRIVER_H_ */

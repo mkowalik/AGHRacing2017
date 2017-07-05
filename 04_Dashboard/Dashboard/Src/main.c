@@ -50,6 +50,7 @@
 #include "alert_leds_driver.h"
 #include "fixed_point.h"
 #include "gear_display_driver.h"
+#include "actual_data_provider.h"
 
 /* USER CODE END Includes */
 
@@ -70,7 +71,17 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 
-LedColor_TypeDef colors[] = {RED_COLOR, YELLOW_COLOR, GREEN_COLOR, BLUE_COLOR};
+// checks if time1 is less than time2 for no more than maxDiffSeconds seconds
+uint8_t timeCompare(RTC_TimeTypeDef time1, RTC_TimeTypeDef time2, uint32_t maxDiffSeconds){
+
+	  uint32_t time1Seconds = time1.Hours*60*60 + time1.Minutes*60 + time1.Seconds;
+	  uint32_t time2Seconds = time2.Hours*60*60 + time2.Minutes*60 + time2.Seconds;
+
+	  if (time1Seconds + maxDiffSeconds >= time2Seconds)
+		  return 1;
+	  else
+		  return 0;
+}
 
 /* USER CODE END 0 */
 
@@ -111,8 +122,7 @@ int main(void)
   AlertLeds_Driver_init();
   RPMLeds_Driver_init();
 
-  uint8_t n = 0;
-  uint8_t up = 1;
+  RTC_TimeTypeDef actualTime;
 
   /* USER CODE END 2 */
 
@@ -124,33 +134,67 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-	  //TODO Trzeba zaimplementowac, ze jak dane przyszly dawno temu (np. urzadzenie padlo) to nalezy nic nie wyswietlac
+	  HAL_RTC_GetTime(&hrtc, &actualTime, RTC_FORMAT_BCD);
 
-	  RPMLeds_Driver_displayRPM(8500+(n*500));
-	  AlertLeds_Driver_displayCLT(FixedPoint_constr((n*10)<<12, 1, 1<<12, 0, 12));
-	  AlertLeds_Driver_displayBatt(FixedPoint_constr((n+5)<<12, 1, 1<<12, 0, 12));
-	  AlertLeds_Driver_displayFuel(FixedPoint_constr(n<<12, 1, 1<<12, 0, 12));
-	  AlertLeds_Driver_displayOilPres(FixedPoint_constr(n<<12, 1, 1<<12, 0, 12));
-
-	  GearDisplay_Driver_displayGear(n, n==0);
-
-
-	  HAL_GPIO_TogglePin(LED_DEBUG1_GPIO_Port, LED_DEBUG1_Pin);
-	  HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
-	  HAL_Delay(300);
-
-	  if (n==10) up=0;
-	  if (n==0) {
-		  up=1;
-	  }
-
-	  if (up){
-		  n++;
+	  if (timeCompare(ActualDataProvider_getDataArrivalTime(RPM_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
+		  //assuming no divider, multiplier, offset
+		  RPMLeds_Driver_displayRPM(ActualDataProvider_getValue(RPM_DATA_CHANNEL));
 	  } else {
-		  n--;
+		  RPMLeds_Driver_offDisplay();
 	  }
 
+	  if (timeCompare(ActualDataProvider_getDataArrivalTime(GEAR_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
+		  //assuming no divider, multiplier, offset
+		  GearDisplay_Driver_displayGear(ActualDataProvider_getValue(GEAR_DATA_CHANNEL), ActualDataProvider_getValue(GEAR_DATA_CHANNEL)==0);
+	  } else {
+		  GearDisplay_Driver_offDisplay();
+	  }
 
+	  if (timeCompare(ActualDataProvider_getDataArrivalTime(CLT_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
+		  AlertLeds_Driver_displayCLT(FixedPoint_constr(
+				  ActualDataProvider_getValue(CLT_DATA_CHANNEL),
+				  ActualDataProvider_getDivider(CLT_DATA_CHANNEL),
+				  ActualDataProvider_getMultiplier(CLT_DATA_CHANNEL),
+				  ActualDataProvider_getOffset(CLT_DATA_CHANNEL),
+				  FRACTIONAL_BITS_NUMBER));
+	  } else {
+		  AlertLeds_Driver_offCLT();
+	  }
+
+	  if (timeCompare(ActualDataProvider_getDataArrivalTime(BATT_VOLTAGE_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
+		  AlertLeds_Driver_displayBatt(FixedPoint_constr(
+				  ActualDataProvider_getValue(BATT_VOLTAGE_DATA_CHANNEL),
+				  ActualDataProvider_getDivider(BATT_VOLTAGE_DATA_CHANNEL),
+				  ActualDataProvider_getMultiplier(BATT_VOLTAGE_DATA_CHANNEL),
+				  ActualDataProvider_getOffset(BATT_VOLTAGE_DATA_CHANNEL),
+				  FRACTIONAL_BITS_NUMBER));
+	  } else {
+		  AlertLeds_Driver_offBatt();
+	  }
+
+	  if (timeCompare(ActualDataProvider_getDataArrivalTime(FUEL_LEVEL_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
+		  AlertLeds_Driver_displayFuel(FixedPoint_constr(
+				  ActualDataProvider_getValue(FUEL_LEVEL_DATA_CHANNEL),
+				  ActualDataProvider_getDivider(FUEL_LEVEL_DATA_CHANNEL),
+				  ActualDataProvider_getMultiplier(FUEL_LEVEL_DATA_CHANNEL),
+				  ActualDataProvider_getOffset(FUEL_LEVEL_DATA_CHANNEL),
+				  FRACTIONAL_BITS_NUMBER));
+	  } else {
+		  AlertLeds_Driver_offFuel();
+	  }
+
+	  if (timeCompare(ActualDataProvider_getDataArrivalTime(OIL_PRESSURE_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
+		  AlertLeds_Driver_displayOilPres(FixedPoint_constr(
+				  ActualDataProvider_getValue(OIL_PRESSURE_DATA_CHANNEL),
+				  ActualDataProvider_getDivider(OIL_PRESSURE_DATA_CHANNEL),
+				  ActualDataProvider_getMultiplier(OIL_PRESSURE_DATA_CHANNEL),
+				  ActualDataProvider_getOffset(OIL_PRESSURE_DATA_CHANNEL),
+				  FRACTIONAL_BITS_NUMBER));
+	  } else {
+		  AlertLeds_Driver_offOilPres();
+	  }
+
+	  HAL_Delay(25);
 
   }
   /* USER CODE END 3 */
@@ -214,6 +258,11 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void _Warning_Handler(char * file, int line)
+{
+	//TODO implementation
+}
 
 /* USER CODE END 4 */
 

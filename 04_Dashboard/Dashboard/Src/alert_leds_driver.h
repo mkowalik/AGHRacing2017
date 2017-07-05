@@ -12,9 +12,17 @@
 #include "fixed_point.h"
 
 void AlertLeds_Driver_init();
+
+void AlertLeds_Driver_offCLT();
 void AlertLeds_Driver_displayCLT(FixedPoint cltValue);
+
+void AlertLeds_Driver_offBatt();
 void AlertLeds_Driver_displayBatt(FixedPoint battValue);
+
+void AlertLeds_Driver_offFuel();
 void AlertLeds_Driver_displayFuel(FixedPoint fuelValue);
+
+void AlertLeds_Driver_offOilPres();
 void AlertLeds_Driver_displayOilPres(FixedPoint oilPresValue);
 
 

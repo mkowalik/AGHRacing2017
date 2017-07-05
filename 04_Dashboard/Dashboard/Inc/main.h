@@ -63,6 +63,11 @@
 
 /* USER CODE BEGIN Private defines */
 
+#define		CHANNEL_TIMEOUT			2
+#define		FRACTIONAL_BITS_NUMBER	12
+
+void _Warning_Handler(char * file, int line);
+
 /* USER CODE END Private defines */
 
 void _Error_Handler(char *, int);

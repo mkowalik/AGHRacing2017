@@ -39,6 +39,13 @@ void AlertLeds_Driver_init(){
 	WS2812_Middleware_turnOnLeds(alertColors, ALERT_LEDS_NUMBER, ALERT_LEDS_CHANNEL);
 }
 
+void AlertLeds_Driver_offCLT(){
+
+	(*cltColor) = OFF_COLOR;
+	WS2812_Middleware_turnOnLeds(alertColors, ALERT_LEDS_NUMBER, ALERT_LEDS_CHANNEL);
+
+}
+
 void AlertLeds_Driver_displayCLT(FixedPoint cltValue){
 
 	(*cltColor) = OFF_COLOR;
@@ -56,6 +63,13 @@ void AlertLeds_Driver_displayCLT(FixedPoint cltValue){
 	WS2812_Middleware_turnOnLeds(alertColors, ALERT_LEDS_NUMBER, ALERT_LEDS_CHANNEL);
 }
 
+void AlertLeds_Driver_offBatt(){
+
+	(*battColor) = OFF_COLOR;
+	WS2812_Middleware_turnOnLeds(alertColors, ALERT_LEDS_NUMBER, ALERT_LEDS_CHANNEL);
+
+}
+
 void AlertLeds_Driver_displayBatt(FixedPoint battValue){
 
 	(*battColor) = OFF_COLOR;
@@ -70,6 +84,13 @@ void AlertLeds_Driver_displayBatt(FixedPoint battValue){
 
 }
 
+void AlertLeds_Driver_offFuel(){
+
+	(*fuelColor) = OFF_COLOR;
+	WS2812_Middleware_turnOnLeds(alertColors, ALERT_LEDS_NUMBER, ALERT_LEDS_CHANNEL);
+
+}
+
 void AlertLeds_Driver_displayFuel(FixedPoint fuelValue){
 
 	(*fuelColor) = OFF_COLOR;
@@ -80,6 +101,13 @@ void AlertLeds_Driver_displayFuel(FixedPoint fuelValue){
 		(*fuelColor) = YELLOW_COLOR;
 	}
 
+	WS2812_Middleware_turnOnLeds(alertColors, ALERT_LEDS_NUMBER, ALERT_LEDS_CHANNEL);
+
+}
+
+void AlertLeds_Driver_offOilPres(){
+
+	(*oilPresColor) = OFF_COLOR;
 	WS2812_Middleware_turnOnLeds(alertColors, ALERT_LEDS_NUMBER, ALERT_LEDS_CHANNEL);
 
 }

@@ -18,8 +18,8 @@ static void FIFOQueue_sizeReduction(volatile FIFOQueue* self){
 
 		self->sizeReductionInPorgress = 0;
 
-		self->firstElementOld -= self->size;
-		self->afterLastElementOld -= self->size;
+		self->firstElementOld = self->firstElement;
+		self->afterLastElementOld = self->afterLastElement;
 
 	}
 }
@@ -32,7 +32,7 @@ void FIFOQueue_init(volatile FIFOQueue* self, volatile ELEMENT_TYPE* pTabPtrArg,
 
 	self->sizeReductionInPorgress = 0;
 	self->firstElementOld = 0;
-	delf->afterLastElementOld = 0;
+	self->afterLastElementOld = 0;
 }
 
 FIFOStatus FIFOQueue_enqueue(volatile FIFOQueue* pSelf, ELEMENT_TYPE element){
