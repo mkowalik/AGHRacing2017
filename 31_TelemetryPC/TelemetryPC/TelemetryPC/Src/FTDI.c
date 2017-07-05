@@ -9,15 +9,15 @@
 
 #define FTDI_FIFO_SIZE		100
 
-static volatile FTDI_payload_t ftdiTxFifoArray[FTDI_FIFO_SIZE];
-static volatile FTDI_payload_t ftdiRxFifoArray[FTDI_FIFO_SIZE];
+static volatile FTDI_data_t ftdiTxFifoArray[FTDI_FIFO_SIZE];
+static volatile FTDI_data_t ftdiRxFifoArray[FTDI_FIFO_SIZE];
 
 volatile Fifo_Handle_t ftdiTxFifo;
 volatile Fifo_Handle_t ftdiRxFifo;
 
 void FTDI_Init(void){
-	ftdiTxFifo = Fifo_Init( (void *) ftdiTxFifoArray, sizeof(FTDI_payload_t), FTDI_FIFO_SIZE);
-	ftdiRxFifo = Fifo_Init( (void *) ftdiRxFifoArray, sizeof(FTDI_payload_t), FTDI_FIFO_SIZE);
+	ftdiTxFifo = Fifo_Init( (void *) ftdiTxFifoArray, sizeof(FTDI_data_t), FTDI_FIFO_SIZE);
+	ftdiRxFifo = Fifo_Init( (void *) ftdiRxFifoArray, sizeof(FTDI_data_t), FTDI_FIFO_SIZE);
 }
 
 FTDI_StatusTypeDef FTDI_Receive(uint8_t * data, uint8_t * dataLen){

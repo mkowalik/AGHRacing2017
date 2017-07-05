@@ -42,14 +42,18 @@ uint8_t nRF24_GetStatus_RXFIFO(nRF24_Device_t * device);
 uint8_t nRF24_GetStatus_TXFIFO(nRF24_Device_t * device);
 uint8_t nRF24_GetRXSource(nRF24_Device_t * device);
 uint8_t nRF24_GetRetransmitCounters(nRF24_Device_t * device);
+uint8_t nRf24_ReadRPD(nRF24_Device_t * device);
 
 void nRF24_ResetPLOS(nRF24_Device_t * device);
 void nRF24_FlushTX(nRF24_Device_t * device);
 void nRF24_FlushRX(nRF24_Device_t * device);
 void nRF24_ClearIRQFlags(nRF24_Device_t * device);
+void nRF24_EnableACKPayload(nRF24_Device_t * device, nRF24_pipe_t pipe);
 
+void nRF24_WriteACKPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length, nRF24_pipe_t pipe);
 void nRF24_WritePayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length);
 nRF24_RXResult nRF24_ReadPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t *length);
+nRF24_RXResult nRF24_ReadDynamicPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t *length);
 void nRF24_TransmitPacketIRQ(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length);
 
 #ifdef __cplusplus

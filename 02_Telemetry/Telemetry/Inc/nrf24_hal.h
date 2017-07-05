@@ -1,5 +1,8 @@
 #ifndef __NRF24_HAL_H
 #define __NRF24_HAL_H
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 // Hardware abstraction layer for NRF24L01+ transceiver (hardware depended functions)
 // GPIO pins definition
@@ -11,22 +14,33 @@
 #include "spi.h"
 #include "main.h"
 
-// SPI port peripheral
-#define nRF24_SPI_HANDLE           &hspi1
+#define NRF24_DEVICES_NUMBER	1
 
-// CE (chip enable) pin (PB11)
-#define nRF24_CE_PORT              nRF24_CE_GPIO_Port
-#define nRF24_CE_PIN               nRF24_CE_Pin
-#define nRF24_CE_L()               ((nRF24_CE_PORT)->BRR = (nRF24_CE_PIN))
-#define nRF24_CE_H()               ((nRF24_CE_PORT)->BSRR = (nRF24_CE_PIN))
+typedef struct nRF24_Device{
+	SPI_HandleTypeDef * SPIHandle;
+	GPIO_TypeDef * CE_GPIO_Port;
+	uint16_t CE_Pin;
+	GPIO_TypeDef * CSN_GPIO_Port;
+	uint16_t CSN_Pin;
+	GPIO_TypeDef * IRQ_GPIO_Port;
+	uint16_t IRQ_Pin;
+	int8_t InterruptNumber;
+} nRF24_Device_t;
 
-// CSN (chip select negative) pin (PB12)
-#define nRF24_CSN_PORT             nRF24_CSN_GPIO_Port
-#define nRF24_CSN_PIN              nRF24_CSN_Pin
-#define nRF24_CSN_L()              ((nRF24_CSN_PORT)->BRR = (nRF24_CSN_PIN))
-#define nRF24_CSN_H()              ((nRF24_CSN_PORT)->BSRR = (nRF24_CSN_PIN))
+nRF24_Device_t nRF24Devices[NRF24_DEVICES_NUMBER];
+
+#define nRF24_CE_L(__device)               ((__device->CE_GPIO_Port)->BRR = (__device->CE_Pin))
+#define nRF24_CE_H(__device)               ((__device->CE_GPIO_Port)->BSRR = (__device->CE_Pin))
+#define nRF24_CSN_L(__device)              ((__device->CSN_GPIO_Port)->BRR = (__device->CSN_Pin))
+#define nRF24_CSN_H(__device)              ((__device->CSN_GPIO_Port)->BSRR = (__device->CSN_Pin))
+#define nRF24_ENA_IRQ(__device)				(HAL_NVIC_EnableIRQ((IRQn_Type) __device->InterruptNumber))
+#define nRF24_DIS_IRQ(__device)				(HAL_NVIC_DisableIRQ((IRQn_Type) __device->InterruptNumber))
 
 // Function prototypes
-uint8_t nRF24_LL_RW(uint8_t data);
+uint8_t nRF24_LL_RW(nRF24_Device_t * device, uint8_t data);
+void nRF24_DevicesInit(void);
 
+#ifdef __cplusplus
+}
+#endif
 #endif // __NRF24_HAL_H

@@ -29,7 +29,7 @@ typedef union{
 
 			struct control{
 				uint8_t	filterNum	: 6;
-				uint8_t reserved	: 3;
+				uint8_t reserved	: 2;
 				struct filter{
 				    uint8_t IDl;
 				    uint8_t IDh			: 3;

@@ -4,6 +4,11 @@
   * Description        : This file provides code for the configuration
   *                      of all used GPIO pins.
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -100,8 +105,11 @@ void MX_GPIO_Init(void)
 /* USER CODE BEGIN 2 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 
-	if(GPIO_Pin == nRF24_IRQ_Pin){
-		Network_InterruptHandler();
+	for(uint8_t networkCtr = 0; networkCtr < NETWORK_NUMBER; networkCtr++){
+		if(GPIO_Pin == network[networkCtr].nRF24device->IRQ_Pin){
+			Network_InterruptHandler(&network[networkCtr]);
+			break;
+		}
 	}
 }
 /* USER CODE END 2 */

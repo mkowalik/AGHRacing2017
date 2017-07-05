@@ -3,6 +3,11 @@
   * File Name          : main.c
   * Description        : Main program body
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -34,6 +39,7 @@
 #include "main.h"
 #include "stm32f0xx_hal.h"
 #include "spi.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
@@ -50,7 +56,6 @@ typedef enum {WaitForUSBConnection, WirelessHandler} smStates_t;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -58,7 +63,7 @@ void Error_Handler(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-
+Network_t * MyNetwork = &network[0];
 /* USER CODE END 0 */
 
 int main(void)
@@ -75,12 +80,21 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
   /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_SPI1_Init();
+  MX_TIM7_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -88,30 +102,34 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  Network_t network;
-  static const uint8_t nRF24_ADDR[] = { 'A', 'G', 'H' };
-  while(Network_OK != Network_Init(&network, (uint8_t *) nRF24_ADDR, 3)){}
-  Network_SetUpServer(&network);
+  Network_DeviceInit();
+  static uint8_t address[] = { 'A', 'G', 'H'};
+  while(Network_OK != Network_Init(MyNetwork, (uint8_t *) &address, 3)){}
+  Network_SetUpServer(MyNetwork);
+  HAL_TIM_Base_Start_IT(&htim7);
   int i = 0;
   while (1){
-	  HAL_Delay(100);
+	  HAL_Delay(10);
 
 	  TxMessage.message.header.canFrames = 3;
 	  TxMessage.message.header.control = 0;
 
 	  TxMessage.message.data.can[0].IDl = 1;
+	  TxMessage.message.data.can[0].IDh = 0;
 	  TxMessage.message.data.can[0].dataLength = 1;
 	  TxMessage.message.data.can[0].data[0] = i;
 
 	  TxMessage.message.data.can[1].IDl = 2;
+	  TxMessage.message.data.can[1].IDh = 0;
 	  TxMessage.message.data.can[1].dataLength = 1;
-	  TxMessage.message.data.can[1].data[1] = i;
+	  TxMessage.message.data.can[1].data[0] = i;
 
 	  TxMessage.message.data.can[2].IDl = 3;
+	  TxMessage.message.data.can[2].IDh = 0;
 	  TxMessage.message.data.can[2].dataLength = 1;
-	  TxMessage.message.data.can[2].data[2] = i;
+	  TxMessage.message.data.can[2].data[0] = i;
 
-	  Network_Send(TxMessage.payload, dataLen);
+	  Network_Send(MyNetwork, TxMessage.payload, dataLen);
 	  i++;
   /* USER CODE END WHILE */
 
@@ -141,7 +159,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Initializes the CPU, AHB and APB busses clocks 
@@ -154,7 +172,7 @@ void SystemClock_Config(void)
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Enables the Clock Security System 
@@ -182,14 +200,14 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void Error_Handler(void)
+void _Error_Handler(char * file, int line)
 {
-  /* USER CODE BEGIN Error_Handler */
+  /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
   }
-  /* USER CODE END Error_Handler */ 
+  /* USER CODE END Error_Handler_Debug */ 
 }
 
 #ifdef USE_FULL_ASSERT

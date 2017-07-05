@@ -65,17 +65,6 @@ typedef struct{
 
 } packetLostStat_t;
 
-typedef struct{
-	Network_DR_t dataRate;
-	uint8_t channel;
-	uint8_t deviceAddress[MAX_ADDR_LEN];
-	uint8_t deviceAddressLen;
-	nRF24_Device_t * nRF24device;
-	DeviceType_t deviceType;
-	uint8_t ID;
-	volatile packetLostStat_t packetLostStat;
-} Network_t;
-
 typedef union{
 
 	struct{
@@ -92,6 +81,26 @@ typedef union{
 	} param;
 
 } Network_settings_t;
+
+typedef struct{
+	Network_DR_t dataRate;
+	Network_DR_t setDataRate;
+	Network_Range_t range;
+	uint8_t channel;
+	uint8_t deviceAddress[MAX_ADDR_LEN];
+	uint8_t deviceAddressLen;
+	nRF24_Device_t * nRF24device;
+	DeviceType_t deviceType;
+	uint8_t ID;
+	volatile packetLostStat_t packetLostStat;
+	volatile Network_settings_t settings;
+	volatile uint8_t payload_length;
+	volatile uint8_t txReceived;
+	volatile uint8_t rxReceived;
+	volatile nRF24_TXResult tx_res;
+	volatile nRF24_RXResult pipe;
+	volatile nRF24_STATUS_RXFIFO_t rx_res;
+} Network_t;
 
 typedef struct{
 	uint8_t data[31];
@@ -121,6 +130,7 @@ uint8_t Network_GetChannel(Network_t * network);
 Network_Range_t Network_GetRange(Network_t * network);
 
 void Network_InterruptHandler(Network_t * network);
+void Network_TimerInterruptHandler(Network_t * network);
 
 #ifdef __cplusplus
 }

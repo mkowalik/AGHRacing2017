@@ -25,7 +25,11 @@ typedef enum{
 
 typedef struct{
 	uint8_t data[FTDI_MESSAGE_SIZE];
-} FTDI_payload_t;
+} FTDI_frame_t;
+
+typedef struct{
+	uint8_t data[31];
+} FTDI_data_t;
 
 extern volatile Fifo_Handle_t ftdiTxFifo;
 extern volatile Fifo_Handle_t ftdiRxFifo;

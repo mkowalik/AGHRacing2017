@@ -85,6 +85,8 @@ nRF24_StatusTypeDef nRF24_Init(nRF24_Device_t * device, uint32_t timeout) {
 
 	uint32_t tickstart = HAL_GetTick();
 
+	nRF24_DevicesInit();
+
 	while(nRF24_OK != nRF24_Check(device)){
 		if((HAL_GetTick()-tickstart) > timeout){
 			return nRF24_TIMEOUT;
@@ -326,11 +328,33 @@ void nRF24_SetDataRate(nRF24_Device_t * device, nRF24_DataRate_t dataRate) {
 	nRF24_WriteReg(device, nRF24_REG_RF_SETUP, reg);
 }
 
+void nRF24_EnableDynamicPayload(nRF24_Device_t * device, nRF24_pipe_t pipe){
+	uint8_t reg;
+
+	reg = nRF24_ReadReg(device, nRF24_REG_FEATURE);
+	reg |=  nRF24_MASK_EN_DPL;
+	nRF24_WriteReg(device, nRF24_REG_FEATURE, reg);
+
+	reg = nRF24_ReadReg(device, nRF24_REG_DYNPD);
+	reg |=  (1 << pipe);
+	nRF24_WriteReg(device, nRF24_REG_DYNPD, reg);
+}
+
+void nRF24_EnableACKPayload(nRF24_Device_t * device, nRF24_pipe_t pipe){
+	uint8_t reg;
+
+	nRF24_EnableDynamicPayload(device, pipe);
+
+	reg = nRF24_ReadReg(device, nRF24_REG_FEATURE);
+	reg |=  nRF24_MASK_EN_ACK_PAY;
+	nRF24_WriteReg(device, nRF24_REG_FEATURE, reg);
+}
+
 /**
   * @brief  Configure a specified RX pipe.
   * @param	pipe: number of the RX pipe, value from 0 to 5.
   * @param	aaState: state of auto acknowledgment, value of nRF24_autoAcknowledgment_t.
-  * @param	payloadLen: payload length in bytes.
+  * @param	payloadLen: payload length in bytes, if 0 payload is set to dynamic.
   * @retval	nRF24 status.
   */
 nRF24_StatusTypeDef nRF24_SetRXPipe(nRF24_Device_t * device, nRF24_pipe_t pipe, nRF24_autoAcknowledgment_t aaState, uint8_t payloadLen) {
@@ -518,6 +542,9 @@ void nRF24_WritePayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length) 
 	nRF24_WriteMBReg(device, nRF24_CMD_W_TX_PAYLOAD, pBuf, length);
 }
 
+void nRF24_WriteACKPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length, nRF24_pipe_t pipe) {
+	nRF24_WriteMBReg(device, nRF24_CMD_W_ACK_PAYLOAD | (pipe), pBuf, length);
+}
 /**
   * @brief  Read top level payload available in the RX FIFO.
   * @param	pBuf: pointer to the buffer to store a payload data.
@@ -535,10 +562,39 @@ nRF24_RXResult nRF24_ReadPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t
 	// RX FIFO empty?
 	if (pipe < 6) {
 		// Get payload length
+
 		*length = nRF24_ReadReg(device, nRF24_RX_PW_PIPE[pipe]);
 
 		// Read a payload from the RX FIFO
 		if (*length) {
+			nRF24_ReadMBReg(device, nRF24_CMD_R_RX_PAYLOAD, pBuf, *length);
+		}
+
+
+		return ((nRF24_RXResult)pipe);
+	}
+
+	// The RX FIFO is empty
+	*length = 0;
+
+	return nRF24_RX_EMPTY;
+}
+
+nRF24_RXResult nRF24_ReadDynamicPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t *length) {
+	uint8_t pipe;
+
+	// Extract a payload pipe number from the STATUS register
+	pipe = (nRF24_ReadReg(device, nRF24_REG_STATUS) & nRF24_MASK_RX_P_NO) >> 1;
+
+	// RX FIFO empty?
+	if (pipe < 6) {
+		// Get payload length
+		nRF24_ReadMBReg(device, nRF24_CMD_R_RX_PL_WID, length, 1);
+		if(*length > 32){
+			nRF24_FlushRX(device);
+			return nRF24_RX_EMPTY;
+		}
+		else if(*length){
 			nRF24_ReadMBReg(device, nRF24_CMD_R_RX_PAYLOAD, pBuf, *length);
 		}
 
@@ -549,6 +605,14 @@ nRF24_RXResult nRF24_ReadPayload(nRF24_Device_t * device, uint8_t *pBuf, uint8_t
 	*length = 0;
 
 	return nRF24_RX_EMPTY;
+}
+
+uint8_t nRf24_ReadRPD(nRF24_Device_t * device){
+	uint8_t reg;
+
+	reg = nRF24_ReadReg(device, nRF24_REG_RPD);
+	reg = reg & 0x01;
+	return reg;
 }
 
 void nRF24_TransmitPacketIRQ(nRF24_Device_t * device, uint8_t *pBuf, uint8_t length){
