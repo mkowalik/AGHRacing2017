@@ -7,22 +7,41 @@
 
 #include "fifo_queue.h"
 
+static void FIFOQueue_sizeReduction(volatile FIFOQueue* self){
+
+	if ((self->firstElement) >= (self->size)) {
+
+		self->sizeReductionInPorgress = 1;
+
+		self->firstElement -= self->size;
+		self->afterLastElement -= self->size;
+
+		self->sizeReductionInPorgress = 0;
+
+		self->firstElementOld -= self->size;
+		self->afterLastElementOld -= self->size;
+
+	}
+}
+
 void FIFOQueue_init(volatile FIFOQueue* self, volatile ELEMENT_TYPE* pTabPtrArg, uint16_t size){
 	self->pTabPtr = pTabPtrArg;
 	self->size = size;
 	self->firstElement = 0;
-	self->arterLastElement = 0;
+	self->afterLastElement = 0;
+
+	self->sizeReductionInPorgress = 0;
+	self->firstElementOld = 0;
+	delf->afterLastElementOld = 0;
 }
 
-FIFOStatus FIFOQueue_enqueue(volatile FIFOQueue* self, ELEMENT_TYPE element){
+FIFOStatus FIFOQueue_enqueue(volatile FIFOQueue* pSelf, ELEMENT_TYPE element){
 
-	//TODO prawdopodobnie sie wysypie jak bedzie uzywane w przerwaniu, a bedzie
+	if (FIFOQueue_full(pSelf)) return FIFOStatus_Full;
 
-	if ((self->arterLastElement) - (self->firstElement) >= self->size) return FIFOStatus_Full;
+	uint16_t index = ((pSelf->afterLastElement)++) % (pSelf->size); // Notice, incrementing afterLastElementValue
 
-	uint16_t index = ((self->arterLastElement)++) % (self->size); // Notice, incrementing afgterLastElementValue
-
-	self->pTabPtr[index] = element;
+	pSelf->pTabPtr[index] = element;
 
 	return FIFOStatus_OK;
 
@@ -34,10 +53,7 @@ FIFOStatus FIFOQueue_dequeue(volatile FIFOQueue* self, ELEMENT_TYPE* pRetElement
 
 	ELEMENT_TYPE ret = self->pTabPtr[((self->firstElement)++) % (self->size)];	//Notice, incrementing firstElement value
 
-	if ((self->firstElement) >= (self->size)) {
-		self->firstElement -= self->size;
-		self->arterLastElement -= self->size;
-	}
+	FIFOQueue_sizeReduction(self);
 
 	(*pRetElement) = ret;
 
@@ -46,7 +62,10 @@ FIFOStatus FIFOQueue_dequeue(volatile FIFOQueue* self, ELEMENT_TYPE* pRetElement
 
 uint16_t FIFOQueue_elementsNumber(volatile FIFOQueue* self){
 
-	return self->arterLastElement - self->firstElement;
+	if (self->sizeReductionInPorgress)
+		return self->afterLastElementOld - self->firstElementOld;
+	else
+		return self->afterLastElement - self->firstElement;
 
 }
 

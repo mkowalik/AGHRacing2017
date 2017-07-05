@@ -23,7 +23,12 @@ typedef struct {
 	volatile ELEMENT_TYPE* pTabPtr;
 	uint16_t size;
 	volatile uint16_t firstElement;
-	volatile uint16_t arterLastElement;
+	volatile uint16_t afterLastElement;
+
+	// Values below used only when sizeReduction function in progress and interrupt occours
+	volatile uint8_t sizeReductionInPorgress;
+	volatile uint16_t firstElementOld;
+	volatile uint16_t afterLastElementOld;
 } FIFOQueue;
 
 void FIFOQueue_init(volatile FIFOQueue* self, volatile ELEMENT_TYPE* pTabArg, uint16_t size);

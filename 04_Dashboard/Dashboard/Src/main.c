@@ -124,6 +124,8 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
+	  //TODO Trzeba zaimplementowac, ze jak dane przyszly dawno temu (np. urzadzenie padlo) to nalezy nic nie wyswietlac
+
 	  RPMLeds_Driver_displayRPM(8500+(n*500));
 	  AlertLeds_Driver_displayCLT(FixedPoint_constr((n*10)<<12, 1, 1<<12, 0, 12));
 	  AlertLeds_Driver_displayBatt(FixedPoint_constr((n+5)<<12, 1, 1<<12, 0, 12));
