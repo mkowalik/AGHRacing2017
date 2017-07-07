@@ -17,8 +17,8 @@
 #define BATT_YELLOW_ALERT		((FixedPoint){45056, 12})	//11 Volts
 #define BATT_RED_ALERT			((FixedPoint){40960, 12})	//10 Volts
 
-#define FUEL_YELLOW_ALERT		((FixedPoint){12288, 12})	//3 liters
-#define FUEL_RED_ALERT			((FixedPoint){8192, 12})	//2 liters
+#define FUEL_YELLOW_ALERT		((FixedPoint){122880, 12})	//30 percent
+#define FUEL_RED_ALERT			((FixedPoint){61440, 12})	//15 percent
 
 #define OIL_PRES_YELLOW_ALERT	((FixedPoint){12288, 12})	//3 bars???
 #define OIL_PRES_RED_ALERT		((FixedPoint){8192, 12})	//2 bars???

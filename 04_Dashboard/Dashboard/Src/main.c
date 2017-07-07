@@ -51,6 +51,7 @@
 #include "fixed_point.h"
 #include "gear_display_driver.h"
 #include "actual_data_provider.h"
+#include "can_receiver_driver.h"
 
 /* USER CODE END Includes */
 
@@ -67,10 +68,6 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
-/* USER CODE END PFP */
-
-/* USER CODE BEGIN 0 */
-
 // checks if time1 is less than time2 for no more than maxDiffSeconds seconds
 uint8_t timeCompare(RTC_TimeTypeDef time1, RTC_TimeTypeDef time2, uint32_t maxDiffSeconds){
 
@@ -82,6 +79,13 @@ uint8_t timeCompare(RTC_TimeTypeDef time1, RTC_TimeTypeDef time2, uint32_t maxDi
 	  else
 		  return 0;
 }
+
+/* USER CODE END PFP */
+
+/* USER CODE BEGIN 0 */
+
+volatile RTC_TimeTypeDef actualTime;
+volatile RTC_DateTypeDef dummyDate;
 
 /* USER CODE END 0 */
 
@@ -122,7 +126,18 @@ int main(void)
   AlertLeds_Driver_init();
   RPMLeds_Driver_init();
 
-  RTC_TimeTypeDef actualTime;
+  GearDisplay_Driver_init();
+
+  ActualDataProvider_init();
+  actualTime.Hours = 0;
+  actualTime.Minutes = 0;
+  actualTime.Seconds = 0;
+  actualTime.TimeFormat = RTC_HOURFORMAT12_AM;
+  actualTime.SubSeconds = 0;
+  actualTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+
+  HAL_RTC_SetTime(&hrtc, (RTC_TimeTypeDef*)&actualTime, RTC_FORMAT_BIN);
+  HAL_RTCStateTypeDef srtc = HAL_RTC_GetState(&hrtc);
 
   /* USER CODE END 2 */
 
@@ -134,7 +149,11 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-	  HAL_RTC_GetTime(&hrtc, &actualTime, RTC_FORMAT_BCD);
+	  HAL_RTC_GetTime(&hrtc, (RTC_TimeTypeDef*)&actualTime, RTC_FORMAT_BIN);
+	  HAL_RTC_GetDate(&hrtc, (RTC_DateTypeDef*)&dummyDate, RTC_FORMAT_BIN);
+
+	  ActualDataProvider_thread();
+
 
 	  if (timeCompare(ActualDataProvider_getDataArrivalTime(RPM_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
 		  //assuming no divider, multiplier, offset
@@ -152,7 +171,7 @@ int main(void)
 
 	  if (timeCompare(ActualDataProvider_getDataArrivalTime(CLT_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
 		  AlertLeds_Driver_displayCLT(FixedPoint_constr(
-				  ActualDataProvider_getValue(CLT_DATA_CHANNEL),
+				  (int16_t)ActualDataProvider_getValue(CLT_DATA_CHANNEL),
 				  ActualDataProvider_getDivider(CLT_DATA_CHANNEL),
 				  ActualDataProvider_getMultiplier(CLT_DATA_CHANNEL),
 				  ActualDataProvider_getOffset(CLT_DATA_CHANNEL),
@@ -194,7 +213,7 @@ int main(void)
 		  AlertLeds_Driver_offOilPres();
 	  }
 
-	  HAL_Delay(25);
+	  HAL_Delay(50);
 
   }
   /* USER CODE END 3 */

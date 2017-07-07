@@ -42,6 +42,8 @@ void RPMLeds_Driver_init(){
 
 void RPMLeds_Driver_displayRPM(uint16_t rpmValue){
 
+	//TODO wysylamy sygnal do WS2812 tylko gdy potrzeba
+
 	if (rpmValue>=LED_ALL_VALUE){
 		for (uint8_t i=0; i<RPM_LED_NUMBER; i++){
 			RPMLeds_Driver_displayLEDColors[i] = RED_COLOR;

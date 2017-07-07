@@ -67,7 +67,7 @@ void WS2812_Middleware_init(){
 
 void WS2812_Middleware_turnOnLeds(LedColor_TypeDef* ledColors, uint8_t size, uint8_t channel) {
 
-	WS2812_Middleware_sendReset(channel);
+
 
 	for (uint8_t i=0; i<size; i++){
 		switch(ledColors[i]){
@@ -92,6 +92,7 @@ void WS2812_Middleware_turnOnLeds(LedColor_TypeDef* ledColors, uint8_t size, uin
 		}
 	}
 
+	WS2812_Middleware_sendReset(channel);
 	SPI_MuxDriver_TransmitDataNoLatch(WS2812_toSendTab, size * WS2812_COLOR_SIZE, channel);
 
 }

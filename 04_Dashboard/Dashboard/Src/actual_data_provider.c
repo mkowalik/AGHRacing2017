@@ -11,12 +11,13 @@
 #include "rtc.h"
 #include "main.h"
 
-#define BUFFER_SIZE		128
+#define BUFFER_SIZE		64
 
 static volatile CanRxMsgTypeDef msgTabBuffer[BUFFER_SIZE];
-static RTC_TimeTypeDef msgArrivalTime[BUFFER_SIZE];
+static volatile RTC_TimeTypeDef msgArrivalTime[BUFFER_SIZE];
 static volatile FIFOQueue msgQueue;
-static uint16_t actualDataStorage[DATA_CHANNELS_NUMBER];
+static volatile uint16_t actualDataStorage[DATA_CHANNELS_NUMBER];
+static volatile RTC_DateTypeDef dummyDate;
 
 #define RPM_CAN_BYTE_OFFSET		0
 #define RPM_CAN_BYTE_LENGTH		2
@@ -38,14 +39,14 @@ static uint16_t actualDataStorage[DATA_CHANNELS_NUMBER];
 
 #define OIL_PRESSURE_CAN_BYTE_OFFSET		4
 #define OIL_PRESSURE_CAN_BYTE_LENGTH		1
-#define OIL_PRESSURE_MULTIPLIER				1
-#define OIL_PRESSURE_DIVIDER				16
+#define OIL_PRESSURE_MULTIPLIER				16
+#define OIL_PRESSURE_DIVIDER				1
 #define OIL_PRESSURE_OFFSET					0
 
 #define BATT_VOLTAGE_CAN_BYTE_OFFSET		2
 #define BATT_VOLTAGE_CAN_BYTE_LENGTH		2
-#define BATT_VOLTAGE_MULTIPLIER				1
-#define BATT_VOLTAGE_DIVIDER				37
+#define BATT_VOLTAGE_MULTIPLIER				37
+#define BATT_VOLTAGE_DIVIDER				1
 #define BATT_VOLTAGE_OFFSET					0
 
 #define GEAR_CAN_BYTE_OFFSET		0
@@ -167,11 +168,12 @@ static void ActualDataProvider_saveData(CanRxMsgTypeDef* pMsg, Channel_TypeDef c
 		actualDataStorage[channel] = dataHigher;
 	} else if (byteLength==2){
 		dataLower = pMsg->Data[byteOffset+1];
-		actualDataStorage[channel] |= (dataHigher<<8);
-		actualDataStorage[channel] |= (dataLower & 0xFF00);
+		actualDataStorage[channel] = (dataHigher<<8);
+		actualDataStorage[channel] |= (dataLower & 0x00FF);
 	}
 
-	HAL_RTC_GetTime(&hrtc, &(msgArrivalTime[channel]), RTC_FORMAT_BCD);
+	HAL_RTC_GetTime(&hrtc, (RTC_TimeTypeDef*)&(msgArrivalTime[channel]), RTC_FORMAT_BIN);
+	HAL_RTC_GetDate(&hrtc, (RTC_DateTypeDef*)&dummyDate, RTC_FORMAT_BIN);
 
 }
 
