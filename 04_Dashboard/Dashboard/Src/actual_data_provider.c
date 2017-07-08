@@ -14,9 +14,9 @@
 #define BUFFER_SIZE		64
 
 static volatile CanRxMsgTypeDef msgTabBuffer[BUFFER_SIZE];
-static volatile RTC_TimeTypeDef msgArrivalTime[BUFFER_SIZE];
 static volatile FIFOQueue msgQueue;
 static volatile uint16_t actualDataStorage[DATA_CHANNELS_NUMBER];
+static volatile RTC_TimeTypeDef dataArrivalTime[DATA_CHANNELS_NUMBER];
 static volatile RTC_DateTypeDef dummyDate;
 
 #define RPM_CAN_BYTE_OFFSET		0
@@ -58,10 +58,22 @@ static volatile RTC_DateTypeDef dummyDate;
 void ActualDataProvider_init(){
 	FIFOQueue_init(&msgQueue, msgTabBuffer, BUFFER_SIZE);
 	CAN_ReceiverDriver_init(&msgQueue);
+
+	RTC_TimeTypeDef dataTimeDefault;
+	dataTimeDefault.Hours = 0;
+	dataTimeDefault.Minutes = 0;
+	dataTimeDefault.Seconds = 0;
+	dataTimeDefault.TimeFormat = RTC_HOURFORMAT12_AM;
+	dataTimeDefault.SubSeconds = 0;
+	dataTimeDefault.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
+
+	for (uint8_t i=0; i<DATA_CHANNELS_NUMBER; i++){
+		dataArrivalTime[i] = dataTimeDefault;
+	}
 }
 
 RTC_TimeTypeDef ActualDataProvider_getDataArrivalTime(Channel_TypeDef channel){
-	return msgArrivalTime[channel];
+	return dataArrivalTime[channel];
 }
 
 uint16_t ActualDataProvider_getValue(Channel_TypeDef channel){
@@ -172,7 +184,7 @@ static void ActualDataProvider_saveData(CanRxMsgTypeDef* pMsg, Channel_TypeDef c
 		actualDataStorage[channel] |= (dataLower & 0x00FF);
 	}
 
-	HAL_RTC_GetTime(&hrtc, (RTC_TimeTypeDef*)&(msgArrivalTime[channel]), RTC_FORMAT_BIN);
+	HAL_RTC_GetTime(&hrtc, (RTC_TimeTypeDef*)&(dataArrivalTime[channel]), RTC_FORMAT_BIN);
 	HAL_RTC_GetDate(&hrtc, (RTC_DateTypeDef*)&dummyDate, RTC_FORMAT_BIN);
 
 }

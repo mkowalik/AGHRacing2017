@@ -80,6 +80,24 @@ uint8_t timeCompare(RTC_TimeTypeDef time1, RTC_TimeTypeDef time2, uint32_t maxDi
 		  return 0;
 }
 
+uint16_t startValues[] = {1001, 8501, 9001, 9501, 10001, 10501, 11001, 11501, 12001};
+#define START_PROCEDURE_DELAY	15
+#define START_VALUES_NUMBER		9
+
+void startProcedure(){
+
+	for(uint8_t i=0; i<START_VALUES_NUMBER; i++){
+		RPMLeds_Driver_displayRPM(startValues[i]);
+		GearDisplay_Driver_displayGear(0, 1);
+		HAL_Delay(START_PROCEDURE_DELAY);
+	}
+	for (uint8_t i=START_VALUES_NUMBER; i>0; i--){
+		RPMLeds_Driver_displayRPM(startValues[i-1]);
+		GearDisplay_Driver_displayGear(0, 1);
+		HAL_Delay(START_PROCEDURE_DELAY);
+	}
+}
+
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -130,7 +148,7 @@ int main(void)
 
   ActualDataProvider_init();
   actualTime.Hours = 0;
-  actualTime.Minutes = 0;
+  actualTime.Minutes = 1;	//for good timeCompare with not delivered yet data
   actualTime.Seconds = 0;
   actualTime.TimeFormat = RTC_HOURFORMAT12_AM;
   actualTime.SubSeconds = 0;
@@ -138,6 +156,8 @@ int main(void)
 
   HAL_RTC_SetTime(&hrtc, (RTC_TimeTypeDef*)&actualTime, RTC_FORMAT_BIN);
   HAL_RTCStateTypeDef srtc = HAL_RTC_GetState(&hrtc);
+
+  startProcedure();
 
   /* USER CODE END 2 */
 

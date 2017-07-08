@@ -46,7 +46,9 @@ void SPI_MuxDriver_TransmitData(uint8_t* pData, uint16_t size, uint8_t channel, 
 	HAL_GPIO_WritePin(SLAVE_SELECT_0_PORT, SLAVE_SELECT_0_PIN, SlaveSelect_0_State);
 	HAL_GPIO_WritePin(SLAVE_SELECT_1_PORT, SLAVE_SELECT_1_PIN, SlaveSelect_1_State);
 
-	HAL_SPI_Transmit(&hspi1, pData, size, 100);
+	__disable_irq();
+	HAL_SPI_Transmit(&hspi1, pData, size, 20);
+	__enable_irq();
 
 	if (latchPort != NULL){
 		HAL_GPIO_WritePin(latchPort, latchPin, GPIO_PIN_RESET);

@@ -60,6 +60,8 @@
 #define SlaveSelect_0_GPIO_Port GPIOA
 #define SlaveSelect_1_Pin GPIO_PIN_10
 #define SlaveSelect_1_GPIO_Port GPIOA
+#define SWO_CONNECTOR_Pin GPIO_PIN_3
+#define SWO_CONNECTOR_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
