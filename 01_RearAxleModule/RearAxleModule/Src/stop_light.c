@@ -31,10 +31,10 @@ static void StopLight_Write(StopLight_value_t value){
 }
 
 void StopLight_Set(void){
-	StopLight_Write(OFF);
+	StopLight_Write(ON);
 }
 
 void StopLight_Clr(void){
-	StopLight_Write(ON);
+	StopLight_Write(OFF);
 }
 
