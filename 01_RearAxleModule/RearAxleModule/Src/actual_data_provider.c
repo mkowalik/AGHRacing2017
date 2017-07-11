@@ -29,6 +29,10 @@ uint16_t ActualDataProvider_getValue(Channel_TypeDef channel){
 	return actualDataStorage[channel];
 }
 
+void ActualDataProvider_setValue(Channel_TypeDef channel, uint16_t data){
+	actualDataStorage[channel] = dataHigher;
+}
+
 uint16_t ActualDataProvider_getOffset(Channel_TypeDef channel){
 
 	int16_t ret;
@@ -73,6 +77,7 @@ void ActualDataProvider_thread(){
 			break;
 		}
 	}
+
 
 	CAN_ReceiverDriver_queueProcessedNotifier();
 
