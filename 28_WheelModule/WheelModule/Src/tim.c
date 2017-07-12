@@ -56,7 +56,7 @@ void MX_TIM16_Init(void)
   htim16.Init.Period = 25;
   htim16.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim16.Init.RepetitionCounter = 0;
-  htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  //htim16.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim16) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -79,6 +79,9 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     HAL_NVIC_SetPriority(TIM16_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(TIM16_IRQn);
   /* USER CODE BEGIN TIM16_MspInit 1 */
+
+    TIM16->CR1 |= 0x01;
+    TIM16->DIER |= 0x01;
 
   /* USER CODE END TIM16_MspInit 1 */
   }

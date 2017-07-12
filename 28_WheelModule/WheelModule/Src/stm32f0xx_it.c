@@ -36,19 +36,8 @@
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
-#define SHOCK_ABS_APPROX_DEGREE 2		// degree of polynomial used for approximation
-#define SHOCK_ABS_MAX_DEG	64
 
-const static uint16_t shock_abs_coeff[SHOCK_ABS_APPROX_DEGREE+1]={-31,3742,1373};	//polynomial coefficents (multiplied by 1000)
-
-const static uint16_t shock_calib_lowval = 1000;	//must be known at compile time -  will vary on different modules
-const static uint16_t shock_calib_highval = 2000;	//must be known at compile time -  will vary on different modules
-
-const static uint16_t difference = shock_calib_highval-shock_calib_lowval;	//calculated at compile time
-const static uint32_t scale = (difference)/SHOCK_ABS_MAX_DEG;
-
-const volatile uint16_t shock_adc_regval;
-
+#include "shock_abs.h"
 
 /* USER CODE END 0 */
 
@@ -163,11 +152,7 @@ void TIM16_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim16);
   /* USER CODE BEGIN TIM16_IRQn 1 */
 
-  uint16_t measurement = shock_adc_regval; //get adc result
-  measurement = ((measurement - shock_calib_lowval) / scale); //scale into 0->70 degree range in order to use polynomial coeffs
-
-  measurement = (shock_abs_coeff[0]*measurement*measurement) + shock_abs_coeff[1]*measurement + shock_abs_coeff[0]; //compute result in micro meters
-  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	   // due to coeffs being mux'd by 1000
+  GetShockDeflection();
 
   //TODO send measurement over CAN
 

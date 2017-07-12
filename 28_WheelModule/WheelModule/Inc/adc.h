@@ -55,6 +55,12 @@ extern ADC_HandleTypeDef hadc;
 
 /* USER CODE BEGIN Private defines */
 
+#define NUM_OF_CONV 2
+#define SHOCK_ABS_INDEX 0
+#define WHEEL_SPEED_INDEX 1
+
+extern volatile const uint32_t adc_conv_results[NUM_OF_CONV];
+
 /* USER CODE END Private defines */
 
 extern void _Error_Handler(char *, int);
@@ -62,6 +68,9 @@ extern void _Error_Handler(char *, int);
 void MX_ADC_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+
+void INIT_ADC_SENSORS_DMA(ADC_HandleTypeDef* hadc,const volatile uint32_t* adc_conv_results, uint8_t num_of_conv);
+uint32_t ADC_GetConvResult(uint8_t result_index);
 
 /* USER CODE END Prototypes */
 
