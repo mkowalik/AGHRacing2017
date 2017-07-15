@@ -47,8 +47,9 @@
 /* USER CODE BEGIN Includes */
 #include "tm_stm32_mpu6050.h"
 #include "stop_light.h"
-#include "actual_data_provider.h"
-#include "can_receiver_driver.h"
+//#include "actual_data_provider.h"
+//#include "can_receiver_driver.h"
+#include "CANhandler.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -90,6 +91,8 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
+	HAL_Delay(500);
+
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -118,27 +121,46 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  ActualDataProvider_init();
+  //ActualDataProvider_init();
+  CANhandler_Init();
   while (1)
   {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	  /*
+
 	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
 	if(MPU6050_Interrupts.F.DataReady){
 		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
 		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
 		TM_MPU6050_CompensateRawData(&MPU6050_Data);
 	}
-	*/
 
-	if( (int16_t) ActualDataProvider_getValue(STOP_DATA_CHANNEL) == 0xFF){
-		StopLight_Set();
+
+
+
+	  //CANhandler_Handler();
+
+	SET_CAN_DATA(DATA_R_ACC_X, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.x * 100));
+	SET_CAN_DATA(DATA_R_ACC_Y, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
+	SET_CAN_DATA(DATA_R_ACC_Z, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
+
+	SET_CAN_DATA(DATA_R_GYR_X, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.x * 10));
+	SET_CAN_DATA(DATA_R_GYR_Y, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.y * 10));
+	SET_CAN_DATA(DATA_R_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
+
+	if(GET_CAN_DATA(DATA_STOP_LIGHT) == 0xFF){
+	  StopLight_Set();
 	}
 	else{
-		StopLight_Clr();
+	  StopLight_Clr();
 	}
+//	if( (int16_t) ActualDataProvider_getValue(STOP_DATA_CHANNEL) == 0xFF){
+//		StopLight_Set();
+//	}
+//	else{
+//		StopLight_Clr();
+//	}
 
   }
   /* USER CODE END 3 */

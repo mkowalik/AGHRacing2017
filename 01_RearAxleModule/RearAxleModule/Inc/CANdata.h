@@ -8,30 +8,35 @@
 #ifndef CANDATA_H_
 #define CANDATA_H_
 
-typedef enum{
-	CANdata_RECEIVE			= 0x00,
-	CANdata_SEND			= 0x01,
-	CANdata_RECEIVE_SEND 	= 0x02
-}CANdata_directionTypeDef;
+#include "CANframe.h"
+
+#define MAX_DATA_ELEMENTS	200
 
 typedef enum{
-	GearUpSW		= 0x00,
-	GearDownSW		= 0x01,
-	ClutchSW		= 0x02,
-	NeutralSW		= 0x03,
-	StWheelSW1		= 0x04,
-	StWheelSW2		= 0x05,
-	StWheelSW3		= 0x06,
-	StWheelSW4		= 0x07,
-	StWheelSW5		= 0x08,
-	StWheelSW6		= 0x09,
-	StWheelSW7		= 0x0A,
-	StWheelSW8		= 0x0B,
-	StWheelAn1		= 0x0C,
-	StWheelAn2		= 0x0D,
-	StWheelAn3		= 0x0E,
-	StWheelAn4		= 0x0F
-}CANdata_dataTypeDef;
+	RECEIVE	= 0,
+	SEND	= 1
+}CANdata_direction;
+
+typedef enum{
+	SIGNED_8 	= 0,
+	UNSIGNED_8	= 1,
+	SIGNED_16	= 2,
+	UNSIGNED_16	= 3,
+	BIT_3_1		= 4
+}CANdata_dataType;
+
+typedef struct{
+	const uint8_t byteOffset;
+	const uint16_t multiplier;
+	const uint16_t divider;
+	const uint8_t offset;
+	const uint8_t customData;
+	const CANdata_dataType dataType;
+	const uint16_t CANframeID;
+	volatile uint8_t validData;
+	volatile uint16_t data;
+	CANdata_direction dir;
+}CANdata_t;
 
 typedef enum{
 	CANdata_OK       = 0x00,
@@ -40,8 +45,362 @@ typedef enum{
 	CANdata_TIMEOUT  = 0x03
 }CANdata_StatusTypeDef;
 
-CANdata_handle_t CANdata_Init();
-CANdata_StatusTypeDef CANdata_InitData(CANdata_dataTypeDef data, CANdata_directionTypeDef dir);
-CANdata_StatusTypeDef CANdata_Handler(void);
+typedef struct{
+	CANdata_t * dataElements[MAX_DATA_ELEMENTS];
+	uint8_t dataElementsNumber;
+	void (*eventHandler)(CANdata_t * data);
+	CANframe_handle_t * frameHandle;
+}CANdata_handle_t;
+
+CANdata_handle_t CANdata_Init(void (* eventHdlr)(CANdata_t * data));
+CANdata_StatusTypeDef CANdata_DeInit(CANdata_handle_t handle);
+CANdata_StatusTypeDef CANdata_InitData(CANdata_handle_t handle, CANdata_t * data, CANdata_direction dir);
+CANdata_StatusTypeDef CANdata_DeInitData(CANdata_handle_t handle, CANdata_t * data);
+CANdata_StatusTypeDef CANdata_Handler(CANdata_handle_t handle);
+
+#define DATA_GEAR_UP_SW_BYTEOFFSET		((uint8_t) 0)
+#define DATA_GEAR_UP_SW_MULTIPLIER		((uint16_t) 0)
+#define DATA_GEAR_UP_SW_DIVIDER			((uint16_t) 0)
+#define DATA_GEAR_UP_SW_OFFSET			((uint8_t) 0)
+#define DATA_GEAR_UP_SW_CUSTOMDATA		((uint8_t) 1)
+#define DATA_GEAR_UP_SW_DATATYPE		UNSIGNED_8
+#define DATA_GEAR_UP_SW_FRAME_ID		GEAR_UP_SW_ID
+
+#define DATA_GEAR_DOWN_SW_BYTEOFFSET
+#define DATA_GEAR_DOWN_SW_MULTIPLIER
+#define DATA_GEAR_DOWN_SW_DIVIDER
+#define DATA_GEAR_DOWN_SW_OFFSET
+#define DATA_GEAR_DOWN_SW_CUSTOMDATA
+#define DATA_GEAR_DOWN_SW_DATATYPE
+
+#define DATA_CLUTCH_SW_BYTEOFFSET
+#define DATA_CLUTCH_SW_MULTIPLIER
+#define DATA_CLUTCH_SW_DIVIDER
+#define DATA_CLUTCH_SW_OFFSET
+#define DATA_CLUTCH_SW_CUSTOMDATA
+#define DATA_CLUTCH_SW_DATATYPE
+
+#define DATA_NEUTRAL_SW_BYTEOFFSET
+#define DATA_NEUTRAL_SW_MULTIPLIER
+#define DATA_NEUTRAL_SW_DIVIDER
+#define DATA_NEUTRAL_SW_OFFSET
+#define DATA_NEUTRAL_SW_CUSTOMDATA
+#define DATA_NEUTRAL_SW_DATATYPE
+
+#define DATA_STWHEEL_SW1_BYTEOFFSET
+#define DATA_STWHEEL_SW1_MULTIPLIER
+#define DATA_STWHEEL_SW1_DIVIDER
+#define DATA_STWHEEL_SW1_OFFSET
+#define DATA_STWHEEL_SW1_CUSTOMDATA
+#define DATA_STWHEEL_SW1_DATATYPE
+
+#define DATA_STWHEEL_SW2_BYTEOFFSET
+#define DATA_STWHEEL_SW2_MULTIPLIER
+#define DATA_STWHEEL_SW2_DIVIDER
+#define DATA_STWHEEL_SW2_OFFSET
+#define DATA_STWHEEL_SW2_CUSTOMDATA
+#define DATA_STWHEEL_SW2_DATATYPE
+
+#define DATA_STWHEEL_SW3_BYTEOFFSET
+#define DATA_STWHEEL_SW3_MULTIPLIER
+#define DATA_STWHEEL_SW3_DIVIDER
+#define DATA_STWHEEL_SW3_OFFSET
+#define DATA_STWHEEL_SW3_CUSTOMDATA
+#define DATA_STWHEEL_SW3_DATATYPE
+
+#define DATA_STWHEEL_SW4_BYTEOFFSET
+#define DATA_STWHEEL_SW4_MULTIPLIER
+#define DATA_STWHEEL_SW4_DIVIDER
+#define DATA_STWHEEL_SW4_OFFSET
+#define DATA_STWHEEL_SW4_CUSTOMDATA
+#define DATA_STWHEEL_SW4_DATATYPE
+
+#define DATA_STWHEEL_SW5_BYTEOFFSET
+#define DATA_STWHEEL_SW5_MULTIPLIER
+#define DATA_STWHEEL_SW5_DIVIDER
+#define DATA_STWHEEL_SW5_OFFSET
+#define DATA_STWHEEL_SW5_CUSTOMDATA
+#define DATA_STWHEEL_SW5_DATATYPE
+
+#define DATA_STWHEEL_SW6_BYTEOFFSET
+#define DATA_STWHEEL_SW6_MULTIPLIER
+#define DATA_STWHEEL_SW6_DIVIDER
+#define DATA_STWHEEL_SW6_OFFSET
+#define DATA_STWHEEL_SW6_CUSTOMDATA
+#define DATA_STWHEEL_SW6_DATATYPE
+
+#define DATA_STWHEEL_SW7_BYTEOFFSET
+#define DATA_STWHEEL_SW7_MULTIPLIER
+#define DATA_STWHEEL_SW7_DIVIDER
+#define DATA_STWHEEL_SW7_OFFSET
+#define DATA_STWHEEL_SW7_CUSTOMDATA
+#define DATA_STWHEEL_SW7_DATATYPE
+
+#define DATA_STWHEEL_SW8_BYTEOFFSET
+#define DATA_STWHEEL_SW8_MULTIPLIER
+#define DATA_STWHEEL_SW8_DIVIDER
+#define DATA_STWHEEL_SW8_OFFSET
+#define DATA_STWHEEL_SW8_CUSTOMDATA
+#define DATA_STWHEEL_SW8_DATATYPE
+
+#define DATA_STWHEEL_AN1_BYTEOFFSET
+#define DATA_STWHEEL_AN1_MULTIPLIER
+#define DATA_STWHEEL_AN1_DIVIDER
+#define DATA_STWHEEL_AN1_OFFSET
+#define DATA_STWHEEL_AN1_CUSTOMDATA
+#define DATA_STWHEEL_AN1_DATATYPE
+
+#define DATA_STWHEEL_AN2_BYTEOFFSET
+#define DATA_STWHEEL_AN2_MULTIPLIER
+#define DATA_STWHEEL_AN2_DIVIDER
+#define DATA_STWHEEL_AN2_OFFSET
+#define DATA_STWHEEL_AN2_CUSTOMDATA
+#define DATA_STWHEEL_AN2_DATATYPE
+
+#define DATA_STWHEEL_AN3_BYTEOFFSET
+#define DATA_STWHEEL_AN3_MULTIPLIER
+#define DATA_STWHEEL_AN3_DIVIDER
+#define DATA_STWHEEL_AN3_OFFSET
+#define DATA_STWHEEL_AN3_CUSTOMDATA
+#define DATA_STWHEEL_AN3_DATATYPE
+
+#define DATA_STWHEEL_AN4_BYTEOFFSET
+#define DATA_STWHEEL_AN4_MULTIPLIER
+#define DATA_STWHEEL_AN4_DIVIDER
+#define DATA_STWHEEL_AN4_OFFSET
+#define DATA_STWHEEL_AN4_CUSTOMDATA
+#define DATA_STWHEEL_AN4_DATATYPE
+
+#define DATA_STWHEEL_DSI_BYTEOFFSET
+#define DATA_STWHEEL_DSI_MULTIPLIER
+#define DATA_STWHEEL_DSI_DIVIDER
+#define DATA_STWHEEL_DSI_OFFSET
+#define DATA_STWHEEL_DSI_CUSTOMDATA
+#define DATA_STWHEEL_DSI_DATATYPE
+
+#define STEERING_WHEEL_DATA
+
+#if defined STEERING_WHEEL_DATA
+#define STEERING_WHEEL_FRAMES
+
+	CANdata_t dGearUpSw = {
+			.byteOffset = DATA_GEAR_UP_SW_BYTEOFFSET,
+			.multiplier = DATA_GEAR_UP_SW_MULTIPLIER,
+			.divider = DATA_GEAR_UP_SW_DIVIDER,
+			.offset = DATA_GEAR_UP_SW_OFFSET,
+			.customData = DATA_GEAR_UP_SW_CUSTOMDATA,
+			.dataType = DATA_GEAR_UP_SW_DATATYPE
+	};
+
+	CANdata_t dGearDownSw = {
+			.byteOffset = DATA_GEAR_DOWN_SW_BYTEOFFSET,
+			.multiplier = DATA_GEAR_DOWN_SW_MULTIPLIER,
+			.divider = DATA_GEAR_DOWN_SW_DIVIDER,
+			.offset = DATA_GEAR_DOWN_SW_OFFSET,
+			.customData = DATA_GEAR_DOWN_SW_CUSTOMDATA,
+			.dataType = DATA_GEAR_DOWN_SW_DATATYPE
+	};
+
+	CANdata_t dClutchSw = {
+			.byteOffset = DATA_CLUTCH_SW_BYTEOFFSET,
+			.multiplier = DATA_CLUTCH_SW_MULTIPLIER,
+			.divider = DATA_CLUTCH_SW_DIVIDER,
+			.offset = DATA_CLUTCH_SW_OFFSET,
+			.customData = DATA_CLUTCH_SW_CUSTOMDATA,
+			.dataType = DATA_CLUTCH_SW_DATATYPE
+	};
+
+	CANdata_t dNeutralSw = {
+			.byteOffset = DATA_NEUTRAL_SW_BYTEOFFSET,
+			.multiplier = DATA_NEUTRAL_SW_MULTIPLIER,
+			.divider = DATA_NEUTRAL_SW_DIVIDER,
+			.offset = DATA_NEUTRAL_SW_OFFSET,
+			.customData = DATA_NEUTRAL_SW_CUSTOMDATA,
+			.dataType = DATA_NEUTRAL_SW_DATATYPE
+	};
+
+	CANdata_t dStWheelSw1 = {
+			.byteOffset = DATA_STWHEEL_SW1_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW1_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW1_DIVIDER,
+			.offset = DATA_STWHEEL_SW1_OFFSET,
+			.customData = DATA_STWHEEL_SW1_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW1_DATATYPE
+	};
+
+	CANdata_t dStWheelSw2 = {
+			.byteOffset = DATA_STWHEEL_SW2_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW2_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW2_DIVIDER,
+			.offset = DATA_STWHEEL_SW2_OFFSET,
+			.customData = DATA_STWHEEL_SW2_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW2_DATATYPE
+	};
+
+	CANdata_t dStWheelSw3 = {
+			.byteOffset = DATA_STWHEEL_SW3_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW3_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW3_DIVIDER,
+			.offset = DATA_STWHEEL_SW3_OFFSET,
+			.customData = DATA_STWHEEL_SW3_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW3_DATATYPE
+	};
+
+	CANdata_t dStWheelSw4 = {
+			.byteOffset = DATA_STWHEEL_SW4_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW4_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW4_DIVIDER,
+			.offset = DATA_STWHEEL_SW4_OFFSET,
+			.customData = DATA_STWHEEL_SW4_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW4_DATATYPE
+	};
+
+	CANdata_t dStWheelSw5 = {
+			.byteOffset = DATA_STWHEEL_SW5_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW5_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW5_DIVIDER,
+			.offset = DATA_STWHEEL_SW5_OFFSET,
+			.customData = DATA_STWHEEL_SW5_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW5_DATATYPE
+	};
+
+	CANdata_t dStWheelSw6 = {
+			.byteOffset = DATA_STWHEEL_SW6_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW6_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW6_DIVIDER,
+			.offset = DATA_STWHEEL_SW6_OFFSET,
+			.customData = DATA_STWHEEL_SW6_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW6_DATATYPE
+	};
+
+	CANdata_t dStWheelSw7 = {
+			.byteOffset = DATA_STWHEEL_SW7_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW7_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW7_DIVIDER,
+			.offset = DATA_STWHEEL_SW7_OFFSET,
+			.customData = DATA_STWHEEL_SW7_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW7_DATATYPE
+	};
+
+	CANdata_t dStWheelSw8 = {
+			.byteOffset = DATA_STWHEEL_SW8_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_SW8_MULTIPLIER,
+			.divider = DATA_STWHEEL_SW8_DIVIDER,
+			.offset = DATA_STWHEEL_SW8_OFFSET,
+			.customData = DATA_STWHEEL_SW8_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_SW8_DATATYPE
+	};
+
+	CANdata_t dStWheelAn1 = {
+			.byteOffset = DATA_STWHEEL_AN1_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_AN1_MULTIPLIER,
+			.divider = DATA_STWHEEL_AN1_DIVIDER,
+			.offset = DATA_STWHEEL_AN1_OFFSET,
+			.customData = DATA_STWHEEL_AN1_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_AN1_DATATYPE
+	};
+
+	CANdata_t dStWheelAn2 = {
+			.byteOffset = DATA_STWHEEL_AN2_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_AN2_MULTIPLIER,
+			.divider = DATA_STWHEEL_AN2_DIVIDER,
+			.offset = DATA_STWHEEL_AN2_OFFSET,
+			.customData = DATA_STWHEEL_AN2_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_AN2_DATATYPE
+	};
+
+	CANdata_t dStWheelAn3 = {
+			.byteOffset = DATA_STWHEEL_AN3_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_AN3_MULTIPLIER,
+			.divider = DATA_STWHEEL_AN3_DIVIDER,
+			.offset = DATA_STWHEEL_AN3_OFFSET,
+			.customData = DATA_STWHEEL_AN3_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_AN3_DATATYPE
+	};
+
+	CANdata_t dStWheelAn4 = {
+			.byteOffset = DATA_STWHEEL_AN4_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_AN4_MULTIPLIER,
+			.divider = DATA_STWHEEL_AN4_DIVIDER,
+			.offset = DATA_STWHEEL_AN4_OFFSET,
+			.customData = DATA_STWHEEL_AN4_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_AN4_DATATYPE
+	};
+
+	CANdata_t dStWheelDSI = {
+			.byteOffset = DATA_STWHEEL_DSI_BYTEOFFSET,
+			.multiplier = DATA_STWHEEL_DSI_MULTIPLIER,
+			.divider = DATA_STWHEEL_DSI_DIVIDER,
+			.offset = DATA_STWHEEL_DSI_OFFSET,
+			.customData = DATA_STWHEEL_DSI_CUSTOMDATA,
+			.dataType = DATA_STWHEEL_DSI_DATATYPE
+	};
+}
+#endif
+
+#if defined GMU_DATA
+#define GMU_FRAMES
+
+#endif
+
+#if defined FRONT_AXLE_MODULE_DATA
+#define FRONT_AXLE_MODULE_FRAMES
+
+#endif
+
+#if defined REAR_AXLE_MODULE_DATA
+#define REAR_AXLE_MODULE_DATA
+
+#endif
+
+#if defined WHEEL_MODULE_FL_DATA
+#define WHEEL_MODULE_FL_FRAMES
+
+#endif
+
+#if defined WHEEL_MODULE_FR_DATA
+#define WHEEL_MODULE_FR_FRAMES
+
+#endif
+
+#if defined WHEEL_MODULE_RL_DATA
+#define WHEEL_MODULE_RL_FRAMES
+
+#endif
+
+#if defined WHEEL_MODULE_RR_DATA
+#define WHEEL_MODULE_RR_FRAMES
+
+#endif
+
+#if defined FUEL_LEVEL_SENSOR_DATA
+#define FUEL_LEVEL_SENSOR_FRAMES
+
+#endif
+
+#if defined DASHBOARD_DATA
+#define DASHBOARD_FRAMES
+
+#endif
+
+#if defined DATALOGGER_DATA
+#define DATALOGGER_FRAMES
+
+#endif
+
+#if defined TELEMETRY_DATA
+#define TELEMETRY_FRAMES
+
+#endif
+
+#if defined EMU_DATA
+#define EMU_FRAMES
+
+#endif
+
+#if defined PMU_DATA
+#define PMU_FRAMES
+
+#endif
 
 #endif /* CANDATA_H_ */

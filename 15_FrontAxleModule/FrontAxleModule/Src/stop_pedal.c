@@ -16,7 +16,7 @@
 uint8_t StopPedal_Read(void){
 
 	if(GPIO_PIN_SET == HAL_GPIO_ReadPin(STOP_PEDAL_GPIO_Port, STOP_PEDAL_Pin)){
-		return 0;
+		return 0xFF;
 	}
-	return 1;
+	return 0;
 }

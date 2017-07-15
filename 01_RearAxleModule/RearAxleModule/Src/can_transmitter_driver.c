@@ -4,7 +4,6 @@
  *  Created on: 03.06.2017
  *      Author: Kowalik
  */
-
 #include "can_transmitter_driver.h"
 #include "can.h"
 
@@ -25,7 +24,7 @@ void CAN_TransmitterDriver_init(volatile FIFOQueue* pMsgQueueArg){
 
 	hcan.pTxMsg = (CanTxMsgTypeDef*) &tx_msg;
 
-	CAN_Transmit_IT(&hcan, CAN_FIFO1);
+	//CAN_Transmit_IT(&hcan, CAN_FIFO1);
 	waitingForInterrupt = 1;
 
 }
@@ -38,11 +37,11 @@ void CAN_TransmitterDriver_transmittITHandler(){
 	counter++;
 
 	if ((hcan.pRxMsg->IDE != CAN_USED_ID) || (hcan.pRxMsg->RTR != CAN_RTR_DATA)) {
-		status = CAN_Transmit_IT(&hcan, CAN_FIFO1);
+		//status = CAN_Transmit_IT(&hcan, CAN_FIFO1);
 		waitingForInterrupt = 1;
-	} else if (FIFOQueue_dequeue(pMsgQueue, *(hcan.pTxMsg))==FIFOStatus_OK){
-		status = CAN_Transmit_IT(&hcan, CAN_FIFO1);
-		waitingForInterrupt = 1;
+//	} else if (FIFOQueue_dequeue(pMsgQueue, *(hcan.pTxMsg))==FIFOStatus_OK){
+//		status = CAN_Transmit_IT(&hcan, CAN_FIFO1);
+//		waitingForInterrupt = 1;
 	} else {
 		waitingForInterrupt = 0;
 	}
@@ -52,7 +51,7 @@ void CAN_TransmitterDriver_transmittITHandler(){
 void CAN_TransmitterDriver_queueProcessedNotifier(){
 
 	if (waitingForInterrupt == 0) {
-		CAN_Transmit_IT(&hcan, CAN_FIFO1);
+		//CAN_Transmit_IT(&hcan, CAN_FIFO1);
 		waitingForInterrupt = 1;
 	}
 

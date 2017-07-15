@@ -30,7 +30,7 @@ uint16_t ActualDataProvider_getValue(Channel_TypeDef channel){
 }
 
 void ActualDataProvider_setValue(Channel_TypeDef channel, uint16_t data){
-	actualDataStorage[channel] = dataHigher;
+	//actualDataStorage[channel] = dataHigher;
 }
 
 uint16_t ActualDataProvider_getOffset(Channel_TypeDef channel){

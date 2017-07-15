@@ -6,39 +6,50 @@
  */
 
 #include <CANhandler.h>
+#include "CANdata.h"
+#include "CANframe.h"
 
-CANdata_handle_t CANdata_Init(){
-	CANdata_handle_t handler;
-	static CANdata_frame_t usedFrames[MAX_CAN_FRAMES];
-
-	handler.usedCANFrames = usedFrames;
-	handler.usedCANFramesNumber = 0;
-	return handler;
+CANdata_handle_t CANdata_Init(void (* eventHdlr)(CANdata_t * data)){
+	static CANdata_handle_t handle = {	.dataElementsNumber = 0,
+										.eventHandler = eventHdlr,
+										.frameHandle = CANframe_Init()};
+	return handle;
 }
 
-Fifo_StatusTypeDef CANdata_InitFrame(CANdata_handle_t * handler, CANframe_t * frame, CANframe_directionTypeDef direction){
-	if(handler->usedCANFramesNumber == MAX_CAN_FRAMES){
-		return CANdata_ERROR;
-	}
-	handler->usedCANFrames[handler->usedCANFramesNumber].frame = frame;
-	handler->usedCANFrames[handler->usedCANFramesNumber].lastSendTime = HAL_GetTick();
-	handler->usedCANFrames[handler->usedCANFramesNumber].dir = direction;
-	handler->usedCANFrames[handler->usedCANFramesNumber].enabled = 1;
-	handler->usedCANFramesNumber ++;
+CANdata_StatusTypeDef CANdata_DeInit(CANdata_handle_t * handle){
+	handle.dataElementsNumber = 0;
 	return CANdata_OK;
 }
 
-Fifo_StatusTypeDef CANdata_DeInitFrame(CANdata_handle_t * handler, CANframe_t *frame){
-	for(uint16_t frameCounter = 0; frameCounter < MAX_CAN_FRAMES; frameCounter++){
-		if(handler->usedCANFrames[frameCounter].frame == frame){
-			handler->usedCANFrames[frameCounter].enabled = 0;
-			handler->usedCANFramesNumber--;
+CANdata_StatusTypeDef CANdata_InitData(CANdata_handle_t * handle, CANdata_t * data, CANdata_direction dir){
+
+	for(uint8_t elementCounter = 0; elementCounter < handle->dataElementsNumber; elementCounter++){
+		if(handle->dataElements[elementCounter] == data){
+			return CANdata_ERROR;
+		}
+	}
+	CANframe_InitFrame(handle->frameHandle, )
+
+
+	handle->dataElements[handle->dataElementsNumber] = data;
+	handle->dataElementsNumber++;
+	data->dir = 0;
+	data->validData = 0;
+	data->data = 0;
+}
+
+CANdata_StatusTypeDef CANdata_DeInitData(CANdata_handle_t * handle, CANdata_t * data){
+	for(uint8_t elementCounter = 0; elementCounter < handle->dataElementsNumber; elementCounter++){
+		if(handle->dataElements[elementCounter] == data){
+			for(;elementCounter < handle->dataElementsNumber - 1; elementCounter++){
+				handle->dataElements[elementCounter] = handle->dataElements[elementCounter + 1];
+			}
+			handle->dataElementsNumber--;
 			return CANdata_OK;
 		}
 	}
 	return CANdata_ERROR;
 }
 
-Fifo_StatusTypeDef CANdata_Handler(CANdata_handle_t * handler){
-	return CANdata_OK;
-}
+CANdata_StatusTypeDef CANdata_Handler(CANdata_handle_t * handle);
+

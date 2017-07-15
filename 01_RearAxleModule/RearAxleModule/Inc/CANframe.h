@@ -15,6 +15,7 @@
 #include "stm32f0xx_hal.h"
 
 #define PERIOD_ON_EVENT	((uint32_t) 0)
+#define MAX_CAN_FRAMES	50
 
 typedef enum{
 	CANframe_RECEIVE		= 0x00,
@@ -29,8 +30,15 @@ typedef struct{
 	int32_t WriteValue;
 }CANframe_t;
 
+typedef struct{
+	CANframe_t * frames[MAX_CAN_FRAMES];
+	uint8_t framesNumber;
+	void (*eventHandler)(CANframe_t * frame);
+}CANframe_handle_t;
+
 #define GEAR_UP_SW_PERIOD			PERIOD_ON_EVENT
 #define GEAR_UP_SW_ID				((uint16_t) 0x000U)
+#define GEAR_UP_SW_DLC				((uint8_t) 1)
 
 #define GEAR_DOWN_SW_PERIOD			PERIOD_ON_EVENT
 #define GEAR_DOWN_SW_ID				((uint16_t) 0x001U)
@@ -209,7 +217,7 @@ typedef struct{
 		.period 	= ST_WHEEL_DSI_PERIOD,
 		.ID 		= ST_WHEEL_DSI_ID
 	};
-}
+
 #endif
 
 #if defined GMU_FRAMES
@@ -249,10 +257,6 @@ typedef struct{
 #endif
 
 #if defined DATALOGGER_FRAMES
-
-#endif
-
-#if defined DASHBOARD_FRAMES
 
 #endif
 

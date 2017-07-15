@@ -3,6 +3,11 @@
   * File Name          : main.c
   * Description        : Main program body
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -40,6 +45,8 @@
 
 /* USER CODE BEGIN Includes */
 #include "tm_stm32_mpu6050.h"
+#include "CANhandler.h"
+#include "stop_pedal.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -51,7 +58,6 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -65,6 +71,7 @@ void Error_Handler(void);
 int main(void)
 {
 
+
   /* USER CODE BEGIN 1 */
 	TM_MPU6050_t MPU6050_Data;
 	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
@@ -73,10 +80,19 @@ int main(void)
   /* MCU Configuration----------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
+	HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+  HAL_Delay(500);
+  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -99,6 +115,10 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  CANhandler_Init();
+  uint8_t stopPedal = 0;
+  uint8_t prevStopPedal = 0;
+  uint32_t pedalReadTime = HAL_GetTick();
   while (1)
   {
   /* USER CODE END WHILE */
@@ -110,6 +130,27 @@ int main(void)
 		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
 		TM_MPU6050_CompensateRawData(&MPU6050_Data);
 	}
+
+	  if(pedalReadTime < HAL_GetTick() - 50){
+		  if(StopPedal_Read() == prevStopPedal){
+			  stopPedal = prevStopPedal;
+		  }
+		  else{
+			  prevStopPedal = StopPedal_Read();
+		  }
+	  }
+
+	SET_CAN_DATA(DATA_F_ACC_X, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.x * 100));
+	SET_CAN_DATA(DATA_F_ACC_Y, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
+	SET_CAN_DATA(DATA_F_ACC_Z, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
+
+	SET_CAN_DATA(DATA_F_GYR_X, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.x * 10));
+	SET_CAN_DATA(DATA_F_GYR_Y, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.y * 10));
+	SET_CAN_DATA(DATA_F_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
+
+	SET_CAN_DATA(DATA_STOP_LIGHT, stopPedal);
+
+	CANhandler_Handler();
   }
   /* USER CODE END 3 */
 
@@ -131,11 +172,11 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
-  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL15;
+  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV3;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Initializes the CPU, AHB and APB busses clocks 
@@ -148,14 +189,14 @@ void SystemClock_Config(void)
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_SYSCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Enables the Clock Security System 
@@ -183,14 +224,14 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void Error_Handler(void)
+void _Error_Handler(char * file, int line)
 {
-  /* USER CODE BEGIN Error_Handler */
+  /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
   }
-  /* USER CODE END Error_Handler */ 
+  /* USER CODE END Error_Handler_Debug */ 
 }
 
 #ifdef USE_FULL_ASSERT
