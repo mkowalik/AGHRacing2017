@@ -66,8 +66,6 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 
-extern volatile uint16_t shock_adc_regval;
-
 /* USER CODE END 0 */
 
 int main(void)
@@ -103,13 +101,15 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-  if( HAL_ADC_Start(&hadc1) != HAL_OK){
-	  return 0;
-  }
+  INIT_ADC_SENSORS_DMA(&hadc,&adc_conv_results[0],NUM_OF_CONV);
 
-  if (HAL_ADC_Start_DMA(&hadc1, (uint16_t*)&shock_adc_regval, 1) != HAL_OK){
-	  return 0;
-  }
+  //if( HAL_ADC_Start(&hadc1) != HAL_OK){
+//	  return 0;
+  //}
+
+  //if (HAL_ADC_Start_DMA(&hadc1, (uint16_t*)&shock_adc_regval, 1) != HAL_OK){
+	//  return 0;
+  //}
 
 
   /* USER CODE END 2 */

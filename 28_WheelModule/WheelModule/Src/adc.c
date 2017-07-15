@@ -45,6 +45,8 @@
 
 /* USER CODE BEGIN 0 */
 
+volatile const uint32_t adc_conv_results[NUM_OF_CONV];
+
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc;
@@ -86,6 +88,14 @@ void MX_ADC_Init(void)
     _Error_Handler(__FILE__, __LINE__);
   }
 
+    /**Configure for the selected ADC regular channel to be converted. 
+    */
+  sConfig.Channel = ADC_CHANNEL_9;
+  if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
 }
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
@@ -101,22 +111,28 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_ADC1_CLK_ENABLE();
   
     /**ADC GPIO Configuration    
-    PA2     ------> ADC_IN2 
+    PA2     ------> ADC_IN2
+    PB1     ------> ADC_IN9 
     */
     GPIO_InitStruct.Pin = SHOCK_ABS_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(SHOCK_ABS_GPIO_Port, &GPIO_InitStruct);
 
+    GPIO_InitStruct.Pin = WHEEL_SPEED_Pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    HAL_GPIO_Init(WHEEL_SPEED_GPIO_Port, &GPIO_InitStruct);
+
     /* ADC1 DMA Init */
     /* ADC Init */
     hdma_adc.Instance = DMA1_Channel1;
     hdma_adc.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_adc.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_adc.Init.MemInc = DMA_MINC_DISABLE;
-    hdma_adc.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_adc.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_adc.Init.Mode = DMA_NORMAL;
+    hdma_adc.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_adc.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_adc.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    hdma_adc.Init.Mode = DMA_CIRCULAR;
     hdma_adc.Init.Priority = DMA_PRIORITY_MEDIUM;
     if (HAL_DMA_Init(&hdma_adc) != HAL_OK)
     {
@@ -143,9 +159,12 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     __HAL_RCC_ADC1_CLK_DISABLE();
   
     /**ADC GPIO Configuration    
-    PA2     ------> ADC_IN2 
+    PA2     ------> ADC_IN2
+    PB1     ------> ADC_IN9 
     */
     HAL_GPIO_DeInit(SHOCK_ABS_GPIO_Port, SHOCK_ABS_Pin);
+
+    HAL_GPIO_DeInit(WHEEL_SPEED_GPIO_Port, WHEEL_SPEED_Pin);
 
     /* ADC1 DMA DeInit */
     HAL_DMA_DeInit(adcHandle->DMA_Handle);
@@ -156,6 +175,33 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+
+/* Function definitions ----------------------------------------------------------*/
+
+/**
+  * @brief  Start ADC sensors conversion with circular DMA enabled
+  * @param  ADC Handle to start proper peripheral , pointer to array with results , number of conversions to be carried out
+  * @retval None
+  * NOTE:
+  */
+
+void INIT_ADC_SENSORS_DMA(ADC_HandleTypeDef* hadc, const volatile uint32_t* adc_conv_results, uint8_t num_of_conv)
+{
+	//HAL_ADC_Start(hadc);
+	HAL_ADC_Start_DMA(hadc, (uint32_t*)adc_conv_results, num_of_conv);
+}
+
+/**
+  * @brief  Get value from array storing ADC conversion results
+  * @param  array index of desired sensor
+  * @retval value of ADC conversion result
+  * NOTE:
+  */
+
+uint32_t ADC_GetConvResult(uint8_t result_index)
+{
+	return adc_conv_results[result_index];
+}
 
 /* USER CODE END 1 */
 
