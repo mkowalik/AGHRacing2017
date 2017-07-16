@@ -38,6 +38,8 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 
 void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef* hcan){
 
+	intPending = 0;
+
 	if(0){
 
 	}
@@ -82,6 +84,28 @@ void CANhandler_Init(void){
 	handle.data[DATA_STOP_LIGHT_LOCAL_ID] = &can_stop_light_value;
 #endif
 
+#if defined(CAN_GYR_TRANSMIT) || defined(CAN_GYR_RECEIVE)
+	static CANhandler_data_t can_gyr_x_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+	handle.data[DATA_R_GYR_X_LOCAL_ID] = &can_gyr_x_value;
+
+	static CANhandler_data_t can_gyr_y_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+	handle.data[DATA_R_GYR_Y_LOCAL_ID] = &can_gyr_y_value;
+
+	static CANhandler_data_t can_gyr_z_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+	handle.data[DATA_R_GYR_Z_LOCAL_ID] = &can_gyr_z_value;
+#endif
+
+#if defined(CAN_ACC_TRANSMIT) || defined(CAN_ACC_RECEIVE)
+	static CANhandler_data_t can_acc_x_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+	handle.data[DATA_R_ACC_X_LOCAL_ID] = &can_acc_x_value;
+
+	static CANhandler_data_t can_acc_y_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+	handle.data[DATA_R_ACC_Y_LOCAL_ID] = &can_acc_y_value;
+
+	static CANhandler_data_t can_acc_z_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+	handle.data[DATA_R_ACC_Z_LOCAL_ID] = &can_acc_z_value;
+#endif
+
 
 	filterConfig.BankNumber = 			0;	// Must be kept 0, only 1 bank in uc
 	filterConfig.FilterActivation = 	ENABLE;
@@ -121,7 +145,7 @@ void CANhandler_Handler(void){
 
 #ifdef CAN_STOP_LIGHT_RECEIVE
 		handle.data[DATA_STOP_LIGHT_LOCAL_ID]->dataValid =
-				(handle.data[DATA_STOP_LIGHT_LOCAL_ID]->updateTime > HAL_GetTick() - FAM_ACC_STOP_SW_PERIOD);
+				(handle.data[DATA_STOP_LIGHT_LOCAL_ID]->updateTime > HAL_GetTick() - (FAM_ACC_STOP_SW_PERIOD)*10);
 #endif
 
 		if(intPending == 0){

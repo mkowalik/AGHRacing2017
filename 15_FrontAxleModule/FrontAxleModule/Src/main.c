@@ -124,12 +124,12 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
-	if(MPU6050_Interrupts.F.DataReady){
-		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
-		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
-		TM_MPU6050_CompensateRawData(&MPU6050_Data);
-	}
+//	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
+//	if(MPU6050_Interrupts.F.DataReady){
+//		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
+//		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
+//		TM_MPU6050_CompensateRawData(&MPU6050_Data);
+//	}
 
 	  if(pedalReadTime < HAL_GetTick() - 50){
 		  if(StopPedal_Read() == prevStopPedal){
@@ -138,15 +138,15 @@ int main(void)
 		  else{
 			  prevStopPedal = StopPedal_Read();
 		  }
-	  }
+	 }
 
-	SET_CAN_DATA(DATA_F_ACC_X, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.x * 100));
-	SET_CAN_DATA(DATA_F_ACC_Y, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
-	SET_CAN_DATA(DATA_F_ACC_Z, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
-
-	SET_CAN_DATA(DATA_F_GYR_X, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.x * 10));
-	SET_CAN_DATA(DATA_F_GYR_Y, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.y * 10));
-	SET_CAN_DATA(DATA_F_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
+//	SET_CAN_DATA(DATA_F_ACC_X, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.x * 100));
+//	SET_CAN_DATA(DATA_F_ACC_Y, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
+//	SET_CAN_DATA(DATA_F_ACC_Z, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
+//
+//	SET_CAN_DATA(DATA_F_GYR_X, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.x * 10));
+//	SET_CAN_DATA(DATA_F_GYR_Y, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.y * 10));
+//	SET_CAN_DATA(DATA_F_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
 
 	SET_CAN_DATA(DATA_STOP_LIGHT, stopPedal);
 

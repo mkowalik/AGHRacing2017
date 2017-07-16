@@ -15,8 +15,8 @@
 #include "can.h"
  //USER DEFINED FRAMES
 #define CAN_STOP_LIGHT_TRANSMIT
-#define CAN_GYR_TRANSMIT
-#define CAN_ACC_TRANSMIT
+//#define CAN_GYR_TRANSMIT
+//#define CAN_ACC_TRANSMIT
 
 #define MAX_DATA_ELEMENTS	50 //user set
 #define CAN_FRAMES			48
