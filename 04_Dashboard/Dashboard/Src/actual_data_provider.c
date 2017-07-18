@@ -103,6 +103,8 @@ uint16_t ActualDataProvider_getMultiplier(Channel_TypeDef channel){
 	case GEAR_DATA_CHANNEL:
 		ret = GEAR_MULTIPLIER;
 		break;
+	default:
+		ret = 1;
 	}
 
 	return ret;
@@ -132,6 +134,8 @@ uint16_t ActualDataProvider_getDivider(Channel_TypeDef channel){
 	case GEAR_DATA_CHANNEL:
 		ret = GEAR_DIVIDER;
 		break;
+	default:
+		ret = 1;
 	}
 
 	return ret;
@@ -161,6 +165,8 @@ uint16_t ActualDataProvider_getOffset(Channel_TypeDef channel){
 	case GEAR_DATA_CHANNEL:
 		ret = GEAR_OFFSET;
 		break;
+	default:
+		ret = 1;
 	}
 
 	return ret;
@@ -174,12 +180,12 @@ static void ActualDataProvider_saveData(CanRxMsgTypeDef* pMsg, Channel_TypeDef c
 		return;
 	}
 
-	uint16_t dataHigher = pMsg->Data[byteOffset];
-	uint16_t dataLower;
+	uint16_t dataLower = pMsg->Data[byteOffset];
+	uint16_t dataHigher;
 	if (byteLength == 1) {
-		actualDataStorage[channel] = dataHigher;
+		actualDataStorage[channel] = dataLower;
 	} else if (byteLength==2){
-		dataLower = pMsg->Data[byteOffset+1];
+		dataHigher = pMsg->Data[byteOffset+1];
 		actualDataStorage[channel] = (dataHigher<<8);
 		actualDataStorage[channel] |= (dataLower & 0x00FF);
 	}
