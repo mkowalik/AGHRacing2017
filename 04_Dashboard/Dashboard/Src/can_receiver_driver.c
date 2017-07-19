@@ -12,11 +12,17 @@ static volatile CanRxMsgTypeDef rx_msg;
 
 static volatile FIFOQueue* pMsgQueue;
 
-static volatile uint8_t waitingForInterrupt = 0;
+static volatile uint32_t canError;
+static volatile HAL_CAN_StateTypeDef canState;
 
 // Overriding weak function from stm32f0xx_hal_can.c file
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 	CAN_ReceiverDriver_receiveITHandler();
+}
+
+// Overriding weak function from stm32f0xx_hal_can.c file
+void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan){
+	canError = HAL_CAN_GetError(hcan);
 }
 
 static void filtersConfiguration(){
@@ -60,34 +66,27 @@ void CAN_ReceiverDriver_init(volatile FIFOQueue* pMsgQueueArg){
 	hcan.pRxMsg = (CanRxMsgTypeDef*) &rx_msg;
 
 	HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
-	waitingForInterrupt = 1;
 
 }
 
-uint32_t counter = 0;
-HAL_StatusTypeDef status;
 
 void CAN_ReceiverDriver_receiveITHandler(){
 
-	counter++;
-
 	if ((hcan.pRxMsg->IDE != CAN_USED_ID) || (hcan.pRxMsg->RTR != CAN_RTR_DATA)) {
-		status = HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
-		waitingForInterrupt = 1;
+		// For some reason RTR Data (shouldn't be in our system)
+		canState = HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+
 	} else if (FIFOQueue_enqueue(pMsgQueue, *(hcan.pRxMsg))==FIFOStatus_OK){
-		status = HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
-		waitingForInterrupt = 1;
-	} else {
-		waitingForInterrupt = 0;
+		canState = HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 	}
 
 }
 
 void CAN_ReceiverDriver_queueProcessedNotifier(){
 
-	if (waitingForInterrupt == 0) {
+	canState = HAL_CAN_GetState(&hcan);
+	if (canState == HAL_CAN_STATE_READY) {
 		HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
-		waitingForInterrupt = 1;
 	}
 
 }

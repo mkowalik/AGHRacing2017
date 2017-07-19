@@ -47,8 +47,8 @@ void SenderThread::run(){
         msg.rtr = 0;
         msg.dlc = 8;
         msg.data[0] = msg.data[1] = msg.data[2] = msg.data[3] = msg.data[4] = msg.data[5] = msg.data[6] = msg.data[7] = 0;
-        msg.data[0] = (((unsigned int)rpm->value()) >> 8) & 0xFF;
-        msg.data[1] = ((unsigned int)rpm->value()) & 0xFF;
+        msg.data[1] = (((unsigned int)rpm->value()) >> 8) & 0xFF;
+        msg.data[0] = ((unsigned int)rpm->value()) & 0xFF;
 
         EUSB2CAN_Status s = canHandle->canWrite(&msg);
         s = canHandle->flush();
@@ -56,16 +56,16 @@ void SenderThread::run(){
         msg.id = 0x602;
         msg.data[0] = msg.data[1] = msg.data[2] = msg.data[3] = msg.data[4] = msg.data[5] = msg.data[6] = msg.data[7] = 0;
         msg.data[4] = ((unsigned int)(oil->value()*16)) & 0xFF;
-        msg.data[6] = (((unsigned int)clt->value()) >> 8) & 0xFF;
-        msg.data[7] = ((unsigned int)clt->value()) & 0xFF;
+        msg.data[7] = (((unsigned int)clt->value()) >> 8) & 0xFF;
+        msg.data[6] = ((unsigned int)clt->value()) & 0xFF;
 
         s = canHandle->canWrite(&msg);
         s = canHandle->flush();
 
         msg.id = 0x604;
         msg.data[0] = msg.data[1] = msg.data[2] = msg.data[3] = msg.data[4] = msg.data[5] = msg.data[6] = msg.data[7] = 0;
-        msg.data[2] = (((unsigned int)(batt->value()*37)) >> 8) & 0xFF;
-        msg.data[3] = ((unsigned int)(batt->value()*37)) & 0xFF;
+        msg.data[3] = (((unsigned int)(batt->value()*37)) >> 8) & 0xFF;
+        msg.data[2] = ((unsigned int)(batt->value()*37)) & 0xFF;
 
 //        std::cout << (int)msg.data[2] << ";" << (int)msg.data[3] << std::endl;
 

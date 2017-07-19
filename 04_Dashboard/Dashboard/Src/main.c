@@ -128,6 +128,8 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
+  HAL_Delay(100);
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -155,7 +157,6 @@ int main(void)
   actualTime.DayLightSaving = RTC_DAYLIGHTSAVING_NONE;
 
   HAL_RTC_SetTime(&hrtc, (RTC_TimeTypeDef*)&actualTime, RTC_FORMAT_BIN);
-  HAL_RTCStateTypeDef srtc = HAL_RTC_GetState(&hrtc);
 
   startProcedure();
 
@@ -174,16 +175,15 @@ int main(void)
 
 	  ActualDataProvider_thread();
 
-
 	  if (timeCompare(ActualDataProvider_getDataArrivalTime(RPM_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
-		  //assuming no divider, multiplier, offset
+//		  assuming no divider, multiplier, offset
 		  RPMLeds_Driver_displayRPM(ActualDataProvider_getValue(RPM_DATA_CHANNEL));
 	  } else {
 		  RPMLeds_Driver_offDisplay();
 	  }
 
 	  if (timeCompare(ActualDataProvider_getDataArrivalTime(GEAR_DATA_CHANNEL), actualTime, CHANNEL_TIMEOUT) == 1){
-		  //assuming no divider, multiplier, offset
+//		  assuming no divider, multiplier, offset
 		  GearDisplay_Driver_displayGear(ActualDataProvider_getValue(GEAR_DATA_CHANNEL), ActualDataProvider_getValue(GEAR_DATA_CHANNEL)==0);
 	  } else {
 		  GearDisplay_Driver_offDisplay();
@@ -251,14 +251,14 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks 
     */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48|RCC_OSCILLATORTYPE_LSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI48;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL5;
-  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV6;
+  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);

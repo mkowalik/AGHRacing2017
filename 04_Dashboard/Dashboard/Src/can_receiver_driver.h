@@ -23,5 +23,6 @@
 void CAN_ReceiverDriver_init(volatile FIFOQueue* psgQueueArg);
 void CAN_ReceiverDriver_receiveITHandler();
 void CAN_ReceiverDriver_queueProcessedNotifier();
+void CAN_ReceiverDriver_thread();
 
 #endif /* CAN_RECEIVER_DRIVER_H_ */
