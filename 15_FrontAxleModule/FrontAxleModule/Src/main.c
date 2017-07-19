@@ -71,7 +71,6 @@ void SystemClock_Config(void);
 int main(void)
 {
 
-
   /* USER CODE BEGIN 1 */
 	TM_MPU6050_t MPU6050_Data;
 	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
@@ -80,8 +79,7 @@ int main(void)
   /* MCU Configuration----------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
-	HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 

@@ -1,10 +1,10 @@
 #MicroXplorer Configuration settings - do not modify
 CAN.BS1=CAN_BS1_14TQ
 CAN.BS2=CAN_BS2_5TQ
-CAN.CalculateTimeBit=1000
-CAN.CalculateTimeQuantum=50.0
+CAN.CalculateTimeBit=4000
+CAN.CalculateTimeQuantum=200.0
 CAN.IPParameters=CalculateTimeQuantum,CalculateTimeBit,Prescaler,BS1,BS2,SJW
-CAN.Prescaler=2
+CAN.Prescaler=8
 CAN.SJW=CAN_SJW_3TQ
 File.Version=6
 I2C1.IPParameters=Timing
@@ -103,7 +103,7 @@ ProjectManager.ProjectFileName=FrontAxleModule.ioc
 ProjectManager.ProjectName=FrontAxleModule
 ProjectManager.StackSize=0x400
 ProjectManager.TargetToolchain=TrueSTUDIO
-ProjectManager.ToolChainLocation=D\:\\AGH_Racing\\AGHRacing2017Local\\15_FrontAxleModule\\FrontAxleModule
+ProjectManager.ToolChainLocation=
 ProjectManager.UnderRoot=true
 ProjectManager.functionlistsort=1-MX_GPIO_Init-GPIO-false-HAL,2-SystemClock_Config-RCC-false-HAL,3-MX_CAN_Init-CAN-false-HAL,4-MX_I2C1_Init-I2C1-false-HAL,5-MX_TIM17_Init-TIM17-false-HAL
 RCC.AHBFreq_Value=40000000
