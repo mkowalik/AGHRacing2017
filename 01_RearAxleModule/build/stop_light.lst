@@ -1,0 +1,206 @@
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"stop_light.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.StopLight_Write,"ax",%progbits
+  16              		.align	1
+  17              		.syntax unified
+  18              		.code	16
+  19              		.thumb_func
+  20              		.fpu softvfp
+  22              	StopLight_Write:
+  23              	.LFB35:
+  24              		.file 1 "Src/stop_light.c"
+   1:Src/stop_light.c **** /*
+   2:Src/stop_light.c ****  * stop_light.c
+   3:Src/stop_light.c ****  *
+   4:Src/stop_light.c ****  *  Created on: May 11, 2017
+   5:Src/stop_light.c ****  *      Author: Wojciech
+   6:Src/stop_light.c ****  */
+   7:Src/stop_light.c **** 
+   8:Src/stop_light.c **** #include "stop_light.h"
+   9:Src/stop_light.c **** #include "main.h"
+  10:Src/stop_light.c **** #include "gpio.h"
+  11:Src/stop_light.c **** 
+  12:Src/stop_light.c **** typedef enum StopLight_value{
+  13:Src/stop_light.c **** 	OFF = 0,
+  14:Src/stop_light.c **** 	ON
+  15:Src/stop_light.c **** }StopLight_value_t;
+  16:Src/stop_light.c **** 
+  17:Src/stop_light.c **** static void StopLight_Write(StopLight_value_t value){
+  25              		.loc 1 17 0
+  26              		.cfi_startproc
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              	.LVL0:
+  30 0000 10B5     		push	{r4, lr}
+  31              	.LCFI0:
+  32              		.cfi_def_cfa_offset 8
+  33              		.cfi_offset 4, -8
+  34              		.cfi_offset 14, -4
+  18:Src/stop_light.c **** 
+  19:Src/stop_light.c **** 	switch(value){
+  35              		.loc 1 19 0
+  36 0002 0028     		cmp	r0, #0
+  37 0004 02D0     		beq	.L3
+  38 0006 0128     		cmp	r0, #1
+  39 0008 06D0     		beq	.L4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 2
+
+
+  40              	.LVL1:
+  41              	.L1:
+  20:Src/stop_light.c **** 
+  21:Src/stop_light.c **** 	case OFF:
+  22:Src/stop_light.c **** 		HAL_GPIO_WritePin(STOP_LIGHT_GPIO_Port, STOP_LIGHT_Pin, GPIO_PIN_RESET);
+  23:Src/stop_light.c **** 		break;
+  24:Src/stop_light.c **** 
+  25:Src/stop_light.c **** 	case ON:
+  26:Src/stop_light.c **** 		HAL_GPIO_WritePin(STOP_LIGHT_GPIO_Port, STOP_LIGHT_Pin, GPIO_PIN_SET);
+  27:Src/stop_light.c **** 		break;
+  28:Src/stop_light.c **** 
+  29:Src/stop_light.c **** 	}
+  30:Src/stop_light.c **** 
+  31:Src/stop_light.c **** }
+  42              		.loc 1 31 0
+  43              		@ sp needed
+  44 000a 10BD     		pop	{r4, pc}
+  45              	.LVL2:
+  46              	.L3:
+  22:Src/stop_light.c **** 		break;
+  47              		.loc 1 22 0
+  48 000c 0022     		movs	r2, #0
+  49 000e 0121     		movs	r1, #1
+  50 0010 0448     		ldr	r0, .L5
+  51              	.LVL3:
+  52 0012 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  53              	.LVL4:
+  23:Src/stop_light.c **** 
+  54              		.loc 1 23 0
+  55 0016 F8E7     		b	.L1
+  56              	.LVL5:
+  57              	.L4:
+  26:Src/stop_light.c **** 		break;
+  58              		.loc 1 26 0
+  59 0018 0122     		movs	r2, #1
+  60 001a 0121     		movs	r1, #1
+  61 001c 0148     		ldr	r0, .L5
+  62              	.LVL6:
+  63 001e FFF7FEFF 		bl	HAL_GPIO_WritePin
+  64              	.LVL7:
+  65              		.loc 1 31 0
+  66 0022 F2E7     		b	.L1
+  67              	.L6:
+  68              		.align	2
+  69              	.L5:
+  70 0024 00040048 		.word	1207960576
+  71              		.cfi_endproc
+  72              	.LFE35:
+  74              		.section	.text.StopLight_Set,"ax",%progbits
+  75              		.align	1
+  76              		.global	StopLight_Set
+  77              		.syntax unified
+  78              		.code	16
+  79              		.thumb_func
+  80              		.fpu softvfp
+  82              	StopLight_Set:
+  83              	.LFB36:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 3
+
+
+  32:Src/stop_light.c **** 
+  33:Src/stop_light.c **** void StopLight_Set(void){
+  84              		.loc 1 33 0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88 0000 10B5     		push	{r4, lr}
+  89              	.LCFI1:
+  90              		.cfi_def_cfa_offset 8
+  91              		.cfi_offset 4, -8
+  92              		.cfi_offset 14, -4
+  34:Src/stop_light.c **** 	StopLight_Write(ON);
+  93              		.loc 1 34 0
+  94 0002 0120     		movs	r0, #1
+  95 0004 FFF7FEFF 		bl	StopLight_Write
+  96              	.LVL8:
+  35:Src/stop_light.c **** }
+  97              		.loc 1 35 0
+  98              		@ sp needed
+  99 0008 10BD     		pop	{r4, pc}
+ 100              		.cfi_endproc
+ 101              	.LFE36:
+ 103              		.section	.text.StopLight_Clr,"ax",%progbits
+ 104              		.align	1
+ 105              		.global	StopLight_Clr
+ 106              		.syntax unified
+ 107              		.code	16
+ 108              		.thumb_func
+ 109              		.fpu softvfp
+ 111              	StopLight_Clr:
+ 112              	.LFB37:
+  36:Src/stop_light.c **** 
+  37:Src/stop_light.c **** void StopLight_Clr(void){
+ 113              		.loc 1 37 0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117 0000 10B5     		push	{r4, lr}
+ 118              	.LCFI2:
+ 119              		.cfi_def_cfa_offset 8
+ 120              		.cfi_offset 4, -8
+ 121              		.cfi_offset 14, -4
+  38:Src/stop_light.c **** 	StopLight_Write(OFF);
+ 122              		.loc 1 38 0
+ 123 0002 0020     		movs	r0, #0
+ 124 0004 FFF7FEFF 		bl	StopLight_Write
+ 125              	.LVL9:
+  39:Src/stop_light.c **** }
+ 126              		.loc 1 39 0
+ 127              		@ sp needed
+ 128 0008 10BD     		pop	{r4, pc}
+ 129              		.cfi_endproc
+ 130              	.LFE37:
+ 132              		.text
+ 133              	.Letext0:
+ 134              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 135              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 4
+
+
+ 136              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h"
+ 137              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f042x6.h"
+ 138              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 139              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 140              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-eab
+ 141              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 142              		.file 10 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stop_light.c
+C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:16     .text.StopLight_Write:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:22     .text.StopLight_Write:00000000 StopLight_Write
+C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:70     .text.StopLight_Write:00000024 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:75     .text.StopLight_Set:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:82     .text.StopLight_Set:00000000 StopLight_Set
+C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:104    .text.StopLight_Clr:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:111    .text.StopLight_Clr:00000000 StopLight_Clr
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin

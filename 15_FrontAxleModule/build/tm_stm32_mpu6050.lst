@@ -1,0 +1,3012 @@
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"tm_stm32_mpu6050.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.TM_MPU6050_SetGyroscope,"ax",%progbits
+  16              		.align	1
+  17              		.global	TM_MPU6050_SetGyroscope
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	TM_MPU6050_SetGyroscope:
+  24              	.LFB36:
+  25              		.file 1 "Src/tm_stm32_mpu6050.c"
+   1:Src/tm_stm32_mpu6050.c **** /**	
+   2:Src/tm_stm32_mpu6050.c ****  * |----------------------------------------------------------------------
+   3:Src/tm_stm32_mpu6050.c ****  * | Copyright (c) 2016 Tilen Majerle
+   4:Src/tm_stm32_mpu6050.c ****  * |  
+   5:Src/tm_stm32_mpu6050.c ****  * | Permission is hereby granted, free of charge, to any person
+   6:Src/tm_stm32_mpu6050.c ****  * | obtaining a copy of this software and associated documentation
+   7:Src/tm_stm32_mpu6050.c ****  * | files (the "Software"), to deal in the Software without restriction,
+   8:Src/tm_stm32_mpu6050.c ****  * | including without limitation the rights to use, copy, modify, merge,
+   9:Src/tm_stm32_mpu6050.c ****  * | publish, distribute, sublicense, and/or sell copies of the Software, 
+  10:Src/tm_stm32_mpu6050.c ****  * | and to permit persons to whom the Software is furnished to do so, 
+  11:Src/tm_stm32_mpu6050.c ****  * | subject to the following conditions:
+  12:Src/tm_stm32_mpu6050.c ****  * | 
+  13:Src/tm_stm32_mpu6050.c ****  * | The above copyright notice and this permission notice shall be
+  14:Src/tm_stm32_mpu6050.c ****  * | included in all copies or substantial portions of the Software.
+  15:Src/tm_stm32_mpu6050.c ****  * | 
+  16:Src/tm_stm32_mpu6050.c ****  * | THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  17:Src/tm_stm32_mpu6050.c ****  * | EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+  18:Src/tm_stm32_mpu6050.c ****  * | OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+  19:Src/tm_stm32_mpu6050.c ****  * | AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  20:Src/tm_stm32_mpu6050.c ****  * | HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+  21:Src/tm_stm32_mpu6050.c ****  * | WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+  22:Src/tm_stm32_mpu6050.c ****  * | FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+  23:Src/tm_stm32_mpu6050.c ****  * | OTHER DEALINGS IN THE SOFTWARE.
+  24:Src/tm_stm32_mpu6050.c ****  * |----------------------------------------------------------------------
+  25:Src/tm_stm32_mpu6050.c ****  */
+  26:Src/tm_stm32_mpu6050.c **** #include "tm_stm32_mpu6050.h"
+  27:Src/tm_stm32_mpu6050.c **** 
+  28:Src/tm_stm32_mpu6050.c **** /* Default I2C address */
+  29:Src/tm_stm32_mpu6050.c **** #define MPU6050_I2C_ADDR			0xD0
+  30:Src/tm_stm32_mpu6050.c **** 
+  31:Src/tm_stm32_mpu6050.c **** /* Who I am register value */
+  32:Src/tm_stm32_mpu6050.c **** #define MPU6050_I_AM				0x68
+  33:Src/tm_stm32_mpu6050.c **** 
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 2
+
+
+  34:Src/tm_stm32_mpu6050.c **** /* MPU6050 registers */
+  35:Src/tm_stm32_mpu6050.c **** #define MPU6050_AUX_VDDIO			0x01
+  36:Src/tm_stm32_mpu6050.c **** #define MPU6050_SMPLRT_DIV			0x19
+  37:Src/tm_stm32_mpu6050.c **** #define MPU6050_CONFIG				0x1A
+  38:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_CONFIG			0x1B
+  39:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCEL_CONFIG		0x1C
+  40:Src/tm_stm32_mpu6050.c **** #define MPU6050_MOTION_THRESH		0x1F
+  41:Src/tm_stm32_mpu6050.c **** #define MPU6050_INT_PIN_CFG			0x37
+  42:Src/tm_stm32_mpu6050.c **** #define MPU6050_INT_ENABLE			0x38
+  43:Src/tm_stm32_mpu6050.c **** #define MPU6050_INT_STATUS			0x3A
+  44:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCEL_XOUT_H		0x3B
+  45:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCEL_XOUT_L		0x3C
+  46:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCEL_YOUT_H		0x3D
+  47:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCEL_YOUT_L		0x3E
+  48:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCEL_ZOUT_H		0x3F
+  49:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCEL_ZOUT_L		0x40
+  50:Src/tm_stm32_mpu6050.c **** #define MPU6050_TEMP_OUT_H			0x41
+  51:Src/tm_stm32_mpu6050.c **** #define MPU6050_TEMP_OUT_L			0x42
+  52:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_XOUT_H			0x43
+  53:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_XOUT_L			0x44
+  54:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_YOUT_H			0x45
+  55:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_YOUT_L			0x46
+  56:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_ZOUT_H			0x47
+  57:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_ZOUT_L			0x48
+  58:Src/tm_stm32_mpu6050.c **** #define MPU6050_MOT_DETECT_STATUS	0x61
+  59:Src/tm_stm32_mpu6050.c **** #define MPU6050_SIGNAL_PATH_RESET	0x68
+  60:Src/tm_stm32_mpu6050.c **** #define MPU6050_MOT_DETECT_CTRL		0x69
+  61:Src/tm_stm32_mpu6050.c **** #define MPU6050_USER_CTRL			0x6A
+  62:Src/tm_stm32_mpu6050.c **** #define MPU6050_PWR_MGMT_1			0x6B
+  63:Src/tm_stm32_mpu6050.c **** #define MPU6050_PWR_MGMT_2			0x6C
+  64:Src/tm_stm32_mpu6050.c **** #define MPU6050_FIFO_COUNTH			0x72
+  65:Src/tm_stm32_mpu6050.c **** #define MPU6050_FIFO_COUNTL			0x73
+  66:Src/tm_stm32_mpu6050.c **** #define MPU6050_FIFO_R_W			0x74
+  67:Src/tm_stm32_mpu6050.c **** #define MPU6050_WHO_AM_I			0x75
+  68:Src/tm_stm32_mpu6050.c **** 
+  69:Src/tm_stm32_mpu6050.c **** /* Gyro sensitivities in degrees/s */
+  70:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_SENS_250		((double) 131)
+  71:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_SENS_500		((double) 65.5)
+  72:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_SENS_1000		((double) 32.8)
+  73:Src/tm_stm32_mpu6050.c **** #define MPU6050_GYRO_SENS_2000		((double) 16.4)
+  74:Src/tm_stm32_mpu6050.c **** 
+  75:Src/tm_stm32_mpu6050.c **** /* Acce sensitivities in g/s */
+  76:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCE_SENS_2			((double) 16384)
+  77:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCE_SENS_4			((double) 8192)
+  78:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCE_SENS_8			((double) 4096)
+  79:Src/tm_stm32_mpu6050.c **** #define MPU6050_ACCE_SENS_16		((double) 2048)
+  80:Src/tm_stm32_mpu6050.c **** 
+  81:Src/tm_stm32_mpu6050.c **** 
+  82:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_Init(TM_MPU6050_t* DataStruct, TM_MPU6050_Device_t DeviceNumber, TM_
+  83:Src/tm_stm32_mpu6050.c **** 	uint8_t temp;
+  84:Src/tm_stm32_mpu6050.c **** 	uint8_t d[2];
+  85:Src/tm_stm32_mpu6050.c **** 	
+  86:Src/tm_stm32_mpu6050.c **** 	/* Format I2C address */
+  87:Src/tm_stm32_mpu6050.c **** 	DataStruct->Address = MPU6050_I2C_ADDR | (uint8_t)DeviceNumber;
+  88:Src/tm_stm32_mpu6050.c **** 	
+  89:Src/tm_stm32_mpu6050.c **** 	/* Initialize I2C */
+  90:Src/tm_stm32_mpu6050.c **** 	MX_I2C1_Init();
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 3
+
+
+  91:Src/tm_stm32_mpu6050.c **** 	
+  92:Src/tm_stm32_mpu6050.c **** 	/* Check if device is connected */
+  93:Src/tm_stm32_mpu6050.c **** 	if(HAL_I2C_IsDeviceReady(&MPU6050_I2C_INSTANCE,DataStruct->Address,2,5) != HAL_OK){
+  94:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_DeviceNotConnected;
+  95:Src/tm_stm32_mpu6050.c **** 	}
+  96:Src/tm_stm32_mpu6050.c **** 
+  97:Src/tm_stm32_mpu6050.c **** 	/* Check who am I */
+  98:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_WHO_AM_I, 1, &temp, 1, 10
+  99:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 100:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_DeviceInvalid;
+ 101:Src/tm_stm32_mpu6050.c **** 	}
+ 102:Src/tm_stm32_mpu6050.c **** 	if(temp != MPU6050_I_AM){
+ 103:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 104:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_DeviceInvalid;
+ 105:Src/tm_stm32_mpu6050.c **** 	}
+ 106:Src/tm_stm32_mpu6050.c **** 
+ 107:Src/tm_stm32_mpu6050.c **** 	/* Wakeup MPU6050 */
+ 108:Src/tm_stm32_mpu6050.c **** 
+ 109:Src/tm_stm32_mpu6050.c **** 	/* Format array to send */
+ 110:Src/tm_stm32_mpu6050.c **** 	d[0] = MPU6050_PWR_MGMT_1;
+ 111:Src/tm_stm32_mpu6050.c **** 	d[1] = 0x00;
+ 112:Src/tm_stm32_mpu6050.c **** 	/* Try to transmit via I2C */
+ 113:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Master_Transmit(&MPU6050_I2C_INSTANCE, DataStruct->Address, (uint8_t *)d, 2, 1000) != 
+ 114:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 115:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 116:Src/tm_stm32_mpu6050.c **** 	}
+ 117:Src/tm_stm32_mpu6050.c **** 	
+ 118:Src/tm_stm32_mpu6050.c **** 	/* Set sample rate to 1kHz */
+ 119:Src/tm_stm32_mpu6050.c **** 	TM_MPU6050_SetDataRate(DataStruct, TM_MPU6050_DataRate_1KHz);
+ 120:Src/tm_stm32_mpu6050.c **** 	
+ 121:Src/tm_stm32_mpu6050.c **** 	/* Config accelerometer */
+ 122:Src/tm_stm32_mpu6050.c **** 	TM_MPU6050_SetAccelerometer(DataStruct, AccelerometerSensitivity);
+ 123:Src/tm_stm32_mpu6050.c **** 	
+ 124:Src/tm_stm32_mpu6050.c **** 	/* Config accelerometer */
+ 125:Src/tm_stm32_mpu6050.c **** 	TM_MPU6050_SetGyroscope(DataStruct, GyroscopeSensitivity);
+ 126:Src/tm_stm32_mpu6050.c **** 	
+ 127:Src/tm_stm32_mpu6050.c **** 	/* Config Digital Low Pass Filter */
+ 128:Src/tm_stm32_mpu6050.c **** 	TM_MPU6050_SetDigitalLowPassFilter(DataStruct, Bandwidth);
+ 129:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 130:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 131:Src/tm_stm32_mpu6050.c **** }
+ 132:Src/tm_stm32_mpu6050.c **** 
+ 133:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_SetGyroscope(TM_MPU6050_t* DataStruct, TM_MPU6050_Gyroscope_t Gyrosc
+  26              		.loc 1 133 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 8
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 30B5     		push	{r4, r5, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 12
+  34              		.cfi_offset 4, -12
+  35              		.cfi_offset 5, -8
+  36              		.cfi_offset 14, -4
+  37 0002 87B0     		sub	sp, sp, #28
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 40
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 4
+
+
+  40 0004 0400     		movs	r4, r0
+  41 0006 0D00     		movs	r5, r1
+ 134:Src/tm_stm32_mpu6050.c **** 	uint8_t temp;
+ 135:Src/tm_stm32_mpu6050.c **** 	
+ 136:Src/tm_stm32_mpu6050.c **** 	/* Config gyroscope */
+ 137:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_GYRO_CONFIG, 1, &temp, 1,
+  42              		.loc 1 137 0
+  43 0008 0178     		ldrb	r1, [r0]
+  44              	.LVL1:
+  45 000a FA23     		movs	r3, #250
+  46 000c 9B00     		lsls	r3, r3, #2
+  47 000e 0293     		str	r3, [sp, #8]
+  48 0010 0123     		movs	r3, #1
+  49 0012 0193     		str	r3, [sp, #4]
+  50 0014 1633     		adds	r3, r3, #22
+  51 0016 6B44     		add	r3, r3, sp
+  52 0018 0093     		str	r3, [sp]
+  53 001a 0123     		movs	r3, #1
+  54 001c 1B22     		movs	r2, #27
+  55 001e 2348     		ldr	r0, .L12
+  56              	.LVL2:
+  57 0020 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+  58              	.LVL3:
+  59 0024 0028     		cmp	r0, #0
+  60 0026 02D0     		beq	.L11
+ 138:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 139:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+  61              		.loc 1 139 0
+  62 0028 0120     		movs	r0, #1
+  63              	.LVL4:
+  64              	.L2:
+ 140:Src/tm_stm32_mpu6050.c **** 	}
+ 141:Src/tm_stm32_mpu6050.c **** 	temp = (temp & 0xE7) | (uint8_t)GyroscopeSensitivity << 3;
+ 142:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_GYRO_CONFIG, 1, &temp, 1
+ 143:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 144:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 145:Src/tm_stm32_mpu6050.c **** 	}
+ 146:Src/tm_stm32_mpu6050.c **** 	
+ 147:Src/tm_stm32_mpu6050.c **** 	switch (GyroscopeSensitivity) {
+ 148:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_250s:
+ 149:Src/tm_stm32_mpu6050.c **** 			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_250;
+ 150:Src/tm_stm32_mpu6050.c **** 			break;
+ 151:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_500s:
+ 152:Src/tm_stm32_mpu6050.c **** 			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_500;
+ 153:Src/tm_stm32_mpu6050.c **** 			break;
+ 154:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_1000s:
+ 155:Src/tm_stm32_mpu6050.c **** 			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_1000;
+ 156:Src/tm_stm32_mpu6050.c **** 			break;
+ 157:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_2000s:
+ 158:Src/tm_stm32_mpu6050.c **** 			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_2000;
+ 159:Src/tm_stm32_mpu6050.c **** 		default:
+ 160:Src/tm_stm32_mpu6050.c **** 			break;
+ 161:Src/tm_stm32_mpu6050.c **** 	}
+ 162:Src/tm_stm32_mpu6050.c **** 	
+ 163:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 164:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 165:Src/tm_stm32_mpu6050.c **** }
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 5
+
+
+  65              		.loc 1 165 0
+  66 002a 07B0     		add	sp, sp, #28
+  67              		@ sp needed
+  68 002c 30BD     		pop	{r4, r5, pc}
+  69              	.LVL5:
+  70              	.L11:
+ 141:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_GYRO_CONFIG, 1, &temp, 1
+  71              		.loc 1 141 0
+  72 002e 1722     		movs	r2, #23
+  73 0030 6A44     		add	r2, r2, sp
+  74 0032 1378     		ldrb	r3, [r2]
+  75 0034 1821     		movs	r1, #24
+  76 0036 8B43     		bics	r3, r1
+  77 0038 5BB2     		sxtb	r3, r3
+  78 003a E900     		lsls	r1, r5, #3
+  79 003c 0B43     		orrs	r3, r1
+  80 003e 1370     		strb	r3, [r2]
+ 142:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+  81              		.loc 1 142 0
+  82 0040 2178     		ldrb	r1, [r4]
+  83 0042 FA23     		movs	r3, #250
+  84 0044 9B00     		lsls	r3, r3, #2
+  85 0046 0293     		str	r3, [sp, #8]
+  86 0048 0123     		movs	r3, #1
+  87 004a 0193     		str	r3, [sp, #4]
+  88 004c 0092     		str	r2, [sp]
+  89 004e 1B22     		movs	r2, #27
+  90 0050 1648     		ldr	r0, .L12
+  91 0052 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+  92              	.LVL6:
+  93 0056 0028     		cmp	r0, #0
+  94 0058 25D1     		bne	.L8
+ 147:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_250s:
+  95              		.loc 1 147 0
+  96 005a 012D     		cmp	r5, #1
+  97 005c 0ED0     		beq	.L3
+  98 005e 002D     		cmp	r5, #0
+  99 0060 05D0     		beq	.L4
+ 100 0062 022D     		cmp	r5, #2
+ 101 0064 11D0     		beq	.L5
+ 102 0066 032D     		cmp	r5, #3
+ 103 0068 16D0     		beq	.L6
+ 164:Src/tm_stm32_mpu6050.c **** }
+ 104              		.loc 1 164 0
+ 105 006a 0020     		movs	r0, #0
+ 106 006c DDE7     		b	.L2
+ 107              	.L4:
+ 149:Src/tm_stm32_mpu6050.c **** 			break;
+ 108              		.loc 1 149 0
+ 109 006e F034     		adds	r4, r4, #240
+ 110              	.LVL7:
+ 111 0070 0F4A     		ldr	r2, .L12+4
+ 112 0072 104B     		ldr	r3, .L12+8
+ 113 0074 2260     		str	r2, [r4]
+ 114 0076 6360     		str	r3, [r4, #4]
+ 164:Src/tm_stm32_mpu6050.c **** }
+ 115              		.loc 1 164 0
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 6
+
+
+ 116 0078 0020     		movs	r0, #0
+ 150:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_500s:
+ 117              		.loc 1 150 0
+ 118 007a D6E7     		b	.L2
+ 119              	.LVL8:
+ 120              	.L3:
+ 152:Src/tm_stm32_mpu6050.c **** 			break;
+ 121              		.loc 1 152 0
+ 122 007c F034     		adds	r4, r4, #240
+ 123              	.LVL9:
+ 124 007e 0C4A     		ldr	r2, .L12+4
+ 125 0080 0D4B     		ldr	r3, .L12+12
+ 126 0082 2260     		str	r2, [r4]
+ 127 0084 6360     		str	r3, [r4, #4]
+ 164:Src/tm_stm32_mpu6050.c **** }
+ 128              		.loc 1 164 0
+ 129 0086 0020     		movs	r0, #0
+ 153:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_1000s:
+ 130              		.loc 1 153 0
+ 131 0088 CFE7     		b	.L2
+ 132              	.LVL10:
+ 133              	.L5:
+ 155:Src/tm_stm32_mpu6050.c **** 			break;
+ 134              		.loc 1 155 0
+ 135 008a F034     		adds	r4, r4, #240
+ 136              	.LVL11:
+ 137 008c 0B4A     		ldr	r2, .L12+16
+ 138 008e 0C4B     		ldr	r3, .L12+20
+ 139 0090 2260     		str	r2, [r4]
+ 140 0092 6360     		str	r3, [r4, #4]
+ 164:Src/tm_stm32_mpu6050.c **** }
+ 141              		.loc 1 164 0
+ 142 0094 0020     		movs	r0, #0
+ 156:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Gyroscope_2000s:
+ 143              		.loc 1 156 0
+ 144 0096 C8E7     		b	.L2
+ 145              	.LVL12:
+ 146              	.L6:
+ 158:Src/tm_stm32_mpu6050.c **** 		default:
+ 147              		.loc 1 158 0
+ 148 0098 F034     		adds	r4, r4, #240
+ 149              	.LVL13:
+ 150 009a 084A     		ldr	r2, .L12+16
+ 151 009c 094B     		ldr	r3, .L12+24
+ 152 009e 2260     		str	r2, [r4]
+ 153 00a0 6360     		str	r3, [r4, #4]
+ 164:Src/tm_stm32_mpu6050.c **** }
+ 154              		.loc 1 164 0
+ 155 00a2 0020     		movs	r0, #0
+ 156 00a4 C1E7     		b	.L2
+ 157              	.LVL14:
+ 158              	.L8:
+ 144:Src/tm_stm32_mpu6050.c **** 	}
+ 159              		.loc 1 144 0
+ 160 00a6 0120     		movs	r0, #1
+ 161 00a8 BFE7     		b	.L2
+ 162              	.L13:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 7
+
+
+ 163 00aa C046     		.align	2
+ 164              	.L12:
+ 165 00ac 00000000 		.word	hi2c1
+ 166 00b0 71424A9E 		.word	-1639300495
+ 167 00b4 65447F3F 		.word	1065305189
+ 168 00b8 65448F3F 		.word	1066353765
+ 169 00bc 391F83F3 		.word	-209510599
+ 170 00c0 31389F3F 		.word	1067399217
+ 171 00c4 3138AF3F 		.word	1068447793
+ 172              		.cfi_endproc
+ 173              	.LFE36:
+ 175              		.section	.text.TM_MPU6050_SetAccelerometer,"ax",%progbits
+ 176              		.align	1
+ 177              		.global	TM_MPU6050_SetAccelerometer
+ 178              		.syntax unified
+ 179              		.code	16
+ 180              		.thumb_func
+ 181              		.fpu softvfp
+ 183              	TM_MPU6050_SetAccelerometer:
+ 184              	.LFB37:
+ 166:Src/tm_stm32_mpu6050.c **** 
+ 167:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_SetAccelerometer(TM_MPU6050_t* DataStruct, TM_MPU6050_Accelerometer_
+ 185              		.loc 1 167 0
+ 186              		.cfi_startproc
+ 187              		@ args = 0, pretend = 0, frame = 8
+ 188              		@ frame_needed = 0, uses_anonymous_args = 0
+ 189              	.LVL15:
+ 190 0000 30B5     		push	{r4, r5, lr}
+ 191              	.LCFI2:
+ 192              		.cfi_def_cfa_offset 12
+ 193              		.cfi_offset 4, -12
+ 194              		.cfi_offset 5, -8
+ 195              		.cfi_offset 14, -4
+ 196 0002 87B0     		sub	sp, sp, #28
+ 197              	.LCFI3:
+ 198              		.cfi_def_cfa_offset 40
+ 199 0004 0400     		movs	r4, r0
+ 200 0006 0D00     		movs	r5, r1
+ 168:Src/tm_stm32_mpu6050.c **** 	uint8_t temp;
+ 169:Src/tm_stm32_mpu6050.c **** 	
+ 170:Src/tm_stm32_mpu6050.c **** 	/* Config accelerometer */
+ 171:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_ACCEL_CONFIG, 1, &temp, 1
+ 201              		.loc 1 171 0
+ 202 0008 0178     		ldrb	r1, [r0]
+ 203              	.LVL16:
+ 204 000a FA23     		movs	r3, #250
+ 205 000c 9B00     		lsls	r3, r3, #2
+ 206 000e 0293     		str	r3, [sp, #8]
+ 207 0010 0123     		movs	r3, #1
+ 208 0012 0193     		str	r3, [sp, #4]
+ 209 0014 1633     		adds	r3, r3, #22
+ 210 0016 6B44     		add	r3, r3, sp
+ 211 0018 0093     		str	r3, [sp]
+ 212 001a 0123     		movs	r3, #1
+ 213 001c 1C22     		movs	r2, #28
+ 214 001e 2148     		ldr	r0, .L25
+ 215              	.LVL17:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 8
+
+
+ 216 0020 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 217              	.LVL18:
+ 218 0024 0028     		cmp	r0, #0
+ 219 0026 02D0     		beq	.L24
+ 172:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 173:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 220              		.loc 1 173 0
+ 221 0028 0120     		movs	r0, #1
+ 222              	.L15:
+ 174:Src/tm_stm32_mpu6050.c **** 	}
+ 175:Src/tm_stm32_mpu6050.c **** 	temp = (temp & 0xE7) | (uint8_t)AccelerometerSensitivity << 3;
+ 176:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_ACCEL_CONFIG, 1, &temp, 
+ 177:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 178:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 179:Src/tm_stm32_mpu6050.c **** 	}
+ 180:Src/tm_stm32_mpu6050.c **** 	
+ 181:Src/tm_stm32_mpu6050.c **** 	/* Set sensitivities for multiplying gyro and accelerometer data */
+ 182:Src/tm_stm32_mpu6050.c **** 	switch (AccelerometerSensitivity) {
+ 183:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_2G:
+ 184:Src/tm_stm32_mpu6050.c **** 			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_2;
+ 185:Src/tm_stm32_mpu6050.c **** 			break;
+ 186:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_4G:
+ 187:Src/tm_stm32_mpu6050.c **** 			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_4;
+ 188:Src/tm_stm32_mpu6050.c **** 			break;
+ 189:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_8G:
+ 190:Src/tm_stm32_mpu6050.c **** 			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_8;
+ 191:Src/tm_stm32_mpu6050.c **** 			break;
+ 192:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_16G:
+ 193:Src/tm_stm32_mpu6050.c **** 			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_16;
+ 194:Src/tm_stm32_mpu6050.c **** 		default:
+ 195:Src/tm_stm32_mpu6050.c **** 			break;
+ 196:Src/tm_stm32_mpu6050.c **** 	}
+ 197:Src/tm_stm32_mpu6050.c **** 	
+ 198:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 199:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 200:Src/tm_stm32_mpu6050.c **** }
+ 223              		.loc 1 200 0
+ 224 002a 07B0     		add	sp, sp, #28
+ 225              		@ sp needed
+ 226              	.LVL19:
+ 227 002c 30BD     		pop	{r4, r5, pc}
+ 228              	.LVL20:
+ 229              	.L24:
+ 175:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_ACCEL_CONFIG, 1, &temp, 
+ 230              		.loc 1 175 0
+ 231 002e 1722     		movs	r2, #23
+ 232 0030 6A44     		add	r2, r2, sp
+ 233 0032 1378     		ldrb	r3, [r2]
+ 234 0034 1821     		movs	r1, #24
+ 235 0036 8B43     		bics	r3, r1
+ 236 0038 5BB2     		sxtb	r3, r3
+ 237 003a E900     		lsls	r1, r5, #3
+ 238 003c 0B43     		orrs	r3, r1
+ 239 003e 1370     		strb	r3, [r2]
+ 176:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 240              		.loc 1 176 0
+ 241 0040 2178     		ldrb	r1, [r4]
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 9
+
+
+ 242 0042 FA23     		movs	r3, #250
+ 243 0044 9B00     		lsls	r3, r3, #2
+ 244 0046 0293     		str	r3, [sp, #8]
+ 245 0048 0123     		movs	r3, #1
+ 246 004a 0193     		str	r3, [sp, #4]
+ 247 004c 0092     		str	r2, [sp]
+ 248 004e 1C22     		movs	r2, #28
+ 249 0050 1448     		ldr	r0, .L25
+ 250 0052 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 251              	.LVL21:
+ 252 0056 0028     		cmp	r0, #0
+ 253 0058 22D1     		bne	.L21
+ 182:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_2G:
+ 254              		.loc 1 182 0
+ 255 005a 012D     		cmp	r5, #1
+ 256 005c 0DD0     		beq	.L16
+ 257 005e 002D     		cmp	r5, #0
+ 258 0060 05D0     		beq	.L17
+ 259 0062 022D     		cmp	r5, #2
+ 260 0064 0FD0     		beq	.L18
+ 261 0066 032D     		cmp	r5, #3
+ 262 0068 13D0     		beq	.L19
+ 199:Src/tm_stm32_mpu6050.c **** }
+ 263              		.loc 1 199 0
+ 264 006a 0020     		movs	r0, #0
+ 265 006c DDE7     		b	.L15
+ 266              	.L17:
+ 184:Src/tm_stm32_mpu6050.c **** 			break;
+ 267              		.loc 1 184 0
+ 268 006e 0022     		movs	r2, #0
+ 269 0070 0D4B     		ldr	r3, .L25+4
+ 270 0072 A265     		str	r2, [r4, #88]
+ 271 0074 E365     		str	r3, [r4, #92]
+ 199:Src/tm_stm32_mpu6050.c **** }
+ 272              		.loc 1 199 0
+ 273 0076 0020     		movs	r0, #0
+ 185:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_4G:
+ 274              		.loc 1 185 0
+ 275 0078 D7E7     		b	.L15
+ 276              	.L16:
+ 187:Src/tm_stm32_mpu6050.c **** 			break;
+ 277              		.loc 1 187 0
+ 278 007a 0022     		movs	r2, #0
+ 279 007c 0B4B     		ldr	r3, .L25+8
+ 280 007e A265     		str	r2, [r4, #88]
+ 281 0080 E365     		str	r3, [r4, #92]
+ 199:Src/tm_stm32_mpu6050.c **** }
+ 282              		.loc 1 199 0
+ 283 0082 0020     		movs	r0, #0
+ 188:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_8G:
+ 284              		.loc 1 188 0
+ 285 0084 D1E7     		b	.L15
+ 286              	.L18:
+ 190:Src/tm_stm32_mpu6050.c **** 			break;
+ 287              		.loc 1 190 0
+ 288 0086 0022     		movs	r2, #0
+ 289 0088 094B     		ldr	r3, .L25+12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 10
+
+
+ 290 008a A265     		str	r2, [r4, #88]
+ 291 008c E365     		str	r3, [r4, #92]
+ 199:Src/tm_stm32_mpu6050.c **** }
+ 292              		.loc 1 199 0
+ 293 008e 0020     		movs	r0, #0
+ 191:Src/tm_stm32_mpu6050.c **** 		case TM_MPU6050_Accelerometer_16G:
+ 294              		.loc 1 191 0
+ 295 0090 CBE7     		b	.L15
+ 296              	.L19:
+ 193:Src/tm_stm32_mpu6050.c **** 		default:
+ 297              		.loc 1 193 0
+ 298 0092 0022     		movs	r2, #0
+ 299 0094 FD23     		movs	r3, #253
+ 300 0096 9B05     		lsls	r3, r3, #22
+ 301 0098 A265     		str	r2, [r4, #88]
+ 302 009a E365     		str	r3, [r4, #92]
+ 199:Src/tm_stm32_mpu6050.c **** }
+ 303              		.loc 1 199 0
+ 304 009c 0020     		movs	r0, #0
+ 305 009e C4E7     		b	.L15
+ 306              	.L21:
+ 178:Src/tm_stm32_mpu6050.c **** 	}
+ 307              		.loc 1 178 0
+ 308 00a0 0120     		movs	r0, #1
+ 309 00a2 C2E7     		b	.L15
+ 310              	.L26:
+ 311              		.align	2
+ 312              	.L25:
+ 313 00a4 00000000 		.word	hi2c1
+ 314 00a8 0000103F 		.word	1058013184
+ 315 00ac 0000203F 		.word	1059061760
+ 316 00b0 0000303F 		.word	1060110336
+ 317              		.cfi_endproc
+ 318              	.LFE37:
+ 320              		.section	.text.TM_MPU6050_SetDataRate,"ax",%progbits
+ 321              		.align	1
+ 322              		.global	TM_MPU6050_SetDataRate
+ 323              		.syntax unified
+ 324              		.code	16
+ 325              		.thumb_func
+ 326              		.fpu softvfp
+ 328              	TM_MPU6050_SetDataRate:
+ 329              	.LFB38:
+ 201:Src/tm_stm32_mpu6050.c **** 
+ 202:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_SetDataRate(TM_MPU6050_t* DataStruct, uint8_t rate) {
+ 330              		.loc 1 202 0
+ 331              		.cfi_startproc
+ 332              		@ args = 0, pretend = 0, frame = 8
+ 333              		@ frame_needed = 0, uses_anonymous_args = 0
+ 334              	.LVL22:
+ 335 0000 00B5     		push	{lr}
+ 336              	.LCFI4:
+ 337              		.cfi_def_cfa_offset 4
+ 338              		.cfi_offset 14, -4
+ 339 0002 87B0     		sub	sp, sp, #28
+ 340              	.LCFI5:
+ 341              		.cfi_def_cfa_offset 32
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 11
+
+
+ 342 0004 1723     		movs	r3, #23
+ 343 0006 6B44     		add	r3, r3, sp
+ 344 0008 1970     		strb	r1, [r3]
+ 203:Src/tm_stm32_mpu6050.c **** 	/* Set data sample rate */
+ 204:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_SMPLRT_DIV, 1, &rate, 1,
+ 345              		.loc 1 204 0
+ 346 000a 0178     		ldrb	r1, [r0]
+ 347              	.LVL23:
+ 348 000c FA22     		movs	r2, #250
+ 349 000e 9200     		lsls	r2, r2, #2
+ 350 0010 0292     		str	r2, [sp, #8]
+ 351              	.LVL24:
+ 352 0012 0122     		movs	r2, #1
+ 353 0014 0192     		str	r2, [sp, #4]
+ 354 0016 0093     		str	r3, [sp]
+ 355 0018 0123     		movs	r3, #1
+ 356 001a 1832     		adds	r2, r2, #24
+ 357 001c 0448     		ldr	r0, .L31
+ 358              	.LVL25:
+ 359 001e FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 360              	.LVL26:
+ 361 0022 0028     		cmp	r0, #0
+ 362 0024 02D1     		bne	.L30
+ 205:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 206:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 207:Src/tm_stm32_mpu6050.c **** 	}
+ 208:Src/tm_stm32_mpu6050.c **** 	
+ 209:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 210:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 363              		.loc 1 210 0
+ 364 0026 0020     		movs	r0, #0
+ 365              	.L28:
+ 211:Src/tm_stm32_mpu6050.c **** }
+ 366              		.loc 1 211 0
+ 367 0028 07B0     		add	sp, sp, #28
+ 368              		@ sp needed
+ 369 002a 00BD     		pop	{pc}
+ 370              	.L30:
+ 206:Src/tm_stm32_mpu6050.c **** 	}
+ 371              		.loc 1 206 0
+ 372 002c 0120     		movs	r0, #1
+ 373 002e FBE7     		b	.L28
+ 374              	.L32:
+ 375              		.align	2
+ 376              	.L31:
+ 377 0030 00000000 		.word	hi2c1
+ 378              		.cfi_endproc
+ 379              	.LFE38:
+ 381              		.section	.text.TM_MPU6050_SetDigitalLowPassFilter,"ax",%progbits
+ 382              		.align	1
+ 383              		.global	TM_MPU6050_SetDigitalLowPassFilter
+ 384              		.syntax unified
+ 385              		.code	16
+ 386              		.thumb_func
+ 387              		.fpu softvfp
+ 389              	TM_MPU6050_SetDigitalLowPassFilter:
+ 390              	.LFB39:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 12
+
+
+ 212:Src/tm_stm32_mpu6050.c **** 
+ 213:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_SetDigitalLowPassFilter(TM_MPU6050_t* DataStruct, TM_MPU6050_Digital
+ 391              		.loc 1 213 0
+ 392              		.cfi_startproc
+ 393              		@ args = 0, pretend = 0, frame = 8
+ 394              		@ frame_needed = 0, uses_anonymous_args = 0
+ 395              	.LVL27:
+ 396 0000 00B5     		push	{lr}
+ 397              	.LCFI6:
+ 398              		.cfi_def_cfa_offset 4
+ 399              		.cfi_offset 14, -4
+ 400 0002 87B0     		sub	sp, sp, #28
+ 401              	.LCFI7:
+ 402              		.cfi_def_cfa_offset 32
+ 403 0004 1723     		movs	r3, #23
+ 404 0006 6B44     		add	r3, r3, sp
+ 405 0008 1970     		strb	r1, [r3]
+ 214:Src/tm_stm32_mpu6050.c **** 	/* Set Digital Low Pass Filter bandwidth */
+ 215:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_CONFIG, 1, (uint8_t*) &B
+ 406              		.loc 1 215 0
+ 407 000a 0178     		ldrb	r1, [r0]
+ 408              	.LVL28:
+ 409 000c FA22     		movs	r2, #250
+ 410 000e 9200     		lsls	r2, r2, #2
+ 411 0010 0292     		str	r2, [sp, #8]
+ 412              	.LVL29:
+ 413 0012 0122     		movs	r2, #1
+ 414 0014 0192     		str	r2, [sp, #4]
+ 415 0016 0093     		str	r3, [sp]
+ 416 0018 0123     		movs	r3, #1
+ 417 001a 1932     		adds	r2, r2, #25
+ 418 001c 0448     		ldr	r0, .L37
+ 419              	.LVL30:
+ 420 001e FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 421              	.LVL31:
+ 422 0022 0028     		cmp	r0, #0
+ 423 0024 02D1     		bne	.L36
+ 216:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 217:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 218:Src/tm_stm32_mpu6050.c **** 	}
+ 219:Src/tm_stm32_mpu6050.c **** 	
+ 220:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 221:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 424              		.loc 1 221 0
+ 425 0026 0020     		movs	r0, #0
+ 426              	.L34:
+ 222:Src/tm_stm32_mpu6050.c **** }
+ 427              		.loc 1 222 0
+ 428 0028 07B0     		add	sp, sp, #28
+ 429              		@ sp needed
+ 430 002a 00BD     		pop	{pc}
+ 431              	.L36:
+ 217:Src/tm_stm32_mpu6050.c **** 	}
+ 432              		.loc 1 217 0
+ 433 002c 0120     		movs	r0, #1
+ 434 002e FBE7     		b	.L34
+ 435              	.L38:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 13
+
+
+ 436              		.align	2
+ 437              	.L37:
+ 438 0030 00000000 		.word	hi2c1
+ 439              		.cfi_endproc
+ 440              	.LFE39:
+ 442              		.section	.text.TM_MPU6050_Init,"ax",%progbits
+ 443              		.align	1
+ 444              		.global	TM_MPU6050_Init
+ 445              		.syntax unified
+ 446              		.code	16
+ 447              		.thumb_func
+ 448              		.fpu softvfp
+ 450              	TM_MPU6050_Init:
+ 451              	.LFB35:
+  82:Src/tm_stm32_mpu6050.c **** 	uint8_t temp;
+ 452              		.loc 1 82 0
+ 453              		.cfi_startproc
+ 454              		@ args = 4, pretend = 0, frame = 8
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456              	.LVL32:
+ 457 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 458              	.LCFI8:
+ 459              		.cfi_def_cfa_offset 20
+ 460              		.cfi_offset 4, -20
+ 461              		.cfi_offset 5, -16
+ 462              		.cfi_offset 6, -12
+ 463              		.cfi_offset 7, -8
+ 464              		.cfi_offset 14, -4
+ 465 0002 87B0     		sub	sp, sp, #28
+ 466              	.LCFI9:
+ 467              		.cfi_def_cfa_offset 48
+ 468 0004 0600     		movs	r6, r0
+ 469 0006 1500     		movs	r5, r2
+ 470 0008 1C00     		movs	r4, r3
+ 471 000a 0CAB     		add	r3, sp, #48
+ 472              	.LVL33:
+ 473 000c 1F78     		ldrb	r7, [r3]
+  87:Src/tm_stm32_mpu6050.c **** 	
+ 474              		.loc 1 87 0
+ 475 000e 3023     		movs	r3, #48
+ 476              	.LVL34:
+ 477 0010 5B42     		rsbs	r3, r3, #0
+ 478 0012 1943     		orrs	r1, r3
+ 479              	.LVL35:
+ 480 0014 0170     		strb	r1, [r0]
+  90:Src/tm_stm32_mpu6050.c **** 	
+ 481              		.loc 1 90 0
+ 482 0016 FFF7FEFF 		bl	MX_I2C1_Init
+ 483              	.LVL36:
+  93:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_DeviceNotConnected;
+ 484              		.loc 1 93 0
+ 485 001a 3178     		ldrb	r1, [r6]
+ 486 001c 0523     		movs	r3, #5
+ 487 001e 0222     		movs	r2, #2
+ 488 0020 2148     		ldr	r0, .L49
+ 489 0022 FFF7FEFF 		bl	HAL_I2C_IsDeviceReady
+ 490              	.LVL37:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 14
+
+
+ 491 0026 0028     		cmp	r0, #0
+ 492 0028 02D0     		beq	.L45
+  94:Src/tm_stm32_mpu6050.c **** 	}
+ 493              		.loc 1 94 0
+ 494 002a 0220     		movs	r0, #2
+ 495              	.L40:
+ 131:Src/tm_stm32_mpu6050.c **** 
+ 496              		.loc 1 131 0
+ 497 002c 07B0     		add	sp, sp, #28
+ 498              		@ sp needed
+ 499              	.LVL38:
+ 500 002e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 501              	.LVL39:
+ 502              	.L45:
+  98:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 503              		.loc 1 98 0
+ 504 0030 3178     		ldrb	r1, [r6]
+ 505 0032 FA23     		movs	r3, #250
+ 506 0034 9B00     		lsls	r3, r3, #2
+ 507 0036 0293     		str	r3, [sp, #8]
+ 508 0038 0123     		movs	r3, #1
+ 509 003a 0193     		str	r3, [sp, #4]
+ 510 003c 1633     		adds	r3, r3, #22
+ 511 003e 6B44     		add	r3, r3, sp
+ 512 0040 0093     		str	r3, [sp]
+ 513 0042 0123     		movs	r3, #1
+ 514 0044 7522     		movs	r2, #117
+ 515 0046 1848     		ldr	r0, .L49
+ 516 0048 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 517              	.LVL40:
+ 518 004c 0028     		cmp	r0, #0
+ 519 004e 01D0     		beq	.L46
+ 100:Src/tm_stm32_mpu6050.c **** 	}
+ 520              		.loc 1 100 0
+ 521 0050 0320     		movs	r0, #3
+ 522 0052 EBE7     		b	.L40
+ 523              	.L46:
+ 102:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 524              		.loc 1 102 0
+ 525 0054 1723     		movs	r3, #23
+ 526 0056 6B44     		add	r3, r3, sp
+ 527 0058 1B78     		ldrb	r3, [r3]
+ 528 005a 682B     		cmp	r3, #104
+ 529 005c 01D0     		beq	.L47
+ 104:Src/tm_stm32_mpu6050.c **** 	}
+ 530              		.loc 1 104 0
+ 531 005e 0320     		movs	r0, #3
+ 532 0060 E4E7     		b	.L40
+ 533              	.L47:
+ 110:Src/tm_stm32_mpu6050.c **** 	d[1] = 0x00;
+ 534              		.loc 1 110 0
+ 535 0062 05AA     		add	r2, sp, #20
+ 536 0064 0333     		adds	r3, r3, #3
+ 537 0066 1370     		strb	r3, [r2]
+ 111:Src/tm_stm32_mpu6050.c **** 	/* Try to transmit via I2C */
+ 538              		.loc 1 111 0
+ 539 0068 0023     		movs	r3, #0
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 15
+
+
+ 540 006a 5370     		strb	r3, [r2, #1]
+ 113:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 541              		.loc 1 113 0
+ 542 006c 3178     		ldrb	r1, [r6]
+ 543 006e FA23     		movs	r3, #250
+ 544 0070 9B00     		lsls	r3, r3, #2
+ 545 0072 0093     		str	r3, [sp]
+ 546 0074 0223     		movs	r3, #2
+ 547 0076 0C48     		ldr	r0, .L49
+ 548 0078 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 549              	.LVL41:
+ 550 007c 0028     		cmp	r0, #0
+ 551 007e 01D0     		beq	.L48
+ 115:Src/tm_stm32_mpu6050.c **** 	}
+ 552              		.loc 1 115 0
+ 553 0080 0120     		movs	r0, #1
+ 554 0082 D3E7     		b	.L40
+ 555              	.L48:
+ 119:Src/tm_stm32_mpu6050.c **** 	
+ 556              		.loc 1 119 0
+ 557 0084 0721     		movs	r1, #7
+ 558 0086 3000     		movs	r0, r6
+ 559 0088 FFF7FEFF 		bl	TM_MPU6050_SetDataRate
+ 560              	.LVL42:
+ 122:Src/tm_stm32_mpu6050.c **** 	
+ 561              		.loc 1 122 0
+ 562 008c 2900     		movs	r1, r5
+ 563 008e 3000     		movs	r0, r6
+ 564 0090 FFF7FEFF 		bl	TM_MPU6050_SetAccelerometer
+ 565              	.LVL43:
+ 125:Src/tm_stm32_mpu6050.c **** 	
+ 566              		.loc 1 125 0
+ 567 0094 2100     		movs	r1, r4
+ 568 0096 3000     		movs	r0, r6
+ 569 0098 FFF7FEFF 		bl	TM_MPU6050_SetGyroscope
+ 570              	.LVL44:
+ 128:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 571              		.loc 1 128 0
+ 572 009c 3900     		movs	r1, r7
+ 573 009e 3000     		movs	r0, r6
+ 574 00a0 FFF7FEFF 		bl	TM_MPU6050_SetDigitalLowPassFilter
+ 575              	.LVL45:
+ 130:Src/tm_stm32_mpu6050.c **** }
+ 576              		.loc 1 130 0
+ 577 00a4 0020     		movs	r0, #0
+ 578 00a6 C1E7     		b	.L40
+ 579              	.L50:
+ 580              		.align	2
+ 581              	.L49:
+ 582 00a8 00000000 		.word	hi2c1
+ 583              		.cfi_endproc
+ 584              	.LFE35:
+ 586              		.section	.text.TM_MPU6050_EnableInterrupts,"ax",%progbits
+ 587              		.align	1
+ 588              		.global	TM_MPU6050_EnableInterrupts
+ 589              		.syntax unified
+ 590              		.code	16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 16
+
+
+ 591              		.thumb_func
+ 592              		.fpu softvfp
+ 594              	TM_MPU6050_EnableInterrupts:
+ 595              	.LFB40:
+ 223:Src/tm_stm32_mpu6050.c **** 
+ 224:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_EnableInterrupts(TM_MPU6050_t* DataStruct) {
+ 596              		.loc 1 224 0
+ 597              		.cfi_startproc
+ 598              		@ args = 0, pretend = 0, frame = 8
+ 599              		@ frame_needed = 0, uses_anonymous_args = 0
+ 600              	.LVL46:
+ 601 0000 10B5     		push	{r4, lr}
+ 602              	.LCFI10:
+ 603              		.cfi_def_cfa_offset 8
+ 604              		.cfi_offset 4, -8
+ 605              		.cfi_offset 14, -4
+ 606 0002 86B0     		sub	sp, sp, #24
+ 607              	.LCFI11:
+ 608              		.cfi_def_cfa_offset 32
+ 609 0004 0400     		movs	r4, r0
+ 225:Src/tm_stm32_mpu6050.c **** 	uint8_t temp;
+ 226:Src/tm_stm32_mpu6050.c **** 	
+ 227:Src/tm_stm32_mpu6050.c **** 	temp = 0x21;
+ 610              		.loc 1 227 0
+ 611 0006 1723     		movs	r3, #23
+ 612 0008 6B44     		add	r3, r3, sp
+ 613 000a 2122     		movs	r2, #33
+ 614 000c 1A70     		strb	r2, [r3]
+ 228:Src/tm_stm32_mpu6050.c **** 	/* Enable interrupts for data ready and motion detect */
+ 229:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_INT_ENABLE, 1, &temp, 1,
+ 615              		.loc 1 229 0
+ 616 000e 0178     		ldrb	r1, [r0]
+ 617 0010 FA22     		movs	r2, #250
+ 618 0012 9200     		lsls	r2, r2, #2
+ 619 0014 0292     		str	r2, [sp, #8]
+ 620 0016 0122     		movs	r2, #1
+ 621 0018 0192     		str	r2, [sp, #4]
+ 622 001a 0093     		str	r3, [sp]
+ 623 001c 0123     		movs	r3, #1
+ 624 001e 3732     		adds	r2, r2, #55
+ 625 0020 1848     		ldr	r0, .L59
+ 626              	.LVL47:
+ 627 0022 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 628              	.LVL48:
+ 629 0026 0028     		cmp	r0, #0
+ 630 0028 02D0     		beq	.L56
+ 230:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 231:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 631              		.loc 1 231 0
+ 632 002a 0120     		movs	r0, #1
+ 633              	.L52:
+ 232:Src/tm_stm32_mpu6050.c **** 	}
+ 233:Src/tm_stm32_mpu6050.c **** 
+ 234:Src/tm_stm32_mpu6050.c **** 	/* Clear IRQ flag on any read operation */
+ 235:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_INT_PIN_CFG, 1, &temp, 1,
+ 236:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 237:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 17
+
+
+ 238:Src/tm_stm32_mpu6050.c **** 	}
+ 239:Src/tm_stm32_mpu6050.c **** 	temp |= 0x10;
+ 240:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_INT_PIN_CFG, 1, &temp, 1
+ 241:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 242:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 243:Src/tm_stm32_mpu6050.c **** 	}
+ 244:Src/tm_stm32_mpu6050.c **** 	
+ 245:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 246:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 247:Src/tm_stm32_mpu6050.c **** }
+ 634              		.loc 1 247 0
+ 635 002c 06B0     		add	sp, sp, #24
+ 636              		@ sp needed
+ 637              	.LVL49:
+ 638 002e 10BD     		pop	{r4, pc}
+ 639              	.LVL50:
+ 640              	.L56:
+ 235:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 641              		.loc 1 235 0
+ 642 0030 2178     		ldrb	r1, [r4]
+ 643 0032 FA23     		movs	r3, #250
+ 644 0034 9B00     		lsls	r3, r3, #2
+ 645 0036 0293     		str	r3, [sp, #8]
+ 646 0038 0123     		movs	r3, #1
+ 647 003a 0193     		str	r3, [sp, #4]
+ 648 003c 1633     		adds	r3, r3, #22
+ 649 003e 6B44     		add	r3, r3, sp
+ 650 0040 0093     		str	r3, [sp]
+ 651 0042 0123     		movs	r3, #1
+ 652 0044 3722     		movs	r2, #55
+ 653 0046 0F48     		ldr	r0, .L59
+ 654 0048 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 655              	.LVL51:
+ 656 004c 0028     		cmp	r0, #0
+ 657 004e 01D0     		beq	.L57
+ 237:Src/tm_stm32_mpu6050.c **** 	}
+ 658              		.loc 1 237 0
+ 659 0050 0120     		movs	r0, #1
+ 660 0052 EBE7     		b	.L52
+ 661              	.L57:
+ 239:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_INT_PIN_CFG, 1, &temp, 1
+ 662              		.loc 1 239 0
+ 663 0054 1723     		movs	r3, #23
+ 664 0056 6B44     		add	r3, r3, sp
+ 665 0058 1A78     		ldrb	r2, [r3]
+ 666 005a 1021     		movs	r1, #16
+ 667 005c 0A43     		orrs	r2, r1
+ 668 005e 1A70     		strb	r2, [r3]
+ 240:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 669              		.loc 1 240 0
+ 670 0060 2178     		ldrb	r1, [r4]
+ 671 0062 FA22     		movs	r2, #250
+ 672 0064 9200     		lsls	r2, r2, #2
+ 673 0066 0292     		str	r2, [sp, #8]
+ 674 0068 0122     		movs	r2, #1
+ 675 006a 0192     		str	r2, [sp, #4]
+ 676 006c 0093     		str	r3, [sp]
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 18
+
+
+ 677 006e 0123     		movs	r3, #1
+ 678 0070 3632     		adds	r2, r2, #54
+ 679 0072 0448     		ldr	r0, .L59
+ 680 0074 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 681              	.LVL52:
+ 682 0078 0028     		cmp	r0, #0
+ 683 007a 01D1     		bne	.L58
+ 246:Src/tm_stm32_mpu6050.c **** }
+ 684              		.loc 1 246 0
+ 685 007c 0020     		movs	r0, #0
+ 686 007e D5E7     		b	.L52
+ 687              	.L58:
+ 242:Src/tm_stm32_mpu6050.c **** 	}
+ 688              		.loc 1 242 0
+ 689 0080 0120     		movs	r0, #1
+ 690 0082 D3E7     		b	.L52
+ 691              	.L60:
+ 692              		.align	2
+ 693              	.L59:
+ 694 0084 00000000 		.word	hi2c1
+ 695              		.cfi_endproc
+ 696              	.LFE40:
+ 698              		.section	.text.TM_MPU6050_DisableInterrupts,"ax",%progbits
+ 699              		.align	1
+ 700              		.global	TM_MPU6050_DisableInterrupts
+ 701              		.syntax unified
+ 702              		.code	16
+ 703              		.thumb_func
+ 704              		.fpu softvfp
+ 706              	TM_MPU6050_DisableInterrupts:
+ 707              	.LFB41:
+ 248:Src/tm_stm32_mpu6050.c **** 
+ 249:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_DisableInterrupts(TM_MPU6050_t* DataStruct) {
+ 708              		.loc 1 249 0
+ 709              		.cfi_startproc
+ 710              		@ args = 0, pretend = 0, frame = 8
+ 711              		@ frame_needed = 0, uses_anonymous_args = 0
+ 712              	.LVL53:
+ 713 0000 00B5     		push	{lr}
+ 714              	.LCFI12:
+ 715              		.cfi_def_cfa_offset 4
+ 716              		.cfi_offset 14, -4
+ 717 0002 87B0     		sub	sp, sp, #28
+ 718              	.LCFI13:
+ 719              		.cfi_def_cfa_offset 32
+ 250:Src/tm_stm32_mpu6050.c **** 	uint8_t temp;
+ 251:Src/tm_stm32_mpu6050.c **** 	temp = 0x00;
+ 720              		.loc 1 251 0
+ 721 0004 1723     		movs	r3, #23
+ 722 0006 6B44     		add	r3, r3, sp
+ 723 0008 0022     		movs	r2, #0
+ 724 000a 1A70     		strb	r2, [r3]
+ 252:Src/tm_stm32_mpu6050.c **** 	/* Disable interrupts */
+ 253:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Write(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_INT_ENABLE, 1, &temp, 1,
+ 725              		.loc 1 253 0
+ 726 000c 0178     		ldrb	r1, [r0]
+ 727 000e FA22     		movs	r2, #250
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 19
+
+
+ 728 0010 9200     		lsls	r2, r2, #2
+ 729 0012 0292     		str	r2, [sp, #8]
+ 730 0014 0122     		movs	r2, #1
+ 731 0016 0192     		str	r2, [sp, #4]
+ 732 0018 0093     		str	r3, [sp]
+ 733 001a 0123     		movs	r3, #1
+ 734 001c 3732     		adds	r2, r2, #55
+ 735 001e 0548     		ldr	r0, .L65
+ 736              	.LVL54:
+ 737 0020 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 738              	.LVL55:
+ 739 0024 0028     		cmp	r0, #0
+ 740 0026 02D1     		bne	.L64
+ 254:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 255:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 256:Src/tm_stm32_mpu6050.c **** 	}
+ 257:Src/tm_stm32_mpu6050.c **** 
+ 258:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 259:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 741              		.loc 1 259 0
+ 742 0028 0020     		movs	r0, #0
+ 743              	.L62:
+ 260:Src/tm_stm32_mpu6050.c **** }
+ 744              		.loc 1 260 0
+ 745 002a 07B0     		add	sp, sp, #28
+ 746              		@ sp needed
+ 747 002c 00BD     		pop	{pc}
+ 748              	.L64:
+ 255:Src/tm_stm32_mpu6050.c **** 	}
+ 749              		.loc 1 255 0
+ 750 002e 0120     		movs	r0, #1
+ 751 0030 FBE7     		b	.L62
+ 752              	.L66:
+ 753 0032 C046     		.align	2
+ 754              	.L65:
+ 755 0034 00000000 		.word	hi2c1
+ 756              		.cfi_endproc
+ 757              	.LFE41:
+ 759              		.section	.text.TM_MPU6050_ReadInterrupts,"ax",%progbits
+ 760              		.align	1
+ 761              		.global	TM_MPU6050_ReadInterrupts
+ 762              		.syntax unified
+ 763              		.code	16
+ 764              		.thumb_func
+ 765              		.fpu softvfp
+ 767              	TM_MPU6050_ReadInterrupts:
+ 768              	.LFB42:
+ 261:Src/tm_stm32_mpu6050.c **** 
+ 262:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_ReadInterrupts(TM_MPU6050_t* DataStruct, TM_MPU6050_Interrupt_t* Int
+ 769              		.loc 1 262 0
+ 770              		.cfi_startproc
+ 771              		@ args = 0, pretend = 0, frame = 8
+ 772              		@ frame_needed = 0, uses_anonymous_args = 0
+ 773              	.LVL56:
+ 774 0000 10B5     		push	{r4, lr}
+ 775              	.LCFI14:
+ 776              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 20
+
+
+ 777              		.cfi_offset 4, -8
+ 778              		.cfi_offset 14, -4
+ 779 0002 86B0     		sub	sp, sp, #24
+ 780              	.LCFI15:
+ 781              		.cfi_def_cfa_offset 32
+ 782 0004 0C00     		movs	r4, r1
+ 263:Src/tm_stm32_mpu6050.c **** 	uint8_t read;
+ 264:Src/tm_stm32_mpu6050.c **** 	
+ 265:Src/tm_stm32_mpu6050.c **** 	/* Reset structure */
+ 266:Src/tm_stm32_mpu6050.c **** 	InterruptsStruct->Status = 0;
+ 783              		.loc 1 266 0
+ 784 0006 0023     		movs	r3, #0
+ 785 0008 0B70     		strb	r3, [r1]
+ 267:Src/tm_stm32_mpu6050.c **** 	
+ 268:Src/tm_stm32_mpu6050.c **** 	/* Read interrupts status register */
+ 269:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_INT_STATUS, 1, &read, 1, 
+ 786              		.loc 1 269 0
+ 787 000a 0178     		ldrb	r1, [r0]
+ 788              	.LVL57:
+ 789 000c FA23     		movs	r3, #250
+ 790 000e 9B00     		lsls	r3, r3, #2
+ 791 0010 0293     		str	r3, [sp, #8]
+ 792 0012 0123     		movs	r3, #1
+ 793 0014 0193     		str	r3, [sp, #4]
+ 794 0016 1633     		adds	r3, r3, #22
+ 795 0018 6B44     		add	r3, r3, sp
+ 796 001a 0093     		str	r3, [sp]
+ 797 001c 0123     		movs	r3, #1
+ 798 001e 3A22     		movs	r2, #58
+ 799 0020 0648     		ldr	r0, .L70
+ 800              	.LVL58:
+ 801 0022 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 802              	.LVL59:
+ 803 0026 0028     		cmp	r0, #0
+ 804 0028 05D1     		bne	.L69
+ 270:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 271:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 272:Src/tm_stm32_mpu6050.c **** 	}
+ 273:Src/tm_stm32_mpu6050.c **** 	
+ 274:Src/tm_stm32_mpu6050.c **** 	/* Fill value */
+ 275:Src/tm_stm32_mpu6050.c **** 	InterruptsStruct->Status = read;
+ 805              		.loc 1 275 0
+ 806 002a 1723     		movs	r3, #23
+ 807 002c 6B44     		add	r3, r3, sp
+ 808 002e 1B78     		ldrb	r3, [r3]
+ 809 0030 2370     		strb	r3, [r4]
+ 810              	.L68:
+ 276:Src/tm_stm32_mpu6050.c **** 	
+ 277:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 278:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 279:Src/tm_stm32_mpu6050.c **** }
+ 811              		.loc 1 279 0
+ 812 0032 06B0     		add	sp, sp, #24
+ 813              		@ sp needed
+ 814              	.LVL60:
+ 815 0034 10BD     		pop	{r4, pc}
+ 816              	.LVL61:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 21
+
+
+ 817              	.L69:
+ 271:Src/tm_stm32_mpu6050.c **** 	}
+ 818              		.loc 1 271 0
+ 819 0036 0120     		movs	r0, #1
+ 820 0038 FBE7     		b	.L68
+ 821              	.L71:
+ 822 003a C046     		.align	2
+ 823              	.L70:
+ 824 003c 00000000 		.word	hi2c1
+ 825              		.cfi_endproc
+ 826              	.LFE42:
+ 828              		.global	__aeabi_i2d
+ 829              		.section	.text.TM_MPU6050_ReadAccelerometer,"ax",%progbits
+ 830              		.align	1
+ 831              		.global	TM_MPU6050_ReadAccelerometer
+ 832              		.syntax unified
+ 833              		.code	16
+ 834              		.thumb_func
+ 835              		.fpu softvfp
+ 837              	TM_MPU6050_ReadAccelerometer:
+ 838              	.LFB43:
+ 280:Src/tm_stm32_mpu6050.c **** 
+ 281:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_ReadAccelerometer(TM_MPU6050_t* DataStruct) {
+ 839              		.loc 1 281 0
+ 840              		.cfi_startproc
+ 841              		@ args = 0, pretend = 0, frame = 8
+ 842              		@ frame_needed = 0, uses_anonymous_args = 0
+ 843              	.LVL62:
+ 844 0000 30B5     		push	{r4, r5, lr}
+ 845              	.LCFI16:
+ 846              		.cfi_def_cfa_offset 12
+ 847              		.cfi_offset 4, -12
+ 848              		.cfi_offset 5, -8
+ 849              		.cfi_offset 14, -4
+ 850 0002 87B0     		sub	sp, sp, #28
+ 851              	.LCFI17:
+ 852              		.cfi_def_cfa_offset 40
+ 853 0004 0500     		movs	r5, r0
+ 282:Src/tm_stm32_mpu6050.c **** 	uint8_t data[6];
+ 283:Src/tm_stm32_mpu6050.c **** 	
+ 284:Src/tm_stm32_mpu6050.c **** 	/* Read accelerometer data */
+ 285:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_ACCEL_XOUT_H, 1, data, 6,
+ 854              		.loc 1 285 0
+ 855 0006 0178     		ldrb	r1, [r0]
+ 856 0008 FA23     		movs	r3, #250
+ 857 000a 9B00     		lsls	r3, r3, #2
+ 858 000c 0293     		str	r3, [sp, #8]
+ 859 000e 0623     		movs	r3, #6
+ 860 0010 0193     		str	r3, [sp, #4]
+ 861 0012 04AB     		add	r3, sp, #16
+ 862 0014 0093     		str	r3, [sp]
+ 863 0016 0123     		movs	r3, #1
+ 864 0018 3B22     		movs	r2, #59
+ 865 001a 1348     		ldr	r0, .L75
+ 866              	.LVL63:
+ 867 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 868              	.LVL64:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 22
+
+
+ 869 0020 0028     		cmp	r0, #0
+ 870 0022 1ED1     		bne	.L74
+ 286:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 287:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 288:Src/tm_stm32_mpu6050.c **** 	}
+ 289:Src/tm_stm32_mpu6050.c **** 	
+ 290:Src/tm_stm32_mpu6050.c **** 	/* Format */
+ 291:Src/tm_stm32_mpu6050.c **** 	DataStruct->Accelerometer_Raw.x = (int16_t)(data[0] << 8 | data[1]);
+ 871              		.loc 1 291 0
+ 872 0024 04AC     		add	r4, sp, #16
+ 873 0026 2378     		ldrb	r3, [r4]
+ 874 0028 1B02     		lsls	r3, r3, #8
+ 875 002a 6078     		ldrb	r0, [r4, #1]
+ 876 002c 1843     		orrs	r0, r3
+ 877 002e 00B2     		sxth	r0, r0
+ 878 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 879              	.LVL65:
+ 880 0034 2861     		str	r0, [r5, #16]
+ 881 0036 6961     		str	r1, [r5, #20]
+ 292:Src/tm_stm32_mpu6050.c **** 	DataStruct->Accelerometer_Raw.y = (int16_t)(data[2] << 8 | data[3]);
+ 882              		.loc 1 292 0
+ 883 0038 A378     		ldrb	r3, [r4, #2]
+ 884 003a 1B02     		lsls	r3, r3, #8
+ 885 003c E078     		ldrb	r0, [r4, #3]
+ 886 003e 1843     		orrs	r0, r3
+ 887 0040 00B2     		sxth	r0, r0
+ 888 0042 FFF7FEFF 		bl	__aeabi_i2d
+ 889              	.LVL66:
+ 890 0046 A861     		str	r0, [r5, #24]
+ 891 0048 E961     		str	r1, [r5, #28]
+ 293:Src/tm_stm32_mpu6050.c **** 	DataStruct->Accelerometer_Raw.z = (int16_t)(data[4] << 8 | data[5]);
+ 892              		.loc 1 293 0
+ 893 004a 2379     		ldrb	r3, [r4, #4]
+ 894 004c 1B02     		lsls	r3, r3, #8
+ 895 004e 6079     		ldrb	r0, [r4, #5]
+ 896 0050 1843     		orrs	r0, r3
+ 897 0052 00B2     		sxth	r0, r0
+ 898 0054 FFF7FEFF 		bl	__aeabi_i2d
+ 899              	.LVL67:
+ 900 0058 2862     		str	r0, [r5, #32]
+ 901 005a 6962     		str	r1, [r5, #36]
+ 294:Src/tm_stm32_mpu6050.c **** 	
+ 295:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 296:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 902              		.loc 1 296 0
+ 903 005c 0020     		movs	r0, #0
+ 904              	.L73:
+ 297:Src/tm_stm32_mpu6050.c **** }
+ 905              		.loc 1 297 0
+ 906 005e 07B0     		add	sp, sp, #28
+ 907              		@ sp needed
+ 908              	.LVL68:
+ 909 0060 30BD     		pop	{r4, r5, pc}
+ 910              	.LVL69:
+ 911              	.L74:
+ 287:Src/tm_stm32_mpu6050.c **** 	}
+ 912              		.loc 1 287 0
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 23
+
+
+ 913 0062 0120     		movs	r0, #1
+ 914 0064 FBE7     		b	.L73
+ 915              	.L76:
+ 916 0066 C046     		.align	2
+ 917              	.L75:
+ 918 0068 00000000 		.word	hi2c1
+ 919              		.cfi_endproc
+ 920              	.LFE43:
+ 922              		.section	.text.TM_MPU6050_ReadGyroscope,"ax",%progbits
+ 923              		.align	1
+ 924              		.global	TM_MPU6050_ReadGyroscope
+ 925              		.syntax unified
+ 926              		.code	16
+ 927              		.thumb_func
+ 928              		.fpu softvfp
+ 930              	TM_MPU6050_ReadGyroscope:
+ 931              	.LFB44:
+ 298:Src/tm_stm32_mpu6050.c **** 
+ 299:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_ReadGyroscope(TM_MPU6050_t* DataStruct) {
+ 932              		.loc 1 299 0
+ 933              		.cfi_startproc
+ 934              		@ args = 0, pretend = 0, frame = 8
+ 935              		@ frame_needed = 0, uses_anonymous_args = 0
+ 936              	.LVL70:
+ 937 0000 30B5     		push	{r4, r5, lr}
+ 938              	.LCFI18:
+ 939              		.cfi_def_cfa_offset 12
+ 940              		.cfi_offset 4, -12
+ 941              		.cfi_offset 5, -8
+ 942              		.cfi_offset 14, -4
+ 943 0002 87B0     		sub	sp, sp, #28
+ 944              	.LCFI19:
+ 945              		.cfi_def_cfa_offset 40
+ 946 0004 0500     		movs	r5, r0
+ 300:Src/tm_stm32_mpu6050.c **** 	uint8_t data[6];
+ 301:Src/tm_stm32_mpu6050.c **** 	
+ 302:Src/tm_stm32_mpu6050.c **** 	/* Read gyroscope data */
+ 303:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_GYRO_XOUT_H, 1, data, 6, 
+ 947              		.loc 1 303 0
+ 948 0006 0178     		ldrb	r1, [r0]
+ 949 0008 FA23     		movs	r3, #250
+ 950 000a 9B00     		lsls	r3, r3, #2
+ 951 000c 0293     		str	r3, [sp, #8]
+ 952 000e 0623     		movs	r3, #6
+ 953 0010 0193     		str	r3, [sp, #4]
+ 954 0012 04AB     		add	r3, sp, #16
+ 955 0014 0093     		str	r3, [sp]
+ 956 0016 0123     		movs	r3, #1
+ 957 0018 4322     		movs	r2, #67
+ 958 001a 1348     		ldr	r0, .L80
+ 959              	.LVL71:
+ 960 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 961              	.LVL72:
+ 962 0020 0028     		cmp	r0, #0
+ 963 0022 1ED1     		bne	.L79
+ 304:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 305:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 24
+
+
+ 306:Src/tm_stm32_mpu6050.c **** 	}
+ 307:Src/tm_stm32_mpu6050.c **** 	
+ 308:Src/tm_stm32_mpu6050.c **** 	/* Format */
+ 309:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Raw.x = (int16_t)(data[0] << 8 | data[1]);
+ 964              		.loc 1 309 0
+ 965 0024 04AC     		add	r4, sp, #16
+ 966 0026 2378     		ldrb	r3, [r4]
+ 967 0028 1B02     		lsls	r3, r3, #8
+ 968 002a 6078     		ldrb	r0, [r4, #1]
+ 969 002c 1843     		orrs	r0, r3
+ 970 002e 00B2     		sxth	r0, r0
+ 971 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 972              	.LVL73:
+ 973 0034 2866     		str	r0, [r5, #96]
+ 974 0036 6966     		str	r1, [r5, #100]
+ 310:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Raw.y = (int16_t)(data[2] << 8 | data[3]);
+ 975              		.loc 1 310 0
+ 976 0038 A378     		ldrb	r3, [r4, #2]
+ 977 003a 1B02     		lsls	r3, r3, #8
+ 978 003c E078     		ldrb	r0, [r4, #3]
+ 979 003e 1843     		orrs	r0, r3
+ 980 0040 00B2     		sxth	r0, r0
+ 981 0042 FFF7FEFF 		bl	__aeabi_i2d
+ 982              	.LVL74:
+ 983 0046 A866     		str	r0, [r5, #104]
+ 984 0048 E966     		str	r1, [r5, #108]
+ 311:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Raw.z = (int16_t)(data[4] << 8 | data[5]);
+ 985              		.loc 1 311 0
+ 986 004a 2379     		ldrb	r3, [r4, #4]
+ 987 004c 1B02     		lsls	r3, r3, #8
+ 988 004e 6079     		ldrb	r0, [r4, #5]
+ 989 0050 1843     		orrs	r0, r3
+ 990 0052 00B2     		sxth	r0, r0
+ 991 0054 FFF7FEFF 		bl	__aeabi_i2d
+ 992              	.LVL75:
+ 993 0058 2867     		str	r0, [r5, #112]
+ 994 005a 6967     		str	r1, [r5, #116]
+ 312:Src/tm_stm32_mpu6050.c **** 
+ 313:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 314:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 995              		.loc 1 314 0
+ 996 005c 0020     		movs	r0, #0
+ 997              	.L78:
+ 315:Src/tm_stm32_mpu6050.c **** }
+ 998              		.loc 1 315 0
+ 999 005e 07B0     		add	sp, sp, #28
+ 1000              		@ sp needed
+ 1001              	.LVL76:
+ 1002 0060 30BD     		pop	{r4, r5, pc}
+ 1003              	.LVL77:
+ 1004              	.L79:
+ 305:Src/tm_stm32_mpu6050.c **** 	}
+ 1005              		.loc 1 305 0
+ 1006 0062 0120     		movs	r0, #1
+ 1007 0064 FBE7     		b	.L78
+ 1008              	.L81:
+ 1009 0066 C046     		.align	2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 25
+
+
+ 1010              	.L80:
+ 1011 0068 00000000 		.word	hi2c1
+ 1012              		.cfi_endproc
+ 1013              	.LFE44:
+ 1015              		.global	__aeabi_ddiv
+ 1016              		.global	__aeabi_dadd
+ 1017              		.section	.text.TM_MPU6050_ReadTemperature,"ax",%progbits
+ 1018              		.align	1
+ 1019              		.global	TM_MPU6050_ReadTemperature
+ 1020              		.syntax unified
+ 1021              		.code	16
+ 1022              		.thumb_func
+ 1023              		.fpu softvfp
+ 1025              	TM_MPU6050_ReadTemperature:
+ 1026              	.LFB45:
+ 316:Src/tm_stm32_mpu6050.c **** 
+ 317:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_ReadTemperature(TM_MPU6050_t* DataStruct) {
+ 1027              		.loc 1 317 0
+ 1028              		.cfi_startproc
+ 1029              		@ args = 0, pretend = 0, frame = 8
+ 1030              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1031              	.LVL78:
+ 1032 0000 10B5     		push	{r4, lr}
+ 1033              	.LCFI20:
+ 1034              		.cfi_def_cfa_offset 8
+ 1035              		.cfi_offset 4, -8
+ 1036              		.cfi_offset 14, -4
+ 1037 0002 86B0     		sub	sp, sp, #24
+ 1038              	.LCFI21:
+ 1039              		.cfi_def_cfa_offset 32
+ 1040 0004 0400     		movs	r4, r0
+ 318:Src/tm_stm32_mpu6050.c **** 	uint8_t data[2];
+ 319:Src/tm_stm32_mpu6050.c **** 	int16_t temp;
+ 320:Src/tm_stm32_mpu6050.c **** 	
+ 321:Src/tm_stm32_mpu6050.c **** 	/* Read temperature */
+ 322:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_TEMP_OUT_H, 1, data, 2, 1
+ 1041              		.loc 1 322 0
+ 1042 0006 0178     		ldrb	r1, [r0]
+ 1043 0008 FA23     		movs	r3, #250
+ 1044 000a 9B00     		lsls	r3, r3, #2
+ 1045 000c 0293     		str	r3, [sp, #8]
+ 1046 000e 0223     		movs	r3, #2
+ 1047 0010 0193     		str	r3, [sp, #4]
+ 1048 0012 05AB     		add	r3, sp, #20
+ 1049 0014 0093     		str	r3, [sp]
+ 1050 0016 0123     		movs	r3, #1
+ 1051 0018 4122     		movs	r2, #65
+ 1052 001a 0E48     		ldr	r0, .L85
+ 1053              	.LVL79:
+ 1054 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 1055              	.LVL80:
+ 1056 0020 0028     		cmp	r0, #0
+ 1057 0022 14D1     		bne	.L84
+ 323:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 324:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 325:Src/tm_stm32_mpu6050.c **** 	}
+ 326:Src/tm_stm32_mpu6050.c **** 	
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 26
+
+
+ 327:Src/tm_stm32_mpu6050.c **** 	/* Format temperature */
+ 328:Src/tm_stm32_mpu6050.c **** 	temp = (data[0] << 8 | data[1]);
+ 1058              		.loc 1 328 0
+ 1059 0024 05AB     		add	r3, sp, #20
+ 1060 0026 1878     		ldrb	r0, [r3]
+ 1061 0028 0002     		lsls	r0, r0, #8
+ 1062 002a 00B2     		sxth	r0, r0
+ 1063 002c 5B78     		ldrb	r3, [r3, #1]
+ 1064 002e 1843     		orrs	r0, r3
+ 1065              	.LVL81:
+ 329:Src/tm_stm32_mpu6050.c **** 	DataStruct->Temperature = (double)((int16_t)temp / (double)340.0 + (double)36.53);
+ 1066              		.loc 1 329 0
+ 1067 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 1068              	.LVL82:
+ 1069 0034 0022     		movs	r2, #0
+ 1070 0036 084B     		ldr	r3, .L85+4
+ 1071 0038 FFF7FEFF 		bl	__aeabi_ddiv
+ 1072              	.LVL83:
+ 1073 003c 074A     		ldr	r2, .L85+8
+ 1074 003e 084B     		ldr	r3, .L85+12
+ 1075 0040 FFF7FEFF 		bl	__aeabi_dadd
+ 1076              	.LVL84:
+ 1077 0044 A060     		str	r0, [r4, #8]
+ 1078 0046 E160     		str	r1, [r4, #12]
+ 330:Src/tm_stm32_mpu6050.c **** 	
+ 331:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 332:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 1079              		.loc 1 332 0
+ 1080 0048 0020     		movs	r0, #0
+ 1081              	.L83:
+ 333:Src/tm_stm32_mpu6050.c **** }
+ 1082              		.loc 1 333 0
+ 1083 004a 06B0     		add	sp, sp, #24
+ 1084              		@ sp needed
+ 1085              	.LVL85:
+ 1086 004c 10BD     		pop	{r4, pc}
+ 1087              	.LVL86:
+ 1088              	.L84:
+ 324:Src/tm_stm32_mpu6050.c **** 	}
+ 1089              		.loc 1 324 0
+ 1090 004e 0120     		movs	r0, #1
+ 1091 0050 FBE7     		b	.L83
+ 1092              	.L86:
+ 1093 0052 C046     		.align	2
+ 1094              	.L85:
+ 1095 0054 00000000 		.word	hi2c1
+ 1096 0058 00407540 		.word	1081425920
+ 1097 005c A4703D0A 		.word	171798692
+ 1098 0060 D7434240 		.word	1078084567
+ 1099              		.cfi_endproc
+ 1100              	.LFE45:
+ 1102              		.section	.text.TM_MPU6050_ReadAll,"ax",%progbits
+ 1103              		.align	1
+ 1104              		.global	TM_MPU6050_ReadAll
+ 1105              		.syntax unified
+ 1106              		.code	16
+ 1107              		.thumb_func
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 27
+
+
+ 1108              		.fpu softvfp
+ 1110              	TM_MPU6050_ReadAll:
+ 1111              	.LFB46:
+ 334:Src/tm_stm32_mpu6050.c **** 
+ 335:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_ReadAll(TM_MPU6050_t* DataStruct) {
+ 1112              		.loc 1 335 0
+ 1113              		.cfi_startproc
+ 1114              		@ args = 0, pretend = 0, frame = 16
+ 1115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1116              	.LVL87:
+ 1117 0000 30B5     		push	{r4, r5, lr}
+ 1118              	.LCFI22:
+ 1119              		.cfi_def_cfa_offset 12
+ 1120              		.cfi_offset 4, -12
+ 1121              		.cfi_offset 5, -8
+ 1122              		.cfi_offset 14, -4
+ 1123 0002 89B0     		sub	sp, sp, #36
+ 1124              	.LCFI23:
+ 1125              		.cfi_def_cfa_offset 48
+ 1126 0004 0500     		movs	r5, r0
+ 336:Src/tm_stm32_mpu6050.c **** 	uint8_t data[14];
+ 337:Src/tm_stm32_mpu6050.c **** 	int16_t temp;
+ 338:Src/tm_stm32_mpu6050.c **** 	
+ 339:Src/tm_stm32_mpu6050.c **** 	/* Read full raw data, 14bytes */
+ 340:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_TEMP_OUT_H, 1, data, 14, 
+ 1127              		.loc 1 340 0
+ 1128 0006 0178     		ldrb	r1, [r0]
+ 1129 0008 FA23     		movs	r3, #250
+ 1130 000a 9B00     		lsls	r3, r3, #2
+ 1131 000c 0293     		str	r3, [sp, #8]
+ 1132 000e 0E23     		movs	r3, #14
+ 1133 0010 0193     		str	r3, [sp, #4]
+ 1134 0012 04AB     		add	r3, sp, #16
+ 1135 0014 0093     		str	r3, [sp]
+ 1136 0016 0123     		movs	r3, #1
+ 1137 0018 4122     		movs	r2, #65
+ 1138 001a 2948     		ldr	r0, .L90
+ 1139              	.LVL88:
+ 1140 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 1141              	.LVL89:
+ 1142 0020 0028     		cmp	r0, #0
+ 1143 0022 4AD1     		bne	.L89
+ 341:Src/tm_stm32_mpu6050.c **** 		/* Return error */
+ 342:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
+ 343:Src/tm_stm32_mpu6050.c **** 	}
+ 344:Src/tm_stm32_mpu6050.c **** 	
+ 345:Src/tm_stm32_mpu6050.c **** 	/* Format accelerometer data */
+ 346:Src/tm_stm32_mpu6050.c **** 	DataStruct->Accelerometer_Raw.x = (int16_t)(data[0] << 8 | data[1]);
+ 1144              		.loc 1 346 0
+ 1145 0024 04AC     		add	r4, sp, #16
+ 1146 0026 2378     		ldrb	r3, [r4]
+ 1147 0028 1B02     		lsls	r3, r3, #8
+ 1148 002a 6078     		ldrb	r0, [r4, #1]
+ 1149 002c 1843     		orrs	r0, r3
+ 1150 002e 00B2     		sxth	r0, r0
+ 1151 0030 FFF7FEFF 		bl	__aeabi_i2d
+ 1152              	.LVL90:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 28
+
+
+ 1153 0034 2861     		str	r0, [r5, #16]
+ 1154 0036 6961     		str	r1, [r5, #20]
+ 347:Src/tm_stm32_mpu6050.c **** 	DataStruct->Accelerometer_Raw.y = (int16_t)(data[2] << 8 | data[3]);
+ 1155              		.loc 1 347 0
+ 1156 0038 A378     		ldrb	r3, [r4, #2]
+ 1157 003a 1B02     		lsls	r3, r3, #8
+ 1158 003c E078     		ldrb	r0, [r4, #3]
+ 1159 003e 1843     		orrs	r0, r3
+ 1160 0040 00B2     		sxth	r0, r0
+ 1161 0042 FFF7FEFF 		bl	__aeabi_i2d
+ 1162              	.LVL91:
+ 1163 0046 A861     		str	r0, [r5, #24]
+ 1164 0048 E961     		str	r1, [r5, #28]
+ 348:Src/tm_stm32_mpu6050.c **** 	DataStruct->Accelerometer_Raw.z = (int16_t)(data[4] << 8 | data[5]);
+ 1165              		.loc 1 348 0
+ 1166 004a 2379     		ldrb	r3, [r4, #4]
+ 1167 004c 1B02     		lsls	r3, r3, #8
+ 1168 004e 6079     		ldrb	r0, [r4, #5]
+ 1169 0050 1843     		orrs	r0, r3
+ 1170 0052 00B2     		sxth	r0, r0
+ 1171 0054 FFF7FEFF 		bl	__aeabi_i2d
+ 1172              	.LVL92:
+ 1173 0058 2862     		str	r0, [r5, #32]
+ 1174 005a 6962     		str	r1, [r5, #36]
+ 349:Src/tm_stm32_mpu6050.c **** 
+ 350:Src/tm_stm32_mpu6050.c **** 	/* Format temperature */
+ 351:Src/tm_stm32_mpu6050.c **** 	temp = (data[6] << 8 | data[7]);
+ 1175              		.loc 1 351 0
+ 1176 005c A079     		ldrb	r0, [r4, #6]
+ 1177 005e 0002     		lsls	r0, r0, #8
+ 1178 0060 00B2     		sxth	r0, r0
+ 1179 0062 E379     		ldrb	r3, [r4, #7]
+ 1180 0064 1843     		orrs	r0, r3
+ 1181              	.LVL93:
+ 352:Src/tm_stm32_mpu6050.c **** 	DataStruct->Temperature = (double)((double)((int16_t)temp) / (double)340.0 + (double)36.53);
+ 1182              		.loc 1 352 0
+ 1183 0066 FFF7FEFF 		bl	__aeabi_i2d
+ 1184              	.LVL94:
+ 1185 006a 0022     		movs	r2, #0
+ 1186 006c 154B     		ldr	r3, .L90+4
+ 1187 006e FFF7FEFF 		bl	__aeabi_ddiv
+ 1188              	.LVL95:
+ 1189 0072 154A     		ldr	r2, .L90+8
+ 1190 0074 154B     		ldr	r3, .L90+12
+ 1191 0076 FFF7FEFF 		bl	__aeabi_dadd
+ 1192              	.LVL96:
+ 1193 007a A860     		str	r0, [r5, #8]
+ 1194 007c E960     		str	r1, [r5, #12]
+ 353:Src/tm_stm32_mpu6050.c **** 	
+ 354:Src/tm_stm32_mpu6050.c **** 	/* Format gyroscope data */
+ 355:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Raw.x = (int16_t)(data[8] << 8 | data[9]);
+ 1195              		.loc 1 355 0
+ 1196 007e 237A     		ldrb	r3, [r4, #8]
+ 1197 0080 1B02     		lsls	r3, r3, #8
+ 1198 0082 607A     		ldrb	r0, [r4, #9]
+ 1199 0084 1843     		orrs	r0, r3
+ 1200 0086 00B2     		sxth	r0, r0
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 29
+
+
+ 1201 0088 FFF7FEFF 		bl	__aeabi_i2d
+ 1202              	.LVL97:
+ 1203 008c 2866     		str	r0, [r5, #96]
+ 1204 008e 6966     		str	r1, [r5, #100]
+ 356:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Raw.y = (int16_t)(data[10] << 8 | data[11]);
+ 1205              		.loc 1 356 0
+ 1206 0090 A37A     		ldrb	r3, [r4, #10]
+ 1207 0092 1B02     		lsls	r3, r3, #8
+ 1208 0094 E07A     		ldrb	r0, [r4, #11]
+ 1209 0096 1843     		orrs	r0, r3
+ 1210 0098 00B2     		sxth	r0, r0
+ 1211 009a FFF7FEFF 		bl	__aeabi_i2d
+ 1212              	.LVL98:
+ 1213 009e A866     		str	r0, [r5, #104]
+ 1214 00a0 E966     		str	r1, [r5, #108]
+ 357:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Raw.z = (int16_t)(data[12] << 8 | data[13]);
+ 1215              		.loc 1 357 0
+ 1216 00a2 237B     		ldrb	r3, [r4, #12]
+ 1217 00a4 1B02     		lsls	r3, r3, #8
+ 1218 00a6 607B     		ldrb	r0, [r4, #13]
+ 1219 00a8 1843     		orrs	r0, r3
+ 1220 00aa 00B2     		sxth	r0, r0
+ 1221 00ac FFF7FEFF 		bl	__aeabi_i2d
+ 1222              	.LVL99:
+ 1223 00b0 2867     		str	r0, [r5, #112]
+ 1224 00b2 6967     		str	r1, [r5, #116]
+ 358:Src/tm_stm32_mpu6050.c **** 
+ 359:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 360:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 1225              		.loc 1 360 0
+ 1226 00b4 0020     		movs	r0, #0
+ 1227              	.L88:
+ 361:Src/tm_stm32_mpu6050.c **** }
+ 1228              		.loc 1 361 0
+ 1229 00b6 09B0     		add	sp, sp, #36
+ 1230              		@ sp needed
+ 1231              	.LVL100:
+ 1232 00b8 30BD     		pop	{r4, r5, pc}
+ 1233              	.LVL101:
+ 1234              	.L89:
+ 342:Src/tm_stm32_mpu6050.c **** 	}
+ 1235              		.loc 1 342 0
+ 1236 00ba 0120     		movs	r0, #1
+ 1237 00bc FBE7     		b	.L88
+ 1238              	.L91:
+ 1239 00be C046     		.align	2
+ 1240              	.L90:
+ 1241 00c0 00000000 		.word	hi2c1
+ 1242 00c4 00407540 		.word	1081425920
+ 1243 00c8 A4703D0A 		.word	171798692
+ 1244 00cc D7434240 		.word	1078084567
+ 1245              		.cfi_endproc
+ 1246              	.LFE46:
+ 1248              		.section	.text.TM_MPU6050_GeneralCallib,"ax",%progbits
+ 1249              		.align	1
+ 1250              		.global	TM_MPU6050_GeneralCallib
+ 1251              		.syntax unified
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 30
+
+
+ 1252              		.code	16
+ 1253              		.thumb_func
+ 1254              		.fpu softvfp
+ 1256              	TM_MPU6050_GeneralCallib:
+ 1257              	.LFB48:
+ 362:Src/tm_stm32_mpu6050.c **** 
+ 363:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_FastCallib(TM_MPU6050_t* DataStruct) {
+ 364:Src/tm_stm32_mpu6050.c **** 	#define MAX_ACC_ERR		2
+ 365:Src/tm_stm32_mpu6050.c **** 	#define MAX_GYRO_ERR	2
+ 366:Src/tm_stm32_mpu6050.c **** 
+ 367:Src/tm_stm32_mpu6050.c **** 	AxesValues_t Accelerometer_Mean;
+ 368:Src/tm_stm32_mpu6050.c **** 	AxesValues_t Gyroscope_Mean;
+ 369:Src/tm_stm32_mpu6050.c **** 
+ 370:Src/tm_stm32_mpu6050.c **** 	TM_MPU6050_EnableInterrupts(DataStruct);
+ 371:Src/tm_stm32_mpu6050.c **** 
+ 372:Src/tm_stm32_mpu6050.c **** 	ZeroAxes(&DataStruct->Accelerometer_Offset);
+ 373:Src/tm_stm32_mpu6050.c **** 	ZeroAxes(&DataStruct->Gyroscope_Offset);
+ 374:Src/tm_stm32_mpu6050.c **** 
+ 375:Src/tm_stm32_mpu6050.c **** 	do{
+ 376:Src/tm_stm32_mpu6050.c **** 		TM_MPU6050_CalcMean(DataStruct, 500, 100, &Accelerometer_Mean, 0);
+ 377:Src/tm_stm32_mpu6050.c **** 		SubstractAxes(&DataStruct->Accelerometer_Offset, &Accelerometer_Mean,
+ 378:Src/tm_stm32_mpu6050.c **** 				&DataStruct->Accelerometer_Offset);
+ 379:Src/tm_stm32_mpu6050.c **** 	}while((Accelerometer_Mean.x > MAX_ACC_ERR) || (Accelerometer_Mean.y > MAX_ACC_ERR) || (Accelerome
+ 380:Src/tm_stm32_mpu6050.c **** 
+ 381:Src/tm_stm32_mpu6050.c **** 	do{
+ 382:Src/tm_stm32_mpu6050.c **** 		TM_MPU6050_CalcMean(DataStruct, 500, 100, &Gyroscope_Mean, 1);
+ 383:Src/tm_stm32_mpu6050.c **** 		SubstractAxes(&DataStruct->Gyroscope_Offset, &Gyroscope_Mean,
+ 384:Src/tm_stm32_mpu6050.c **** 				&DataStruct->Gyroscope_Offset);
+ 385:Src/tm_stm32_mpu6050.c **** 	}while((Gyroscope_Mean.x > MAX_ACC_ERR) || (Gyroscope_Mean.y > MAX_ACC_ERR) || (Gyroscope_Mean.z >
+ 386:Src/tm_stm32_mpu6050.c **** 
+ 387:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 388:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 389:Src/tm_stm32_mpu6050.c **** }
+ 390:Src/tm_stm32_mpu6050.c **** 
+ 391:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_GeneralCallib(TM_MPU6050_t* DataStruct){
+ 1258              		.loc 1 391 0
+ 1259              		.cfi_startproc
+ 1260              		@ args = 0, pretend = 0, frame = 0
+ 1261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1262              		@ link register save eliminated.
+ 1263              	.LVL102:
+ 1264              	.LVL103:
+ 392:Src/tm_stm32_mpu6050.c **** 	//wait 5 seconds for max axis values
+ 393:Src/tm_stm32_mpu6050.c **** 
+ 394:Src/tm_stm32_mpu6050.c **** }
+ 1265              		.loc 1 394 0
+ 1266              		@ sp needed
+ 1267 0000 7047     		bx	lr
+ 1268              		.cfi_endproc
+ 1269              	.LFE48:
+ 1271              		.global	__aeabi_dsub
+ 1272              		.section	.text.SubstractAxes,"ax",%progbits
+ 1273              		.align	1
+ 1274              		.global	SubstractAxes
+ 1275              		.syntax unified
+ 1276              		.code	16
+ 1277              		.thumb_func
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 31
+
+
+ 1278              		.fpu softvfp
+ 1280              	SubstractAxes:
+ 1281              	.LFB50:
+ 395:Src/tm_stm32_mpu6050.c **** 
+ 396:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_CalcMean(TM_MPU6050_t* DataStruct, uint16_t NumberOfValidSamples, ui
+ 397:Src/tm_stm32_mpu6050.c **** 	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
+ 398:Src/tm_stm32_mpu6050.c **** 	ZeroAxes(Mean);
+ 399:Src/tm_stm32_mpu6050.c **** 	for(int i=0; i < NumberOfInvalidSamples; i++){
+ 400:Src/tm_stm32_mpu6050.c **** 		while(!MPU6050_Interrupts.F.DataReady){
+ 401:Src/tm_stm32_mpu6050.c **** 			TM_MPU6050_ReadInterrupts(DataStruct, &MPU6050_Interrupts);
+ 402:Src/tm_stm32_mpu6050.c **** 		}
+ 403:Src/tm_stm32_mpu6050.c **** 		TM_MPU6050_ReadAccelerometer(DataStruct);
+ 404:Src/tm_stm32_mpu6050.c **** 		TM_MPU6050_ReadGyroscope(DataStruct);
+ 405:Src/tm_stm32_mpu6050.c **** 	}
+ 406:Src/tm_stm32_mpu6050.c **** 	switch(Device){
+ 407:Src/tm_stm32_mpu6050.c **** 
+ 408:Src/tm_stm32_mpu6050.c **** 	case 0:
+ 409:Src/tm_stm32_mpu6050.c **** 		for(int i=0; i < NumberOfValidSamples; i++){
+ 410:Src/tm_stm32_mpu6050.c **** 			while(!MPU6050_Interrupts.F.DataReady){
+ 411:Src/tm_stm32_mpu6050.c **** 				TM_MPU6050_ReadInterrupts(DataStruct, &MPU6050_Interrupts);
+ 412:Src/tm_stm32_mpu6050.c **** 			}
+ 413:Src/tm_stm32_mpu6050.c **** 			TM_MPU6050_ReadAccelerometer(DataStruct);
+ 414:Src/tm_stm32_mpu6050.c **** 			AddAxesToAxis(&DataStruct->Accelerometer_Offset, &DataStruct->Accelerometer_Raw, Mean);
+ 415:Src/tm_stm32_mpu6050.c **** 		}
+ 416:Src/tm_stm32_mpu6050.c **** 		break;
+ 417:Src/tm_stm32_mpu6050.c **** 
+ 418:Src/tm_stm32_mpu6050.c **** 	case 1:
+ 419:Src/tm_stm32_mpu6050.c **** 		for(int i=0; i < NumberOfValidSamples; i++){
+ 420:Src/tm_stm32_mpu6050.c **** 			while(!MPU6050_Interrupts.F.DataReady){
+ 421:Src/tm_stm32_mpu6050.c **** 				TM_MPU6050_ReadInterrupts(DataStruct, &MPU6050_Interrupts);
+ 422:Src/tm_stm32_mpu6050.c **** 			}
+ 423:Src/tm_stm32_mpu6050.c **** 			TM_MPU6050_ReadGyroscope(DataStruct);
+ 424:Src/tm_stm32_mpu6050.c **** 			AddAxesToAxis(&DataStruct->Gyroscope_Offset, &DataStruct->Gyroscope_Raw, Mean);
+ 425:Src/tm_stm32_mpu6050.c **** 		}
+ 426:Src/tm_stm32_mpu6050.c **** 		break;
+ 427:Src/tm_stm32_mpu6050.c **** 	}
+ 428:Src/tm_stm32_mpu6050.c **** 	DivideAxes(Mean, NumberOfValidSamples);
+ 429:Src/tm_stm32_mpu6050.c **** 	Mean->x = (int32_t) Mean->x;
+ 430:Src/tm_stm32_mpu6050.c **** 	Mean->y = (int32_t) Mean->y;
+ 431:Src/tm_stm32_mpu6050.c **** 	Mean->z = (int32_t) Mean->z;
+ 432:Src/tm_stm32_mpu6050.c **** 
+ 433:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 434:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 435:Src/tm_stm32_mpu6050.c **** }
+ 436:Src/tm_stm32_mpu6050.c **** 
+ 437:Src/tm_stm32_mpu6050.c **** void SubstractAxes(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValues_t * Resul
+ 1282              		.loc 1 437 0
+ 1283              		.cfi_startproc
+ 1284              		@ args = 0, pretend = 0, frame = 0
+ 1285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1286              	.LVL104:
+ 1287 0000 70B5     		push	{r4, r5, r6, lr}
+ 1288              	.LCFI24:
+ 1289              		.cfi_def_cfa_offset 16
+ 1290              		.cfi_offset 4, -16
+ 1291              		.cfi_offset 5, -12
+ 1292              		.cfi_offset 6, -8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 32
+
+
+ 1293              		.cfi_offset 14, -4
+ 1294 0002 0600     		movs	r6, r0
+ 1295 0004 0D00     		movs	r5, r1
+ 1296 0006 1400     		movs	r4, r2
+ 438:Src/tm_stm32_mpu6050.c **** 	ResultStruct->x = (StructToAdd_1->x - StructToAdd_2->x);
+ 1297              		.loc 1 438 0
+ 1298 0008 0A68     		ldr	r2, [r1]
+ 1299 000a 4B68     		ldr	r3, [r1, #4]
+ 1300              	.LVL105:
+ 1301 000c 4168     		ldr	r1, [r0, #4]
+ 1302 000e 0068     		ldr	r0, [r0]
+ 1303              	.LVL106:
+ 1304 0010 FFF7FEFF 		bl	__aeabi_dsub
+ 1305              	.LVL107:
+ 1306 0014 2060     		str	r0, [r4]
+ 1307 0016 6160     		str	r1, [r4, #4]
+ 439:Src/tm_stm32_mpu6050.c **** 	ResultStruct->y = (StructToAdd_1->y - StructToAdd_2->y);
+ 1308              		.loc 1 439 0
+ 1309 0018 AA68     		ldr	r2, [r5, #8]
+ 1310 001a EB68     		ldr	r3, [r5, #12]
+ 1311 001c B068     		ldr	r0, [r6, #8]
+ 1312 001e F168     		ldr	r1, [r6, #12]
+ 1313 0020 FFF7FEFF 		bl	__aeabi_dsub
+ 1314              	.LVL108:
+ 1315 0024 A060     		str	r0, [r4, #8]
+ 1316 0026 E160     		str	r1, [r4, #12]
+ 440:Src/tm_stm32_mpu6050.c **** 	ResultStruct->z = (StructToAdd_1->z - StructToAdd_2->z);
+ 1317              		.loc 1 440 0
+ 1318 0028 3069     		ldr	r0, [r6, #16]
+ 1319 002a 7169     		ldr	r1, [r6, #20]
+ 1320 002c 2A69     		ldr	r2, [r5, #16]
+ 1321 002e 6B69     		ldr	r3, [r5, #20]
+ 1322 0030 FFF7FEFF 		bl	__aeabi_dsub
+ 1323              	.LVL109:
+ 1324 0034 2061     		str	r0, [r4, #16]
+ 1325 0036 6161     		str	r1, [r4, #20]
+ 441:Src/tm_stm32_mpu6050.c **** }
+ 1326              		.loc 1 441 0
+ 1327              		@ sp needed
+ 1328              	.LVL110:
+ 1329              	.LVL111:
+ 1330              	.LVL112:
+ 1331 0038 70BD     		pop	{r4, r5, r6, pc}
+ 1332              		.cfi_endproc
+ 1333              	.LFE50:
+ 1335              		.global	__aeabi_dmul
+ 1336              		.section	.text.AddAxesWithMultiplication,"ax",%progbits
+ 1337              		.align	1
+ 1338              		.global	AddAxesWithMultiplication
+ 1339              		.syntax unified
+ 1340              		.code	16
+ 1341              		.thumb_func
+ 1342              		.fpu softvfp
+ 1344              	AddAxesWithMultiplication:
+ 1345              	.LFB51:
+ 442:Src/tm_stm32_mpu6050.c **** 
+ 443:Src/tm_stm32_mpu6050.c **** void AddAxesWithMultiplication(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValu
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 33
+
+
+ 1346              		.loc 1 443 0
+ 1347              		.cfi_startproc
+ 1348              		@ args = 8, pretend = 0, frame = 0
+ 1349              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1350              	.LVL113:
+ 1351 0000 70B5     		push	{r4, r5, r6, lr}
+ 1352              	.LCFI25:
+ 1353              		.cfi_def_cfa_offset 16
+ 1354              		.cfi_offset 4, -16
+ 1355              		.cfi_offset 5, -12
+ 1356              		.cfi_offset 6, -8
+ 1357              		.cfi_offset 14, -4
+ 1358 0002 0600     		movs	r6, r0
+ 1359 0004 0D00     		movs	r5, r1
+ 1360 0006 1400     		movs	r4, r2
+ 444:Src/tm_stm32_mpu6050.c **** 	ResultStruct->x = (StructToAdd_1->x + StructToAdd_2->x) * Multiplier;
+ 1361              		.loc 1 444 0
+ 1362 0008 0A68     		ldr	r2, [r1]
+ 1363 000a 4B68     		ldr	r3, [r1, #4]
+ 1364              	.LVL114:
+ 1365 000c 4168     		ldr	r1, [r0, #4]
+ 1366 000e 0068     		ldr	r0, [r0]
+ 1367              	.LVL115:
+ 1368 0010 FFF7FEFF 		bl	__aeabi_dadd
+ 1369              	.LVL116:
+ 1370 0014 049A     		ldr	r2, [sp, #16]
+ 1371 0016 059B     		ldr	r3, [sp, #20]
+ 1372 0018 FFF7FEFF 		bl	__aeabi_dmul
+ 1373              	.LVL117:
+ 1374 001c 2060     		str	r0, [r4]
+ 1375 001e 6160     		str	r1, [r4, #4]
+ 445:Src/tm_stm32_mpu6050.c **** 	ResultStruct->y = (StructToAdd_1->y + StructToAdd_2->y) * Multiplier;
+ 1376              		.loc 1 445 0
+ 1377 0020 AA68     		ldr	r2, [r5, #8]
+ 1378 0022 EB68     		ldr	r3, [r5, #12]
+ 1379 0024 B068     		ldr	r0, [r6, #8]
+ 1380 0026 F168     		ldr	r1, [r6, #12]
+ 1381 0028 FFF7FEFF 		bl	__aeabi_dadd
+ 1382              	.LVL118:
+ 1383 002c 0200     		movs	r2, r0
+ 1384 002e 0B00     		movs	r3, r1
+ 1385 0030 0498     		ldr	r0, [sp, #16]
+ 1386 0032 0599     		ldr	r1, [sp, #20]
+ 1387 0034 FFF7FEFF 		bl	__aeabi_dmul
+ 1388              	.LVL119:
+ 1389 0038 A060     		str	r0, [r4, #8]
+ 1390 003a E160     		str	r1, [r4, #12]
+ 446:Src/tm_stm32_mpu6050.c **** 	ResultStruct->z = (StructToAdd_1->z + StructToAdd_2->z) * Multiplier;
+ 1391              		.loc 1 446 0
+ 1392 003c 3069     		ldr	r0, [r6, #16]
+ 1393 003e 7169     		ldr	r1, [r6, #20]
+ 1394 0040 2A69     		ldr	r2, [r5, #16]
+ 1395 0042 6B69     		ldr	r3, [r5, #20]
+ 1396 0044 FFF7FEFF 		bl	__aeabi_dadd
+ 1397              	.LVL120:
+ 1398 0048 0200     		movs	r2, r0
+ 1399 004a 0B00     		movs	r3, r1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 34
+
+
+ 1400 004c 0498     		ldr	r0, [sp, #16]
+ 1401 004e 0599     		ldr	r1, [sp, #20]
+ 1402 0050 FFF7FEFF 		bl	__aeabi_dmul
+ 1403              	.LVL121:
+ 1404 0054 2061     		str	r0, [r4, #16]
+ 1405 0056 6161     		str	r1, [r4, #20]
+ 447:Src/tm_stm32_mpu6050.c **** }
+ 1406              		.loc 1 447 0
+ 1407              		@ sp needed
+ 1408              	.LVL122:
+ 1409              	.LVL123:
+ 1410              	.LVL124:
+ 1411 0058 70BD     		pop	{r4, r5, r6, pc}
+ 1412              		.cfi_endproc
+ 1413              	.LFE51:
+ 1415              		.section	.text.AddAxesToAxis,"ax",%progbits
+ 1416              		.align	1
+ 1417              		.global	AddAxesToAxis
+ 1418              		.syntax unified
+ 1419              		.code	16
+ 1420              		.thumb_func
+ 1421              		.fpu softvfp
+ 1423              	AddAxesToAxis:
+ 1424              	.LFB52:
+ 448:Src/tm_stm32_mpu6050.c **** 
+ 449:Src/tm_stm32_mpu6050.c **** void AddAxesToAxis(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValues_t * Resul
+ 1425              		.loc 1 449 0
+ 1426              		.cfi_startproc
+ 1427              		@ args = 0, pretend = 0, frame = 0
+ 1428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1429              	.LVL125:
+ 1430 0000 70B5     		push	{r4, r5, r6, lr}
+ 1431              	.LCFI26:
+ 1432              		.cfi_def_cfa_offset 16
+ 1433              		.cfi_offset 4, -16
+ 1434              		.cfi_offset 5, -12
+ 1435              		.cfi_offset 6, -8
+ 1436              		.cfi_offset 14, -4
+ 1437 0002 0600     		movs	r6, r0
+ 1438 0004 0D00     		movs	r5, r1
+ 1439 0006 1400     		movs	r4, r2
+ 450:Src/tm_stm32_mpu6050.c **** 	ResultStruct->x += (StructToAdd_1->x + StructToAdd_2->x);
+ 1440              		.loc 1 450 0
+ 1441 0008 0A68     		ldr	r2, [r1]
+ 1442 000a 4B68     		ldr	r3, [r1, #4]
+ 1443              	.LVL126:
+ 1444 000c 4168     		ldr	r1, [r0, #4]
+ 1445 000e 0068     		ldr	r0, [r0]
+ 1446              	.LVL127:
+ 1447 0010 FFF7FEFF 		bl	__aeabi_dadd
+ 1448              	.LVL128:
+ 1449 0014 0200     		movs	r2, r0
+ 1450 0016 0B00     		movs	r3, r1
+ 1451 0018 2068     		ldr	r0, [r4]
+ 1452 001a 6168     		ldr	r1, [r4, #4]
+ 1453 001c FFF7FEFF 		bl	__aeabi_dadd
+ 1454              	.LVL129:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 35
+
+
+ 1455 0020 2060     		str	r0, [r4]
+ 1456 0022 6160     		str	r1, [r4, #4]
+ 451:Src/tm_stm32_mpu6050.c **** 	ResultStruct->y += (StructToAdd_1->y + StructToAdd_2->y);
+ 1457              		.loc 1 451 0
+ 1458 0024 AA68     		ldr	r2, [r5, #8]
+ 1459 0026 EB68     		ldr	r3, [r5, #12]
+ 1460 0028 B068     		ldr	r0, [r6, #8]
+ 1461 002a F168     		ldr	r1, [r6, #12]
+ 1462 002c FFF7FEFF 		bl	__aeabi_dadd
+ 1463              	.LVL130:
+ 1464 0030 0200     		movs	r2, r0
+ 1465 0032 0B00     		movs	r3, r1
+ 1466 0034 A068     		ldr	r0, [r4, #8]
+ 1467 0036 E168     		ldr	r1, [r4, #12]
+ 1468 0038 FFF7FEFF 		bl	__aeabi_dadd
+ 1469              	.LVL131:
+ 1470 003c A060     		str	r0, [r4, #8]
+ 1471 003e E160     		str	r1, [r4, #12]
+ 452:Src/tm_stm32_mpu6050.c **** 	ResultStruct->z += (StructToAdd_1->z + StructToAdd_2->z);
+ 1472              		.loc 1 452 0
+ 1473 0040 3069     		ldr	r0, [r6, #16]
+ 1474 0042 7169     		ldr	r1, [r6, #20]
+ 1475 0044 2A69     		ldr	r2, [r5, #16]
+ 1476 0046 6B69     		ldr	r3, [r5, #20]
+ 1477 0048 FFF7FEFF 		bl	__aeabi_dadd
+ 1478              	.LVL132:
+ 1479 004c 0200     		movs	r2, r0
+ 1480 004e 0B00     		movs	r3, r1
+ 1481 0050 2069     		ldr	r0, [r4, #16]
+ 1482 0052 6169     		ldr	r1, [r4, #20]
+ 1483 0054 FFF7FEFF 		bl	__aeabi_dadd
+ 1484              	.LVL133:
+ 1485 0058 2061     		str	r0, [r4, #16]
+ 1486 005a 6161     		str	r1, [r4, #20]
+ 453:Src/tm_stm32_mpu6050.c **** }
+ 1487              		.loc 1 453 0
+ 1488              		@ sp needed
+ 1489              	.LVL134:
+ 1490              	.LVL135:
+ 1491              	.LVL136:
+ 1492 005c 70BD     		pop	{r4, r5, r6, pc}
+ 1493              		.cfi_endproc
+ 1494              	.LFE52:
+ 1496              		.section	.text.DivideAxes,"ax",%progbits
+ 1497              		.align	1
+ 1498              		.global	DivideAxes
+ 1499              		.syntax unified
+ 1500              		.code	16
+ 1501              		.thumb_func
+ 1502              		.fpu softvfp
+ 1504              	DivideAxes:
+ 1505              	.LFB53:
+ 454:Src/tm_stm32_mpu6050.c **** void DivideAxes(AxesValues_t * StructToDivide, uint16_t Divisor){
+ 1506              		.loc 1 454 0
+ 1507              		.cfi_startproc
+ 1508              		@ args = 0, pretend = 0, frame = 8
+ 1509              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 36
+
+
+ 1510              	.LVL137:
+ 1511 0000 70B5     		push	{r4, r5, r6, lr}
+ 1512              	.LCFI27:
+ 1513              		.cfi_def_cfa_offset 16
+ 1514              		.cfi_offset 4, -16
+ 1515              		.cfi_offset 5, -12
+ 1516              		.cfi_offset 6, -8
+ 1517              		.cfi_offset 14, -4
+ 1518 0002 82B0     		sub	sp, sp, #8
+ 1519              	.LCFI28:
+ 1520              		.cfi_def_cfa_offset 24
+ 1521 0004 0600     		movs	r6, r0
+ 455:Src/tm_stm32_mpu6050.c **** 	StructToDivide->x = StructToDivide->x / Divisor;
+ 1522              		.loc 1 455 0
+ 1523 0006 0468     		ldr	r4, [r0]
+ 1524 0008 4568     		ldr	r5, [r0, #4]
+ 1525 000a 0800     		movs	r0, r1
+ 1526              	.LVL138:
+ 1527 000c FFF7FEFF 		bl	__aeabi_i2d
+ 1528              	.LVL139:
+ 1529 0010 0090     		str	r0, [sp]
+ 1530 0012 0191     		str	r1, [sp, #4]
+ 1531 0014 0200     		movs	r2, r0
+ 1532 0016 0B00     		movs	r3, r1
+ 1533 0018 2000     		movs	r0, r4
+ 1534 001a 2900     		movs	r1, r5
+ 1535 001c FFF7FEFF 		bl	__aeabi_ddiv
+ 1536              	.LVL140:
+ 1537 0020 3060     		str	r0, [r6]
+ 1538 0022 7160     		str	r1, [r6, #4]
+ 456:Src/tm_stm32_mpu6050.c **** 	StructToDivide->y = StructToDivide->y / Divisor;
+ 1539              		.loc 1 456 0
+ 1540 0024 009C     		ldr	r4, [sp]
+ 1541 0026 019D     		ldr	r5, [sp, #4]
+ 1542 0028 2200     		movs	r2, r4
+ 1543 002a 2B00     		movs	r3, r5
+ 1544 002c B068     		ldr	r0, [r6, #8]
+ 1545 002e F168     		ldr	r1, [r6, #12]
+ 1546 0030 FFF7FEFF 		bl	__aeabi_ddiv
+ 1547              	.LVL141:
+ 1548 0034 B060     		str	r0, [r6, #8]
+ 1549 0036 F160     		str	r1, [r6, #12]
+ 457:Src/tm_stm32_mpu6050.c **** 	StructToDivide->z = StructToDivide->z / Divisor;
+ 1550              		.loc 1 457 0
+ 1551 0038 2200     		movs	r2, r4
+ 1552 003a 2B00     		movs	r3, r5
+ 1553 003c 3069     		ldr	r0, [r6, #16]
+ 1554 003e 7169     		ldr	r1, [r6, #20]
+ 1555 0040 FFF7FEFF 		bl	__aeabi_ddiv
+ 1556              	.LVL142:
+ 1557 0044 3061     		str	r0, [r6, #16]
+ 1558 0046 7161     		str	r1, [r6, #20]
+ 458:Src/tm_stm32_mpu6050.c **** }
+ 1559              		.loc 1 458 0
+ 1560 0048 02B0     		add	sp, sp, #8
+ 1561              		@ sp needed
+ 1562              	.LVL143:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 37
+
+
+ 1563 004a 70BD     		pop	{r4, r5, r6, pc}
+ 1564              		.cfi_endproc
+ 1565              	.LFE53:
+ 1567              		.section	.text.ZeroAxes,"ax",%progbits
+ 1568              		.align	1
+ 1569              		.global	ZeroAxes
+ 1570              		.syntax unified
+ 1571              		.code	16
+ 1572              		.thumb_func
+ 1573              		.fpu softvfp
+ 1575              	ZeroAxes:
+ 1576              	.LFB54:
+ 459:Src/tm_stm32_mpu6050.c **** 
+ 460:Src/tm_stm32_mpu6050.c **** void ZeroAxes(AxesValues_t * StructToZero){
+ 1577              		.loc 1 460 0
+ 1578              		.cfi_startproc
+ 1579              		@ args = 0, pretend = 0, frame = 0
+ 1580              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1581              		@ link register save eliminated.
+ 1582              	.LVL144:
+ 461:Src/tm_stm32_mpu6050.c **** 	StructToZero->x = 0;
+ 1583              		.loc 1 461 0
+ 1584 0000 0022     		movs	r2, #0
+ 1585 0002 0023     		movs	r3, #0
+ 1586 0004 0260     		str	r2, [r0]
+ 1587 0006 4360     		str	r3, [r0, #4]
+ 462:Src/tm_stm32_mpu6050.c **** 	StructToZero->y = 0;
+ 1588              		.loc 1 462 0
+ 1589 0008 8260     		str	r2, [r0, #8]
+ 1590 000a C360     		str	r3, [r0, #12]
+ 463:Src/tm_stm32_mpu6050.c **** 	StructToZero->z = 0;
+ 1591              		.loc 1 463 0
+ 1592 000c 0261     		str	r2, [r0, #16]
+ 1593 000e 4361     		str	r3, [r0, #20]
+ 464:Src/tm_stm32_mpu6050.c **** }
+ 1594              		.loc 1 464 0
+ 1595              		@ sp needed
+ 1596 0010 7047     		bx	lr
+ 1597              		.cfi_endproc
+ 1598              	.LFE54:
+ 1600              		.global	__aeabi_d2iz
+ 1601              		.section	.text.TM_MPU6050_CalcMean,"ax",%progbits
+ 1602              		.align	1
+ 1603              		.global	TM_MPU6050_CalcMean
+ 1604              		.syntax unified
+ 1605              		.code	16
+ 1606              		.thumb_func
+ 1607              		.fpu softvfp
+ 1609              	TM_MPU6050_CalcMean:
+ 1610              	.LFB49:
+ 396:Src/tm_stm32_mpu6050.c **** 	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
+ 1611              		.loc 1 396 0
+ 1612              		.cfi_startproc
+ 1613              		@ args = 4, pretend = 0, frame = 8
+ 1614              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1615              	.LVL145:
+ 1616 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 38
+
+
+ 1617              	.LCFI29:
+ 1618              		.cfi_def_cfa_offset 20
+ 1619              		.cfi_offset 4, -20
+ 1620              		.cfi_offset 5, -16
+ 1621              		.cfi_offset 6, -12
+ 1622              		.cfi_offset 7, -8
+ 1623              		.cfi_offset 14, -4
+ 1624 0002 CE46     		mov	lr, r9
+ 1625 0004 4746     		mov	r7, r8
+ 1626 0006 80B5     		push	{r7, lr}
+ 1627              	.LCFI30:
+ 1628              		.cfi_def_cfa_offset 28
+ 1629              		.cfi_offset 8, -28
+ 1630              		.cfi_offset 9, -24
+ 1631 0008 83B0     		sub	sp, sp, #12
+ 1632              	.LCFI31:
+ 1633              		.cfi_def_cfa_offset 40
+ 1634 000a 0400     		movs	r4, r0
+ 1635 000c 0E00     		movs	r6, r1
+ 1636 000e 9046     		mov	r8, r2
+ 1637 0010 1D00     		movs	r5, r3
+ 1638 0012 0AAB     		add	r3, sp, #40
+ 1639              	.LVL146:
+ 1640 0014 1B78     		ldrb	r3, [r3]
+ 1641              	.LVL147:
+ 1642 0016 9946     		mov	r9, r3
+ 398:Src/tm_stm32_mpu6050.c **** 	for(int i=0; i < NumberOfInvalidSamples; i++){
+ 1643              		.loc 1 398 0
+ 1644 0018 2800     		movs	r0, r5
+ 1645              	.LVL148:
+ 1646 001a FFF7FEFF 		bl	ZeroAxes
+ 1647              	.LVL149:
+ 1648              	.LBB2:
+ 399:Src/tm_stm32_mpu6050.c **** 		while(!MPU6050_Interrupts.F.DataReady){
+ 1649              		.loc 1 399 0
+ 1650 001e 0027     		movs	r7, #0
+ 1651 0020 0EE0     		b	.L99
+ 1652              	.LVL150:
+ 1653              	.L100:
+ 401:Src/tm_stm32_mpu6050.c **** 		}
+ 1654              		.loc 1 401 0
+ 1655 0022 01A9     		add	r1, sp, #4
+ 1656 0024 2000     		movs	r0, r4
+ 1657 0026 FFF7FEFF 		bl	TM_MPU6050_ReadInterrupts
+ 1658              	.LVL151:
+ 1659              	.L101:
+ 400:Src/tm_stm32_mpu6050.c **** 			TM_MPU6050_ReadInterrupts(DataStruct, &MPU6050_Interrupts);
+ 1660              		.loc 1 400 0
+ 1661 002a 01AB     		add	r3, sp, #4
+ 1662 002c 1B78     		ldrb	r3, [r3]
+ 1663 002e DB07     		lsls	r3, r3, #31
+ 1664 0030 F7D5     		bpl	.L100
+ 403:Src/tm_stm32_mpu6050.c **** 		TM_MPU6050_ReadGyroscope(DataStruct);
+ 1665              		.loc 1 403 0 discriminator 2
+ 1666 0032 2000     		movs	r0, r4
+ 1667 0034 FFF7FEFF 		bl	TM_MPU6050_ReadAccelerometer
+ 1668              	.LVL152:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 39
+
+
+ 404:Src/tm_stm32_mpu6050.c **** 	}
+ 1669              		.loc 1 404 0 discriminator 2
+ 1670 0038 2000     		movs	r0, r4
+ 1671 003a FFF7FEFF 		bl	TM_MPU6050_ReadGyroscope
+ 1672              	.LVL153:
+ 399:Src/tm_stm32_mpu6050.c **** 		while(!MPU6050_Interrupts.F.DataReady){
+ 1673              		.loc 1 399 0 discriminator 2
+ 1674 003e 0137     		adds	r7, r7, #1
+ 1675              	.LVL154:
+ 1676              	.L99:
+ 399:Src/tm_stm32_mpu6050.c **** 		while(!MPU6050_Interrupts.F.DataReady){
+ 1677              		.loc 1 399 0 is_stmt 0 discriminator 1
+ 1678 0040 4745     		cmp	r7, r8
+ 1679 0042 F2DB     		blt	.L101
+ 1680              	.LBE2:
+ 406:Src/tm_stm32_mpu6050.c **** 
+ 1681              		.loc 1 406 0 is_stmt 1
+ 1682 0044 4B46     		mov	r3, r9
+ 1683 0046 002B     		cmp	r3, #0
+ 1684 0048 39D0     		beq	.L109
+ 1685 004a 012B     		cmp	r3, #1
+ 1686 004c 4FD0     		beq	.L110
+ 1687              	.LVL155:
+ 1688              	.L102:
+ 428:Src/tm_stm32_mpu6050.c **** 	Mean->x = (int32_t) Mean->x;
+ 1689              		.loc 1 428 0
+ 1690 004e 3100     		movs	r1, r6
+ 1691 0050 2800     		movs	r0, r5
+ 1692 0052 FFF7FEFF 		bl	DivideAxes
+ 1693              	.LVL156:
+ 429:Src/tm_stm32_mpu6050.c **** 	Mean->y = (int32_t) Mean->y;
+ 1694              		.loc 1 429 0
+ 1695 0056 2868     		ldr	r0, [r5]
+ 1696 0058 6968     		ldr	r1, [r5, #4]
+ 1697 005a FFF7FEFF 		bl	__aeabi_d2iz
+ 1698              	.LVL157:
+ 1699 005e FFF7FEFF 		bl	__aeabi_i2d
+ 1700              	.LVL158:
+ 1701 0062 2860     		str	r0, [r5]
+ 1702 0064 6960     		str	r1, [r5, #4]
+ 430:Src/tm_stm32_mpu6050.c **** 	Mean->z = (int32_t) Mean->z;
+ 1703              		.loc 1 430 0
+ 1704 0066 A868     		ldr	r0, [r5, #8]
+ 1705 0068 E968     		ldr	r1, [r5, #12]
+ 1706 006a FFF7FEFF 		bl	__aeabi_d2iz
+ 1707              	.LVL159:
+ 1708 006e FFF7FEFF 		bl	__aeabi_i2d
+ 1709              	.LVL160:
+ 1710 0072 A860     		str	r0, [r5, #8]
+ 1711 0074 E960     		str	r1, [r5, #12]
+ 431:Src/tm_stm32_mpu6050.c **** 
+ 1712              		.loc 1 431 0
+ 1713 0076 2869     		ldr	r0, [r5, #16]
+ 1714 0078 6969     		ldr	r1, [r5, #20]
+ 1715 007a FFF7FEFF 		bl	__aeabi_d2iz
+ 1716              	.LVL161:
+ 1717 007e FFF7FEFF 		bl	__aeabi_i2d
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 40
+
+
+ 1718              	.LVL162:
+ 1719 0082 2861     		str	r0, [r5, #16]
+ 1720 0084 6961     		str	r1, [r5, #20]
+ 435:Src/tm_stm32_mpu6050.c **** 
+ 1721              		.loc 1 435 0
+ 1722 0086 0020     		movs	r0, #0
+ 1723 0088 03B0     		add	sp, sp, #12
+ 1724              		@ sp needed
+ 1725              	.LVL163:
+ 1726              	.LVL164:
+ 1727 008a 0CBC     		pop	{r2, r3}
+ 1728 008c 9046     		mov	r8, r2
+ 1729 008e 9946     		mov	r9, r3
+ 1730 0090 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1731              	.LVL165:
+ 1732              	.L105:
+ 1733              	.LBB3:
+ 411:Src/tm_stm32_mpu6050.c **** 			}
+ 1734              		.loc 1 411 0
+ 1735 0092 01A9     		add	r1, sp, #4
+ 1736 0094 2000     		movs	r0, r4
+ 1737 0096 FFF7FEFF 		bl	TM_MPU6050_ReadInterrupts
+ 1738              	.LVL166:
+ 1739              	.L106:
+ 410:Src/tm_stm32_mpu6050.c **** 				TM_MPU6050_ReadInterrupts(DataStruct, &MPU6050_Interrupts);
+ 1740              		.loc 1 410 0
+ 1741 009a 01AB     		add	r3, sp, #4
+ 1742 009c 1B78     		ldrb	r3, [r3]
+ 1743 009e DB07     		lsls	r3, r3, #31
+ 1744 00a0 F7D5     		bpl	.L105
+ 413:Src/tm_stm32_mpu6050.c **** 			AddAxesToAxis(&DataStruct->Accelerometer_Offset, &DataStruct->Accelerometer_Raw, Mean);
+ 1745              		.loc 1 413 0 discriminator 2
+ 1746 00a2 2000     		movs	r0, r4
+ 1747 00a4 FFF7FEFF 		bl	TM_MPU6050_ReadAccelerometer
+ 1748              	.LVL167:
+ 414:Src/tm_stm32_mpu6050.c **** 		}
+ 1749              		.loc 1 414 0 discriminator 2
+ 1750 00a8 2100     		movs	r1, r4
+ 1751 00aa 1031     		adds	r1, r1, #16
+ 1752 00ac 2000     		movs	r0, r4
+ 1753 00ae 4030     		adds	r0, r0, #64
+ 1754 00b0 2A00     		movs	r2, r5
+ 1755 00b2 FFF7FEFF 		bl	AddAxesToAxis
+ 1756              	.LVL168:
+ 409:Src/tm_stm32_mpu6050.c **** 			while(!MPU6050_Interrupts.F.DataReady){
+ 1757              		.loc 1 409 0 discriminator 2
+ 1758 00b6 0137     		adds	r7, r7, #1
+ 1759              	.LVL169:
+ 1760              	.L103:
+ 409:Src/tm_stm32_mpu6050.c **** 			while(!MPU6050_Interrupts.F.DataReady){
+ 1761              		.loc 1 409 0 is_stmt 0 discriminator 1
+ 1762 00b8 B742     		cmp	r7, r6
+ 1763 00ba EEDB     		blt	.L106
+ 1764 00bc C7E7     		b	.L102
+ 1765              	.LVL170:
+ 1766              	.L109:
+ 1767              	.LBE3:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 41
+
+
+ 406:Src/tm_stm32_mpu6050.c **** 
+ 1768              		.loc 1 406 0 is_stmt 1
+ 1769 00be 0027     		movs	r7, #0
+ 1770              	.LVL171:
+ 1771 00c0 FAE7     		b	.L103
+ 1772              	.LVL172:
+ 1773              	.L107:
+ 1774              	.LBB4:
+ 421:Src/tm_stm32_mpu6050.c **** 			}
+ 1775              		.loc 1 421 0
+ 1776 00c2 01A9     		add	r1, sp, #4
+ 1777 00c4 2000     		movs	r0, r4
+ 1778 00c6 FFF7FEFF 		bl	TM_MPU6050_ReadInterrupts
+ 1779              	.LVL173:
+ 1780              	.L108:
+ 420:Src/tm_stm32_mpu6050.c **** 				TM_MPU6050_ReadInterrupts(DataStruct, &MPU6050_Interrupts);
+ 1781              		.loc 1 420 0
+ 1782 00ca 01AB     		add	r3, sp, #4
+ 1783 00cc 1B78     		ldrb	r3, [r3]
+ 1784 00ce DB07     		lsls	r3, r3, #31
+ 1785 00d0 F7D5     		bpl	.L107
+ 423:Src/tm_stm32_mpu6050.c **** 			AddAxesToAxis(&DataStruct->Gyroscope_Offset, &DataStruct->Gyroscope_Raw, Mean);
+ 1786              		.loc 1 423 0 discriminator 2
+ 1787 00d2 2000     		movs	r0, r4
+ 1788 00d4 FFF7FEFF 		bl	TM_MPU6050_ReadGyroscope
+ 1789              	.LVL174:
+ 424:Src/tm_stm32_mpu6050.c **** 		}
+ 1790              		.loc 1 424 0 discriminator 2
+ 1791 00d8 2100     		movs	r1, r4
+ 1792 00da 6031     		adds	r1, r1, #96
+ 1793 00dc 2000     		movs	r0, r4
+ 1794 00de A830     		adds	r0, r0, #168
+ 1795 00e0 2A00     		movs	r2, r5
+ 1796 00e2 FFF7FEFF 		bl	AddAxesToAxis
+ 1797              	.LVL175:
+ 419:Src/tm_stm32_mpu6050.c **** 			while(!MPU6050_Interrupts.F.DataReady){
+ 1798              		.loc 1 419 0 discriminator 2
+ 1799 00e6 0137     		adds	r7, r7, #1
+ 1800              	.LVL176:
+ 1801              	.L104:
+ 419:Src/tm_stm32_mpu6050.c **** 			while(!MPU6050_Interrupts.F.DataReady){
+ 1802              		.loc 1 419 0 is_stmt 0 discriminator 1
+ 1803 00e8 B742     		cmp	r7, r6
+ 1804 00ea EEDB     		blt	.L108
+ 1805 00ec AFE7     		b	.L102
+ 1806              	.LVL177:
+ 1807              	.L110:
+ 1808              	.LBE4:
+ 406:Src/tm_stm32_mpu6050.c **** 
+ 1809              		.loc 1 406 0 is_stmt 1
+ 1810 00ee 0027     		movs	r7, #0
+ 1811              	.LVL178:
+ 1812 00f0 FAE7     		b	.L104
+ 1813              		.cfi_endproc
+ 1814              	.LFE49:
+ 1816              		.global	__aeabi_dcmpgt
+ 1817              		.section	.text.TM_MPU6050_FastCallib,"ax",%progbits
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 42
+
+
+ 1818              		.align	1
+ 1819              		.global	TM_MPU6050_FastCallib
+ 1820              		.syntax unified
+ 1821              		.code	16
+ 1822              		.thumb_func
+ 1823              		.fpu softvfp
+ 1825              	TM_MPU6050_FastCallib:
+ 1826              	.LFB47:
+ 363:Src/tm_stm32_mpu6050.c **** 	#define MAX_ACC_ERR		2
+ 1827              		.loc 1 363 0
+ 1828              		.cfi_startproc
+ 1829              		@ args = 0, pretend = 0, frame = 48
+ 1830              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1831              	.LVL179:
+ 1832 0000 70B5     		push	{r4, r5, r6, lr}
+ 1833              	.LCFI32:
+ 1834              		.cfi_def_cfa_offset 16
+ 1835              		.cfi_offset 4, -16
+ 1836              		.cfi_offset 5, -12
+ 1837              		.cfi_offset 6, -8
+ 1838              		.cfi_offset 14, -4
+ 1839 0002 8EB0     		sub	sp, sp, #56
+ 1840              	.LCFI33:
+ 1841              		.cfi_def_cfa_offset 72
+ 1842 0004 0400     		movs	r4, r0
+ 370:Src/tm_stm32_mpu6050.c **** 
+ 1843              		.loc 1 370 0
+ 1844 0006 FFF7FEFF 		bl	TM_MPU6050_EnableInterrupts
+ 1845              	.LVL180:
+ 372:Src/tm_stm32_mpu6050.c **** 	ZeroAxes(&DataStruct->Gyroscope_Offset);
+ 1846              		.loc 1 372 0
+ 1847 000a 2600     		movs	r6, r4
+ 1848 000c 4036     		adds	r6, r6, #64
+ 1849 000e 3000     		movs	r0, r6
+ 1850 0010 FFF7FEFF 		bl	ZeroAxes
+ 1851              	.LVL181:
+ 373:Src/tm_stm32_mpu6050.c **** 
+ 1852              		.loc 1 373 0
+ 1853 0014 2500     		movs	r5, r4
+ 1854 0016 A835     		adds	r5, r5, #168
+ 1855 0018 2800     		movs	r0, r5
+ 1856 001a FFF7FEFF 		bl	ZeroAxes
+ 1857              	.LVL182:
+ 1858              	.L112:
+ 376:Src/tm_stm32_mpu6050.c **** 		SubstractAxes(&DataStruct->Accelerometer_Offset, &Accelerometer_Mean,
+ 1859              		.loc 1 376 0 discriminator 5
+ 1860 001e 0023     		movs	r3, #0
+ 1861 0020 0093     		str	r3, [sp]
+ 1862 0022 08AB     		add	r3, sp, #32
+ 1863 0024 6422     		movs	r2, #100
+ 1864 0026 FA21     		movs	r1, #250
+ 1865 0028 4900     		lsls	r1, r1, #1
+ 1866 002a 2000     		movs	r0, r4
+ 1867 002c FFF7FEFF 		bl	TM_MPU6050_CalcMean
+ 1868              	.LVL183:
+ 377:Src/tm_stm32_mpu6050.c **** 				&DataStruct->Accelerometer_Offset);
+ 1869              		.loc 1 377 0 discriminator 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 43
+
+
+ 1870 0030 3200     		movs	r2, r6
+ 1871 0032 08A9     		add	r1, sp, #32
+ 1872 0034 3000     		movs	r0, r6
+ 1873 0036 FFF7FEFF 		bl	SubstractAxes
+ 1874              	.LVL184:
+ 379:Src/tm_stm32_mpu6050.c **** 
+ 1875              		.loc 1 379 0 discriminator 5
+ 1876 003a 0022     		movs	r2, #0
+ 1877 003c 8023     		movs	r3, #128
+ 1878 003e DB05     		lsls	r3, r3, #23
+ 1879 0040 0898     		ldr	r0, [sp, #32]
+ 1880 0042 0999     		ldr	r1, [sp, #36]
+ 1881 0044 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1882              	.LVL185:
+ 1883 0048 0028     		cmp	r0, #0
+ 1884 004a E8D1     		bne	.L112
+ 379:Src/tm_stm32_mpu6050.c **** 
+ 1885              		.loc 1 379 0 is_stmt 0 discriminator 2
+ 1886 004c 0022     		movs	r2, #0
+ 1887 004e 8023     		movs	r3, #128
+ 1888 0050 DB05     		lsls	r3, r3, #23
+ 1889 0052 0A98     		ldr	r0, [sp, #40]
+ 1890 0054 0B99     		ldr	r1, [sp, #44]
+ 1891 0056 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1892              	.LVL186:
+ 1893 005a 0028     		cmp	r0, #0
+ 1894 005c DFD1     		bne	.L112
+ 379:Src/tm_stm32_mpu6050.c **** 
+ 1895              		.loc 1 379 0 discriminator 4
+ 1896 005e 0022     		movs	r2, #0
+ 1897 0060 8023     		movs	r3, #128
+ 1898 0062 DB05     		lsls	r3, r3, #23
+ 1899 0064 0C98     		ldr	r0, [sp, #48]
+ 1900 0066 0D99     		ldr	r1, [sp, #52]
+ 1901 0068 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1902              	.LVL187:
+ 1903 006c 0028     		cmp	r0, #0
+ 1904 006e D6D1     		bne	.L112
+ 1905              	.L113:
+ 382:Src/tm_stm32_mpu6050.c **** 		SubstractAxes(&DataStruct->Gyroscope_Offset, &Gyroscope_Mean,
+ 1906              		.loc 1 382 0 is_stmt 1 discriminator 5
+ 1907 0070 0123     		movs	r3, #1
+ 1908 0072 0093     		str	r3, [sp]
+ 1909 0074 02AB     		add	r3, sp, #8
+ 1910 0076 6422     		movs	r2, #100
+ 1911 0078 FA21     		movs	r1, #250
+ 1912 007a 4900     		lsls	r1, r1, #1
+ 1913 007c 2000     		movs	r0, r4
+ 1914 007e FFF7FEFF 		bl	TM_MPU6050_CalcMean
+ 1915              	.LVL188:
+ 383:Src/tm_stm32_mpu6050.c **** 				&DataStruct->Gyroscope_Offset);
+ 1916              		.loc 1 383 0 discriminator 5
+ 1917 0082 2A00     		movs	r2, r5
+ 1918 0084 02A9     		add	r1, sp, #8
+ 1919 0086 2800     		movs	r0, r5
+ 1920 0088 FFF7FEFF 		bl	SubstractAxes
+ 1921              	.LVL189:
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 44
+
+
+ 385:Src/tm_stm32_mpu6050.c **** 
+ 1922              		.loc 1 385 0 discriminator 5
+ 1923 008c 0022     		movs	r2, #0
+ 1924 008e 8023     		movs	r3, #128
+ 1925 0090 DB05     		lsls	r3, r3, #23
+ 1926 0092 0298     		ldr	r0, [sp, #8]
+ 1927 0094 0399     		ldr	r1, [sp, #12]
+ 1928 0096 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1929              	.LVL190:
+ 1930 009a 0028     		cmp	r0, #0
+ 1931 009c E8D1     		bne	.L113
+ 385:Src/tm_stm32_mpu6050.c **** 
+ 1932              		.loc 1 385 0 is_stmt 0 discriminator 2
+ 1933 009e 0022     		movs	r2, #0
+ 1934 00a0 8023     		movs	r3, #128
+ 1935 00a2 DB05     		lsls	r3, r3, #23
+ 1936 00a4 0498     		ldr	r0, [sp, #16]
+ 1937 00a6 0599     		ldr	r1, [sp, #20]
+ 1938 00a8 FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1939              	.LVL191:
+ 1940 00ac 0028     		cmp	r0, #0
+ 1941 00ae DFD1     		bne	.L113
+ 385:Src/tm_stm32_mpu6050.c **** 
+ 1942              		.loc 1 385 0 discriminator 4
+ 1943 00b0 0022     		movs	r2, #0
+ 1944 00b2 8023     		movs	r3, #128
+ 1945 00b4 DB05     		lsls	r3, r3, #23
+ 1946 00b6 0698     		ldr	r0, [sp, #24]
+ 1947 00b8 0799     		ldr	r1, [sp, #28]
+ 1948 00ba FFF7FEFF 		bl	__aeabi_dcmpgt
+ 1949              	.LVL192:
+ 1950 00be 0028     		cmp	r0, #0
+ 1951 00c0 D6D1     		bne	.L113
+ 389:Src/tm_stm32_mpu6050.c **** 
+ 1952              		.loc 1 389 0 is_stmt 1
+ 1953 00c2 0EB0     		add	sp, sp, #56
+ 1954              		@ sp needed
+ 1955              	.LVL193:
+ 1956              	.LVL194:
+ 1957              	.LVL195:
+ 1958 00c4 70BD     		pop	{r4, r5, r6, pc}
+ 1959              		.cfi_endproc
+ 1960              	.LFE47:
+ 1962              		.section	.text.TM_MPU6050_CompensateRawData,"ax",%progbits
+ 1963              		.align	1
+ 1964              		.global	TM_MPU6050_CompensateRawData
+ 1965              		.syntax unified
+ 1966              		.code	16
+ 1967              		.thumb_func
+ 1968              		.fpu softvfp
+ 1970              	TM_MPU6050_CompensateRawData:
+ 1971              	.LFB55:
+ 465:Src/tm_stm32_mpu6050.c **** 
+ 466:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_CompensateRawData(TM_MPU6050_t* DataStruct) {
+ 1972              		.loc 1 466 0
+ 1973              		.cfi_startproc
+ 1974              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 45
+
+
+ 1975              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1976              	.LVL196:
+ 1977 0000 70B5     		push	{r4, r5, r6, lr}
+ 1978              	.LCFI34:
+ 1979              		.cfi_def_cfa_offset 16
+ 1980              		.cfi_offset 4, -16
+ 1981              		.cfi_offset 5, -12
+ 1982              		.cfi_offset 6, -8
+ 1983              		.cfi_offset 14, -4
+ 1984 0002 82B0     		sub	sp, sp, #8
+ 1985              	.LCFI35:
+ 1986              		.cfi_def_cfa_offset 24
+ 1987 0004 0400     		movs	r4, r0
+ 467:Src/tm_stm32_mpu6050.c **** 
+ 468:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Compensated_Prev.x = DataStruct->Gyroscope_Compensated.x;
+ 1988              		.loc 1 468 0
+ 1989 0006 0300     		movs	r3, r0
+ 1990 0008 9033     		adds	r3, r3, #144
+ 1991 000a 816F     		ldr	r1, [r0, #120]
+ 1992 000c C26F     		ldr	r2, [r0, #124]
+ 1993 000e 1960     		str	r1, [r3]
+ 1994 0010 5A60     		str	r2, [r3, #4]
+ 469:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Compensated_Prev.y = DataStruct->Gyroscope_Compensated.y;
+ 1995              		.loc 1 469 0
+ 1996 0012 103B     		subs	r3, r3, #16
+ 1997 0014 1868     		ldr	r0, [r3]
+ 1998 0016 5968     		ldr	r1, [r3, #4]
+ 1999              	.LVL197:
+ 2000 0018 1833     		adds	r3, r3, #24
+ 2001 001a 1860     		str	r0, [r3]
+ 2002 001c 5960     		str	r1, [r3, #4]
+ 470:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Compensated_Prev.z = DataStruct->Gyroscope_Compensated.z;
+ 2003              		.loc 1 470 0
+ 2004 001e 103B     		subs	r3, r3, #16
+ 2005 0020 1868     		ldr	r0, [r3]
+ 2006 0022 5968     		ldr	r1, [r3, #4]
+ 2007 0024 1833     		adds	r3, r3, #24
+ 2008 0026 1860     		str	r0, [r3]
+ 2009 0028 5960     		str	r1, [r3, #4]
+ 471:Src/tm_stm32_mpu6050.c **** 
+ 472:Src/tm_stm32_mpu6050.c **** 	AddAxesWithMultiplication(&DataStruct->Accelerometer_Raw, &DataStruct->Accelerometer_Offset,
+ 2010              		.loc 1 472 0
+ 2011 002a 2200     		movs	r2, r4
+ 2012 002c 2832     		adds	r2, r2, #40
+ 2013 002e 2100     		movs	r1, r4
+ 2014 0030 4031     		adds	r1, r1, #64
+ 2015 0032 2000     		movs	r0, r4
+ 2016 0034 1030     		adds	r0, r0, #16
+ 2017 0036 A56D     		ldr	r5, [r4, #88]
+ 2018 0038 E66D     		ldr	r6, [r4, #92]
+ 2019 003a 0095     		str	r5, [sp]
+ 2020 003c 0196     		str	r6, [sp, #4]
+ 2021 003e FFF7FEFF 		bl	AddAxesWithMultiplication
+ 2022              	.LVL198:
+ 473:Src/tm_stm32_mpu6050.c **** 			&DataStruct->Accelerometer_Compensated, DataStruct->Accelerometer_Multiply);
+ 474:Src/tm_stm32_mpu6050.c **** 
+ 475:Src/tm_stm32_mpu6050.c **** 	AddAxesWithMultiplication(&DataStruct->Gyroscope_Raw, &DataStruct->Gyroscope_Offset,
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 46
+
+
+ 2023              		.loc 1 475 0
+ 2024 0042 2200     		movs	r2, r4
+ 2025 0044 7832     		adds	r2, r2, #120
+ 2026 0046 2100     		movs	r1, r4
+ 2027 0048 A831     		adds	r1, r1, #168
+ 2028 004a 2000     		movs	r0, r4
+ 2029 004c 6030     		adds	r0, r0, #96
+ 2030 004e F034     		adds	r4, r4, #240
+ 2031              	.LVL199:
+ 2032 0050 2368     		ldr	r3, [r4]
+ 2033 0052 6468     		ldr	r4, [r4, #4]
+ 2034 0054 0093     		str	r3, [sp]
+ 2035 0056 0194     		str	r4, [sp, #4]
+ 2036 0058 FFF7FEFF 		bl	AddAxesWithMultiplication
+ 2037              	.LVL200:
+ 476:Src/tm_stm32_mpu6050.c **** 			&DataStruct->Gyroscope_Compensated, DataStruct->Gyroscope_Multiply);
+ 477:Src/tm_stm32_mpu6050.c **** 
+ 478:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 479:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 480:Src/tm_stm32_mpu6050.c **** }
+ 2038              		.loc 1 480 0
+ 2039 005c 0020     		movs	r0, #0
+ 2040 005e 02B0     		add	sp, sp, #8
+ 2041              		@ sp needed
+ 2042              	.LVL201:
+ 2043 0060 70BD     		pop	{r4, r5, r6, pc}
+ 2044              		.cfi_endproc
+ 2045              	.LFE55:
+ 2047              		.section	.text.TM_MPU6050_CalcGyroAcc,"ax",%progbits
+ 2048              		.align	1
+ 2049              		.global	TM_MPU6050_CalcGyroAcc
+ 2050              		.syntax unified
+ 2051              		.code	16
+ 2052              		.thumb_func
+ 2053              		.fpu softvfp
+ 2055              	TM_MPU6050_CalcGyroAcc:
+ 2056              	.LFB56:
+ 481:Src/tm_stm32_mpu6050.c **** 
+ 482:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_CalcGyroAcc(TM_MPU6050_t* DataStruct, double Time_s) {
+ 2057              		.loc 1 482 0
+ 2058              		.cfi_startproc
+ 2059              		@ args = 0, pretend = 0, frame = 0
+ 2060              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2061              	.LVL202:
+ 2062 0000 70B5     		push	{r4, r5, r6, lr}
+ 2063              	.LCFI36:
+ 2064              		.cfi_def_cfa_offset 16
+ 2065              		.cfi_offset 4, -16
+ 2066              		.cfi_offset 5, -12
+ 2067              		.cfi_offset 6, -8
+ 2068              		.cfi_offset 14, -4
+ 2069 0002 0600     		movs	r6, r0
+ 2070 0004 1400     		movs	r4, r2
+ 2071 0006 1D00     		movs	r5, r3
+ 483:Src/tm_stm32_mpu6050.c **** 
+ 484:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Acceleration.x = (DataStruct->Gyroscope_Compensated.x - DataStruct->Gyroscop
+ 2072              		.loc 1 484 0
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 47
+
+
+ 2073 0008 0300     		movs	r3, r0
+ 2074 000a 9033     		adds	r3, r3, #144
+ 2075 000c 1A68     		ldr	r2, [r3]
+ 2076 000e 5B68     		ldr	r3, [r3, #4]
+ 2077              	.LVL203:
+ 2078 0010 C16F     		ldr	r1, [r0, #124]
+ 2079 0012 806F     		ldr	r0, [r0, #120]
+ 2080              	.LVL204:
+ 2081 0014 FFF7FEFF 		bl	__aeabi_dsub
+ 2082              	.LVL205:
+ 2083 0018 2200     		movs	r2, r4
+ 2084 001a 2B00     		movs	r3, r5
+ 2085 001c FFF7FEFF 		bl	__aeabi_ddiv
+ 2086              	.LVL206:
+ 2087 0020 3300     		movs	r3, r6
+ 2088 0022 C033     		adds	r3, r3, #192
+ 2089 0024 1860     		str	r0, [r3]
+ 2090 0026 5960     		str	r1, [r3, #4]
+ 485:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Acceleration.y = (DataStruct->Gyroscope_Compensated.y - DataStruct->Gyroscop
+ 2091              		.loc 1 485 0
+ 2092 0028 403B     		subs	r3, r3, #64
+ 2093 002a 1868     		ldr	r0, [r3]
+ 2094 002c 5968     		ldr	r1, [r3, #4]
+ 2095 002e 1833     		adds	r3, r3, #24
+ 2096 0030 1A68     		ldr	r2, [r3]
+ 2097 0032 5B68     		ldr	r3, [r3, #4]
+ 2098 0034 FFF7FEFF 		bl	__aeabi_dsub
+ 2099              	.LVL207:
+ 2100 0038 2200     		movs	r2, r4
+ 2101 003a 2B00     		movs	r3, r5
+ 2102 003c FFF7FEFF 		bl	__aeabi_ddiv
+ 2103              	.LVL208:
+ 2104 0040 3300     		movs	r3, r6
+ 2105 0042 C833     		adds	r3, r3, #200
+ 2106 0044 1860     		str	r0, [r3]
+ 2107 0046 5960     		str	r1, [r3, #4]
+ 486:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Acceleration.z = (DataStruct->Gyroscope_Compensated.z - DataStruct->Gyroscop
+ 2108              		.loc 1 486 0
+ 2109 0048 403B     		subs	r3, r3, #64
+ 2110 004a 1868     		ldr	r0, [r3]
+ 2111 004c 5968     		ldr	r1, [r3, #4]
+ 2112 004e 1833     		adds	r3, r3, #24
+ 2113 0050 1A68     		ldr	r2, [r3]
+ 2114 0052 5B68     		ldr	r3, [r3, #4]
+ 2115 0054 FFF7FEFF 		bl	__aeabi_dsub
+ 2116              	.LVL209:
+ 2117 0058 2200     		movs	r2, r4
+ 2118 005a 2B00     		movs	r3, r5
+ 2119 005c FFF7FEFF 		bl	__aeabi_ddiv
+ 2120              	.LVL210:
+ 2121 0060 D036     		adds	r6, r6, #208
+ 2122              	.LVL211:
+ 2123 0062 3060     		str	r0, [r6]
+ 2124 0064 7160     		str	r1, [r6, #4]
+ 487:Src/tm_stm32_mpu6050.c **** 
+ 488:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 489:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 48
+
+
+ 490:Src/tm_stm32_mpu6050.c **** }
+ 2125              		.loc 1 490 0
+ 2126 0066 0020     		movs	r0, #0
+ 2127              		@ sp needed
+ 2128              	.LVL212:
+ 2129 0068 70BD     		pop	{r4, r5, r6, pc}
+ 2130              		.cfi_endproc
+ 2131              	.LFE56:
+ 2133              		.section	.text.TM_MPU6050_ConvToRad,"ax",%progbits
+ 2134              		.align	1
+ 2135              		.global	TM_MPU6050_ConvToRad
+ 2136              		.syntax unified
+ 2137              		.code	16
+ 2138              		.thumb_func
+ 2139              		.fpu softvfp
+ 2141              	TM_MPU6050_ConvToRad:
+ 2142              	.LFB57:
+ 491:Src/tm_stm32_mpu6050.c **** 
+ 492:Src/tm_stm32_mpu6050.c **** 
+ 493:Src/tm_stm32_mpu6050.c **** TM_MPU6050_Result_t TM_MPU6050_ConvToRad(TM_MPU6050_t* DataStruct) {
+ 2143              		.loc 1 493 0
+ 2144              		.cfi_startproc
+ 2145              		@ args = 0, pretend = 0, frame = 0
+ 2146              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2147              	.LVL213:
+ 2148 0000 10B5     		push	{r4, lr}
+ 2149              	.LCFI37:
+ 2150              		.cfi_def_cfa_offset 8
+ 2151              		.cfi_offset 4, -8
+ 2152              		.cfi_offset 14, -4
+ 2153 0002 0400     		movs	r4, r0
+ 494:Src/tm_stm32_mpu6050.c **** 
+ 495:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Acceleration_Rad.x = DataStruct->Gyroscope_Acceleration.x * 0.01745;//2pi/36
+ 2154              		.loc 1 495 0
+ 2155 0004 0300     		movs	r3, r0
+ 2156 0006 C033     		adds	r3, r3, #192
+ 2157 0008 1868     		ldr	r0, [r3]
+ 2158 000a 5968     		ldr	r1, [r3, #4]
+ 2159              	.LVL214:
+ 2160 000c 0F4A     		ldr	r2, .L117
+ 2161 000e 104B     		ldr	r3, .L117+4
+ 2162 0010 FFF7FEFF 		bl	__aeabi_dmul
+ 2163              	.LVL215:
+ 2164 0014 2300     		movs	r3, r4
+ 2165 0016 D833     		adds	r3, r3, #216
+ 2166 0018 1860     		str	r0, [r3]
+ 2167 001a 5960     		str	r1, [r3, #4]
+ 496:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Acceleration_Rad.y = DataStruct->Gyroscope_Acceleration.y * 0.01745;//2pi/36
+ 2168              		.loc 1 496 0
+ 2169 001c 103B     		subs	r3, r3, #16
+ 2170 001e 1868     		ldr	r0, [r3]
+ 2171 0020 5968     		ldr	r1, [r3, #4]
+ 2172 0022 0A4A     		ldr	r2, .L117
+ 2173 0024 0A4B     		ldr	r3, .L117+4
+ 2174 0026 FFF7FEFF 		bl	__aeabi_dmul
+ 2175              	.LVL216:
+ 2176 002a 2300     		movs	r3, r4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 49
+
+
+ 2177 002c E033     		adds	r3, r3, #224
+ 2178 002e 1860     		str	r0, [r3]
+ 2179 0030 5960     		str	r1, [r3, #4]
+ 497:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Acceleration_Rad.z = DataStruct->Gyroscope_Acceleration.z * 0.01745;//2pi/36
+ 2180              		.loc 1 497 0
+ 2181 0032 103B     		subs	r3, r3, #16
+ 2182 0034 1868     		ldr	r0, [r3]
+ 2183 0036 5968     		ldr	r1, [r3, #4]
+ 2184 0038 044A     		ldr	r2, .L117
+ 2185 003a 054B     		ldr	r3, .L117+4
+ 2186 003c FFF7FEFF 		bl	__aeabi_dmul
+ 2187              	.LVL217:
+ 2188 0040 E834     		adds	r4, r4, #232
+ 2189              	.LVL218:
+ 2190 0042 2060     		str	r0, [r4]
+ 2191 0044 6160     		str	r1, [r4, #4]
+ 498:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
+ 499:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
+ 500:Src/tm_stm32_mpu6050.c **** }
+ 2192              		.loc 1 500 0
+ 2193 0046 0020     		movs	r0, #0
+ 2194              		@ sp needed
+ 2195              	.LVL219:
+ 2196 0048 10BD     		pop	{r4, pc}
+ 2197              	.L118:
+ 2198 004a C046     		.align	2
+ 2199              	.L117:
+ 2200 004c CAC342AD 		.word	-1388133430
+ 2201 0050 69DE913F 		.word	1066524265
+ 2202              		.cfi_endproc
+ 2203              	.LFE57:
+ 2205              		.text
+ 2206              	.Letext0:
+ 2207              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 2208              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 2209              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h"
+ 2210              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f042x6.h"
+ 2211              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 2212              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 2213              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-eab
+ 2214              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 2215              		.file 10 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
+ 2216              		.file 11 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_dma.h"
+ 2217              		.file 12 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_i2c.h"
+ 2218              		.file 13 "Inc/i2c.h"
+ 2219              		.file 14 "Inc/tm_stm32_mpu6050.h"
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 50
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tm_stm32_mpu6050.c
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:16     .text.TM_MPU6050_SetGyroscope:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:23     .text.TM_MPU6050_SetGyroscope:00000000 TM_MPU6050_SetGyroscope
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:165    .text.TM_MPU6050_SetGyroscope:000000ac $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:176    .text.TM_MPU6050_SetAccelerometer:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:183    .text.TM_MPU6050_SetAccelerometer:00000000 TM_MPU6050_SetAccelerometer
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:313    .text.TM_MPU6050_SetAccelerometer:000000a4 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:321    .text.TM_MPU6050_SetDataRate:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:328    .text.TM_MPU6050_SetDataRate:00000000 TM_MPU6050_SetDataRate
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:377    .text.TM_MPU6050_SetDataRate:00000030 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:382    .text.TM_MPU6050_SetDigitalLowPassFilter:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:389    .text.TM_MPU6050_SetDigitalLowPassFilter:00000000 TM_MPU6050_SetDigitalLowPassFilter
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:438    .text.TM_MPU6050_SetDigitalLowPassFilter:00000030 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:443    .text.TM_MPU6050_Init:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:450    .text.TM_MPU6050_Init:00000000 TM_MPU6050_Init
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:582    .text.TM_MPU6050_Init:000000a8 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:587    .text.TM_MPU6050_EnableInterrupts:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:594    .text.TM_MPU6050_EnableInterrupts:00000000 TM_MPU6050_EnableInterrupts
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:694    .text.TM_MPU6050_EnableInterrupts:00000084 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:699    .text.TM_MPU6050_DisableInterrupts:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:706    .text.TM_MPU6050_DisableInterrupts:00000000 TM_MPU6050_DisableInterrupts
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:755    .text.TM_MPU6050_DisableInterrupts:00000034 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:760    .text.TM_MPU6050_ReadInterrupts:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:767    .text.TM_MPU6050_ReadInterrupts:00000000 TM_MPU6050_ReadInterrupts
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:824    .text.TM_MPU6050_ReadInterrupts:0000003c $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:830    .text.TM_MPU6050_ReadAccelerometer:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:837    .text.TM_MPU6050_ReadAccelerometer:00000000 TM_MPU6050_ReadAccelerometer
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:918    .text.TM_MPU6050_ReadAccelerometer:00000068 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:923    .text.TM_MPU6050_ReadGyroscope:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:930    .text.TM_MPU6050_ReadGyroscope:00000000 TM_MPU6050_ReadGyroscope
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1011   .text.TM_MPU6050_ReadGyroscope:00000068 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1018   .text.TM_MPU6050_ReadTemperature:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1025   .text.TM_MPU6050_ReadTemperature:00000000 TM_MPU6050_ReadTemperature
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1095   .text.TM_MPU6050_ReadTemperature:00000054 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1103   .text.TM_MPU6050_ReadAll:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1110   .text.TM_MPU6050_ReadAll:00000000 TM_MPU6050_ReadAll
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1241   .text.TM_MPU6050_ReadAll:000000c0 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1249   .text.TM_MPU6050_GeneralCallib:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1256   .text.TM_MPU6050_GeneralCallib:00000000 TM_MPU6050_GeneralCallib
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1273   .text.SubstractAxes:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1280   .text.SubstractAxes:00000000 SubstractAxes
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1337   .text.AddAxesWithMultiplication:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1344   .text.AddAxesWithMultiplication:00000000 AddAxesWithMultiplication
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1416   .text.AddAxesToAxis:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1423   .text.AddAxesToAxis:00000000 AddAxesToAxis
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1497   .text.DivideAxes:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1504   .text.DivideAxes:00000000 DivideAxes
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1568   .text.ZeroAxes:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1575   .text.ZeroAxes:00000000 ZeroAxes
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1602   .text.TM_MPU6050_CalcMean:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1609   .text.TM_MPU6050_CalcMean:00000000 TM_MPU6050_CalcMean
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1818   .text.TM_MPU6050_FastCallib:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1825   .text.TM_MPU6050_FastCallib:00000000 TM_MPU6050_FastCallib
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1963   .text.TM_MPU6050_CompensateRawData:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:1970   .text.TM_MPU6050_CompensateRawData:00000000 TM_MPU6050_CompensateRawData
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:2048   .text.TM_MPU6050_CalcGyroAcc:00000000 $t
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s 			page 51
+
+
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:2055   .text.TM_MPU6050_CalcGyroAcc:00000000 TM_MPU6050_CalcGyroAcc
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:2134   .text.TM_MPU6050_ConvToRad:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:2141   .text.TM_MPU6050_ConvToRad:00000000 TM_MPU6050_ConvToRad
+C:\Users\Wojciech\AppData\Local\Temp\cc3DvDel.s:2200   .text.TM_MPU6050_ConvToRad:0000004c $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+HAL_I2C_Mem_Read
+HAL_I2C_Mem_Write
+hi2c1
+MX_I2C1_Init
+HAL_I2C_IsDeviceReady
+HAL_I2C_Master_Transmit
+__aeabi_i2d
+__aeabi_ddiv
+__aeabi_dadd
+__aeabi_dsub
+__aeabi_dmul
+__aeabi_d2iz
+__aeabi_dcmpgt
