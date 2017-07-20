@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 1
   37 0004 02D0     		beq	.L3
   38 0006 0128     		cmp	r0, #1
   39 0008 06D0     		beq	.L4
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s 			page 2
 
 
   40              	.LVL1:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 1
   80              		.fpu softvfp
   82              	StopLight_Set:
   83              	.LFB36:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s 			page 3
 
 
   32:Src/stop_light.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 1
  133              	.Letext0:
  134              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
  135              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s 			page 4
 
 
  136              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h"
@@ -188,18 +188,18 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 1
  140              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-eab
  141              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
  142              		.file 10 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stop_light.c
-C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:16     .text.StopLight_Write:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:22     .text.StopLight_Write:00000000 StopLight_Write
-C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:70     .text.StopLight_Write:00000024 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:75     .text.StopLight_Set:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:82     .text.StopLight_Set:00000000 StopLight_Set
-C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:104    .text.StopLight_Clr:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccfy7xkI.s:111    .text.StopLight_Clr:00000000 StopLight_Clr
+C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s:16     .text.StopLight_Write:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s:22     .text.StopLight_Write:00000000 StopLight_Write
+C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s:70     .text.StopLight_Write:00000024 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s:75     .text.StopLight_Set:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s:82     .text.StopLight_Set:00000000 StopLight_Set
+C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s:104    .text.StopLight_Clr:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccohhvMj.s:111    .text.StopLight_Clr:00000000 StopLight_Clr
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

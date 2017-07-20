@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
   31:Src/main.c    ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
   32:Src/main.c    ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
   33:Src/main.c    ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 2
 
 
   34:Src/main.c    ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
   88:Src/main.c    **** 
   89:Src/main.c    ****   /* USER CODE END Init */
   90:Src/main.c    **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 3
 
 
   91:Src/main.c    ****   /* Configure the system clock */
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
  145:Src/main.c    **** //	SET_CAN_DATA(DATA_R_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
  146:Src/main.c    **** 
  147:Src/main.c    **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 4
 
 
  148:Src/main.c    **** 	if((GET_CAN_DATA(DATA_STOP_LIGHT) * GET_CAN_DATA_VALIDATION(DATA_STOP_LIGHT)) == 0xFF){
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
  202:Src/main.c    ****   }
  203:Src/main.c    **** 
  204:Src/main.c    ****   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 5
 
 
  205:Src/main.c    ****   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_SYSCLK;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
   52              		@ frame_needed = 0, uses_anonymous_args = 0
  169:Src/main.c    **** 
   53              		.loc 1 169 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 6
 
 
   54 0000 00B5     		push	{lr}
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
   96              		.loc 1 195 0
   97 0034 053B     		subs	r3, r3, #5
   98 0036 0893     		str	r3, [sp, #32]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 7
 
 
  196:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
  143              		.loc 1 221 0
  144 007e 19B0     		add	sp, sp, #100
  145              		@ sp needed
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 8
 
 
  146 0080 00BD     		pop	{pc}
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
   92:Src/main.c    **** 
  197              		.loc 1 92 0
  198 0008 FFF7FEFF 		bl	SystemClock_Config
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 9
 
 
  199              	.LVL13:
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
  242 004a 1593     		str	r3, [sp, #84]
  113:Src/main.c    ****   MPU6050_Data.Gyroscope_Offset.x = 0;
  243              		.loc 1 113 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 10
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 10
 
 
  244 004c 1692     		str	r2, [sp, #88]
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
  290      6D61696E 
  290      2E6300
  291              		.text
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 11
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 11
 
 
  292              	.Letext0:
@@ -628,20 +628,20 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 1
  316              		.file 25 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
  317              		.file 26 "Inc/gpio.h"
  318              		.file 27 "Inc/stop_light.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s 			page 12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:16     .text._Error_Handler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:23     .text._Error_Handler:00000000 _Error_Handler
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:40     .text.SystemClock_Config:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:47     .text.SystemClock_Config:00000000 SystemClock_Config
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:168    .text.SystemClock_Config:0000009c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:173    .text.main:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:180    .text.main:00000000 main
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:283    .text.main:00000080 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccWVQIwK.s:288    .rodata.SystemClock_Config.str1.4:00000000 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:16     .text._Error_Handler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:23     .text._Error_Handler:00000000 _Error_Handler
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:40     .text.SystemClock_Config:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:47     .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:168    .text.SystemClock_Config:0000009c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:173    .text.main:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:180    .text.main:00000000 main
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:283    .text.main:00000080 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccAiM32Y.s:288    .rodata.SystemClock_Config.str1.4:00000000 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

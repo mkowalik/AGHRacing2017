@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
   31:Src/system_stm32f0xx.c ****   *        SYSCLK(Hz)                             | 8000000
   32:Src/system_stm32f0xx.c ****   *-----------------------------------------------------------------------------
   33:Src/system_stm32f0xx.c ****   *        HCLK(Hz)                               | 8000000
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 2
 
 
   34:Src/system_stm32f0xx.c ****   *-----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
   88:Src/system_stm32f0xx.c **** /** @addtogroup STM32F0xx_System_Private_TypesDefinitions
   89:Src/system_stm32f0xx.c ****   * @{
   90:Src/system_stm32f0xx.c ****   */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 3
 
 
   91:Src/system_stm32f0xx.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  145:Src/system_stm32f0xx.c **** /** @addtogroup STM32F0xx_System_Private_FunctionPrototypes
  146:Src/system_stm32f0xx.c ****   * @{
  147:Src/system_stm32f0xx.c ****   */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 4
 
 
  148:Src/system_stm32f0xx.c **** 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  181:Src/system_stm32f0xx.c ****   RCC->CR &= (uint32_t)0xFFFBFFFFU;
   47              		.loc 1 181 0
   48 001a 1A68     		ldr	r2, [r3]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 5
 
 
   49 001c 0D48     		ldr	r0, .L2+12
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
   67              		.loc 1 217 0
   68 003a 5A6B     		ldr	r2, [r3, #52]
   69 003c 8A43     		bics	r2, r1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 6
 
 
   70 003e 5A63     		str	r2, [r3, #52]
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  244:Src/system_stm32f0xx.c ****   *
  245:Src/system_stm32f0xx.c ****   *         (*) HSI_VALUE is a constant defined in stm32f0xx_hal.h file (default value
  246:Src/system_stm32f0xx.c ****   *             8 MHz) but the real value may vary depending on the variations
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 7
 
 
  247:Src/system_stm32f0xx.c ****   *             in voltage and temperature.
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  278:Src/system_stm32f0xx.c ****       pllsource = RCC->CFGR & RCC_CFGR_PLLSRC;
  279:Src/system_stm32f0xx.c ****       pllmull = ( pllmull >> 18) + 2;
  280:Src/system_stm32f0xx.c ****       predivfactor = (RCC->CFGR2 & RCC_CFGR2_PREDIV) + 1;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 8
 
 
  281:Src/system_stm32f0xx.c **** 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  141 0026 5A68     		ldr	r2, [r3, #4]
  142 0028 1209     		lsrs	r2, r2, #4
  143 002a 0F23     		movs	r3, #15
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 9
 
 
  144 002c 1340     		ands	r3, r2
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  189              	.LVL15:
  282:Src/system_stm32f0xx.c ****       {
  190              		.loc 1 282 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 10
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 10
 
 
  191 005e 8022     		movs	r2, #128
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  242              		.section	.data.SystemCoreClock,"aw",%progbits
  243              		.align	2
  244              		.set	.LANCHOR0,. + 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 11
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 11
 
 
  247              	SystemCoreClock:
@@ -644,23 +644,23 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 1
  291              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
  292              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-eab
  293              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s 			page 12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 system_stm32f0xx.c
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:16     .text.SystemInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:23     .text.SystemInit:00000000 SystemInit
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:80     .text.SystemInit:00000048 $d
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:91     .text.SystemCoreClockUpdate:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:98     .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:231    .text.SystemCoreClockUpdate:00000098 $d
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:275    .rodata.APBPrescTable:00000000 APBPrescTable
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:254    .rodata.AHBPrescTable:00000000 AHBPrescTable
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:247    .data.SystemCoreClock:00000000 SystemCoreClock
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:243    .data.SystemCoreClock:00000000 $d
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:250    .rodata.AHBPrescTable:00000000 $d
-C:\Users\Wojciech\AppData\Local\Temp\cckmD2tS.s:272    .rodata.APBPrescTable:00000000 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:16     .text.SystemInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:23     .text.SystemInit:00000000 SystemInit
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:80     .text.SystemInit:00000048 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:91     .text.SystemCoreClockUpdate:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:98     .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:231    .text.SystemCoreClockUpdate:00000098 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:275    .rodata.APBPrescTable:00000000 APBPrescTable
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:254    .rodata.AHBPrescTable:00000000 AHBPrescTable
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:247    .data.SystemCoreClock:00000000 SystemCoreClock
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:243    .data.SystemCoreClock:00000000 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:250    .rodata.AHBPrescTable:00000000 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccLMoNf5.s:272    .rodata.APBPrescTable:00000000 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

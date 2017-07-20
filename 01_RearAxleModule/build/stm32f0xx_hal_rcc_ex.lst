@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
   31:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
   32:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   33:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 2
 
 
   34:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
   88:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****  *
   89:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** @verbatim
   90:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****  ===============================================================================
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 3
 
 
   91:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****                 ##### Extended Peripheral Control functions  #####
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  128:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   /*---------------------------- RTC configuration -------------------------------*/
  129:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   if(((PeriphClkInit->PeriphClockSelection) & RCC_PERIPHCLK_RTC) == (RCC_PERIPHCLK_RTC))
   43              		.loc 1 129 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 4
 
 
   44 0006 0368     		ldr	r3, [r0]
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  148:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       SET_BIT(PWR->CR, PWR_CR_DBP);
  149:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       
  150:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       /* Wait for Backup domain Write protection disable */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 5
 
 
  151:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       tickstart = HAL_GetTick();
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  112              		.loc 1 172 0
  113 0060 1A62     		str	r2, [r3, #32]
  173:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 6
 
 
  174:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       /* Wait for LSERDY if LSE was enabled */
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  205:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     /* Configure the USART1 clock source */
  206:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     __HAL_RCC_USART1_CONFIG(PeriphClkInit->Usart1ClockSelection);
  137              		.loc 1 206 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 7
 
 
  138 007e 2A4A     		ldr	r2, .L21
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  156 009c 0B43     		orrs	r3, r1
  157 009e 1363     		str	r3, [r2, #48]
  158              	.L12:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 8
 
 
  243:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   }
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  272:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****        /* STM32F071xB || STM32F072xB || STM32F078xx || */
  273:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****        /* STM32F091xC || STM32F098xx */
  274:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 9
 
 
  275:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   return HAL_OK;
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  229              		.loc 1 178 0
  230 00fa FFF7FEFF 		bl	HAL_GetTick
  231              	.LVL19:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 10
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 10
 
 
  232 00fe 0600     		movs	r6, r0
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  282              		.fpu softvfp
  284              	HAL_RCCEx_GetPeriphCLKConfig:
  285              	.LFB36:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 11
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 11
 
 
  277:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  305:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
  306:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** #if defined(STM32F091xC) || defined(STM32F098xx)
  307:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   PeriphClkInit->PeriphClockSelection |= RCC_PERIPHCLK_USART3;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 12
 
 
  308:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   /* Get the USART3 clock source ---------------------------------------------*/
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  344              		.global	HAL_RCCEx_GetPeriphCLKFreq
  345              		.syntax unified
  346              		.code	16
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 13
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 13
 
 
  347              		.thumb_func
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  381:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   *            @arg @ref RCC_PERIPHCLK_USART3  USART2 peripheral clock
  382:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   *            @arg @ref RCC_PERIPHCLK_CEC     CEC peripheral clock
  383:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   @endif
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 14
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 14
 
 
  384:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * @retval Frequency in Hz (0: means that no available frequency for the peripheral)
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  413:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       {
  414:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****         frequency = LSI_VALUE;
  415:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       }
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 15
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 15
 
 
  416:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       /* Check if HSE is ready  and if RTC clock selection is HSI_DIV32*/
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  470:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       }
  471:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       /* Check if LSE is ready  and if USART2 clock selection is LSE */
  472:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       else if ((srcclk == RCC_USART2CLKSOURCE_LSE) && (HAL_IS_BIT_SET(RCC->BDCR, RCC_BDCR_LSERDY)))
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 16
 
 
  473:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       {
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  389 0028 77D5     		bpl	.L39
  515:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       {
  516:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****         frequency = HSI_VALUE;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 17
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 17
 
 
  390              		.loc 1 516 0 is_stmt 1
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  424              	.LVL32:
  536:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****         pllsource    = RCC->CFGR & RCC_CFGR_PLLSRC;
  425              		.loc 1 536 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 18
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 18
 
 
  426 0056 5368     		ldr	r3, [r2, #4]
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  460              	.LVL39:
  461              	.L32:
  404:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 19
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 19
 
 
  462              		.loc 1 404 0
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  414:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       }
  509              		.loc 1 414 0
  510 00c2 3248     		ldr	r0, .L72+8
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 20
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 20
 
 
  511              	.LVL45:
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  556              	.L65:
  431:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       }
  557              		.loc 1 431 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 21
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 21
 
 
  558 00f0 FFF7FEFF 		bl	HAL_RCC_GetPCLK1Freq
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  604              	.LVL66:
  605 0120 2BE0     		b	.L26
  606              	.LVL67:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 22
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 22
 
 
  607              	.L70:
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  569:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** #endif /* RCC_CR2_HSI48ON */
  570:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       break;
  571:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     }
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 23
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 23
 
 
  572:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** #endif /* USB */
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  593:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     {
  594:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       break;
  595:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     }
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 24
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 24
 
 
  596:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   }
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  602:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   */
  603:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
  604:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** #if defined(CRS)
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 25
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 25
 
 
  605:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  659:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****                    (+++) @ref HAL_RCCEx_CRS_SyncWarnCallback()
  660:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****                    (+++) @ref HAL_RCCEx_CRS_ExpectedSyncCallback()
  661:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****                    (+++) @ref HAL_RCCEx_CRS_ErrorCallback()
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 26
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 26
 
 
  662:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  746 0014 0368     		ldr	r3, [r0]
  747 0016 4268     		ldr	r2, [r0, #4]
  748 0018 1343     		orrs	r3, r2
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 27
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 27
 
 
  749 001a 8268     		ldr	r2, [r0, #8]
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  788 0050 FFC0FFFF 		.word	-16129
  789              		.cfi_endproc
  790              	.LFE38:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 28
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 28
 
 
  792              		.section	.text.HAL_RCCEx_CRSSoftwareSynchronizationGenerate,"ax",%progbits
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  728:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** {
  833              		.loc 1 728 0
  834              		.cfi_startproc
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 29
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 29
 
 
  835              		@ args = 0, pretend = 0, frame = 0
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  875              		.code	16
  876              		.thumb_func
  877              		.fpu softvfp
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 30
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 30
 
 
  879              	HAL_RCCEx_CRSWaitSynchronization:
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  771:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     if(Timeout != HAL_MAX_DELAY)
  772:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     {
  773:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****       if((Timeout == 0U) || ((HAL_GetTick() - tickstart) > Timeout))
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 31
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 31
 
 
  905              		.loc 1 773 0 discriminator 1
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  816:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     }
  817:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     
  818:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     /* Check CRS SYNC Missed flag  */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 32
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 32
 
 
  819:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     if(__HAL_RCC_CRS_GET_FLAG(RCC_CRS_FLAG_SYNCMISS))
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  948 003e 9B68     		ldr	r3, [r3, #8]
  949 0040 9B07     		lsls	r3, r3, #30
  950 0042 04D5     		bpl	.L86
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 33
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 33
 
 
  792:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  995 007c 1C43     		orrs	r4, r3
  996              	.LVL113:
  825:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     }
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 34
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 34
 
 
  997              		.loc 1 825 0
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  849:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
  850:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   /* Check CRS SYNCOK flag  */
  851:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   if(((itflags & RCC_CRS_FLAG_SYNCOK) != RESET) && ((itsources & RCC_CRS_IT_SYNCOK) != RESET))
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 35
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 35
 
 
  852:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   {
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  906:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * @retval none
  907:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   */
  908:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** __weak void HAL_RCCEx_CRS_SyncOkCallback(void)
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 36
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 36
 
 
  909:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** {
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  925:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
  926:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** /**
  927:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * @brief  RCCEx Clock Recovery System Expected SYNC interrupt callback.
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 37
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 37
 
 
  928:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****   * @retval none
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  1108 0000 7047     		bx	lr
  1109              		.cfi_endproc
  1110              	.LFE46:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 38
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 38
 
 
  1112              		.section	.text.HAL_RCCEx_CRS_IRQHandler,"ax",%progbits
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  1158 001e 20D4     		bmi	.L113
  1159              	.L106:
  880:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c ****     {
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 39
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 39
 
 
  1160              		.loc 1 880 0 is_stmt 1
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  854:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_rcc_ex.c **** 
  1204              		.loc 1 854 0
  1205 004a 0122     		movs	r2, #1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 40
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 40
 
 
  1206              	.LVL128:
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  1255              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f042x6.h"
  1256              		.file 6 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h"
  1257              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 41
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 41
 
 
  1258              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
@@ -2408,43 +2408,43 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 1
  1262              		.file 12 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h"
  1263              		.file 13 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
  1264              		.file 14 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s 			page 42
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s 			page 42
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_hal_rcc_ex.c
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:16     .text.HAL_RCCEx_PeriphCLKConfig:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:23     .text.HAL_RCCEx_PeriphCLKConfig:00000000 HAL_RCCEx_PeriphCLKConfig
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:267    .text.HAL_RCCEx_PeriphCLKConfig:00000128 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:277    .text.HAL_RCCEx_GetPeriphCLKConfig:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:284    .text.HAL_RCCEx_GetPeriphCLKConfig:00000000 HAL_RCCEx_GetPeriphCLKConfig
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:334    .text.HAL_RCCEx_GetPeriphCLKConfig:0000003c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:343    .text.HAL_RCCEx_GetPeriphCLKFreq:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:350    .text.HAL_RCCEx_GetPeriphCLKFreq:00000000 HAL_RCCEx_GetPeriphCLKFreq
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:709    .text.HAL_RCCEx_GetPeriphCLKFreq:00000184 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:718    .text.HAL_RCCEx_CRSConfig:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:725    .text.HAL_RCCEx_CRSConfig:00000000 HAL_RCCEx_CRSConfig
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:785    .text.HAL_RCCEx_CRSConfig:00000044 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:793    .text.HAL_RCCEx_CRSSoftwareSynchronizationGenerate:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:800    .text.HAL_RCCEx_CRSSoftwareSynchronizationGenerate:00000000 HAL_RCCEx_CRSSoftwareSynchronizationGenerate
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:819    .text.HAL_RCCEx_CRSSoftwareSynchronizationGenerate:0000000c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:824    .text.HAL_RCCEx_CRSGetSynchronizationInfo:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:831    .text.HAL_RCCEx_CRSGetSynchronizationInfo:00000000 HAL_RCCEx_CRSGetSynchronizationInfo
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:867    .text.HAL_RCCEx_CRSGetSynchronizationInfo:00000028 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:872    .text.HAL_RCCEx_CRSWaitSynchronization:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:879    .text.HAL_RCCEx_CRSWaitSynchronization:00000000 HAL_RCCEx_CRSWaitSynchronization
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1023   .text.HAL_RCCEx_CRSWaitSynchronization:00000098 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1028   .text.HAL_RCCEx_CRS_SyncOkCallback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1035   .text.HAL_RCCEx_CRS_SyncOkCallback:00000000 HAL_RCCEx_CRS_SyncOkCallback
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1049   .text.HAL_RCCEx_CRS_SyncWarnCallback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1056   .text.HAL_RCCEx_CRS_SyncWarnCallback:00000000 HAL_RCCEx_CRS_SyncWarnCallback
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1070   .text.HAL_RCCEx_CRS_ExpectedSyncCallback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1077   .text.HAL_RCCEx_CRS_ExpectedSyncCallback:00000000 HAL_RCCEx_CRS_ExpectedSyncCallback
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1091   .text.HAL_RCCEx_CRS_ErrorCallback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1098   .text.HAL_RCCEx_CRS_ErrorCallback:00000000 HAL_RCCEx_CRS_ErrorCallback
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1113   .text.HAL_RCCEx_CRS_IRQHandler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1120   .text.HAL_RCCEx_CRS_IRQHandler:00000000 HAL_RCCEx_CRS_IRQHandler
-C:\Users\Wojciech\AppData\Local\Temp\ccKGVNeM.s:1246   .text.HAL_RCCEx_CRS_IRQHandler:00000074 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:16     .text.HAL_RCCEx_PeriphCLKConfig:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:23     .text.HAL_RCCEx_PeriphCLKConfig:00000000 HAL_RCCEx_PeriphCLKConfig
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:267    .text.HAL_RCCEx_PeriphCLKConfig:00000128 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:277    .text.HAL_RCCEx_GetPeriphCLKConfig:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:284    .text.HAL_RCCEx_GetPeriphCLKConfig:00000000 HAL_RCCEx_GetPeriphCLKConfig
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:334    .text.HAL_RCCEx_GetPeriphCLKConfig:0000003c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:343    .text.HAL_RCCEx_GetPeriphCLKFreq:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:350    .text.HAL_RCCEx_GetPeriphCLKFreq:00000000 HAL_RCCEx_GetPeriphCLKFreq
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:709    .text.HAL_RCCEx_GetPeriphCLKFreq:00000184 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:718    .text.HAL_RCCEx_CRSConfig:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:725    .text.HAL_RCCEx_CRSConfig:00000000 HAL_RCCEx_CRSConfig
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:785    .text.HAL_RCCEx_CRSConfig:00000044 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:793    .text.HAL_RCCEx_CRSSoftwareSynchronizationGenerate:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:800    .text.HAL_RCCEx_CRSSoftwareSynchronizationGenerate:00000000 HAL_RCCEx_CRSSoftwareSynchronizationGenerate
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:819    .text.HAL_RCCEx_CRSSoftwareSynchronizationGenerate:0000000c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:824    .text.HAL_RCCEx_CRSGetSynchronizationInfo:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:831    .text.HAL_RCCEx_CRSGetSynchronizationInfo:00000000 HAL_RCCEx_CRSGetSynchronizationInfo
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:867    .text.HAL_RCCEx_CRSGetSynchronizationInfo:00000028 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:872    .text.HAL_RCCEx_CRSWaitSynchronization:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:879    .text.HAL_RCCEx_CRSWaitSynchronization:00000000 HAL_RCCEx_CRSWaitSynchronization
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1023   .text.HAL_RCCEx_CRSWaitSynchronization:00000098 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1028   .text.HAL_RCCEx_CRS_SyncOkCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1035   .text.HAL_RCCEx_CRS_SyncOkCallback:00000000 HAL_RCCEx_CRS_SyncOkCallback
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1049   .text.HAL_RCCEx_CRS_SyncWarnCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1056   .text.HAL_RCCEx_CRS_SyncWarnCallback:00000000 HAL_RCCEx_CRS_SyncWarnCallback
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1070   .text.HAL_RCCEx_CRS_ExpectedSyncCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1077   .text.HAL_RCCEx_CRS_ExpectedSyncCallback:00000000 HAL_RCCEx_CRS_ExpectedSyncCallback
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1091   .text.HAL_RCCEx_CRS_ErrorCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1098   .text.HAL_RCCEx_CRS_ErrorCallback:00000000 HAL_RCCEx_CRS_ErrorCallback
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1113   .text.HAL_RCCEx_CRS_IRQHandler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1120   .text.HAL_RCCEx_CRS_IRQHandler:00000000 HAL_RCCEx_CRS_IRQHandler
+C:\Users\Wojciech\AppData\Local\Temp\ccjtf4WZ.s:1246   .text.HAL_RCCEx_CRS_IRQHandler:00000074 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
   31:Src/tm_stm32_mpu6050.c **** /* Who I am register value */
   32:Src/tm_stm32_mpu6050.c **** #define MPU6050_I_AM				0x68
   33:Src/tm_stm32_mpu6050.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 2
 
 
   34:Src/tm_stm32_mpu6050.c **** /* MPU6050 registers */
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
   88:Src/tm_stm32_mpu6050.c **** 	
   89:Src/tm_stm32_mpu6050.c **** 	/* Initialize I2C */
   90:Src/tm_stm32_mpu6050.c **** 	MX_I2C1_Init();
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 3
 
 
   91:Src/tm_stm32_mpu6050.c **** 	
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
   37 0002 87B0     		sub	sp, sp, #28
   38              	.LCFI1:
   39              		.cfi_def_cfa_offset 40
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 4
 
 
   40 0004 0400     		movs	r4, r0
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  163:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
  164:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
  165:Src/tm_stm32_mpu6050.c **** }
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 5
 
 
   65              		.loc 1 165 0
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  114 0076 6360     		str	r3, [r4, #4]
  164:Src/tm_stm32_mpu6050.c **** }
  115              		.loc 1 164 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 6
 
 
  116 0078 0020     		movs	r0, #0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  160 00a6 0120     		movs	r0, #1
  161 00a8 BFE7     		b	.L2
  162              	.L13:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 7
 
 
  163 00aa C046     		.align	2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  213 001c 1C22     		movs	r2, #28
  214 001e 2148     		ldr	r0, .L25
  215              	.LVL17:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 8
 
 
  216 0020 FFF7FEFF 		bl	HAL_I2C_Mem_Read
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  176:Src/tm_stm32_mpu6050.c **** 		/* Return error */
  240              		.loc 1 176 0
  241 0040 2178     		ldrb	r1, [r4]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 9
 
 
  242 0042 FA23     		movs	r3, #250
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  287              		.loc 1 190 0
  288 0086 0022     		movs	r2, #0
  289 0088 094B     		ldr	r3, .L25+12
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 10
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 10
 
 
  290 008a A265     		str	r2, [r4, #88]
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  339 0002 87B0     		sub	sp, sp, #28
  340              	.LCFI5:
  341              		.cfi_def_cfa_offset 32
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 11
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 11
 
 
  342 0004 1723     		movs	r3, #23
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  387              		.fpu softvfp
  389              	TM_MPU6050_SetDigitalLowPassFilter:
  390              	.LFB39:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 12
 
 
  212:Src/tm_stm32_mpu6050.c **** 
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  433 002c 0120     		movs	r0, #1
  434 002e FBE7     		b	.L34
  435              	.L38:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 13
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 13
 
 
  436              		.align	2
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  488 0020 2148     		ldr	r0, .L49
  489 0022 FFF7FEFF 		bl	HAL_I2C_IsDeviceReady
  490              	.LVL37:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 14
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 14
 
 
  491 0026 0028     		cmp	r0, #0
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  111:Src/tm_stm32_mpu6050.c **** 	/* Try to transmit via I2C */
  538              		.loc 1 111 0
  539 0068 0023     		movs	r3, #0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 15
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 15
 
 
  540 006a 5370     		strb	r3, [r2, #1]
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  588              		.global	TM_MPU6050_EnableInterrupts
  589              		.syntax unified
  590              		.code	16
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 16
 
 
  591              		.thumb_func
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  235:Src/tm_stm32_mpu6050.c **** 	if (HAL_I2C_Mem_Read(&MPU6050_I2C_INSTANCE, DataStruct->Address, MPU6050_INT_PIN_CFG, 1, &temp, 1,
  236:Src/tm_stm32_mpu6050.c **** 		/* Return error */
  237:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 17
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 17
 
 
  238:Src/tm_stm32_mpu6050.c **** 	}
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  674 0068 0122     		movs	r2, #1
  675 006a 0192     		str	r2, [sp, #4]
  676 006c 0093     		str	r3, [sp]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 18
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 18
 
 
  677 006e 0123     		movs	r3, #1
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  725              		.loc 1 253 0
  726 000c 0178     		ldrb	r1, [r0]
  727 000e FA22     		movs	r2, #250
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 19
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 19
 
 
  728 0010 9200     		lsls	r2, r2, #2
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  774 0000 10B5     		push	{r4, lr}
  775              	.LCFI14:
  776              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 20
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 20
 
 
  777              		.cfi_offset 4, -8
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  814              	.LVL60:
  815 0034 10BD     		pop	{r4, pc}
  816              	.LVL61:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 21
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 21
 
 
  817              	.L69:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  866              	.LVL63:
  867 001c FFF7FEFF 		bl	HAL_I2C_Mem_Read
  868              	.LVL64:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 22
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 22
 
 
  869 0020 0028     		cmp	r0, #0
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  911              	.L74:
  287:Src/tm_stm32_mpu6050.c **** 	}
  912              		.loc 1 287 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 23
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 23
 
 
  913 0062 0120     		movs	r0, #1
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  963 0022 1ED1     		bne	.L79
  304:Src/tm_stm32_mpu6050.c **** 		/* Return error */
  305:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 24
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 24
 
 
  306:Src/tm_stm32_mpu6050.c **** 	}
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1007 0064 FBE7     		b	.L78
  1008              	.L81:
  1009 0066 C046     		.align	2
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 25
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 25
 
 
  1010              	.L80:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  324:Src/tm_stm32_mpu6050.c **** 		return TM_MPU6050_Result_Error;
  325:Src/tm_stm32_mpu6050.c **** 	}
  326:Src/tm_stm32_mpu6050.c **** 	
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 26
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 26
 
 
  327:Src/tm_stm32_mpu6050.c **** 	/* Format temperature */
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1105              		.syntax unified
  1106              		.code	16
  1107              		.thumb_func
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 27
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 27
 
 
  1108              		.fpu softvfp
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1150 002e 00B2     		sxth	r0, r0
  1151 0030 FFF7FEFF 		bl	__aeabi_i2d
  1152              	.LVL90:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 28
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 28
 
 
  1153 0034 2861     		str	r0, [r5, #16]
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1198 0082 607A     		ldrb	r0, [r4, #9]
  1199 0084 1843     		orrs	r0, r3
  1200 0086 00B2     		sxth	r0, r0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 29
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 29
 
 
  1201 0088 FFF7FEFF 		bl	__aeabi_i2d
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1249              		.align	1
  1250              		.global	TM_MPU6050_GeneralCallib
  1251              		.syntax unified
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 30
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 30
 
 
  1252              		.code	16
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1275              		.syntax unified
  1276              		.code	16
  1277              		.thumb_func
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 31
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 31
 
 
  1278              		.fpu softvfp
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1290              		.cfi_offset 4, -16
  1291              		.cfi_offset 5, -12
  1292              		.cfi_offset 6, -8
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 32
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 32
 
 
  1293              		.cfi_offset 14, -4
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1345              	.LFB51:
  442:Src/tm_stm32_mpu6050.c **** 
  443:Src/tm_stm32_mpu6050.c **** void AddAxesWithMultiplication(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValu
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 33
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 33
 
 
  1346              		.loc 1 443 0
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1397              	.LVL120:
  1398 0048 0200     		movs	r2, r0
  1399 004a 0B00     		movs	r3, r1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 34
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 34
 
 
  1400 004c 0498     		ldr	r0, [sp, #16]
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1452 001a 6168     		ldr	r1, [r4, #4]
  1453 001c FFF7FEFF 		bl	__aeabi_dadd
  1454              	.LVL129:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 35
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 35
 
 
  1455 0020 2060     		str	r0, [r4]
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1507              		.cfi_startproc
  1508              		@ args = 0, pretend = 0, frame = 8
  1509              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 36
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 36
 
 
  1510              	.LVL137:
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1560 0048 02B0     		add	sp, sp, #8
  1561              		@ sp needed
  1562              	.LVL143:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 37
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 37
 
 
  1563 004a 70BD     		pop	{r4, r5, r6, pc}
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1614              		@ frame_needed = 0, uses_anonymous_args = 0
  1615              	.LVL145:
  1616 0000 F0B5     		push	{r4, r5, r6, r7, lr}
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 38
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 38
 
 
  1617              	.LCFI29:
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1666 0032 2000     		movs	r0, r4
  1667 0034 FFF7FEFF 		bl	TM_MPU6050_ReadAccelerometer
  1668              	.LVL152:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 39
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 39
 
 
  404:Src/tm_stm32_mpu6050.c **** 	}
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1715 007a FFF7FEFF 		bl	__aeabi_d2iz
  1716              	.LVL161:
  1717 007e FFF7FEFF 		bl	__aeabi_i2d
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 40
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 40
 
 
  1718              	.LVL162:
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1765              	.LVL170:
  1766              	.L109:
  1767              	.LBE3:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 41
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 41
 
 
  406:Src/tm_stm32_mpu6050.c **** 
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1814              	.LFE49:
  1816              		.global	__aeabi_dcmpgt
  1817              		.section	.text.TM_MPU6050_FastCallib,"ax",%progbits
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 42
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 42
 
 
  1818              		.align	1
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1868              	.LVL183:
  377:Src/tm_stm32_mpu6050.c **** 				&DataStruct->Accelerometer_Offset);
  1869              		.loc 1 377 0 discriminator 5
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 43
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 43
 
 
  1870 0030 3200     		movs	r2, r6
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1919 0086 2800     		movs	r0, r5
  1920 0088 FFF7FEFF 		bl	SubstractAxes
  1921              	.LVL189:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 44
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 44
 
 
  385:Src/tm_stm32_mpu6050.c **** 
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  1972              		.loc 1 466 0
  1973              		.cfi_startproc
  1974              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 45
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 45
 
 
  1975              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  473:Src/tm_stm32_mpu6050.c **** 			&DataStruct->Accelerometer_Compensated, DataStruct->Accelerometer_Multiply);
  474:Src/tm_stm32_mpu6050.c **** 
  475:Src/tm_stm32_mpu6050.c **** 	AddAxesWithMultiplication(&DataStruct->Gyroscope_Raw, &DataStruct->Gyroscope_Offset,
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 46
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 46
 
 
  2023              		.loc 1 475 0
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  483:Src/tm_stm32_mpu6050.c **** 
  484:Src/tm_stm32_mpu6050.c **** 	DataStruct->Gyroscope_Acceleration.x = (DataStruct->Gyroscope_Compensated.x - DataStruct->Gyroscop
  2072              		.loc 1 484 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 47
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 47
 
 
  2073 0008 0300     		movs	r3, r0
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  487:Src/tm_stm32_mpu6050.c **** 
  488:Src/tm_stm32_mpu6050.c **** 	/* Return OK */
  489:Src/tm_stm32_mpu6050.c **** 	return TM_MPU6050_Result_Ok;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 48
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 48
 
 
  490:Src/tm_stm32_mpu6050.c **** }
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  2174 0026 FFF7FEFF 		bl	__aeabi_dmul
  2175              	.LVL216:
  2176 002a 2300     		movs	r3, r4
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 49
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 49
 
 
  2177 002c E033     		adds	r3, r3, #224
@@ -2927,73 +2927,73 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 1
  2217              		.file 12 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_i2c.h"
  2218              		.file 13 "Inc/i2c.h"
  2219              		.file 14 "Inc/tm_stm32_mpu6050.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 50
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 50
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 tm_stm32_mpu6050.c
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:16     .text.TM_MPU6050_SetGyroscope:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:23     .text.TM_MPU6050_SetGyroscope:00000000 TM_MPU6050_SetGyroscope
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:165    .text.TM_MPU6050_SetGyroscope:000000ac $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:176    .text.TM_MPU6050_SetAccelerometer:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:183    .text.TM_MPU6050_SetAccelerometer:00000000 TM_MPU6050_SetAccelerometer
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:313    .text.TM_MPU6050_SetAccelerometer:000000a4 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:321    .text.TM_MPU6050_SetDataRate:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:328    .text.TM_MPU6050_SetDataRate:00000000 TM_MPU6050_SetDataRate
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:377    .text.TM_MPU6050_SetDataRate:00000030 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:382    .text.TM_MPU6050_SetDigitalLowPassFilter:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:389    .text.TM_MPU6050_SetDigitalLowPassFilter:00000000 TM_MPU6050_SetDigitalLowPassFilter
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:438    .text.TM_MPU6050_SetDigitalLowPassFilter:00000030 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:443    .text.TM_MPU6050_Init:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:450    .text.TM_MPU6050_Init:00000000 TM_MPU6050_Init
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:582    .text.TM_MPU6050_Init:000000a8 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:587    .text.TM_MPU6050_EnableInterrupts:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:594    .text.TM_MPU6050_EnableInterrupts:00000000 TM_MPU6050_EnableInterrupts
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:694    .text.TM_MPU6050_EnableInterrupts:00000084 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:699    .text.TM_MPU6050_DisableInterrupts:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:706    .text.TM_MPU6050_DisableInterrupts:00000000 TM_MPU6050_DisableInterrupts
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:755    .text.TM_MPU6050_DisableInterrupts:00000034 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:760    .text.TM_MPU6050_ReadInterrupts:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:767    .text.TM_MPU6050_ReadInterrupts:00000000 TM_MPU6050_ReadInterrupts
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:824    .text.TM_MPU6050_ReadInterrupts:0000003c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:830    .text.TM_MPU6050_ReadAccelerometer:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:837    .text.TM_MPU6050_ReadAccelerometer:00000000 TM_MPU6050_ReadAccelerometer
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:918    .text.TM_MPU6050_ReadAccelerometer:00000068 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:923    .text.TM_MPU6050_ReadGyroscope:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:930    .text.TM_MPU6050_ReadGyroscope:00000000 TM_MPU6050_ReadGyroscope
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1011   .text.TM_MPU6050_ReadGyroscope:00000068 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1018   .text.TM_MPU6050_ReadTemperature:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1025   .text.TM_MPU6050_ReadTemperature:00000000 TM_MPU6050_ReadTemperature
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1095   .text.TM_MPU6050_ReadTemperature:00000054 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1103   .text.TM_MPU6050_ReadAll:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1110   .text.TM_MPU6050_ReadAll:00000000 TM_MPU6050_ReadAll
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1241   .text.TM_MPU6050_ReadAll:000000c0 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1249   .text.TM_MPU6050_GeneralCallib:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1256   .text.TM_MPU6050_GeneralCallib:00000000 TM_MPU6050_GeneralCallib
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1273   .text.SubstractAxes:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1280   .text.SubstractAxes:00000000 SubstractAxes
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1337   .text.AddAxesWithMultiplication:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1344   .text.AddAxesWithMultiplication:00000000 AddAxesWithMultiplication
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1416   .text.AddAxesToAxis:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1423   .text.AddAxesToAxis:00000000 AddAxesToAxis
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1497   .text.DivideAxes:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1504   .text.DivideAxes:00000000 DivideAxes
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1568   .text.ZeroAxes:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1575   .text.ZeroAxes:00000000 ZeroAxes
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1602   .text.TM_MPU6050_CalcMean:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1609   .text.TM_MPU6050_CalcMean:00000000 TM_MPU6050_CalcMean
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1818   .text.TM_MPU6050_FastCallib:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1825   .text.TM_MPU6050_FastCallib:00000000 TM_MPU6050_FastCallib
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1963   .text.TM_MPU6050_CompensateRawData:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:1970   .text.TM_MPU6050_CompensateRawData:00000000 TM_MPU6050_CompensateRawData
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:2048   .text.TM_MPU6050_CalcGyroAcc:00000000 $t
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s 			page 51
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:16     .text.TM_MPU6050_SetGyroscope:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:23     .text.TM_MPU6050_SetGyroscope:00000000 TM_MPU6050_SetGyroscope
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:165    .text.TM_MPU6050_SetGyroscope:000000ac $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:176    .text.TM_MPU6050_SetAccelerometer:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:183    .text.TM_MPU6050_SetAccelerometer:00000000 TM_MPU6050_SetAccelerometer
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:313    .text.TM_MPU6050_SetAccelerometer:000000a4 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:321    .text.TM_MPU6050_SetDataRate:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:328    .text.TM_MPU6050_SetDataRate:00000000 TM_MPU6050_SetDataRate
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:377    .text.TM_MPU6050_SetDataRate:00000030 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:382    .text.TM_MPU6050_SetDigitalLowPassFilter:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:389    .text.TM_MPU6050_SetDigitalLowPassFilter:00000000 TM_MPU6050_SetDigitalLowPassFilter
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:438    .text.TM_MPU6050_SetDigitalLowPassFilter:00000030 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:443    .text.TM_MPU6050_Init:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:450    .text.TM_MPU6050_Init:00000000 TM_MPU6050_Init
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:582    .text.TM_MPU6050_Init:000000a8 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:587    .text.TM_MPU6050_EnableInterrupts:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:594    .text.TM_MPU6050_EnableInterrupts:00000000 TM_MPU6050_EnableInterrupts
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:694    .text.TM_MPU6050_EnableInterrupts:00000084 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:699    .text.TM_MPU6050_DisableInterrupts:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:706    .text.TM_MPU6050_DisableInterrupts:00000000 TM_MPU6050_DisableInterrupts
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:755    .text.TM_MPU6050_DisableInterrupts:00000034 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:760    .text.TM_MPU6050_ReadInterrupts:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:767    .text.TM_MPU6050_ReadInterrupts:00000000 TM_MPU6050_ReadInterrupts
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:824    .text.TM_MPU6050_ReadInterrupts:0000003c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:830    .text.TM_MPU6050_ReadAccelerometer:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:837    .text.TM_MPU6050_ReadAccelerometer:00000000 TM_MPU6050_ReadAccelerometer
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:918    .text.TM_MPU6050_ReadAccelerometer:00000068 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:923    .text.TM_MPU6050_ReadGyroscope:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:930    .text.TM_MPU6050_ReadGyroscope:00000000 TM_MPU6050_ReadGyroscope
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1011   .text.TM_MPU6050_ReadGyroscope:00000068 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1018   .text.TM_MPU6050_ReadTemperature:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1025   .text.TM_MPU6050_ReadTemperature:00000000 TM_MPU6050_ReadTemperature
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1095   .text.TM_MPU6050_ReadTemperature:00000054 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1103   .text.TM_MPU6050_ReadAll:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1110   .text.TM_MPU6050_ReadAll:00000000 TM_MPU6050_ReadAll
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1241   .text.TM_MPU6050_ReadAll:000000c0 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1249   .text.TM_MPU6050_GeneralCallib:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1256   .text.TM_MPU6050_GeneralCallib:00000000 TM_MPU6050_GeneralCallib
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1273   .text.SubstractAxes:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1280   .text.SubstractAxes:00000000 SubstractAxes
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1337   .text.AddAxesWithMultiplication:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1344   .text.AddAxesWithMultiplication:00000000 AddAxesWithMultiplication
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1416   .text.AddAxesToAxis:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1423   .text.AddAxesToAxis:00000000 AddAxesToAxis
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1497   .text.DivideAxes:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1504   .text.DivideAxes:00000000 DivideAxes
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1568   .text.ZeroAxes:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1575   .text.ZeroAxes:00000000 ZeroAxes
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1602   .text.TM_MPU6050_CalcMean:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1609   .text.TM_MPU6050_CalcMean:00000000 TM_MPU6050_CalcMean
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1818   .text.TM_MPU6050_FastCallib:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1825   .text.TM_MPU6050_FastCallib:00000000 TM_MPU6050_FastCallib
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1963   .text.TM_MPU6050_CompensateRawData:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:1970   .text.TM_MPU6050_CompensateRawData:00000000 TM_MPU6050_CompensateRawData
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:2048   .text.TM_MPU6050_CalcGyroAcc:00000000 $t
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s 			page 51
 
 
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:2055   .text.TM_MPU6050_CalcGyroAcc:00000000 TM_MPU6050_CalcGyroAcc
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:2134   .text.TM_MPU6050_ConvToRad:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:2141   .text.TM_MPU6050_ConvToRad:00000000 TM_MPU6050_ConvToRad
-C:\Users\Wojciech\AppData\Local\Temp\ccveW7dh.s:2200   .text.TM_MPU6050_ConvToRad:0000004c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:2055   .text.TM_MPU6050_CalcGyroAcc:00000000 TM_MPU6050_CalcGyroAcc
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:2134   .text.TM_MPU6050_ConvToRad:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:2141   .text.TM_MPU6050_ConvToRad:00000000 TM_MPU6050_ConvToRad
+C:\Users\Wojciech\AppData\Local\Temp\ccmG3avR.s:2200   .text.TM_MPU6050_ConvToRad:0000004c $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

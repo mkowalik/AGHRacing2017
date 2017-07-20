@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
   31:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c **** 
   32:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****       (#)  Enable the selected IRQ Channels using HAL_NVIC_EnableIRQ()
   33:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****       
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 2
 
 
   34:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****       -@-  Negative value of IRQn_Type are not allowed.
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
   88:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
   89:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   90:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 3
 
 
   91:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  145:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   *         This parameter can be a value between 0 and 3.
  146:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   *         A lower priority value indicates a higher priority
  147:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   * @param  SubPriority: the subpriority level for the IRQ channel.
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 4
 
 
  148:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_cortex.c ****   *         with stm32f0xx devices, this parameter is a dummy value and it is ignored, because 
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
   33:Drivers/CMSIS/Include/core_cm0.h **** 
   34:Drivers/CMSIS/Include/core_cm0.h **** 
   35:Drivers/CMSIS/Include/core_cm0.h **** #if   defined ( __ICCARM__ )
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 5
 
 
   36:Drivers/CMSIS/Include/core_cm0.h ****  #pragma system_include         /* treat file as system include file for MISRA check */
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
   90:Drivers/CMSIS/Include/core_cm0.h ****   #define __STATIC_INLINE  static __inline
   91:Drivers/CMSIS/Include/core_cm0.h **** 
   92:Drivers/CMSIS/Include/core_cm0.h **** #elif defined ( __GNUC__ )
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 6
 
 
   93:Drivers/CMSIS/Include/core_cm0.h ****   #define __ASM            __asm                                      /*!< asm keyword for GNU Comp
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  147:Drivers/CMSIS/Include/core_cm0.h ****   #if defined __TI_VFP_SUPPORT__
  148:Drivers/CMSIS/Include/core_cm0.h ****     #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
  149:Drivers/CMSIS/Include/core_cm0.h ****   #endif
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 7
 
 
  150:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  204:Drivers/CMSIS/Include/core_cm0.h ****     \li to specify the access to peripheral variables.
  205:Drivers/CMSIS/Include/core_cm0.h ****     \li for automatic generation of peripheral register debug information.
  206:Drivers/CMSIS/Include/core_cm0.h **** */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 8
 
 
  207:Drivers/CMSIS/Include/core_cm0.h **** #ifdef __cplusplus
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  261:Drivers/CMSIS/Include/core_cm0.h **** #define APSR_N_Pos                         31U                                            /*!< APSR
  262:Drivers/CMSIS/Include/core_cm0.h **** #define APSR_N_Msk                         (1UL << APSR_N_Pos)                            /*!< APSR
  263:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 9
 
 
  264:Drivers/CMSIS/Include/core_cm0.h **** #define APSR_Z_Pos                         30U                                            /*!< APSR
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  318:Drivers/CMSIS/Include/core_cm0.h **** #define xPSR_C_Pos                         29U                                            /*!< xPSR
  319:Drivers/CMSIS/Include/core_cm0.h **** #define xPSR_C_Msk                         (1UL << xPSR_C_Pos)                            /*!< xPSR
  320:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 10
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 10
 
 
  321:Drivers/CMSIS/Include/core_cm0.h **** #define xPSR_V_Pos                         28U                                            /*!< xPSR
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  375:Drivers/CMSIS/Include/core_cm0.h **** 
  376:Drivers/CMSIS/Include/core_cm0.h **** /*@} end of group CMSIS_NVIC */
  377:Drivers/CMSIS/Include/core_cm0.h **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 11
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 11
 
 
  378:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  432:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_ICSR_PENDSTCLR_Msk             (1UL << SCB_ICSR_PENDSTCLR_Pos)                /*!< SCB 
  433:Drivers/CMSIS/Include/core_cm0.h **** 
  434:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_ICSR_ISRPREEMPT_Pos            23U                                            /*!< SCB 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 12
 
 
  435:Drivers/CMSIS/Include/core_cm0.h **** #define SCB_ICSR_ISRPREEMPT_Msk            (1UL << SCB_ICSR_ISRPREEMPT_Pos)               /*!< SCB 
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  489:Drivers/CMSIS/Include/core_cm0.h ****   \brief    Type definitions for the System Timer Registers.
  490:Drivers/CMSIS/Include/core_cm0.h ****   @{
  491:Drivers/CMSIS/Include/core_cm0.h ****  */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 13
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 13
 
 
  492:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  546:Drivers/CMSIS/Include/core_cm0.h **** 
  547:Drivers/CMSIS/Include/core_cm0.h **** 
  548:Drivers/CMSIS/Include/core_cm0.h **** /**
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 14
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 14
 
 
  549:Drivers/CMSIS/Include/core_cm0.h ****   \ingroup    CMSIS_core_register
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  603:Drivers/CMSIS/Include/core_cm0.h **** /**
  604:Drivers/CMSIS/Include/core_cm0.h ****   \defgroup CMSIS_Core_FunctionInterface Functions and Instructions Reference
  605:Drivers/CMSIS/Include/core_cm0.h **** */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 15
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 15
 
 
  606:Drivers/CMSIS/Include/core_cm0.h **** 
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  660:Drivers/CMSIS/Include/core_cm0.h ****   \brief   Set Pending Interrupt
  661:Drivers/CMSIS/Include/core_cm0.h ****   \details Sets the pending bit of an external interrupt.
  662:Drivers/CMSIS/Include/core_cm0.h ****   \param [in]      IRQn  Interrupt number. Value cannot be negative.
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 16
 
 
  663:Drivers/CMSIS/Include/core_cm0.h ****  */
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
   60              		.loc 2 698 0
   61 001e 8901     		lsls	r1, r1, #6
   62              	.LVL4:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 17
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 17
 
 
   63 0020 0A40     		ands	r2, r1
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  109              	.L6:
  110 005a C046     		.align	2
  111              	.L5:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 18
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 18
 
 
  112 005c 00E100E0 		.word	-536813312
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  149              		@ sp needed
  150 000c 7047     		bx	lr
  151              	.L9:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 19
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 19
 
 
  152 000e C046     		.align	2
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  191              	.L12:
  192              		.align	2
  193              	.L11:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 20
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 20
 
 
  194 0010 00E100E0 		.word	-536813312
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
   25:Drivers/CMSIS/Include/cmsis_gcc.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
   26:Drivers/CMSIS/Include/cmsis_gcc.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
   27:Drivers/CMSIS/Include/cmsis_gcc.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 21
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 21
 
 
   28:Drivers/CMSIS/Include/cmsis_gcc.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
   82:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
   83:Drivers/CMSIS/Include/cmsis_gcc.h **** 
   84:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 22
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 22
 
 
   85:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  139:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
  140:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  141:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 23
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 23
 
 
  142:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  196:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
  197:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Priority Mask value
  198:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 24
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 24
 
 
  199:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __get_PRIMASK(void)
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  253:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
  254:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  255:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 25
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 25
 
 
  256:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  310:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get FPSCR
  311:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Floating Point Status/Control register.
  312:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Floating Point Status/Control register value
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 26
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 26
 
 
  313:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  367:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  368:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  369:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 27
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 27
 
 
  370:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  424:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
  425:Drivers/CMSIS/Include/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
  426:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 28
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 28
 
 
  427:Drivers/CMSIS/Include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  234              		.loc 3 429 0
  235              		.syntax divided
  236              	@ 429 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 29
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 29
 
 
  237 000a BFF34F8F 		dsb 0xF
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  279              		@ frame_needed = 0, uses_anonymous_args = 0
  280              		@ link register save eliminated.
  281              	.LVL16:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 30
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 30
 
 
  282              	.LBB50:
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  294              	.LBB52:
  295              	.LBB53:
  692:Drivers/CMSIS/Include/core_cm0.h ****        (((priority << (8U - __NVIC_PRIO_BITS)) & (uint32_t)0xFFUL) << _BIT_SHIFT(IRQn)));
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 31
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 31
 
 
  296              		.loc 2 692 0
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  340 0034 00ED00E0 		.word	-536810240
  341              		.cfi_endproc
  342              	.LFE39:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 32
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 32
 
 
  344              		.section	.text.HAL_NVIC_GetPriority,"ax",%progbits
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  367 0006 C033     		adds	r3, r3, #192
  368 0008 9B00     		lsls	r3, r3, #2
  369 000a 0E4A     		ldr	r2, .L26
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 33
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 33
 
 
  370 000c 9B58     		ldr	r3, [r3, r2]
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  421              		.section	.text.HAL_NVIC_SetPendingIRQ,"ax",%progbits
  422              		.align	1
  423              		.global	HAL_NVIC_SetPendingIRQ
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 34
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 34
 
 
  424              		.syntax unified
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  463              		.align	1
  464              		.global	HAL_NVIC_GetPendingIRQ
  465              		.syntax unified
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 35
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 35
 
 
  466              		.code	16
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  502              	.LFE42:
  504              		.section	.text.HAL_NVIC_ClearPendingIRQ,"ax",%progbits
  505              		.align	1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 36
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 36
 
 
  506              		.global	HAL_NVIC_ClearPendingIRQ
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  545              		.section	.text.HAL_SYSTICK_CLKSourceConfig,"ax",%progbits
  546              		.align	1
  547              		.global	HAL_SYSTICK_CLKSourceConfig
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 37
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 37
 
 
  548              		.syntax unified
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  580 0018 1360     		str	r3, [r2]
  581 001a F8E7     		b	.L37
  582              	.L42:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 38
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 38
 
 
  583              		.align	2
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  620              		.loc 1 325 0
  621              		.cfi_startproc
  622              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 39
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 39
 
 
  623              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -2307,45 +2307,45 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 1
  645              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
  646              		.file 10 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-ea
  647              		.file 11 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\includ
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s 			page 40
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s 			page 40
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_hal_cortex.c
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:16     .text.HAL_NVIC_SetPriority:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:23     .text.HAL_NVIC_SetPriority:00000000 HAL_NVIC_SetPriority
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:112    .text.HAL_NVIC_SetPriority:0000005c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:120    .text.HAL_NVIC_EnableIRQ:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:127    .text.HAL_NVIC_EnableIRQ:00000000 HAL_NVIC_EnableIRQ
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:154    .text.HAL_NVIC_EnableIRQ:00000010 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:159    .text.HAL_NVIC_DisableIRQ:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:166    .text.HAL_NVIC_DisableIRQ:00000000 HAL_NVIC_DisableIRQ
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:194    .text.HAL_NVIC_DisableIRQ:00000010 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:199    .text.HAL_NVIC_SystemReset:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:206    .text.HAL_NVIC_SystemReset:00000000 HAL_NVIC_SystemReset
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:257    .text.HAL_NVIC_SystemReset:00000014 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:267    .text.HAL_SYSTICK_Config:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:274    .text.HAL_SYSTICK_Config:00000000 HAL_SYSTICK_Config
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:338    .text.HAL_SYSTICK_Config:0000002c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:345    .text.HAL_NVIC_GetPriority:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:352    .text.HAL_NVIC_GetPriority:00000000 HAL_NVIC_GetPriority
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:414    .text.HAL_NVIC_GetPriority:00000044 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:422    .text.HAL_NVIC_SetPendingIRQ:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:429    .text.HAL_NVIC_SetPendingIRQ:00000000 HAL_NVIC_SetPendingIRQ
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:458    .text.HAL_NVIC_SetPendingIRQ:00000014 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:463    .text.HAL_NVIC_GetPendingIRQ:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:470    .text.HAL_NVIC_GetPendingIRQ:00000000 HAL_NVIC_GetPendingIRQ
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:500    .text.HAL_NVIC_GetPendingIRQ:00000014 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:505    .text.HAL_NVIC_ClearPendingIRQ:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:512    .text.HAL_NVIC_ClearPendingIRQ:00000000 HAL_NVIC_ClearPendingIRQ
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:541    .text.HAL_NVIC_ClearPendingIRQ:00000014 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:546    .text.HAL_SYSTICK_CLKSourceConfig:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:553    .text.HAL_SYSTICK_CLKSourceConfig:00000000 HAL_SYSTICK_CLKSourceConfig
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:585    .text.HAL_SYSTICK_CLKSourceConfig:0000001c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:590    .text.HAL_SYSTICK_Callback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:597    .text.HAL_SYSTICK_Callback:00000000 HAL_SYSTICK_Callback
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:611    .text.HAL_SYSTICK_IRQHandler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccAAbol3.s:618    .text.HAL_SYSTICK_IRQHandler:00000000 HAL_SYSTICK_IRQHandler
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:16     .text.HAL_NVIC_SetPriority:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:23     .text.HAL_NVIC_SetPriority:00000000 HAL_NVIC_SetPriority
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:112    .text.HAL_NVIC_SetPriority:0000005c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:120    .text.HAL_NVIC_EnableIRQ:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:127    .text.HAL_NVIC_EnableIRQ:00000000 HAL_NVIC_EnableIRQ
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:154    .text.HAL_NVIC_EnableIRQ:00000010 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:159    .text.HAL_NVIC_DisableIRQ:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:166    .text.HAL_NVIC_DisableIRQ:00000000 HAL_NVIC_DisableIRQ
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:194    .text.HAL_NVIC_DisableIRQ:00000010 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:199    .text.HAL_NVIC_SystemReset:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:206    .text.HAL_NVIC_SystemReset:00000000 HAL_NVIC_SystemReset
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:257    .text.HAL_NVIC_SystemReset:00000014 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:267    .text.HAL_SYSTICK_Config:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:274    .text.HAL_SYSTICK_Config:00000000 HAL_SYSTICK_Config
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:338    .text.HAL_SYSTICK_Config:0000002c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:345    .text.HAL_NVIC_GetPriority:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:352    .text.HAL_NVIC_GetPriority:00000000 HAL_NVIC_GetPriority
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:414    .text.HAL_NVIC_GetPriority:00000044 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:422    .text.HAL_NVIC_SetPendingIRQ:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:429    .text.HAL_NVIC_SetPendingIRQ:00000000 HAL_NVIC_SetPendingIRQ
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:458    .text.HAL_NVIC_SetPendingIRQ:00000014 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:463    .text.HAL_NVIC_GetPendingIRQ:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:470    .text.HAL_NVIC_GetPendingIRQ:00000000 HAL_NVIC_GetPendingIRQ
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:500    .text.HAL_NVIC_GetPendingIRQ:00000014 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:505    .text.HAL_NVIC_ClearPendingIRQ:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:512    .text.HAL_NVIC_ClearPendingIRQ:00000000 HAL_NVIC_ClearPendingIRQ
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:541    .text.HAL_NVIC_ClearPendingIRQ:00000014 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:546    .text.HAL_SYSTICK_CLKSourceConfig:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:553    .text.HAL_SYSTICK_CLKSourceConfig:00000000 HAL_SYSTICK_CLKSourceConfig
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:585    .text.HAL_SYSTICK_CLKSourceConfig:0000001c $d
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:590    .text.HAL_SYSTICK_Callback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:597    .text.HAL_SYSTICK_Callback:00000000 HAL_SYSTICK_Callback
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:611    .text.HAL_SYSTICK_IRQHandler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccc0sfce.s:618    .text.HAL_SYSTICK_IRQHandler:00000000 HAL_SYSTICK_IRQHandler
                      .debug_frame:00000010 $d
 
 NO UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
   31:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****           (++) HAL_I2CEx_EnableFastModePlus()
   32:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****           (++) HAL_I2CEx_DisableFastModePlus()
   33:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****   @endverbatim
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 2
 
 
   34:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****   ******************************************************************************
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
   88:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c **** 
   89:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c **** /** @defgroup I2CEx_Exported_Functions_Group1 Extended features functions
   90:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****   * @brief    Extended features functions
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 3
 
 
   91:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****  *
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  127:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****     /* Reset I2Cx ANOFF bit */
  128:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****     hi2c->Instance->CR1 &= ~(I2C_CR1_ANFOFF);
  129:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 4
 
 
  130:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****     /* Set analog filter bit*/
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
   76 0032 3360     		str	r3, [r6]
  131:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c **** 
   77              		.loc 1 131 0 discriminator 2
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 5
 
 
   78 0034 0668     		ldr	r6, [r0]
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  155:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c **** HAL_StatusTypeDef HAL_I2CEx_ConfigDigitalFilter(I2C_HandleTypeDef *hi2c, uint32_t DigitalFilter)
  156:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c **** {
  121              		.loc 1 156 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 6
 
 
  122              		.cfi_startproc
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  193:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****   }
  194:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****   else
  195:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****   {
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 7
 
 
  196:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****     return HAL_BUSY;
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  182              		.loc 1 185 0 discriminator 2
  183 0038 0168     		ldr	r1, [r0]
  184              	.LVL15:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 8
 
 
  185 003a 0B68     		ldr	r3, [r1]
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  227 0000 70B5     		push	{r4, r5, r6, lr}
  228              	.LCFI2:
  229              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 9
 
 
  230              		.cfi_offset 4, -16
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  215:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c **** 
  253              		.loc 1 215 0 is_stmt 0 discriminator 2
  254 0016 4021     		movs	r1, #64
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 10
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 10
 
 
  255 0018 0122     		movs	r2, #1
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  302              		.thumb_func
  303              		.fpu softvfp
  305              	HAL_I2CEx_DisableWakeUp:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 11
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 11
 
 
  306              	.LFB38:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  275:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_i2c_ex.c ****     return HAL_BUSY;
  324              		.loc 1 275 0
  325 000a 0220     		movs	r0, #2
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 12
 
 
  326              	.LVL27:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  369 0044 0020     		movs	r0, #0
  370              	.LVL29:
  371 0046 E1E7     		b	.L21
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 13
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 13
 
 
  372              	.LVL30:
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  405              		.loc 1 299 0
  406 0002 074A     		ldr	r2, .L28
  407 0004 9169     		ldr	r1, [r2, #24]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 14
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 14
 
 
  408 0006 0123     		movs	r3, #1
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  444              		.loc 1 319 0
  445              		.cfi_startproc
  446              		@ args = 0, pretend = 0, frame = 8
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 15
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 15
 
 
  447              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -897,28 +897,28 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 1
  492              		.file 10 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
  493              		.file 11 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_dma.h"
  494              		.file 12 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_i2c.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s 			page 16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_hal_i2c_ex.c
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:16     .text.HAL_I2CEx_ConfigAnalogFilter:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:23     .text.HAL_I2CEx_ConfigAnalogFilter:00000000 HAL_I2CEx_ConfigAnalogFilter
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:107    .text.HAL_I2CEx_ConfigAnalogFilter:00000054 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:112    .text.HAL_I2CEx_ConfigDigitalFilter:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:119    .text.HAL_I2CEx_ConfigDigitalFilter:00000000 HAL_I2CEx_ConfigDigitalFilter
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:208    .text.HAL_I2CEx_ConfigDigitalFilter:00000050 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:213    .text.HAL_I2CEx_EnableWakeUp:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:220    .text.HAL_I2CEx_EnableWakeUp:00000000 HAL_I2CEx_EnableWakeUp
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:298    .text.HAL_I2CEx_DisableWakeUp:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:305    .text.HAL_I2CEx_DisableWakeUp:00000000 HAL_I2CEx_DisableWakeUp
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:381    .text.HAL_I2CEx_DisableWakeUp:0000004c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:386    .text.HAL_I2CEx_EnableFastModePlus:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:393    .text.HAL_I2CEx_EnableFastModePlus:00000000 HAL_I2CEx_EnableFastModePlus
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:429    .text.HAL_I2CEx_EnableFastModePlus:00000020 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:435    .text.HAL_I2CEx_DisableFastModePlus:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:442    .text.HAL_I2CEx_DisableFastModePlus:00000000 HAL_I2CEx_DisableFastModePlus
-C:\Users\Wojciech\AppData\Local\Temp\ccEkSwOb.s:477    .text.HAL_I2CEx_DisableFastModePlus:00000020 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:16     .text.HAL_I2CEx_ConfigAnalogFilter:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:23     .text.HAL_I2CEx_ConfigAnalogFilter:00000000 HAL_I2CEx_ConfigAnalogFilter
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:107    .text.HAL_I2CEx_ConfigAnalogFilter:00000054 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:112    .text.HAL_I2CEx_ConfigDigitalFilter:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:119    .text.HAL_I2CEx_ConfigDigitalFilter:00000000 HAL_I2CEx_ConfigDigitalFilter
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:208    .text.HAL_I2CEx_ConfigDigitalFilter:00000050 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:213    .text.HAL_I2CEx_EnableWakeUp:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:220    .text.HAL_I2CEx_EnableWakeUp:00000000 HAL_I2CEx_EnableWakeUp
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:298    .text.HAL_I2CEx_DisableWakeUp:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:305    .text.HAL_I2CEx_DisableWakeUp:00000000 HAL_I2CEx_DisableWakeUp
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:381    .text.HAL_I2CEx_DisableWakeUp:0000004c $d
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:386    .text.HAL_I2CEx_EnableFastModePlus:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:393    .text.HAL_I2CEx_EnableFastModePlus:00000000 HAL_I2CEx_EnableFastModePlus
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:429    .text.HAL_I2CEx_EnableFastModePlus:00000020 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:435    .text.HAL_I2CEx_DisableFastModePlus:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:442    .text.HAL_I2CEx_DisableFastModePlus:00000000 HAL_I2CEx_DisableFastModePlus
+C:\Users\Wojciech\AppData\Local\Temp\cc6q2Mtp.s:477    .text.HAL_I2CEx_DisableFastModePlus:00000020 $d
                      .debug_frame:00000010 $d
 
 NO UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 1
   31:Src/stm32f0xx_it.c ****   ******************************************************************************
   32:Src/stm32f0xx_it.c ****   */
   33:Src/stm32f0xx_it.c **** /* Includes ------------------------------------------------------------------*/
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s 			page 2
 
 
   34:Src/stm32f0xx_it.c **** #include "stm32f0xx_hal.h"
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 1
   49              		@ Volatile: function does not return.
   50              		@ args = 0, pretend = 0, frame = 0
   51              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s 			page 3
 
 
   52              		@ link register save eliminated.
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 1
   87              	PendSV_Handler:
   88              	.LFB38:
   90:Src/stm32f0xx_it.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s 			page 4
 
 
   91:Src/stm32f0xx_it.c **** /**
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 1
  122              		.loc 1 113 0
  123 0006 FFF7FEFF 		bl	HAL_SYSTICK_IRQHandler
  124              	.LVL1:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s 			page 5
 
 
  114:Src/stm32f0xx_it.c ****   /* USER CODE BEGIN SysTick_IRQn 1 */
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 1
  156 0008 10BD     		pop	{r4, pc}
  157              	.L9:
  158 000a C046     		.align	2
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s 			page 6
 
 
  159              	.L8:
@@ -319,24 +319,24 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 1
  175              		.file 11 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_can.h"
  176              		.file 12 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
  177              		.file 13 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_it.c
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:16     .text.NMI_Handler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:23     .text.NMI_Handler:00000000 NMI_Handler
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:38     .text.HardFault_Handler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:45     .text.HardFault_Handler:00000000 HardFault_Handler
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:59     .text.SVC_Handler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:66     .text.SVC_Handler:00000000 SVC_Handler
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:80     .text.PendSV_Handler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:87     .text.PendSV_Handler:00000000 PendSV_Handler
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:101    .text.SysTick_Handler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:108    .text.SysTick_Handler:00000000 SysTick_Handler
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:132    .text.CEC_CAN_IRQHandler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:139    .text.CEC_CAN_IRQHandler:00000000 CEC_CAN_IRQHandler
-C:\Users\Wojciech\AppData\Local\Temp\ccYtVeJW.s:160    .text.CEC_CAN_IRQHandler:0000000c $d
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:16     .text.NMI_Handler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:23     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:38     .text.HardFault_Handler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:45     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:59     .text.SVC_Handler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:66     .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:80     .text.PendSV_Handler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:87     .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:101    .text.SysTick_Handler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:108    .text.SysTick_Handler:00000000 SysTick_Handler
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:132    .text.CEC_CAN_IRQHandler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:139    .text.CEC_CAN_IRQHandler:00000000 CEC_CAN_IRQHandler
+C:\Users\Wojciech\AppData\Local\Temp\cck9h30h.s:160    .text.CEC_CAN_IRQHandler:0000000c $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

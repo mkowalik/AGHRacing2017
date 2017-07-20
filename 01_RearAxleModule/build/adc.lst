@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
   31:Src/adc.c     ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   32:Src/adc.c     ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
   33:Src/adc.c     ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 2
 
 
   34:Src/adc.c     ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
   63:Src/adc.c     ****   hadc.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   51              		.loc 1 63 0
   52 0016 0421     		movs	r1, #4
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 3
 
 
   53 0018 4161     		str	r1, [r0, #20]
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
   82:Src/adc.c     ****   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   89              		.loc 1 82 0
   90 0046 01A9     		add	r1, sp, #4
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 4
 
 
   91 0048 0E48     		ldr	r0, .L8
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
  129 007c 0348     		ldr	r0, .L8+8
  130 007e FFF7FEFF 		bl	_Error_Handler
  131              	.LVL5:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 5
 
 
  132              		.loc 1 95 0
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
  112:Src/adc.c     ****     */
  113:Src/adc.c     ****     GPIO_InitStruct.Pin = ANALOG_B_Pin|ANALOG_A_Pin;
  114:Src/adc.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 6
 
 
  115:Src/adc.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
  213              		.cfi_endproc
  214              	.LFE36:
  216              		.section	.text.HAL_ADC_MspDeInit,"ax",%progbits
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 7
 
 
  217              		.align	1
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
  248              		.loc 1 133 0
  249 000c 064A     		ldr	r2, .L18+4
  250 000e 9369     		ldr	r3, [r2, #24]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 8
 
 
  251 0010 0649     		ldr	r1, .L18+8
@@ -465,22 +465,22 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 1
  290              		.file 13 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_dma.h"
  291              		.file 14 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_adc.h"
  292              		.file 15 "Inc/adc.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 adc.c
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:16     .text.MX_ADC_Init:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:23     .text.MX_ADC_Init:00000000 MX_ADC_Init
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:137    .text.MX_ADC_Init:00000084 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:16     .text.MX_ADC_Init:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:23     .text.MX_ADC_Init:00000000 MX_ADC_Init
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:137    .text.MX_ADC_Init:00000084 $d
                             *COM*:0000004c hadc
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:144    .text.HAL_ADC_MspInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:151    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:211    .text.HAL_ADC_MspInit:0000003c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:217    .text.HAL_ADC_MspDeInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:224    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:266    .text.HAL_ADC_MspDeInit:00000024 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccFmsfGB.s:274    .rodata.MX_ADC_Init.str1.4:00000000 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:144    .text.HAL_ADC_MspInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:151    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:211    .text.HAL_ADC_MspInit:0000003c $d
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:217    .text.HAL_ADC_MspDeInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:224    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:266    .text.HAL_ADC_MspDeInit:00000024 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc0ffyWr.s:274    .rodata.MX_ADC_Init.str1.4:00000000 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
   31:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
   32:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       (#) Receive a CAN frame using HAL_CAN_Receive() function.
   33:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 2
 
 
   34:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       (#) Or receive a CAN frame using HAL_CAN_Receive_IT() function.
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
   88:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   *
   89:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
   90:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 3
 
 
   91:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  145:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
  146:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** /** @defgroup CAN_Exported_Functions_Group1 Initialization and de-initialization functions 
  147:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****  *  @brief    Initialization and Configuration functions 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 4
 
 
  148:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****  *
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  202:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   hcan->State = HAL_CAN_STATE_BUSY;
  203:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   
  204:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   /* Exit from sleep mode */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 5
 
 
  205:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   CLEAR_BIT(hcan->Instance->MCR, CAN_MCR_SLEEP);
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  259:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     if (hcan->Init.NART == ENABLE)
  260:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     {
  261:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       SET_BIT(hcan->Instance->MCR, CAN_MCR_NART);
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 6
 
 
  262:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  316:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     if(HAL_IS_BIT_CLR(hcan->Instance->MSR, CAN_MSR_INAK))
  317:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     {
  318:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       status = CAN_INITSTATUS_SUCCESS;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 7
 
 
  319:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  359:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   assert_param(IS_CAN_FILTER_SCALE(sFilterConfig->FilterScale));
  360:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   assert_param(IS_CAN_FILTER_FIFO(sFilterConfig->FilterFIFOAssignment));
  361:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   assert_param(IS_FUNCTIONAL_STATE(sFilterConfig->FilterActivation));
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 8
 
 
  362:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   assert_param(IS_CAN_BANKNUMBER(sFilterConfig->BankNumber));
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  380:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* First 16-bit identifier and First 16-bit mask */
  381:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* Or First 16-bit identifier and Second 16-bit identifier */
  382:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     hcan->Instance->sFilterRegister[sFilterConfig->FilterNumber].FR1 = 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 9
 
 
  383:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****        ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterMaskIdLow) << 16U) |
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  395:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* 32-bit scale for the filter */
  396:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     SET_BIT(hcan->Instance->FS1R, filternbrbitpos);
  397:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 10
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 10
 
 
  398:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* 32-bit identifier or First 32-bit identifier */
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  428:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   {
  429:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* FIFO 1 assignation for the filter */
  430:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     SET_BIT(hcan->Instance->FFA1R, filternbrbitpos);
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 11
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 11
 
 
  431:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  174 00c6 1D43     		orrs	r5, r3
  399:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****        ((0x0000FFFFU & (uint32_t)sFilterConfig->FilterIdHigh) << 16U) |
  175              		.loc 1 399 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 12
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 12
 
 
  176 00c8 4B69     		ldr	r3, [r1, #20]
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  223 0110 CC58     		ldr	r4, [r1, r3]
  224 0112 2243     		orrs	r2, r4
  225              	.LVL7:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 13
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 13
 
 
  226 0114 CA50     		str	r2, [r1, r3]
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  482:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   *         the configuration information for the specified CAN.  
  483:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * @retval None
  484:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 14
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 14
 
 
  485:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** __weak void HAL_CAN_MspInit(CAN_HandleTypeDef* hcan)
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  289 000e 1FD0     		beq	.L38
  290              	.LVL11:
  291              	.L16:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 15
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 15
 
 
  202:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  336              		.loc 1 341 0
  337              		@ sp needed
  338              	.LVL16:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 16
 
 
  339 004e 70BD     		pop	{r4, r5, r6, pc}
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  384 008a 2021     		movs	r1, #32
  385 008c 8B43     		bics	r3, r1
  386 008e 1360     		str	r3, [r2]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 17
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 17
 
 
  387              	.L25:
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  296:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
  434              		.loc 1 296 0
  435 00d8 2268     		ldr	r2, [r4]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 18
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 18
 
 
  436 00da 1368     		ldr	r3, [r2]
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  482 011e AFE7     		b	.L23
  483              	.L42:
  251:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 19
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 19
 
 
  484              		.loc 1 251 0
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  531 0160 0422     		movs	r2, #4
  532 0162 3D23     		movs	r3, #61
  533              	.LVL24:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 20
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 20
 
 
  534 0164 E254     		strb	r2, [r4, r3]
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  575              		.loc 1 502 0
  576              		.cfi_startproc
  577              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 21
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 21
 
 
  578              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  473:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
  622              		.loc 1 473 0
  623 0014 3C22     		movs	r2, #60
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 22
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 22
 
 
  624 0016 A354     		strb	r3, [r4, r2]
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  536:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * @param  Timeout: Timeout duration.
  537:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * @retval HAL status
  538:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 23
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 23
 
 
  539:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** HAL_StatusTypeDef HAL_CAN_Transmit(CAN_HandleTypeDef* hcan, uint32_t Timeout)
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  687 001c 3C22     		movs	r2, #60
  688 001e A25C     		ldrb	r2, [r4, r2]
  689 0020 012A     		cmp	r2, #1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 24
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 24
 
 
  690 0022 00D1     		bne	.LCB671
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  723 0050 0CD4     		bmi	.L80
  575:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     {
  576:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       transmitmailbox = CAN_TXMAILBOX_0;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 25
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 25
 
 
  577:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  760 007c 226B     		ldr	r2, [r4, #48]
  761 007e 9368     		ldr	r3, [r2, #8]
  762 0080 002B     		cmp	r3, #0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 26
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 26
 
 
  763 0082 4CD1     		bne	.L62
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  799 00bc 0069     		ldr	r0, [r0, #16]
  800 00be 0243     		orrs	r2, r0
  801 00c0 5A60     		str	r2, [r3, #4]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 27
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 27
 
 
  607:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  843 010e 0343     		orrs	r3, r0
  844 0110 8B50     		str	r3, [r1, r2]
  620:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 28
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 28
 
 
  621:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* Get tick */
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  884              	.LVL46:
  885 0142 C01B     		subs	r0, r0, r7
  886 0144 8642     		cmp	r6, r0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 29
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 29
 
 
  887 0146 2ED2     		bcs	.L65
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  929 0182 9360     		str	r3, [r2, #8]
  930 0184 EAE7     		b	.L68
  931              	.L70:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 30
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 30
 
 
  625:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     {
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  979 01d0 9341     		sbcs	r3, r3, r2
  980 01d2 DBB2     		uxtb	r3, r3
  981 01d4 E3E7     		b	.L71
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 31
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 31
 
 
  982              	.L87:
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1009              		.loc 1 665 0
  1010 01fc 0020     		movs	r0, #0
  1011              	.LVL47:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 32
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 32
 
 
  1012              	.L55:
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1049              	.L91:
  1050 021e C046     		.align	2
  1051              	.L90:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 33
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 33
 
 
  1052 0220 00000110 		.word	268500992
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1090              		.loc 1 693 0 discriminator 1
  1091 000a 9368     		ldr	r3, [r2, #8]
  692:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****      ((hcan->Instance->TSR&CAN_TSR_TME1) == CAN_TSR_TME1) || \
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 34
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 34
 
 
  1092              		.loc 1 692 0 discriminator 1
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  708:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     else
  709:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     {
  710:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       transmitmailbox = CAN_TXMAILBOX_2;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 35
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 35
 
 
  711:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1163 006e 0A61     		str	r2, [r1, #16]
  731:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     hcan->Instance->sTxMailBox[transmitmailbox].TDTR &= 0xFFFFFFF0U;
  1164              		.loc 1 731 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 36
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 36
 
 
  1165 0070 1A00     		movs	r2, r3
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1211 00c6 2243     		orrs	r2, r4
  1212 00c8 0468     		ldr	r4, [r0]
  1213 00ca A446     		mov	ip, r4
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 37
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 37
 
 
  1214 00cc 6144     		add	r1, r1, ip
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1247 00fc 4F68     		ldr	r7, [r1, #4]
  1248 00fe FF00     		lsls	r7, r7, #3
  1249 0100 3A43     		orrs	r2, r7
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 38
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 38
 
 
  726:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1281 0128 0268     		ldr	r2, [r0]
  1282 012a 5169     		ldr	r1, [r2, #20]
  1283 012c 094B     		ldr	r3, .L109
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 39
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 39
 
 
  1284 012e 0B43     		orrs	r3, r1
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1315 014c 0120     		movs	r0, #1
  1316              	.LVL65:
  1317 014e F1E7     		b	.L95
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 40
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 40
 
 
  1318              	.LVL66:
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  809:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   /* Check the parameters */
  810:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   assert_param(IS_CAN_FIFO(FIFONumber));
  811:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 41
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 41
 
 
  812:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   /* Process locked */
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  824:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     return HAL_BUSY;
  825:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
  826:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 42
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 42
 
 
  827:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   /* Check if CAN state is not busy for RX FIFO1 */
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1422              		.loc 1 822 0
  1423 005e 0022     		movs	r2, #0
  1424 0060 3C23     		movs	r3, #60
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 43
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 43
 
 
  1425 0062 E254     		strb	r2, [r4, r3]
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1468 0094 2B33     		adds	r3, r3, #43
  1469 0096 E254     		strb	r2, [r4, r3]
  1470              	.L122:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 44
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 44
 
 
  856:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1494              		.loc 1 860 0
  1495 00b0 3D23     		movs	r3, #61
  1496 00b2 E35C     		ldrb	r3, [r4, r3]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 45
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 45
 
 
  1497 00b4 DBB2     		uxtb	r3, r3
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1538              	.LVL79:
  1539 00ea C01B     		subs	r0, r0, r7
  1540 00ec 8642     		cmp	r6, r0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 46
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 46
 
 
  1541 00ee 12D2     		bcs	.L128
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1583              	.L157:
  894:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       }
  895:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 47
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 47
 
 
  896:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1615 0156 2168     		ldr	r1, [r4]
  1616 0158 5058     		ldr	r0, [r2, r1]
  1617 015a 4008     		lsrs	r0, r0, #1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 48
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 48
 
 
  1618 015c 0121     		movs	r1, #1
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1662 01a8 9975     		strb	r1, [r3, #22]
  929:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   pRxMsg->Data[3] = (CAN_RDL0R_DATA3 & hcan->Instance->sFIFOMailBox[FIFONumber].RDLR) >> CAN_RDL0R_
  1663              		.loc 1 929 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 49
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 49
 
 
  1664 01aa 2168     		ldr	r1, [r4]
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1708 01f6 D368     		ldr	r3, [r2, #12]
  1709              	.LVL81:
  1710 01f8 2021     		movs	r1, #32
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 50
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 50
 
 
  1711 01fa 0B43     		orrs	r3, r1
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  916:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
  1740              		.loc 1 916 0
  1741 0220 2A00     		movs	r2, r5
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 51
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 51
 
 
  1742 0222 1B32     		adds	r2, r2, #27
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1768              		.loc 1 989 0
  1769 0248 0020     		movs	r0, #0
  1770 024a 21E0     		b	.L112
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 52
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 52
 
 
  1771              	.L141:
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  1814              		.loc 1 975 0
  1815 0284 DDE7     		b	.L144
  1816              	.L147:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 53
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 53
 
 
  977:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****         break;
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1002:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   assert_param(IS_CAN_FIFO(FIFONumber));
 1003:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
 1004:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   /* Process locked */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 54
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 54
 
 
 1005:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   __HAL_LOCK(hcan);
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1020:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   if ((FIFONumber == CAN_FIFO1) && ((hcan->State == HAL_CAN_STATE_BUSY_RX1) ||        \
  1894              		.loc 1 1020 0
  1895 0034 0129     		cmp	r1, #1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 55
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 55
 
 
  1896 0036 13D0     		beq	.L181
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1016:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
  1922              		.loc 1 1016 0
  1923 005c 0220     		movs	r0, #2
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 56
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 56
 
 
  1924              	.LVL90:
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1049:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
 1050:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   else /* FIFONumber == CAN_FIFO1 */
 1051:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   {
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 57
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 57
 
 
 1052:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     switch(hcan->State)
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1090:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     __HAL_CAN_ENABLE_IT(hcan, CAN_IT_FOV0 | CAN_IT_FMP0);
 1091:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
 1092:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   else
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 58
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 58
 
 
 1093:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   {
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1065:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
  2024              		.loc 1 1065 0
  2025 00de D7E7     		b	.L172
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 59
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 59
 
 
  2026              	.L184:
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2072              		.align	1
  2073              		.global	HAL_CAN_Sleep
  2074              		.syntax unified
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 60
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 60
 
 
  2075              		.code	16
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2111 001c 0320     		movs	r0, #3
  2112              	.LVL103:
  2113 001e 8343     		bics	r3, r0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 61
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 61
 
 
  2114 0020 1343     		orrs	r3, r2
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2145 0044 FFF7FEFF 		bl	HAL_GetTick
  2146              	.LVL107:
  2147 0048 401B     		subs	r0, r0, r5
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 62
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 62
 
 
  2148 004a 0A28     		cmp	r0, #10
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1146:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
  2181              		.loc 1 1146 0
  2182 0078 0320     		movs	r0, #3
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 63
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 63
 
 
  2183 007a 00E0     		b	.L186
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2223 0006 C35C     		ldrb	r3, [r0, r3]
  2224 0008 012B     		cmp	r3, #1
  2225 000a 01D1     		bne	.L199
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 64
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 64
 
 
  2226 000c 0220     		movs	r0, #2
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2237 0012 3C23     		movs	r3, #60
  2238 0014 C254     		strb	r2, [r0, r3]
 1175:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****  
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 65
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 65
 
 
  2239              		.loc 1 1175 0 discriminator 2
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2284 0056 E254     		strb	r2, [r4, r3]
 1210:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   
  2285              		.loc 1 1210 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 66
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 66
 
 
  2286 0058 0022     		movs	r2, #0
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1241:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* Set CAN error code to FOV1 error */
 1242:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     errorcode |= HAL_CAN_ERROR_FOV1;
 1243:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 67
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 67
 
 
 1244:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* Clear FIFO1 Overrun Flag */
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1298:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****      (__HAL_CAN_GET_IT_SOURCE(hcan, CAN_IT_ERR)))
 1299:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   {
 1300:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /* Set CAN error code to EWG error */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 68
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 68
 
 
 1301:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     hcan->ErrorCode |= HAL_CAN_ERROR_EWG;
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1355:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****           break;
 1356:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       default:
 1357:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****           break;
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 69
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 69
 
 
 1358:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     }
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2317              		@ link register save eliminated.
  2318              	.LVL119:
 1408:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   /* Prevent unused argument(s) compilation warning */
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 70
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 70
 
 
 1409:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   UNUSED(hcan);
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1450:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   */
 1451:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
 1452:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** /** @defgroup CAN_Exported_Functions_Group3 Peripheral State and Error functions
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 71
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 71
 
 
 1453:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****  *  @brief   CAN Peripheral State functions 
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1507:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * @param  hcan: pointer to a CAN_HandleTypeDef structure that contains
 1508:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   *         the configuration information for the specified CAN.  
 1509:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   * @retval HAL status
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 72
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 72
 
 
 1510:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   */
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2365 0024 09D0     		beq	.L212
 1533:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   {
 1534:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     case(HAL_CAN_STATE_BUSY_TX_RX0):
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 73
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 73
 
 
 1535:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       hcan->State = HAL_CAN_STATE_BUSY_RX0;
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1539:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     case(HAL_CAN_STATE_BUSY_TX_RX0_RX1):
  2399              		.loc 1 1539 0
  2400 004e F7E7     		b	.L209
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 74
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 74
 
 
  2401              	.L207:
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1562:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** static HAL_StatusTypeDef CAN_Receive_IT(CAN_HandleTypeDef* hcan, uint8_t FIFONumber)
 1563:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** {
  2446              		.loc 1 1563 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 75
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 75
 
 
  2447              		.cfi_startproc
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2484 0024 1259     		ldr	r2, [r2, r4]
  2485 0026 520D     		lsrs	r2, r2, #21
  2486 0028 1A60     		str	r2, [r3]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 76
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 76
 
 
  2487              	.L220:
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2526 006a A418     		adds	r4, r4, r2
  2527 006c B934     		adds	r4, r4, #185
  2528 006e FF34     		adds	r4, r4, #255
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 77
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 77
 
 
  2529 0070 2468     		ldr	r4, [r4]
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2577 00c4 1268     		ldr	r2, [r2]
  2578 00c6 120E     		lsrs	r2, r2, #24
  2579 00c8 DA76     		strb	r2, [r3, #27]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 78
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 78
 
 
 1602:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1628:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     /*  - Disable Error Interrupt */
 1629:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****     __HAL_CAN_DISABLE_IT(hcan, CAN_IT_EWG |
 1630:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****                                CAN_IT_EPV |
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 79
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 79
 
 
 1631:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****                                CAN_IT_BOF |
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2638 011a 0468     		ldr	r4, [r0]
  2639 011c 1259     		ldr	r2, [r2, r4]
  2640 011e D208     		lsrs	r2, r2, #3
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 80
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 80
 
 
  2641 0120 5A60     		str	r2, [r3, #4]
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1672:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   }
 1673:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** 
 1674:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   /* Receive complete callback */ 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 81
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 81
 
 
 1675:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   HAL_CAN_RxCpltCallback(hcan);
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2713 017e 1222     		movs	r2, #18
  2714 0180 153B     		subs	r3, r3, #21
  2715 0182 C254     		strb	r2, [r0, r3]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 82
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 82
 
 
 1661:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       case(HAL_CAN_STATE_BUSY_RX0_RX1):
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2766              		.thumb_func
  2767              		.fpu softvfp
  2769              	HAL_CAN_IRQHandler:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 83
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 83
 
 
  2770              	.LFB46:
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
 1239:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****   {
  2816              		.loc 1 1239 0 discriminator 1
  2817 0028 5A69     		ldr	r2, [r3, #20]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 84
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 84
 
 
 1238:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****      (__HAL_CAN_GET_IT_SOURCE(hcan, CAN_IT_FOV1)))
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2861 0064 9A68     		ldr	r2, [r3, #8]
 1257:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****          (__HAL_CAN_GET_FLAG(hcan, CAN_FLAG_TXOK1)) ||
  2862              		.loc 1 1257 0 discriminator 1
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 85
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 85
 
 
  2863 0066 9205     		lsls	r2, r2, #22
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2906              		.loc 1 1293 0
  2907 009c 236C     		ldr	r3, [r4, #64]
  2908 009e 1D43     		orrs	r5, r3
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 86
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 86
 
 
  2909              	.LVL142:
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2951              	.L253:
 1316:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****      (__HAL_CAN_GET_IT_SOURCE(hcan, CAN_IT_BOF)) &&
  2952              		.loc 1 1316 0
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 87
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 87
 
 
  2953 00d8 9A69     		ldr	r2, [r3, #24]
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  2996 0116 602A     		cmp	r2, #96
  2997 0118 35D0     		beq	.L262
  2998 011a 402A     		cmp	r2, #64
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 88
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 88
 
 
  2999 011c 21D1     		bne	.L256
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  3045 0154 0A43     		orrs	r2, r1
  3046 0156 2264     		str	r2, [r4, #64]
 1339:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       case(CAN_ESR_LEC_1 | CAN_ESR_LEC_0):
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 89
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 89
 
 
  3047              		.loc 1 1339 0
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  3092 018a 5200     		lsls	r2, r2, #1
  3093 018c 0A43     		orrs	r2, r1
  3094 018e 2264     		str	r2, [r4, #64]
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 90
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 90
 
 
 1355:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c ****       default:
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  3144              		@ frame_needed = 0, uses_anonymous_args = 0
  3145              		@ link register save eliminated.
  3146              	.LVL153:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 91
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 91
 
 
 1477:Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_can.c **** }
@@ -5453,55 +5453,55 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 1
  3194              		.file 11 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
  3195              		.file 12 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_can.h"
  3196              		.file 13 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s 			page 92
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s 			page 92
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32f0xx_hal_can.c
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:16     .text.HAL_CAN_ConfigFilter:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:23     .text.HAL_CAN_ConfigFilter:00000000 HAL_CAN_ConfigFilter
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:231    .text.HAL_CAN_ConfigFilter:00000118 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:236    .text.HAL_CAN_MspInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:243    .text.HAL_CAN_MspInit:00000000 HAL_CAN_MspInit
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:258    .text.HAL_CAN_Init:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:265    .text.HAL_CAN_Init:00000000 HAL_CAN_Init
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:566    .text.HAL_CAN_MspDeInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:573    .text.HAL_CAN_MspDeInit:00000000 HAL_CAN_MspDeInit
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:588    .text.HAL_CAN_DeInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:595    .text.HAL_CAN_DeInit:00000000 HAL_CAN_DeInit
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:642    .text.HAL_CAN_Transmit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:649    .text.HAL_CAN_Transmit:00000000 HAL_CAN_Transmit
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1052   .text.HAL_CAN_Transmit:00000220 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1062   .text.HAL_CAN_Transmit_IT:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1069   .text.HAL_CAN_Transmit_IT:00000000 HAL_CAN_Transmit_IT
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1327   .text.HAL_CAN_Transmit_IT:00000154 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1332   .text.HAL_CAN_Receive:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1339   .text.HAL_CAN_Receive:00000000 HAL_CAN_Receive
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1838   .text.HAL_CAN_Receive_IT:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:1845   .text.HAL_CAN_Receive_IT:00000000 HAL_CAN_Receive_IT
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2072   .text.HAL_CAN_Sleep:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2079   .text.HAL_CAN_Sleep:00000000 HAL_CAN_Sleep
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2198   .text.HAL_CAN_WakeUp:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2205   .text.HAL_CAN_WakeUp:00000000 HAL_CAN_WakeUp
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2304   .text.HAL_CAN_TxCpltCallback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2311   .text.HAL_CAN_TxCpltCallback:00000000 HAL_CAN_TxCpltCallback
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2326   .text.CAN_Transmit_IT:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2332   .text.CAN_Transmit_IT:00000000 CAN_Transmit_IT
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2411   .text.CAN_Transmit_IT:00000058 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2416   .text.HAL_CAN_RxCpltCallback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2423   .text.HAL_CAN_RxCpltCallback:00000000 HAL_CAN_RxCpltCallback
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2438   .text.CAN_Receive_IT:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2444   .text.CAN_Receive_IT:00000000 CAN_Receive_IT
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2735   .text.CAN_Receive_IT:00000198 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2740   .text.HAL_CAN_ErrorCallback:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2747   .text.HAL_CAN_ErrorCallback:00000000 HAL_CAN_ErrorCallback
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2762   .text.HAL_CAN_IRQHandler:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:2769   .text.HAL_CAN_IRQHandler:00000000 HAL_CAN_IRQHandler
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:3123   .text.HAL_CAN_IRQHandler:000001b4 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:3132   .text.HAL_CAN_GetState:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:3139   .text.HAL_CAN_GetState:00000000 HAL_CAN_GetState
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:3159   .text.HAL_CAN_GetError:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccL4I3PO.s:3166   .text.HAL_CAN_GetError:00000000 HAL_CAN_GetError
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:16     .text.HAL_CAN_ConfigFilter:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:23     .text.HAL_CAN_ConfigFilter:00000000 HAL_CAN_ConfigFilter
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:231    .text.HAL_CAN_ConfigFilter:00000118 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:236    .text.HAL_CAN_MspInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:243    .text.HAL_CAN_MspInit:00000000 HAL_CAN_MspInit
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:258    .text.HAL_CAN_Init:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:265    .text.HAL_CAN_Init:00000000 HAL_CAN_Init
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:566    .text.HAL_CAN_MspDeInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:573    .text.HAL_CAN_MspDeInit:00000000 HAL_CAN_MspDeInit
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:588    .text.HAL_CAN_DeInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:595    .text.HAL_CAN_DeInit:00000000 HAL_CAN_DeInit
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:642    .text.HAL_CAN_Transmit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:649    .text.HAL_CAN_Transmit:00000000 HAL_CAN_Transmit
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1052   .text.HAL_CAN_Transmit:00000220 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1062   .text.HAL_CAN_Transmit_IT:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1069   .text.HAL_CAN_Transmit_IT:00000000 HAL_CAN_Transmit_IT
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1327   .text.HAL_CAN_Transmit_IT:00000154 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1332   .text.HAL_CAN_Receive:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1339   .text.HAL_CAN_Receive:00000000 HAL_CAN_Receive
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1838   .text.HAL_CAN_Receive_IT:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:1845   .text.HAL_CAN_Receive_IT:00000000 HAL_CAN_Receive_IT
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2072   .text.HAL_CAN_Sleep:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2079   .text.HAL_CAN_Sleep:00000000 HAL_CAN_Sleep
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2198   .text.HAL_CAN_WakeUp:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2205   .text.HAL_CAN_WakeUp:00000000 HAL_CAN_WakeUp
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2304   .text.HAL_CAN_TxCpltCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2311   .text.HAL_CAN_TxCpltCallback:00000000 HAL_CAN_TxCpltCallback
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2326   .text.CAN_Transmit_IT:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2332   .text.CAN_Transmit_IT:00000000 CAN_Transmit_IT
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2411   .text.CAN_Transmit_IT:00000058 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2416   .text.HAL_CAN_RxCpltCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2423   .text.HAL_CAN_RxCpltCallback:00000000 HAL_CAN_RxCpltCallback
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2438   .text.CAN_Receive_IT:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2444   .text.CAN_Receive_IT:00000000 CAN_Receive_IT
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2735   .text.CAN_Receive_IT:00000198 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2740   .text.HAL_CAN_ErrorCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2747   .text.HAL_CAN_ErrorCallback:00000000 HAL_CAN_ErrorCallback
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2762   .text.HAL_CAN_IRQHandler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:2769   .text.HAL_CAN_IRQHandler:00000000 HAL_CAN_IRQHandler
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:3123   .text.HAL_CAN_IRQHandler:000001b4 $d
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:3132   .text.HAL_CAN_GetState:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:3139   .text.HAL_CAN_GetState:00000000 HAL_CAN_GetState
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:3159   .text.HAL_CAN_GetError:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\ccTm8tS2.s:3166   .text.HAL_CAN_GetError:00000000 HAL_CAN_GetError
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

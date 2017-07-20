@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
   31:Src/can.c     ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   32:Src/can.c     ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
   33:Src/can.c     ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 2
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 2
 
 
   34:Src/can.c     ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
@@ -96,9 +96,9 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
   36 0002 1048     		ldr	r0, .L4
   37 0004 104B     		ldr	r3, .L4+4
   38 0006 0360     		str	r3, [r0]
-  56:Src/can.c     ****   hcan.Init.Prescaler = 2;
+  56:Src/can.c     ****   hcan.Init.Prescaler = 8;
   39              		.loc 1 56 0
-  40 0008 0223     		movs	r3, #2
+  40 0008 0823     		movs	r3, #8
   41 000a 4360     		str	r3, [r0, #4]
   57:Src/can.c     ****   hcan.Init.Mode = CAN_MODE_NORMAL;
   42              		.loc 1 57 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
   53              		.loc 1 60 0
   54 001c 8022     		movs	r2, #128
   55 001e D203     		lsls	r2, r2, #15
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 3
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 3
 
 
   56 0020 4261     		str	r2, [r0, #20]
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
   98              		.syntax unified
   99              		.code	16
  100              		.thumb_func
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 4
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 4
 
 
  101              		.fpu softvfp
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
  124              		.loc 1 104 0
  125 000c 07B0     		add	sp, sp, #28
  126              		@ sp needed
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 5
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 5
 
 
  127 000e 00BD     		pop	{pc}
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
  172 004c 1E20     		movs	r0, #30
  173 004e FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
  174              	.LVL8:
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 6
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 6
 
 
  175              		.loc 1 104 0
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
  124:Src/can.c     ****     HAL_NVIC_DisableIRQ(CEC_CAN_IRQn);
  125:Src/can.c     ****   /* USER CODE BEGIN CAN_MspDeInit 1 */
  126:Src/can.c     **** 
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 7
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 7
 
 
  127:Src/can.c     ****   /* USER CODE END CAN_MspDeInit 1 */
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
  259              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
  260              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-eab
  261              		.file 10 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\includ
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 8
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 8
 
 
  262              		.file 11 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
@@ -426,22 +426,22 @@ ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 1
  264              		.file 13 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_can.h"
  265              		.file 14 "Inc/can.h"
  266              		.file 15 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_cortex.h"
-ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s 			page 9
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 can.c
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:16     .text.MX_CAN_Init:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:23     .text.MX_CAN_Init:00000000 MX_CAN_Init
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:89     .text.MX_CAN_Init:00000044 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:16     .text.MX_CAN_Init:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:23     .text.MX_CAN_Init:00000000 MX_CAN_Init
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:89     .text.MX_CAN_Init:00000044 $d
                             *COM*:00000044 hcan
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:96     .text.HAL_CAN_MspInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:103    .text.HAL_CAN_MspInit:00000000 HAL_CAN_MspInit
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:180    .text.HAL_CAN_MspInit:00000054 $d
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:186    .text.HAL_CAN_MspDeInit:00000000 $t
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:193    .text.HAL_CAN_MspDeInit:00000000 HAL_CAN_MspDeInit
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:240    .text.HAL_CAN_MspDeInit:0000002c $d
-C:\Users\Wojciech\AppData\Local\Temp\ccymdxYC.s:248    .rodata.MX_CAN_Init.str1.4:00000000 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:96     .text.HAL_CAN_MspInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:103    .text.HAL_CAN_MspInit:00000000 HAL_CAN_MspInit
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:180    .text.HAL_CAN_MspInit:00000054 $d
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:186    .text.HAL_CAN_MspDeInit:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:193    .text.HAL_CAN_MspDeInit:00000000 HAL_CAN_MspDeInit
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:240    .text.HAL_CAN_MspDeInit:0000002c $d
+C:\Users\Wojciech\AppData\Local\Temp\cc8eZwgV.s:248    .rodata.MX_CAN_Init.str1.4:00000000 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

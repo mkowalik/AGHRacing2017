@@ -1,10 +1,10 @@
 #MicroXplorer Configuration settings - do not modify
 CAN.BS1=CAN_BS1_14TQ
 CAN.BS2=CAN_BS2_5TQ
-CAN.CalculateTimeBit=1000
-CAN.CalculateTimeQuantum=50.0
+CAN.CalculateTimeBit=4000
+CAN.CalculateTimeQuantum=200.0
 CAN.IPParameters=CalculateTimeQuantum,CalculateTimeBit,Prescaler,BS1,BS2,SJW
-CAN.Prescaler=2
+CAN.Prescaler=8
 CAN.SJW=CAN_SJW_3TQ
 File.Version=6
 I2C1.IPParameters=Timing
