@@ -45,7 +45,6 @@
 
 /* USER CODE BEGIN Includes */
 #include "tm_stm32_mpu6050.h"
-#include "CANhandler.h"
 #include "stop_pedal.h"
 /* USER CODE END Includes */
 
@@ -113,7 +112,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  CANhandler_Init();
+  //CANhandler_Init();
   uint8_t stopPedal = 0;
   uint8_t prevStopPedal = 0;
   uint32_t pedalReadTime = HAL_GetTick();
@@ -146,9 +145,9 @@ int main(void)
 //	SET_CAN_DATA(DATA_F_GYR_Y, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.y * 10));
 //	SET_CAN_DATA(DATA_F_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
 
-	SET_CAN_DATA(DATA_STOP_LIGHT, stopPedal);
+	//SET_CAN_DATA(DATA_STOP_LIGHT, stopPedal);
 
-	CANhandler_Handler();
+	//CANhandler_Handler();
   }
   /* USER CODE END 3 */
 
