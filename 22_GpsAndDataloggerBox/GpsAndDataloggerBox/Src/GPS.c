@@ -14,7 +14,7 @@
 
 /* Private Variables------------------------------------------------------------*/
 uint8_t Received[40]; // Array to receive data
-uint8_t Data[40]; // Array to send data
+uint8_t Data[60]; // Array to send data
 uint8_t Size = 0; // Size of the sending and receiving data
 uint8_t Sleep = 0; // If device is in standby mode or not
 uint8_t Pos11; // 1. position read from new message
@@ -24,7 +24,6 @@ uint8_t Pos22 = 0; // 2. position read from old message
 uint16_t Cnt = 0; // How long car was in one place
 
 extern UART_HandleTypeDef huart1;
-extern UART_HandleTypeDef huart2;
 extern TIM_HandleTypeDef htim4;
 
 /* Function definitions ----------------------------------------------------------*/
@@ -49,30 +48,25 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	  // Receiving messages
 	  Size = sprintf(Data, "%s\n\r",Received);
 
-	  //TEST SEND DATA - START
-	  // Send data to PC
-	  HAL_UART_Transmit(&huart2, Data, Size,1);
-	  // TEST SEND DATA - END
-
 	  GPS_ArrToNum(Data);
 
 	  // Waiting for message and write it to Received
-	  HAL_UART_Receive_IT(&huart, Received, 35);
+	  HAL_UART_Receive(huart, Received, 40,100);
 };
 
 void GPS_Configure_Init(UART_HandleTypeDef* huart1){
 
 	  // FULL COLD START - Without verification of correct start
 	  Size = sprintf(Data, "$PMTK104*37<CR><LF>");
-	  HAL_UART_Transmit(&huart1, Data, Size,1);
+	  HAL_UART_Transmit(huart1, Data, Size,100);
 }
 
 void GPS_Start_Transmit(UART_HandleTypeDef* huart1){
 	  // Set SIM28 to send only data about position
 	  Size = sprintf(Data, "$PMTK314,0,1,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,1,0*2D<CR><LF>");
 	  // Start send data with IT
-	  HAL_UART_Transmit(&huart1, Data, Size,1);
-	  HAL_UART_Receive_IT(&huart1, Received, 40);
+	  HAL_UART_Transmit(huart1, Data, Size,1);
+	  HAL_UART_Receive_IT(huart1, Received, 40);
 }
 
 void GPS_ArrToNum(uint8_t* Data)
@@ -119,8 +113,8 @@ void GPS_Check_Data(UART_HandleTypeDef* huart1, uint8_t Pos11, uint8_t Pos12, ui
 			//Wake it up and start receiving data normally
  			Size = sprintf(Data,"$PMTK225,0*2B<CR><LF>");
 			Sleep = 0;
-			HAL_UART_Transmit(&huart1, Data, Size,1);
-			HAL_UART_Receive_IT(&huart1, Received, 40);
+			HAL_UART_Transmit(huart1, Data, Size,100);
+			HAL_UART_Receive_IT(huart1, Received, 40);
 		}
 		Pos21 = Pos11;
 		Pos22 = Pos12;
@@ -135,6 +129,6 @@ void GPS_Go_Sleep(UART_HandleTypeDef* huart1)
 	//Go into Periodic Sleep Mode, 3 sec scanning, 2 min(!) sleep
 	Size = sprintf(Data, "PMTK225,2,3000,120000*2B<CR><LF>");
 	Sleep = 1;
-	HAL_UART_Transmit(&huart1, Data, Size,1);
+	HAL_UART_Transmit(huart1, Data, Size,100);
 }
 

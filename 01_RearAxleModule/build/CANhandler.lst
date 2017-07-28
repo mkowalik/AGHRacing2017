@@ -1,0 +1,508 @@
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 1
+   9              		.eabi_attribute 34, 0
+  10              		.eabi_attribute 18, 4
+  11              		.file	"CANhandler.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.HAL_CAN_RxCpltCallback,"ax",%progbits
+  16              		.align	1
+  17              		.global	HAL_CAN_RxCpltCallback
+  18              		.syntax unified
+  19              		.code	16
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	HAL_CAN_RxCpltCallback:
+  24              	.LFB35:
+  25              		.file 1 "Src/CANhandler.c"
+   1:Src/CANhandler.c **** /*
+   2:Src/CANhandler.c ****  * CANhandler.c
+   3:Src/CANhandler.c ****  *
+   4:Src/CANhandler.c ****  *  Created on: Jul 13, 2017
+   5:Src/CANhandler.c ****  *      Author: Wojciech
+   6:Src/CANhandler.c ****  */
+   7:Src/CANhandler.c **** 
+   8:Src/CANhandler.c **** 
+   9:Src/CANhandler.c **** #ifdef __cplusplus
+  10:Src/CANhandler.c ****  extern "C" {
+  11:Src/CANhandler.c **** #endif
+  12:Src/CANhandler.c **** 
+  13:Src/CANhandler.c **** #include "can.h"
+  14:Src/CANhandler.c **** #include "CANhandler.h"
+  15:Src/CANhandler.c **** 
+  16:Src/CANhandler.c **** volatile CANhandler_handle_t handle;
+  17:Src/CANhandler.c **** 
+  18:Src/CANhandler.c **** CanRxMsgTypeDef rx_mes;
+  19:Src/CANhandler.c **** CanTxMsgTypeDef tx_mes;
+  20:Src/CANhandler.c **** 
+  21:Src/CANhandler.c **** volatile uint8_t intPending;
+  22:Src/CANhandler.c **** 
+  23:Src/CANhandler.c **** 
+  24:Src/CANhandler.c **** void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
+  26              		.loc 1 24 0
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              	.LVL0:
+  31 0000 70B5     		push	{r4, r5, r6, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 16
+  34              		.cfi_offset 4, -16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 2
+
+
+  35              		.cfi_offset 5, -12
+  36              		.cfi_offset 6, -8
+  37              		.cfi_offset 14, -4
+  38 0002 0400     		movs	r4, r0
+  25:Src/CANhandler.c **** 
+  26:Src/CANhandler.c **** 		if ((hcan->pRxMsg->IDE == CAN_ID_STD) && (hcan->pRxMsg->RTR == CAN_RTR_DATA)) {
+  39              		.loc 1 26 0
+  40 0004 436B     		ldr	r3, [r0, #52]
+  41 0006 9A68     		ldr	r2, [r3, #8]
+  42 0008 002A     		cmp	r2, #0
+  43 000a 07D1     		bne	.L2
+  44              		.loc 1 26 0 is_stmt 0 discriminator 1
+  45 000c DA68     		ldr	r2, [r3, #12]
+  46 000e 002A     		cmp	r2, #0
+  47 0010 04D1     		bne	.L2
+  27:Src/CANhandler.c **** 
+  28:Src/CANhandler.c **** 	#ifdef CAN_STOP_LIGHT_RECEIVE
+  29:Src/CANhandler.c **** 			if(hcan->pRxMsg->StdId == FAM_ACC_STOP_SW_ID){
+  48              		.loc 1 29 0 is_stmt 1
+  49 0012 0132     		adds	r2, r2, #1
+  50 0014 FF32     		adds	r2, r2, #255
+  51 0016 1968     		ldr	r1, [r3]
+  52 0018 9142     		cmp	r1, r2
+  53 001a 04D0     		beq	.L3
+  54              	.LVL1:
+  55              	.L2:
+  30:Src/CANhandler.c **** 				handle.data[DATA_STOP_LIGHT_LOCAL_ID]->data = hcan->pRxMsg->Data[DATA_STOP_SW_BYTEOFFSET];
+  31:Src/CANhandler.c **** 				handle.data[DATA_STOP_LIGHT_LOCAL_ID]->updateTime = HAL_GetTick();
+  32:Src/CANhandler.c **** 			}
+  33:Src/CANhandler.c **** 	#endif
+  34:Src/CANhandler.c **** 
+  35:Src/CANhandler.c **** 		}
+  36:Src/CANhandler.c **** 		HAL_CAN_Receive_IT(hcan, CAN_FIFO0);
+  56              		.loc 1 36 0
+  57 001c 0021     		movs	r1, #0
+  58 001e 2000     		movs	r0, r4
+  59 0020 FFF7FEFF 		bl	HAL_CAN_Receive_IT
+  60              	.LVL2:
+  37:Src/CANhandler.c **** }
+  61              		.loc 1 37 0
+  62              		@ sp needed
+  63              	.LVL3:
+  64 0024 70BD     		pop	{r4, r5, r6, pc}
+  65              	.LVL4:
+  66              	.L3:
+  30:Src/CANhandler.c **** 				handle.data[DATA_STOP_LIGHT_LOCAL_ID]->data = hcan->pRxMsg->Data[DATA_STOP_SW_BYTEOFFSET];
+  67              		.loc 1 30 0
+  68 0026 044A     		ldr	r2, .L4
+  69 0028 1168     		ldr	r1, [r2]
+  70 002a 9B7E     		ldrb	r3, [r3, #26]
+  71 002c 0B60     		str	r3, [r1]
+  31:Src/CANhandler.c **** 			}
+  72              		.loc 1 31 0
+  73 002e 1568     		ldr	r5, [r2]
+  74 0030 FFF7FEFF 		bl	HAL_GetTick
+  75              	.LVL5:
+  76 0034 6860     		str	r0, [r5, #4]
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 3
+
+
+  77 0036 F1E7     		b	.L2
+  78              	.L5:
+  79              		.align	2
+  80              	.L4:
+  81 0038 00000000 		.word	handle
+  82              		.cfi_endproc
+  83              	.LFE35:
+  85              		.section	.text.HAL_CAN_TxCpltCallback,"ax",%progbits
+  86              		.align	1
+  87              		.global	HAL_CAN_TxCpltCallback
+  88              		.syntax unified
+  89              		.code	16
+  90              		.thumb_func
+  91              		.fpu softvfp
+  93              	HAL_CAN_TxCpltCallback:
+  94              	.LFB36:
+  38:Src/CANhandler.c **** 
+  39:Src/CANhandler.c **** void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef* hcan){
+  95              		.loc 1 39 0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              		@ link register save eliminated.
+ 100              	.LVL6:
+  40:Src/CANhandler.c **** 
+  41:Src/CANhandler.c **** 	intPending = 0;
+ 101              		.loc 1 41 0
+ 102 0000 0022     		movs	r2, #0
+ 103 0002 014B     		ldr	r3, .L7
+ 104 0004 1A70     		strb	r2, [r3]
+  42:Src/CANhandler.c **** 
+  43:Src/CANhandler.c **** 	if(0){
+  44:Src/CANhandler.c **** 
+  45:Src/CANhandler.c **** 	}
+  46:Src/CANhandler.c **** #if  defined(CAN_STOP_LIGHT_TRANSMIT) || defined(CAN_ACC_TRANSMIT)
+  47:Src/CANhandler.c **** 	else if(handle.data[DATA_R_ACC_X_LOCAL_ID]->updateTime < HAL_GetTick() - RAM_ACC_PERIOD){
+  48:Src/CANhandler.c **** 		handle.data[DATA_R_ACC_X_LOCAL_ID]->updateTime = HAL_GetTick();
+  49:Src/CANhandler.c **** 		hcan->pTxMsg->IDE = CAN_ID_STD;
+  50:Src/CANhandler.c **** 		hcan->pTxMsg->StdId = RAM_ACC_ID;
+  51:Src/CANhandler.c **** 		hcan->pTxMsg->RTR = CAN_RTR_DATA;
+  52:Src/CANhandler.c **** 		hcan->pTxMsg->DLC = 6;
+  53:Src/CANhandler.c **** 		*((uint16_t *)(&(hcan->pTxMsg->Data[DATA_R_ACC_X_BYTEOFFSET]))) = handle.data[DATA_R_ACC_X_LOCAL_
+  54:Src/CANhandler.c **** 		*((uint16_t *)(&(hcan->pTxMsg->Data[DATA_R_ACC_Y_BYTEOFFSET]))) = handle.data[DATA_R_ACC_Y_LOCAL_
+  55:Src/CANhandler.c **** 		*((uint16_t *)(&(hcan->pTxMsg->Data[DATA_R_ACC_Z_BYTEOFFSET]))) = handle.data[DATA_R_ACC_Z_LOCAL_
+  56:Src/CANhandler.c **** 		HAL_CAN_Transmit_IT(hcan);
+  57:Src/CANhandler.c **** 		intPending = 1;
+  58:Src/CANhandler.c **** 	}
+  59:Src/CANhandler.c **** #endif
+  60:Src/CANhandler.c **** 
+  61:Src/CANhandler.c **** #if  defined(CAN_GYR_TRANSMIT)
+  62:Src/CANhandler.c **** 	else if(handle.data[DATA_R_GYR_Y_LOCAL_ID]->updateTime < HAL_GetTick() - RAM_GYRO_PERIOD){
+  63:Src/CANhandler.c **** 		handle.data[DATA_R_GYR_Y_LOCAL_ID]->updateTime = HAL_GetTick();
+  64:Src/CANhandler.c **** 		hcan->pTxMsg->IDE = CAN_ID_STD;
+  65:Src/CANhandler.c **** 		hcan->pTxMsg->StdId = RAM_GYRO_ID;
+  66:Src/CANhandler.c **** 		hcan->pTxMsg->RTR = CAN_RTR_DATA;
+  67:Src/CANhandler.c **** 		hcan->pTxMsg->DLC = 6;
+  68:Src/CANhandler.c **** 		*((uint16_t *)(&(hcan->pTxMsg->Data[DATA_R_GYR_X_BYTEOFFSET]))) = handle.data[DATA_R_GYR_X_LOCAL_
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 4
+
+
+  69:Src/CANhandler.c **** 		*((uint16_t *)(&(hcan->pTxMsg->Data[DATA_R_GYR_Y_BYTEOFFSET]))) = handle.data[DATA_R_GYR_Y_LOCAL_
+  70:Src/CANhandler.c **** 		*((uint16_t *)(&(hcan->pTxMsg->Data[DATA_R_GYR_Z_BYTEOFFSET]))) = handle.data[DATA_R_GYR_Z_LOCAL_
+  71:Src/CANhandler.c **** 		HAL_CAN_Transmit_IT(hcan);
+  72:Src/CANhandler.c **** 		intPending = 1;
+  73:Src/CANhandler.c **** 	}
+  74:Src/CANhandler.c **** #endif
+  75:Src/CANhandler.c **** 
+  76:Src/CANhandler.c **** }
+ 105              		.loc 1 76 0
+ 106              		@ sp needed
+ 107 0006 7047     		bx	lr
+ 108              	.L8:
+ 109              		.align	2
+ 110              	.L7:
+ 111 0008 00000000 		.word	intPending
+ 112              		.cfi_endproc
+ 113              	.LFE36:
+ 115              		.section	.text.CANhandler_Init,"ax",%progbits
+ 116              		.align	1
+ 117              		.global	CANhandler_Init
+ 118              		.syntax unified
+ 119              		.code	16
+ 120              		.thumb_func
+ 121              		.fpu softvfp
+ 123              	CANhandler_Init:
+ 124              	.LFB37:
+  77:Src/CANhandler.c **** 
+  78:Src/CANhandler.c **** CAN_FilterConfTypeDef filterConfig;
+  79:Src/CANhandler.c **** 
+  80:Src/CANhandler.c **** void CANhandler_Init(void){
+ 125              		.loc 1 80 0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129 0000 70B5     		push	{r4, r5, r6, lr}
+ 130              	.LCFI1:
+ 131              		.cfi_def_cfa_offset 16
+ 132              		.cfi_offset 4, -16
+ 133              		.cfi_offset 5, -12
+ 134              		.cfi_offset 6, -8
+ 135              		.cfi_offset 14, -4
+  81:Src/CANhandler.c **** 
+  82:Src/CANhandler.c **** #if defined(CAN_STOP_LIGHT_TRANSMIT) || defined(CAN_STOP_LIGHT_RECEIVE)
+  83:Src/CANhandler.c **** 	static CANhandler_data_t can_stop_light_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+  84:Src/CANhandler.c **** 	handle.data[DATA_STOP_LIGHT_LOCAL_ID] = &can_stop_light_value;
+ 136              		.loc 1 84 0
+ 137 0002 104A     		ldr	r2, .L10
+ 138 0004 104B     		ldr	r3, .L10+4
+ 139 0006 1A60     		str	r2, [r3]
+  85:Src/CANhandler.c **** #endif
+  86:Src/CANhandler.c **** 
+  87:Src/CANhandler.c **** #if defined(CAN_GYR_TRANSMIT) || defined(CAN_GYR_RECEIVE)
+  88:Src/CANhandler.c **** 	static CANhandler_data_t can_gyr_x_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+  89:Src/CANhandler.c **** 	handle.data[DATA_R_GYR_X_LOCAL_ID] = &can_gyr_x_value;
+  90:Src/CANhandler.c **** 
+  91:Src/CANhandler.c **** 	static CANhandler_data_t can_gyr_y_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+  92:Src/CANhandler.c **** 	handle.data[DATA_R_GYR_Y_LOCAL_ID] = &can_gyr_y_value;
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 5
+
+
+  93:Src/CANhandler.c **** 
+  94:Src/CANhandler.c **** 	static CANhandler_data_t can_gyr_z_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+  95:Src/CANhandler.c **** 	handle.data[DATA_R_GYR_Z_LOCAL_ID] = &can_gyr_z_value;
+  96:Src/CANhandler.c **** #endif
+  97:Src/CANhandler.c **** 
+  98:Src/CANhandler.c **** #if defined(CAN_ACC_TRANSMIT) || defined(CAN_ACC_RECEIVE)
+  99:Src/CANhandler.c **** 	static CANhandler_data_t can_acc_x_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+ 100:Src/CANhandler.c **** 	handle.data[DATA_R_ACC_X_LOCAL_ID] = &can_acc_x_value;
+ 101:Src/CANhandler.c **** 
+ 102:Src/CANhandler.c **** 	static CANhandler_data_t can_acc_y_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+ 103:Src/CANhandler.c **** 	handle.data[DATA_R_ACC_Y_LOCAL_ID] = &can_acc_y_value;
+ 104:Src/CANhandler.c **** 
+ 105:Src/CANhandler.c **** 	static CANhandler_data_t can_acc_z_value = {.data = 0, .dataValid = 0, .updateTime = 0};
+ 106:Src/CANhandler.c **** 	handle.data[DATA_R_ACC_Z_LOCAL_ID] = &can_acc_z_value;
+ 107:Src/CANhandler.c **** #endif
+ 108:Src/CANhandler.c **** 
+ 109:Src/CANhandler.c **** 
+ 110:Src/CANhandler.c **** 	filterConfig.BankNumber = 			0;	// Must be kept 0, only 1 bank in uc
+ 140              		.loc 1 110 0
+ 141 0008 1049     		ldr	r1, .L10+8
+ 142 000a 0024     		movs	r4, #0
+ 143 000c 4C62     		str	r4, [r1, #36]
+ 111:Src/CANhandler.c **** 	filterConfig.FilterActivation = 	ENABLE;
+ 144              		.loc 1 111 0
+ 145 000e 0123     		movs	r3, #1
+ 146 0010 0B62     		str	r3, [r1, #32]
+ 112:Src/CANhandler.c **** 	filterConfig.FilterScale = 			CAN_FILTERSCALE_16BIT;
+ 147              		.loc 1 112 0
+ 148 0012 CC61     		str	r4, [r1, #28]
+ 113:Src/CANhandler.c **** 	filterConfig.FilterMode = 			CAN_FILTERMODE_IDLIST;
+ 149              		.loc 1 113 0
+ 150 0014 8B61     		str	r3, [r1, #24]
+ 114:Src/CANhandler.c **** 	filterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+ 151              		.loc 1 114 0
+ 152 0016 0C61     		str	r4, [r1, #16]
+ 115:Src/CANhandler.c **** 
+ 116:Src/CANhandler.c **** 	filterConfig.FilterNumber = 		0;
+ 153              		.loc 1 116 0
+ 154 0018 4C61     		str	r4, [r1, #20]
+ 117:Src/CANhandler.c **** 
+ 118:Src/CANhandler.c **** 	filterConfig.FilterIdLow = 			FAM_ACC_STOP_SW_ID<<5;
+ 155              		.loc 1 118 0
+ 156 001a 8023     		movs	r3, #128
+ 157 001c 9B01     		lsls	r3, r3, #6
+ 158 001e 4B60     		str	r3, [r1, #4]
+ 119:Src/CANhandler.c **** 	filterConfig.FilterIdHigh = 		0;
+ 159              		.loc 1 119 0
+ 160 0020 0C60     		str	r4, [r1]
+ 120:Src/CANhandler.c **** 	filterConfig.FilterMaskIdLow = 		0;
+ 161              		.loc 1 120 0
+ 162 0022 CC60     		str	r4, [r1, #12]
+ 121:Src/CANhandler.c **** 	filterConfig.FilterMaskIdHigh = 	0;
+ 163              		.loc 1 121 0
+ 164 0024 8C60     		str	r4, [r1, #8]
+ 122:Src/CANhandler.c **** 
+ 123:Src/CANhandler.c **** 
+ 124:Src/CANhandler.c **** 	HAL_CAN_ConfigFilter(&hcan, &filterConfig);
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 6
+
+
+ 165              		.loc 1 124 0
+ 166 0026 0A4D     		ldr	r5, .L10+12
+ 167 0028 2800     		movs	r0, r5
+ 168 002a FFF7FEFF 		bl	HAL_CAN_ConfigFilter
+ 169              	.LVL7:
+ 125:Src/CANhandler.c **** 
+ 126:Src/CANhandler.c **** 	hcan.pRxMsg = (CanRxMsgTypeDef*) &rx_mes;
+ 170              		.loc 1 126 0
+ 171 002e 094B     		ldr	r3, .L10+16
+ 172 0030 6B63     		str	r3, [r5, #52]
+ 127:Src/CANhandler.c **** 	hcan.pTxMsg = (CanTxMsgTypeDef*) &tx_mes;
+ 173              		.loc 1 127 0
+ 174 0032 094B     		ldr	r3, .L10+20
+ 175 0034 2B63     		str	r3, [r5, #48]
+ 128:Src/CANhandler.c **** 	HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+ 176              		.loc 1 128 0
+ 177 0036 0021     		movs	r1, #0
+ 178 0038 2800     		movs	r0, r5
+ 179 003a FFF7FEFF 		bl	HAL_CAN_Receive_IT
+ 180              	.LVL8:
+ 129:Src/CANhandler.c **** //	hcan.pTxMsg->IDE = CAN_ID_STD;
+ 130:Src/CANhandler.c **** //	hcan.pTxMsg->StdId = FAM_DSI_ID;
+ 131:Src/CANhandler.c **** //	hcan.pTxMsg->RTR = CAN_RTR_DATA;
+ 132:Src/CANhandler.c **** //	hcan.pTxMsg->Data[0] = 0;
+ 133:Src/CANhandler.c **** //	hcan.pTxMsg->Data[1] = 0;
+ 134:Src/CANhandler.c **** //	hcan.pTxMsg->Data[2] = 0;
+ 135:Src/CANhandler.c **** //	hcan.pTxMsg->Data[3] = 0;
+ 136:Src/CANhandler.c **** //	hcan.pTxMsg->Data[4] = 0;
+ 137:Src/CANhandler.c **** //	hcan.pTxMsg->Data[5] = 0;
+ 138:Src/CANhandler.c **** //	hcan.pTxMsg->Data[6] = 0;
+ 139:Src/CANhandler.c **** //	hcan.pTxMsg->Data[7] = 0;
+ 140:Src/CANhandler.c **** //	HAL_CAN_Transmit_IT(&hcan);
+ 141:Src/CANhandler.c **** 	intPending = 0;
+ 181              		.loc 1 141 0
+ 182 003e 074B     		ldr	r3, .L10+24
+ 183 0040 1C70     		strb	r4, [r3]
+ 142:Src/CANhandler.c **** }
+ 184              		.loc 1 142 0
+ 185              		@ sp needed
+ 186 0042 70BD     		pop	{r4, r5, r6, pc}
+ 187              	.L11:
+ 188              		.align	2
+ 189              	.L10:
+ 190 0044 00000000 		.word	.LANCHOR0
+ 191 0048 00000000 		.word	handle
+ 192 004c 00000000 		.word	filterConfig
+ 193 0050 00000000 		.word	hcan
+ 194 0054 00000000 		.word	rx_mes
+ 195 0058 00000000 		.word	tx_mes
+ 196 005c 00000000 		.word	intPending
+ 197              		.cfi_endproc
+ 198              	.LFE37:
+ 200              		.section	.text.CANhandler_Handler,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	CANhandler_Handler
+ 203              		.syntax unified
+ 204              		.code	16
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 7
+
+
+ 205              		.thumb_func
+ 206              		.fpu softvfp
+ 208              	CANhandler_Handler:
+ 209              	.LFB38:
+ 143:Src/CANhandler.c **** 
+ 144:Src/CANhandler.c **** void CANhandler_Handler(void){
+ 210              		.loc 1 144 0
+ 211              		.cfi_startproc
+ 212              		@ args = 0, pretend = 0, frame = 0
+ 213              		@ frame_needed = 0, uses_anonymous_args = 0
+ 214 0000 70B5     		push	{r4, r5, r6, lr}
+ 215              	.LCFI2:
+ 216              		.cfi_def_cfa_offset 16
+ 217              		.cfi_offset 4, -16
+ 218              		.cfi_offset 5, -12
+ 219              		.cfi_offset 6, -8
+ 220              		.cfi_offset 14, -4
+ 145:Src/CANhandler.c **** 
+ 146:Src/CANhandler.c **** #ifdef CAN_STOP_LIGHT_RECEIVE
+ 147:Src/CANhandler.c **** 		handle.data[DATA_STOP_LIGHT_LOCAL_ID]->dataValid =
+ 221              		.loc 1 147 0
+ 222 0002 074B     		ldr	r3, .L13
+ 223 0004 1C68     		ldr	r4, [r3]
+ 148:Src/CANhandler.c **** 				(handle.data[DATA_STOP_LIGHT_LOCAL_ID]->updateTime > HAL_GetTick() - (FAM_ACC_STOP_SW_PERIOD)*1
+ 224              		.loc 1 148 0
+ 225 0006 1B68     		ldr	r3, [r3]
+ 226 0008 5D68     		ldr	r5, [r3, #4]
+ 227 000a FFF7FEFF 		bl	HAL_GetTick
+ 228              	.LVL9:
+ 229 000e 6438     		subs	r0, r0, #100
+ 230 0010 A842     		cmp	r0, r5
+ 231 0012 8041     		sbcs	r0, r0, r0
+ 232 0014 4042     		rsbs	r0, r0, #0
+ 147:Src/CANhandler.c **** 				(handle.data[DATA_STOP_LIGHT_LOCAL_ID]->updateTime > HAL_GetTick() - (FAM_ACC_STOP_SW_PERIOD)*1
+ 233              		.loc 1 147 0
+ 234 0016 2072     		strb	r0, [r4, #8]
+ 149:Src/CANhandler.c **** #endif
+ 150:Src/CANhandler.c **** 
+ 151:Src/CANhandler.c **** 		if(intPending == 0){
+ 235              		.loc 1 151 0
+ 236 0018 024B     		ldr	r3, .L13+4
+ 237 001a 1B78     		ldrb	r3, [r3]
+ 152:Src/CANhandler.c **** #if  defined(CAN_STOP_LIGHT_TRANSMIT) || defined(CAN_ACC_TRANSMIT)
+ 153:Src/CANhandler.c **** 			if(handle.data[DATA_R_ACC_X_LOCAL_ID]->updateTime < HAL_GetTick() - RAM_ACC_PERIOD){
+ 154:Src/CANhandler.c **** 				handle.data[DATA_R_ACC_X_LOCAL_ID]->updateTime = HAL_GetTick();
+ 155:Src/CANhandler.c **** 				hcan.pTxMsg->IDE = CAN_ID_STD;
+ 156:Src/CANhandler.c **** 				hcan.pTxMsg->StdId = RAM_ACC_ID;
+ 157:Src/CANhandler.c **** 				hcan.pTxMsg->RTR = CAN_RTR_DATA;
+ 158:Src/CANhandler.c **** 				hcan.pTxMsg->DLC = 6;
+ 159:Src/CANhandler.c **** 				*((uint16_t *)(&(hcan.pTxMsg->Data[DATA_R_ACC_X_BYTEOFFSET]))) = handle.data[DATA_R_ACC_X_LOCAL
+ 160:Src/CANhandler.c **** 				*((uint16_t *)(&(hcan.pTxMsg->Data[DATA_R_ACC_Y_BYTEOFFSET]))) = handle.data[DATA_R_ACC_Y_LOCAL
+ 161:Src/CANhandler.c **** 				*((uint16_t *)(&(hcan.pTxMsg->Data[DATA_R_ACC_Z_BYTEOFFSET]))) = handle.data[DATA_R_ACC_Z_LOCAL
+ 162:Src/CANhandler.c **** 				HAL_CAN_Transmit_IT(&hcan);
+ 163:Src/CANhandler.c **** 				intPending = 1;
+ 164:Src/CANhandler.c **** 			}
+ 165:Src/CANhandler.c **** #endif
+ 166:Src/CANhandler.c **** 
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 8
+
+
+ 167:Src/CANhandler.c **** #if  defined(CAN_GYR_TRANSMIT)
+ 168:Src/CANhandler.c **** 			else if(handle.data[DATA_R_GYR_Y_LOCAL_ID]->updateTime < HAL_GetTick() - RAM_GYRO_PERIOD){
+ 169:Src/CANhandler.c **** 				handle.data[DATA_R_GYR_Y_LOCAL_ID]->updateTime = HAL_GetTick();
+ 170:Src/CANhandler.c **** 				hcan.pTxMsg->IDE = CAN_ID_STD;
+ 171:Src/CANhandler.c **** 				hcan.pTxMsg->StdId = RAM_GYRO_ID;
+ 172:Src/CANhandler.c **** 				hcan.pTxMsg->RTR = CAN_RTR_DATA;
+ 173:Src/CANhandler.c **** 				hcan.pTxMsg->DLC = 6;
+ 174:Src/CANhandler.c **** 				*((uint16_t *)(&(hcan.pTxMsg->Data[DATA_R_GYR_X_BYTEOFFSET]))) = handle.data[DATA_R_GYR_X_LOCAL
+ 175:Src/CANhandler.c **** 				*((uint16_t *)(&(hcan.pTxMsg->Data[DATA_R_GYR_Y_BYTEOFFSET]))) = handle.data[DATA_R_GYR_Y_LOCAL
+ 176:Src/CANhandler.c **** 				*((uint16_t *)(&(hcan.pTxMsg->Data[DATA_R_GYR_Z_BYTEOFFSET]))) = handle.data[DATA_R_GYR_Z_LOCAL
+ 177:Src/CANhandler.c **** 				HAL_CAN_Transmit_IT(&hcan);
+ 178:Src/CANhandler.c **** 				intPending = 1;
+ 179:Src/CANhandler.c **** 			}
+ 180:Src/CANhandler.c **** #endif
+ 181:Src/CANhandler.c **** 		}
+ 182:Src/CANhandler.c **** }
+ 238              		.loc 1 182 0
+ 239              		@ sp needed
+ 240 001c 70BD     		pop	{r4, r5, r6, pc}
+ 241              	.L14:
+ 242 001e C046     		.align	2
+ 243              	.L13:
+ 244 0020 00000000 		.word	handle
+ 245 0024 00000000 		.word	intPending
+ 246              		.cfi_endproc
+ 247              	.LFE38:
+ 249              		.comm	filterConfig,40,4
+ 250              		.comm	intPending,1,1
+ 251              		.comm	tx_mes,28,4
+ 252              		.comm	rx_mes,36,4
+ 253              		.comm	handle,200,4
+ 254              		.section	.bss.can_stop_light_value.7068,"aw",%nobits
+ 255              		.align	2
+ 256              		.set	.LANCHOR0,. + 0
+ 259              	can_stop_light_value.7068:
+ 260 0000 00000000 		.space	12
+ 260      00000000 
+ 260      00000000 
+ 261              		.text
+ 262              	.Letext0:
+ 263              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 264              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 265              		.file 4 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h"
+ 266              		.file 5 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f042x6.h"
+ 267              		.file 6 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 268              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 269              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\lib\\gcc\\arm-none-eab
+ 270              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\6 2017-q2-update\\arm-none-eabi\\include
+ 271              		.file 10 "Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h"
+ 272              		.file 11 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h"
+ 273              		.file 12 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_can.h"
+ 274              		.file 13 "Inc/can.h"
+ 275              		.file 14 "Inc/CANhandler.h"
+ 276              		.file 15 "Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h"
+ARM GAS  C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 CANhandler.c
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:16     .text.HAL_CAN_RxCpltCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:23     .text.HAL_CAN_RxCpltCallback:00000000 HAL_CAN_RxCpltCallback
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:81     .text.HAL_CAN_RxCpltCallback:00000038 $d
+                            *COM*:000000c8 handle
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:86     .text.HAL_CAN_TxCpltCallback:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:93     .text.HAL_CAN_TxCpltCallback:00000000 HAL_CAN_TxCpltCallback
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:111    .text.HAL_CAN_TxCpltCallback:00000008 $d
+                            *COM*:00000001 intPending
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:116    .text.CANhandler_Init:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:123    .text.CANhandler_Init:00000000 CANhandler_Init
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:190    .text.CANhandler_Init:00000044 $d
+                            *COM*:00000028 filterConfig
+                            *COM*:00000024 rx_mes
+                            *COM*:0000001c tx_mes
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:201    .text.CANhandler_Handler:00000000 $t
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:208    .text.CANhandler_Handler:00000000 CANhandler_Handler
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:244    .text.CANhandler_Handler:00000020 $d
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:255    .bss.can_stop_light_value.7068:00000000 $d
+C:\Users\Wojciech\AppData\Local\Temp\cccDFv6z.s:259    .bss.can_stop_light_value.7068:00000000 can_stop_light_value.7068
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+HAL_CAN_Receive_IT
+HAL_GetTick
+HAL_CAN_ConfigFilter
+hcan
