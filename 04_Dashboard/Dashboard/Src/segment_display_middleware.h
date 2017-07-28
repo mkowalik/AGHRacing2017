@@ -16,6 +16,6 @@
 #define DISPLAY_SELECT_PIN			DisplaySelect_Pin
 
 void SegmentDisplay_Middleware_displayDigit(uint8_t digit, uint8_t dot);
-void SegmentDisplay_Middleware_offDisplay();
+void SegmentDisplay_Middleware_offDisplay(uint8_t dot);
 
 #endif /* SEGMENT_DISPLAY_MIDDLEWARE_H_ */

@@ -85,7 +85,7 @@ void CAN_ReceiverDriver_receiveITHandler(){
 void CAN_ReceiverDriver_queueProcessedNotifier(){
 
 	canState = HAL_CAN_GetState(&hcan);
-	if (canState == HAL_CAN_STATE_READY) {
+	if (canState == HAL_CAN_STATE_READY || canState == HAL_CAN_STATE_BUSY_TX) {
 		HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 	}
 

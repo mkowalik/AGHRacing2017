@@ -37,9 +37,13 @@ void SegmentDisplay_Middleware_displayDigit(uint8_t digit, uint8_t dot){
 
 }
 
-void SegmentDisplay_Middleware_offDisplay(){
+void SegmentDisplay_Middleware_offDisplay(uint8_t dot){
 
 	uint8_t val = 0b00000000;
+
+	if (dot){
+		val |= dot_mask;
+	}
 
 	SPI_MuxDriver_TransmitData(&(val), 1, SEGMENT_DISPLAY_CHANNEL, DISPLAY_SELECT_PORT, DISPLAY_SELECT_PIN);
 

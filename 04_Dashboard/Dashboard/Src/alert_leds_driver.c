@@ -11,8 +11,8 @@
 //TODO change for MACROS declarations
 
 #define CLT_BLUE_ALERT			((FixedPoint){163840, 12})	//40 degrees
-#define CLT_YELLOW_ALERT		((FixedPoint){368640, 12})	//90 degrees
-#define CLT_RED_ALERT			((FixedPoint){409600, 12})	//100 degrees
+#define CLT_YELLOW_ALERT		((FixedPoint){389120, 12})	//95 degrees
+#define CLT_RED_ALERT			((FixedPoint){430080, 12})	//105 degrees
 
 #define BATT_YELLOW_ALERT		((FixedPoint){45056, 12})	//11 Volts
 #define BATT_RED_ALERT			((FixedPoint){40960, 12})	//10 Volts

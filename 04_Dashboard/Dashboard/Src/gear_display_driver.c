@@ -9,17 +9,19 @@
 #include "segment_display_middleware.h"
 
 void GearDisplay_Driver_init(){
-	SegmentDisplay_Middleware_offDisplay();
+	SegmentDisplay_Middleware_offDisplay(0);
 }
 
 void GearDisplay_Driver_displayGear(uint8_t gear, uint8_t neutral){
 
-	gear = gear>MAX_GEAR_VALUE ? MAX_GEAR_VALUE : gear;
+	if (gear<=MAX_GEAR_VALUE)
+		SegmentDisplay_Middleware_displayDigit(gear, 1);
+	else
+		SegmentDisplay_Middleware_offDisplay(1);
 
-	SegmentDisplay_Middleware_displayDigit(gear, neutral);
 
 }
 
 void GearDisplay_Driver_offDisplay(){
-	SegmentDisplay_Middleware_offDisplay();
+	SegmentDisplay_Middleware_offDisplay(0);
 }
