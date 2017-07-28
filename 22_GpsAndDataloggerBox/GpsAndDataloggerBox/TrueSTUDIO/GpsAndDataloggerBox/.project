@@ -112,9 +112,24 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/GPS.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/actual_data_provider.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/actual_data_provider.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/can.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/can.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/can_receiver_driver.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/fifo_queue.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/fifo_queue.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gpio.c</name>

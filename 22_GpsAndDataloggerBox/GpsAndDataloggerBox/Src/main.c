@@ -3,6 +3,11 @@
   * File Name          : main.c
   * Description        : Main program body
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -42,6 +47,9 @@
 
 /* USER CODE BEGIN Includes */
 
+#include "GPS.h"
+#include "actual_data_provider.h"
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -54,7 +62,6 @@ void GPS_Start_Transmit(UART_HandleTypeDef*);
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -76,8 +83,16 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
   /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -88,9 +103,29 @@ int main(void)
   MX_TIM4_Init();
 
   /* USER CODE BEGIN 2 */
-  GPS_Configure_Init(&huart1);
+  /*GPS_Configure_Init(&huart1);
   GPS_Start_Transmit(&huart1);
-  HAL_TIM_Base_Start_IT(&htim4);
+  HAL_TIM_Base_Start_IT(&htim4);*/ // TODO Jakies glupoty, dwa razy transmit w srodku :-/
+
+  ActualDataProvider_init();
+
+  /*FIFOQueue queue;
+
+  volatile CanRxMsgTypeDef tab[32];
+
+  FIFOQueue_init(&queue, tab, 32, sizeof(CanRxMsgTypeDef));
+
+  CanRxMsgTypeDef a;
+  a.Data[0] = 15;
+  CanRxMsgTypeDef b;
+  b.Data[0] = 123;
+  FIFOQueue_enqueue(&queue, &a);
+  a.Data[0] = 13;
+  FIFOQueue_enqueue(&queue, &b);
+  a.Data[0] = 14;
+  FIFOQueue_enqueue(&queue, &a);
+  FIFOQueue_dequeue(&queue, &b);
+  FIFOQueue_dequeue(&queue, &a);*/ //TODO Debug powyzej
 
   /* USER CODE END 2 */
 
@@ -101,7 +136,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+	  ActualDataProvider_thread();
   }
   /* USER CODE END 3 */
 
@@ -128,7 +163,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Initializes the CPU, AHB and APB busses clocks 
@@ -142,14 +177,14 @@ void SystemClock_Config(void)
 
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
   PeriphClkInit.RTCClockSelection = RCC_RTCCLKSOURCE_LSI;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
     /**Configure the Systick interrupt time 
@@ -172,14 +207,14 @@ void SystemClock_Config(void)
   * @param  None
   * @retval None
   */
-void Error_Handler(void)
+void _Error_Handler(char * file, int line)
 {
-  /* USER CODE BEGIN Error_Handler */
+  /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   while(1) 
   {
   }
-  /* USER CODE END Error_Handler */ 
+  /* USER CODE END Error_Handler_Debug */ 
 }
 
 #ifdef USE_FULL_ASSERT

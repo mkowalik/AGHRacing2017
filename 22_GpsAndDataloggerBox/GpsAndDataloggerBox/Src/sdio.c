@@ -4,6 +4,11 @@
   * Description        : This file provides code for the configuration
   *                      of the SDIO instances.
   ******************************************************************************
+  ** This notice applies to any and all portions of this file
+  * that are not between comment pairs USER CODE BEGIN and
+  * USER CODE END. Other portions of this file, whether 
+  * inserted by the user or by software development tools
+  * are owned by their respective copyright owners.
   *
   * COPYRIGHT(c) 2017 STMicroelectronics
   *
@@ -58,7 +63,7 @@ void MX_SDIO_SD_Init(void)
   hsd.Init.ClockDiv = 0;
   if (HAL_SD_Init(&hsd, &SDCardInfo) != SD_OK)
   {
-    Error_Handler();
+    _Error_Handler(__FILE__, __LINE__);
   }
 
 }
@@ -116,10 +121,10 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef* sdHandle)
 
     HAL_GPIO_DeInit(GPIOD, GPIO_PIN_2);
 
-  }
   /* USER CODE BEGIN SDIO_MspDeInit 1 */
 
   /* USER CODE END SDIO_MspDeInit 1 */
+  }
 } 
 
 /* USER CODE BEGIN 1 */
