@@ -51,8 +51,11 @@ typedef struct{
 	const uint16_t		multiplier;
 	const uint16_t		divider;
 	const uint16_t		offset;
-	bool *				data_valid;
-	uint16_t *			data;
+	bool 				*data_valid;
+	uint8_t	 			*data;
+	uint8_t				data_size;
+	float				( *data_calc)(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size);
+	void				( *data_extract)(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, float value);
 }can_data_t;
 
 //extern can_frame_t *can_frames;
@@ -61,11 +64,38 @@ typedef struct{
 void can_frame_init(can_frame_t *frame);
 void can_data_init(can_data_t *data, bool rx);
 
+float can_data_calc_default(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size){
+	float 		value;
+	uint32_t	raw_data;
+
+	raw_data = 0;
+	for(uint8_t byte_ctr = 0; byte_ctr < size; byte_ctr++){
+		raw_data	= (raw_data<<8) & 0xFFFFFFF0;
+		raw_data   |= *(data_ptr + byte_ctr);
+	}
+	value = ((raw_data + offs) * mult) / div;
+
+	return value;
+}
+
+void can_data_extract(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, float value){
+	uint32_t raw_data;
+
+	raw_data = (value * div) / mult - offs;
+
+	for(uint8_t byte_ctr = 0; byte_ctr < size; byte_ctr++){
+		*(data_ptr + byte_ctr) = raw_data & (0xFF << 8*byte_ctr);
+	}
+}
+
+#define DEFAULT_CALC_FUN		(&can_data_calc_default)
+#define DEFAULT_EXTRACT_FUNC	(&can_data_extract)
+
 #define CAN_FRAME_DEF(name, 							\
 					  period_ms, 						\
 					  _id,								\
 					  _dlc)								\
-	   static m_can_frame_t CONCAT2(name, _m_frame) = {\
+	   static m_can_frame_t CONCAT2(name, _m_frame) = {	\
 			.period	= period_ms,						\
 			.id		= _id,								\
 			.dlc 	= _dlc								\
@@ -82,26 +112,11 @@ void can_data_init(can_data_t *data, bool rx);
 #define CAN_TX_DATA_DEF(name, 							\
 						frame_name, 					\
 						byte_offset, 					\
-						multiplier, 					\
-						divider, 						\
-						offset)							\
-	static can_data_t CONCAT2(name, _data) = {			\
-		.can_frame 	= &CONCAT2(frame_name, _frame),		\
-		.multiplier	= multiplier,						\
-		.divider	= divider,							\
-		.offset		= offset,							\
-		.data_valid = false,							\
-		.data 		= 									\
-				&((void)CONCAT2(frame_name, _frame)		\
-				.tx_data[byte_offset])					\
-	}
-
-#define CAN_RX_DATA_DEF(name, 							\
-						frame_name, 					\
-						byte_offset, 					\
 						_multiplier, 					\
 						_divider, 						\
-						_offset)						\
+						_offset,						\
+						_data_calc_func,				\
+						_data_extract_func)				\
 	static can_data_t CONCAT2(name, _data) = {			\
 		.can_frame 	= &CONCAT2(frame_name, _frame),		\
 		.multiplier	= _multiplier,						\
@@ -109,14 +124,50 @@ void can_data_init(can_data_t *data, bool rx);
 		.offset		= _offset,							\
 		.data_valid = false,							\
 		.data 		= 									\
-			(uint16_t *) &(CONCAT2(frame_name, _frame)	\
-			.rx_data[byte_offset])						\
+				(uint8_t *)&(CONCAT2(frame_name, _frame)\
+				.rx_data[byte_offset]),					\
+		.data_calc = _data_calc_func,					\
+		.data_extract = _data_extract_func				\
+		}
+
+#define CAN_RX_DATA_DEF(name, 							\
+						frame_name, 					\
+						byte_offset, 					\
+						_multiplier, 					\
+						_divider, 						\
+						_offset,						\
+						_data_calc_func,				\
+						_data_extract_func)				\
+	static can_data_t CONCAT2(name, _data) = {			\
+		.can_frame 	= &CONCAT2(frame_name, _frame),		\
+		.multiplier	= _multiplier,						\
+		.divider	= _divider,							\
+		.offset		= _offset,							\
+		.data_valid = false,							\
+		.data 		= 									\
+				(uint8_t *)&(CONCAT2(frame_name, _frame)\
+				.rx_data[byte_offset]),					\
+		.data_calc = _data_calc_func,					\
+		.data_extract = _data_extract_func				\
 	}
 
-#define CAN_FRAME_INIT(name)	can_frame_init(&CONCAT2(name, _frame))
-#define CAN_RX_DATA_INIT(name)	can_data_init(&CONCAT2(name, _data), true)
-#define CAN_TX_DATA_INIT(name)	can_data_init(&CONCAT2(name, _data), false)
-
+#define CAN_FRAME_INIT(name)		can_frame_init(&CONCAT2(name, _frame))
+#define CAN_RX_DATA_INIT(name)		can_data_init(&CONCAT2(name, _data), true)
+#define CAN_TX_DATA_INIT(name)		can_data_init(&CONCAT2(name, _data), false)
+#define CAN_GET_DATA(name)			&CONCAT2(name, _data).data_calc(				\
+												&CONCAT2(name, _data).multiplier,	\
+												&CONCAT2(name, _data).divider,		\
+												&CONCAT2(name, _data).offset,		\
+												&CONCAT2(name, _data).data,			\
+												&CONCAT2(name, _data).data_size)
+#define CAN_SET_DATA(name, data)	&CONCAT2(name, _data).data_calc(				\
+												&CONCAT2(name, _data).multiplier,	\
+												&CONCAT2(name, _data).divider,		\
+												&CONCAT2(name, _data).offset,		\
+												&CONCAT2(name, _data).data,			\
+												&CONCAT2(name, _data).data_size,	\
+												(float)data)
+#define CAN_CHECK_VALIDATION(data)	&CONCAT2(name, _data)->can_frame.frame_valid
 /*
 #define CAN_INIT_TASK_MANAGER()	()
 

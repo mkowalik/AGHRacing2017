@@ -20,7 +20,7 @@ can_frame_t *can_frames[CAN_FRAMES_MAX_NUMB];
 uint8_t		can_frame_number;
 
 CAN_FRAME_DEF(gear_up, PERIOD_ON_EVENT, 0x000, 1);
-CAN_RX_DATA_DEF(gear_up, gear_up, 0, 1, 1, 0);
+CAN_RX_DATA_DEF(gear_up, gear_up, 0, 1, 1, 0, DEFAULT_CALC_FUN, DEFAULT_EXTRACT_FUNC);
 
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 
@@ -66,7 +66,6 @@ void can_data_init(can_data_t *data, bool rx){
 }
 
 void can_task_manager_init(void){
-
 	tx_mes.can_tx.RTR 	= CAN_RTR_DATA;
 	tx_mes.can_tx.IDE	= CAN_ID_STD;
 }
@@ -130,7 +129,6 @@ void can_task_manager(void){
 	for(uint8_t frame = 0;frame < can_frame_number; frame ++){
 		can_frames[frame]->frame_valid = can_frames[frame]->rx_update_time + can_frames[frame]->m_can_frame->period > time;
 	}
-
 
 }
 
