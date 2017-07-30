@@ -16,11 +16,34 @@ static volatile uint8_t		rx_buf_number;
 static volatile rx_mes_t 	rx_mes[CAN_RX_SOFTWARE_BUFFER_SIZE];
 static tx_mes_t				tx_mes;
 
+#define CAN_VALIDATION_MULT	2
+
 can_frame_t *can_frames[CAN_FRAMES_MAX_NUMB];
 uint8_t		can_frame_number;
 
-CAN_FRAME_DEF(gear_up, PERIOD_ON_EVENT, 0x000, 1);
-CAN_RX_DATA_DEF(gear_up, gear_up, 0, 1, 1, 0, DEFAULT_CALC_FUN, DEFAULT_EXTRACT_FUNC);
+float can_data_calc_default(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size){
+	float 		value;
+	uint32_t	raw_data;
+
+	raw_data = 0;
+	for(uint8_t byte_ctr = 0; byte_ctr < size; byte_ctr++){
+		raw_data	= (raw_data<<8) & 0xFFFFFFF0;
+		raw_data   |= *(data_ptr + byte_ctr);
+	}
+	value = ((raw_data + offs) * mult) / div;
+
+	return value;
+}
+
+void can_data_extract(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, void * value){
+	uint32_t raw_data;
+
+	raw_data = (*((float *)value) * div) / mult - offs;
+
+	for(uint8_t byte_ctr = 0; byte_ctr < size; byte_ctr++){
+		*(data_ptr + byte_ctr) = raw_data & (0xFF << 8*byte_ctr);
+	}
+}
 
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 
@@ -33,7 +56,7 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 
 		// Increase buffer number
 		rx_buf_number = (++ rx_buf_number == CAN_RX_SOFTWARE_BUFFER_SIZE) ? 0 : rx_buf_number;
-		hcan->pRxMsg = &(rx_mes[rx_buf_number].can_rx);
+		hcan->pRxMsg = ( CanRxMsgTypeDef *) &(rx_mes[rx_buf_number].can_rx);
 
 		CRITICAL_REGION_EXIT();
 	}
@@ -65,9 +88,43 @@ void can_data_init(can_data_t *data, bool rx){
 	}
 }
 
+void can_filter_setter(CAN_HandleTypeDef * hcan){
+	CAN_FilterConfTypeDef filterConfig;
+
+	filterConfig.BankNumber = 			0;	// Must be kept 0, only 1 bank in uc
+	filterConfig.FilterActivation = 	ENABLE;
+	filterConfig.FilterScale = 			CAN_FILTERSCALE_16BIT;
+	filterConfig.FilterMode = 			CAN_FILTERMODE_IDLIST;
+	filterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+
+	filterConfig.FilterNumber = 		0;
+
+	filterConfig.FilterIdLow = 			0x100<<5;
+	filterConfig.FilterIdHigh = 		0;
+	filterConfig.FilterMaskIdLow = 		0;
+	filterConfig.FilterMaskIdHigh = 	0;
+
+	HAL_CAN_ConfigFilter(hcan, &filterConfig);
+}
+
 void can_task_manager_init(void){
+
 	tx_mes.can_tx.RTR 	= CAN_RTR_DATA;
 	tx_mes.can_tx.IDE	= CAN_ID_STD;
+	empty_tx_mailboxes 	= 3;
+	rx_buf_number 		= 0;
+
+	can_filter_setter(&hcan);
+
+	hcan.pRxMsg = (CanRxMsgTypeDef*) &(rx_mes[rx_buf_number].can_rx);
+	hcan.pTxMsg = (CanTxMsgTypeDef*) &tx_mes.can_tx;
+
+	for(uint8_t can_ctr = 0; can_ctr < can_frame_number; can_ctr ++){
+		if(can_frames[can_ctr]->rx_on){
+			HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+			return;
+		}
+	}
 }
 
 void can_task_manager(void){
@@ -79,6 +136,9 @@ void can_task_manager(void){
 
 	// Frames TX
 
+	if(tx_frame_number == can_frame_number){
+		tx_frame_number = 0;
+	}
 	for(;(tx_frame_number < can_frame_number) && (empty_tx_mailboxes > 0); tx_frame_number ++){
 		can_frame = can_frames[tx_frame_number];
 
@@ -127,7 +187,7 @@ void can_task_manager(void){
 
 	// Validate frames
 	for(uint8_t frame = 0;frame < can_frame_number; frame ++){
-		can_frames[frame]->frame_valid = can_frames[frame]->rx_update_time + can_frames[frame]->m_can_frame->period > time;
+		can_frames[frame]->frame_valid = can_frames[frame]->rx_update_time + (can_frames[frame]->m_can_frame->period * CAN_VALIDATION_MULT) > time;
 	}
 
 }

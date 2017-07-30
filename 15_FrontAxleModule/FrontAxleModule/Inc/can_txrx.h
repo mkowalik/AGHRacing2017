@@ -55,7 +55,7 @@ typedef struct{
 	uint8_t	 			*data;
 	uint8_t				data_size;
 	float				( *data_calc)(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size);
-	void				( *data_extract)(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, float value);
+	void				( *data_extract)(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, void * value);
 }can_data_t;
 
 //extern can_frame_t *can_frames;
@@ -64,31 +64,13 @@ typedef struct{
 void can_frame_init(can_frame_t *frame);
 void can_data_init(can_data_t *data, bool rx);
 
-float can_data_calc_default(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size){
-	float 		value;
-	uint32_t	raw_data;
+float can_data_calc_default(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size);
+void can_data_extract(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, void * value);
 
-	raw_data = 0;
-	for(uint8_t byte_ctr = 0; byte_ctr < size; byte_ctr++){
-		raw_data	= (raw_data<<8) & 0xFFFFFFF0;
-		raw_data   |= *(data_ptr + byte_ctr);
-	}
-	value = ((raw_data + offs) * mult) / div;
+void can_task_manager(void);
+void can_task_manager_init(void);
 
-	return value;
-}
-
-void can_data_extract(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, float value){
-	uint32_t raw_data;
-
-	raw_data = (value * div) / mult - offs;
-
-	for(uint8_t byte_ctr = 0; byte_ctr < size; byte_ctr++){
-		*(data_ptr + byte_ctr) = raw_data & (0xFF << 8*byte_ctr);
-	}
-}
-
-#define DEFAULT_CALC_FUN		(&can_data_calc_default)
+#define DEFAULT_CALC_FUNC		(&can_data_calc_default)
 #define DEFAULT_EXTRACT_FUNC	(&can_data_extract)
 
 #define CAN_FRAME_DEF(name, 							\
@@ -125,7 +107,7 @@ void can_data_extract(const uint16_t mult, const uint16_t div, const uint16_t of
 		.data_valid = false,							\
 		.data 		= 									\
 				(uint8_t *)&(CONCAT2(frame_name, _frame)\
-				.rx_data[byte_offset]),					\
+				.tx_data[byte_offset]),					\
 		.data_calc = _data_calc_func,					\
 		.data_extract = _data_extract_func				\
 		}
@@ -154,26 +136,25 @@ void can_data_extract(const uint16_t mult, const uint16_t div, const uint16_t of
 #define CAN_FRAME_INIT(name)		can_frame_init(&CONCAT2(name, _frame))
 #define CAN_RX_DATA_INIT(name)		can_data_init(&CONCAT2(name, _data), true)
 #define CAN_TX_DATA_INIT(name)		can_data_init(&CONCAT2(name, _data), false)
-#define CAN_GET_DATA(name)			&CONCAT2(name, _data).data_calc(				\
-												&CONCAT2(name, _data).multiplier,	\
-												&CONCAT2(name, _data).divider,		\
-												&CONCAT2(name, _data).offset,		\
-												&CONCAT2(name, _data).data,			\
-												&CONCAT2(name, _data).data_size)
-#define CAN_SET_DATA(name, data)	&CONCAT2(name, _data).data_calc(				\
-												&CONCAT2(name, _data).multiplier,	\
-												&CONCAT2(name, _data).divider,		\
-												&CONCAT2(name, _data).offset,		\
-												&CONCAT2(name, _data).data,			\
-												&CONCAT2(name, _data).data_size,	\
-												(float)data)
-#define CAN_CHECK_VALIDATION(data)	&CONCAT2(name, _data)->can_frame.frame_valid
-/*
-#define CAN_INIT_TASK_MANAGER()	()
+#define CAN_GET_DATA(name)			CONCAT2(name, _data).data_calc(					\
+												CONCAT2(name, _data).multiplier,	\
+												CONCAT2(name, _data).divider,		\
+												CONCAT2(name, _data).offset,		\
+												CONCAT2(name, _data).data,			\
+												CONCAT2(name, _data).data_size)
+#define CAN_SET_DATA(name, value)	CONCAT2(name, _data).data_extract(				\
+												CONCAT2(name, _data).multiplier,	\
+												CONCAT2(name, _data).divider,		\
+												CONCAT2(name, _data).offset,		\
+												CONCAT2(name, _data).data,			\
+												CONCAT2(name, _data).data_size,		\
+												value)
 
-#define CAN_START_TASK_MANAGER()	()
+#define CAN_CHECK_VALIDATION(name)	CONCAT2(name, _data).can_frame->frame_valid
 
-*/
+#define CAN_TASK_MANAGER()			can_task_manager()
+#define CAN_TASK_MANAGER_INIT()		can_task_manager_init()
+
 #ifdef __cplusplus
 }
 #endif

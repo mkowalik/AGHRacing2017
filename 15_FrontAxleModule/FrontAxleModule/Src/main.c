@@ -46,13 +46,25 @@
 /* USER CODE BEGIN Includes */
 #include "tm_stm32_mpu6050.h"
 #include "stop_pedal.h"
+#include "can_txrx.h"
+
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+CAN_FRAME_DEF(fam_acc_stop	, 10, 0x100, 7);
+CAN_FRAME_DEF(fam_gyr		, 10, 0x101, 6);
 
+CAN_TX_DATA_DEF(stop_light	, fam_acc_stop, 6, 1, 1		, 0, &StopPedal_can_data_calc	, &StopPedal_can_data_extract	);
+CAN_TX_DATA_DEF(acc_x		, fam_acc_stop, 0, 1, 100	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(acc_y		, fam_acc_stop, 0, 1, 100	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(acc_z		, fam_acc_stop, 0, 1, 100	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(gyr_x		, fam_gyr	  , 0, 1, 10	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(gyr_y		, fam_gyr	  , 0, 1, 10	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(gyr_z		, fam_gyr	  , 0, 1, 10	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,8 +83,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	TM_MPU6050_t MPU6050_Data;
-	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
+  TM_MPU6050_t 				MPU6050_Data;
+  TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -98,56 +110,58 @@ int main(void)
   MX_TIM17_Init();
 
   /* USER CODE BEGIN 2 */
+  MPU6050_Interrupts.Status = 0;
   TM_MPU6050_Init(&MPU6050_Data, TM_MPU6050_Device_0, TM_MPU6050_Accelerometer_8G, TM_MPU6050_Gyroscope_250s, TM_MPU6050_Bandwidth_94Hz);
   TM_MPU6050_EnableInterrupts(&MPU6050_Data);
-  TM_MPU6050_GeneralCallib(&MPU6050_Data);
-  //TM_MPU6050_FastCallib(&MPU6050_Data);
-  MPU6050_Data.Accelerometer_Offset.x = 0;
-  MPU6050_Data.Accelerometer_Offset.y = 0;
-  MPU6050_Data.Accelerometer_Offset.z = 0;
-  MPU6050_Data.Gyroscope_Offset.x = 0;
-  MPU6050_Data.Gyroscope_Offset.y = 0;
-  MPU6050_Data.Gyroscope_Offset.z = 0;
+  TM_MPU6050_FastCallib(&MPU6050_Data);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //CANhandler_Init();
-  uint8_t stopPedal = 0;
-  uint8_t prevStopPedal = 0;
-  uint32_t pedalReadTime = HAL_GetTick();
+  bool stopPedal = 0;
+
+  CAN_FRAME_INIT(fam_acc_stop);
+  CAN_FRAME_INIT(fam_gyr);
+
+  CAN_TX_DATA_INIT(stop_light);
+  CAN_TX_DATA_INIT(acc_x);
+  CAN_TX_DATA_INIT(acc_y);
+  CAN_TX_DATA_INIT(acc_z);
+  CAN_TX_DATA_INIT(gyr_x);
+  CAN_TX_DATA_INIT(gyr_y);
+  CAN_TX_DATA_INIT(gyr_z);
+
+  CAN_TASK_MANAGER_INIT();
+
   while (1)
   {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-//	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
-//	if(MPU6050_Interrupts.F.DataReady){
-//		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
-//		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
-//		TM_MPU6050_CompensateRawData(&MPU6050_Data);
-//	}
 
-	  if(pedalReadTime < HAL_GetTick() - 50){
-		  if(StopPedal_Read() == prevStopPedal){
-			  stopPedal = prevStopPedal;
-		  }
-		  else{
-			  prevStopPedal = StopPedal_Read();
-		  }
-	 }
+	// Read Accelerometer
+	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
+	if(MPU6050_Interrupts.F.DataReady){
+		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
+		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
+		TM_MPU6050_CompensateRawData(&MPU6050_Data);
+	}
 
-//	SET_CAN_DATA(DATA_F_ACC_X, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.x * 100));
-//	SET_CAN_DATA(DATA_F_ACC_Y, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
-//	SET_CAN_DATA(DATA_F_ACC_Z, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
-//
-//	SET_CAN_DATA(DATA_F_GYR_X, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.x * 10));
-//	SET_CAN_DATA(DATA_F_GYR_Y, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.y * 10));
-//	SET_CAN_DATA(DATA_F_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
+	// Read stop pedal
+	stopPedal = StopPedal_Read();
 
-	//SET_CAN_DATA(DATA_STOP_LIGHT, stopPedal);
+	// Send new data to CAN structures
+	CAN_SET_DATA(acc_x, &MPU6050_Data.Accelerometer_Compensated.x);
+	CAN_SET_DATA(acc_y, &MPU6050_Data.Accelerometer_Compensated.y);
+	CAN_SET_DATA(acc_z, &MPU6050_Data.Accelerometer_Compensated.z);
+	CAN_SET_DATA(gyr_x, &MPU6050_Data.Gyroscope_Compensated.x);
+	CAN_SET_DATA(gyr_y, &MPU6050_Data.Gyroscope_Compensated.y);
+	CAN_SET_DATA(gyr_z, &MPU6050_Data.Gyroscope_Compensated.z);
+	CAN_SET_DATA(stop_light, &stopPedal);
 
-	//CANhandler_Handler();
+	// Handle all the receive and send of CAN data
+	CAN_TASK_MANAGER();
+
   }
   /* USER CODE END 3 */
 

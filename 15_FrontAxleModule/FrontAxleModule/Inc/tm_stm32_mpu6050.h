@@ -228,9 +228,9 @@ typedef enum _Axes_t {
 } Axes_t;
 
 typedef struct _AxesValues_t {
-	double x;
-	double y;
-	double z;
+	float x;
+	float y;
+	float z;
 } AxesValues_t;
 
 /**
@@ -239,12 +239,12 @@ typedef struct _AxesValues_t {
 typedef struct _TM_MPU6050_t {
 	/* Private */
 	uint8_t Address;         /*!< I2C address of device. Only for private use */
-	double Temperature;       /*!< Temperature in degrees */
+	float Temperature;       /*!< Temperature in degrees */
 
 	AxesValues_t Accelerometer_Raw;
 	AxesValues_t Accelerometer_Compensated;
 	AxesValues_t Accelerometer_Offset;
-	double Accelerometer_Multiply;
+	float Accelerometer_Multiply;
 
 	AxesValues_t Gyroscope_Raw;
 	AxesValues_t Gyroscope_Compensated;
@@ -252,7 +252,7 @@ typedef struct _TM_MPU6050_t {
 	AxesValues_t Gyroscope_Offset;
 	AxesValues_t Gyroscope_Acceleration;
 	AxesValues_t Gyroscope_Acceleration_Rad;
-	double Gyroscope_Multiply;
+	float Gyroscope_Multiply;
 } TM_MPU6050_t;
 
 
@@ -397,13 +397,13 @@ TM_MPU6050_Result_t TM_MPU6050_CalcMean(TM_MPU6050_t* DataStruct, uint16_t Numbe
 
 TM_MPU6050_Result_t TM_MPU6050_CompensateRawData(TM_MPU6050_t* DataStruct);
 
-TM_MPU6050_Result_t TM_MPU6050_CalcGyroAcc(TM_MPU6050_t* DataStruct, double Time_s);
+TM_MPU6050_Result_t TM_MPU6050_CalcGyroAcc(TM_MPU6050_t* DataStruct, float Time_s);
 
 TM_MPU6050_Result_t TM_MPU6050_ConvToRad(TM_MPU6050_t* DataStruct);
 
 
 
-void AddAxesWithMultiplication(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2,  AxesValues_t * ResultStruct, double Multiplier);
+void AddAxesWithMultiplication(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2,  AxesValues_t * ResultStruct, float Multiplier);
 void SubstractAxes(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValues_t * ResultStruct);
 void AddAxesToAxis(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValues_t * ResultStruct);
 void DivideAxes(AxesValues_t * StructToDivide, uint16_t Divisor);
