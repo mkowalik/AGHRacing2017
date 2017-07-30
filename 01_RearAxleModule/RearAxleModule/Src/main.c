@@ -47,16 +47,26 @@
 /* USER CODE BEGIN Includes */
 #include "tm_stm32_mpu6050.h"
 #include "stop_light.h"
-//#include "actual_data_provider.h"
-//#include "can_receiver_driver.h"
-#include "CANhandler.h"
+#include "can_txrx.h"
+
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+CAN_FRAME_DEF(ram_acc		, 10, 0x180, 6);
+CAN_FRAME_DEF(ram_gyr		, 10, 0x181, 6);
+CAN_FRAME_DEF(fam_acc_stop	, 10, 0x100, 7);
 
+CAN_RX_DATA_DEF(stop_light	, fam_acc_stop, 6, 1, 1		, 0, 1, &StopLight_can_data_calc	, DEFAULT_EXTRACT_FUNC	);
+CAN_TX_DATA_DEF(acc_x		, ram_acc	  , 0, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
+CAN_TX_DATA_DEF(acc_y		, ram_acc     , 2, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
+CAN_TX_DATA_DEF(acc_z		, ram_acc     , 4, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
+CAN_TX_DATA_DEF(gyr_x		, ram_gyr	  , 0, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
+CAN_TX_DATA_DEF(gyr_y		, ram_gyr	  , 2, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
+CAN_TX_DATA_DEF(gyr_z		, ram_gyr	  , 4, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,8 +85,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	TM_MPU6050_t MPU6050_Data;
-	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
+  TM_MPU6050_t 				MPU6050_Data;
+  TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -91,10 +101,8 @@ int main(void)
   /* Configure the system clock */
   SystemClock_Config();
 
-	HAL_Delay(500);
-
   /* USER CODE BEGIN SysInit */
-
+  HAL_Delay(500);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -106,59 +114,67 @@ int main(void)
   MX_TIM3_Init();
 
   /* USER CODE BEGIN 2 */
+  MPU6050_Interrupts.Status = 0;
   TM_MPU6050_Init(&MPU6050_Data, TM_MPU6050_Device_0, TM_MPU6050_Accelerometer_8G, TM_MPU6050_Gyroscope_250s, TM_MPU6050_Bandwidth_94Hz);
   TM_MPU6050_EnableInterrupts(&MPU6050_Data);
-  TM_MPU6050_GeneralCallib(&MPU6050_Data);
-  //TM_MPU6050_FastCallib(&MPU6050_Data);
-  MPU6050_Data.Accelerometer_Offset.x = 0;
-  MPU6050_Data.Accelerometer_Offset.y = 0;
-  MPU6050_Data.Accelerometer_Offset.z = 0;
-  MPU6050_Data.Gyroscope_Offset.x = 0;
-  MPU6050_Data.Gyroscope_Offset.y = 0;
-  MPU6050_Data.Gyroscope_Offset.z = 0;
+  TM_MPU6050_FastCallib(&MPU6050_Data);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  //ActualDataProvider_init();
-  CANhandler_Init();
+  CAN_FRAME_INIT(fam_acc_stop);
+  CAN_FRAME_INIT(ram_acc);
+  CAN_FRAME_INIT(ram_gyr);
+
+  CAN_TX_DATA_INIT(stop_light);
+  CAN_TX_DATA_INIT(acc_x);
+  CAN_TX_DATA_INIT(acc_y);
+  CAN_TX_DATA_INIT(acc_z);
+  CAN_TX_DATA_INIT(gyr_x);
+  CAN_TX_DATA_INIT(gyr_y);
+  CAN_TX_DATA_INIT(gyr_z);
+
+  CAN_TASK_MANAGER_INIT();
+
   while (1)
   {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
 
-//	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
-//	if(MPU6050_Interrupts.F.DataReady){
-//		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
-//		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
-//		TM_MPU6050_CompensateRawData(&MPU6050_Data);
-//	}
+	// Read Accelerometer
+	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
+	if(MPU6050_Interrupts.F.DataReady){
+		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
+		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
+		TM_MPU6050_CompensateRawData(&MPU6050_Data);
 
-	CANhandler_Handler();
+		// Send new data to CAN structures
+		CAN_SET_DATA(acc_x, &MPU6050_Data.Accelerometer_Compensated.x);
+		CAN_SET_DATA(acc_y, &MPU6050_Data.Accelerometer_Compensated.y);
+		CAN_SET_DATA(acc_z, &MPU6050_Data.Accelerometer_Compensated.z);
+		CAN_SET_DATA(gyr_x, &MPU6050_Data.Gyroscope_Compensated.x);
+		CAN_SET_DATA(gyr_y, &MPU6050_Data.Gyroscope_Compensated.y);
+		CAN_SET_DATA(gyr_z, &MPU6050_Data.Gyroscope_Compensated.z);
+	}
 
-//	SET_CAN_DATA(DATA_R_ACC_X, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.x * 100));
-//	SET_CAN_DATA(DATA_R_ACC_Y, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
-//	SET_CAN_DATA(DATA_R_ACC_Z, (uint16_t)(MPU6050_Data.Accelerometer_Compensated.y * 100));
-//
-//	SET_CAN_DATA(DATA_R_GYR_X, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.x * 10));
-//	SET_CAN_DATA(DATA_R_GYR_Y, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.y * 10));
-//	SET_CAN_DATA(DATA_R_GYR_Z, (uint16_t)(MPU6050_Data.Gyroscope_Compensated.z * 10));
-
-
-	if((GET_CAN_DATA(DATA_STOP_LIGHT) * GET_CAN_DATA_VALIDATION(DATA_STOP_LIGHT)) == 0xFF){
-	  StopLight_Set();
+	// Read stop pedal
+	if(CAN_CHECK_VALIDATION(stop_light)){
+		if((bool)CAN_GET_DATA(stop_light)){
+			StopLight_Set();
+		}
+		else{
+			StopLight_Clr();
+		}
 	}
 	else{
-	  StopLight_Clr();
+		StopLight_Clr();
 	}
-//	if( (int16_t) ActualDataProvider_getValue(STOP_DATA_CHANNEL) == 0xFF){
-//		StopLight_Set();
-//	}
-//	else{
-//		StopLight_Clr();
-//	}
+
+
+	// Handle all the receive and send of CAN data
+	CAN_TASK_MANAGER();
 
   }
   /* USER CODE END 3 */

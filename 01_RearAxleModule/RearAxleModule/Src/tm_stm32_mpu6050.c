@@ -390,7 +390,7 @@ TM_MPU6050_Result_t TM_MPU6050_FastCallib(TM_MPU6050_t* DataStruct) {
 
 TM_MPU6050_Result_t TM_MPU6050_GeneralCallib(TM_MPU6050_t* DataStruct){
 	//wait 5 seconds for max axis values
-
+	return TM_MPU6050_Result_Ok;
 }
 
 TM_MPU6050_Result_t TM_MPU6050_CalcMean(TM_MPU6050_t* DataStruct, uint16_t NumberOfValidSamples, uint16_t NumberOfInvalidSamples, AxesValues_t * Mean, uint8_t Device) {

@@ -58,13 +58,13 @@
 CAN_FRAME_DEF(fam_acc_stop	, 10, 0x100, 7);
 CAN_FRAME_DEF(fam_gyr		, 10, 0x101, 6);
 
-CAN_TX_DATA_DEF(stop_light	, fam_acc_stop, 6, 1, 1		, 0, &StopPedal_can_data_calc	, &StopPedal_can_data_extract	);
-CAN_TX_DATA_DEF(acc_x		, fam_acc_stop, 0, 1, 100	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
-CAN_TX_DATA_DEF(acc_y		, fam_acc_stop, 0, 1, 100	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
-CAN_TX_DATA_DEF(acc_z		, fam_acc_stop, 0, 1, 100	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
-CAN_TX_DATA_DEF(gyr_x		, fam_gyr	  , 0, 1, 10	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
-CAN_TX_DATA_DEF(gyr_y		, fam_gyr	  , 0, 1, 10	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
-CAN_TX_DATA_DEF(gyr_z		, fam_gyr	  , 0, 1, 10	, 0, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(stop_light	, fam_acc_stop, 6, 1, 1		, 0, 1, &StopPedal_can_data_calc	, &StopPedal_can_data_extract	);
+CAN_TX_DATA_DEF(acc_x		, fam_acc_stop, 0, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(acc_y		, fam_acc_stop, 2, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(acc_z		, fam_acc_stop, 4, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(gyr_x		, fam_gyr	  , 0, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(gyr_y		, fam_gyr	  , 2, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
+CAN_TX_DATA_DEF(gyr_z		, fam_gyr	  , 4, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC			);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -145,18 +145,17 @@ int main(void)
 		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
 		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
 		TM_MPU6050_CompensateRawData(&MPU6050_Data);
+		// Send new data to CAN structures
+		CAN_SET_DATA(acc_x, &MPU6050_Data.Accelerometer_Compensated.x);
+		CAN_SET_DATA(acc_y, &MPU6050_Data.Accelerometer_Compensated.y);
+		CAN_SET_DATA(acc_z, &MPU6050_Data.Accelerometer_Compensated.z);
+		CAN_SET_DATA(gyr_x, &MPU6050_Data.Gyroscope_Compensated.x);
+		CAN_SET_DATA(gyr_y, &MPU6050_Data.Gyroscope_Compensated.y);
+		CAN_SET_DATA(gyr_z, &MPU6050_Data.Gyroscope_Compensated.z);
 	}
 
 	// Read stop pedal
 	stopPedal = StopPedal_Read();
-
-	// Send new data to CAN structures
-	CAN_SET_DATA(acc_x, &MPU6050_Data.Accelerometer_Compensated.x);
-	CAN_SET_DATA(acc_y, &MPU6050_Data.Accelerometer_Compensated.y);
-	CAN_SET_DATA(acc_z, &MPU6050_Data.Accelerometer_Compensated.z);
-	CAN_SET_DATA(gyr_x, &MPU6050_Data.Gyroscope_Compensated.x);
-	CAN_SET_DATA(gyr_y, &MPU6050_Data.Gyroscope_Compensated.y);
-	CAN_SET_DATA(gyr_z, &MPU6050_Data.Gyroscope_Compensated.z);
 	CAN_SET_DATA(stop_light, &stopPedal);
 
 	// Handle all the receive and send of CAN data
