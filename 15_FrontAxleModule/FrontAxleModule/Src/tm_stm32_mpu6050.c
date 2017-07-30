@@ -67,16 +67,16 @@
 #define MPU6050_WHO_AM_I			0x75
 
 /* Gyro sensitivities in degrees/s */
-#define MPU6050_GYRO_SENS_250		((double) 131)
-#define MPU6050_GYRO_SENS_500		((double) 65.5)
-#define MPU6050_GYRO_SENS_1000		((double) 32.8)
-#define MPU6050_GYRO_SENS_2000		((double) 16.4)
+#define MPU6050_GYRO_SENS_250		((float) 131)
+#define MPU6050_GYRO_SENS_500		((float) 65.5)
+#define MPU6050_GYRO_SENS_1000		((float) 32.8)
+#define MPU6050_GYRO_SENS_2000		((float) 16.4)
 
 /* Acce sensitivities in g/s */
-#define MPU6050_ACCE_SENS_2			((double) 16384)
-#define MPU6050_ACCE_SENS_4			((double) 8192)
-#define MPU6050_ACCE_SENS_8			((double) 4096)
-#define MPU6050_ACCE_SENS_16		((double) 2048)
+#define MPU6050_ACCE_SENS_2			((float) 16384)
+#define MPU6050_ACCE_SENS_4			((float) 8192)
+#define MPU6050_ACCE_SENS_8			((float) 4096)
+#define MPU6050_ACCE_SENS_16		((float) 2048)
 
 
 TM_MPU6050_Result_t TM_MPU6050_Init(TM_MPU6050_t* DataStruct, TM_MPU6050_Device_t DeviceNumber, TM_MPU6050_Accelerometer_t AccelerometerSensitivity, TM_MPU6050_Gyroscope_t GyroscopeSensitivity, TM_MPU6050_DigitalLowPassFilter_t Bandwidth) {
@@ -146,16 +146,16 @@ TM_MPU6050_Result_t TM_MPU6050_SetGyroscope(TM_MPU6050_t* DataStruct, TM_MPU6050
 	
 	switch (GyroscopeSensitivity) {
 		case TM_MPU6050_Gyroscope_250s:
-			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_250;
+			DataStruct->Gyroscope_Multiply = (float)1 / MPU6050_GYRO_SENS_250;
 			break;
 		case TM_MPU6050_Gyroscope_500s:
-			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_500;
+			DataStruct->Gyroscope_Multiply = (float)1 / MPU6050_GYRO_SENS_500;
 			break;
 		case TM_MPU6050_Gyroscope_1000s:
-			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_1000;
+			DataStruct->Gyroscope_Multiply = (float)1 / MPU6050_GYRO_SENS_1000;
 			break;
 		case TM_MPU6050_Gyroscope_2000s:
-			DataStruct->Gyroscope_Multiply = (double)1 / MPU6050_GYRO_SENS_2000;
+			DataStruct->Gyroscope_Multiply = (float)1 / MPU6050_GYRO_SENS_2000;
 		default:
 			break;
 	}
@@ -181,16 +181,16 @@ TM_MPU6050_Result_t TM_MPU6050_SetAccelerometer(TM_MPU6050_t* DataStruct, TM_MPU
 	/* Set sensitivities for multiplying gyro and accelerometer data */
 	switch (AccelerometerSensitivity) {
 		case TM_MPU6050_Accelerometer_2G:
-			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_2;
+			DataStruct->Accelerometer_Multiply = (float)1 / MPU6050_ACCE_SENS_2;
 			break;
 		case TM_MPU6050_Accelerometer_4G:
-			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_4;
+			DataStruct->Accelerometer_Multiply = (float)1 / MPU6050_ACCE_SENS_4;
 			break;
 		case TM_MPU6050_Accelerometer_8G:
-			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_8;
+			DataStruct->Accelerometer_Multiply = (float)1 / MPU6050_ACCE_SENS_8;
 			break;
 		case TM_MPU6050_Accelerometer_16G:
-			DataStruct->Accelerometer_Multiply = (double)1 / MPU6050_ACCE_SENS_16;
+			DataStruct->Accelerometer_Multiply = (float)1 / MPU6050_ACCE_SENS_16;
 		default:
 			break;
 	}
@@ -326,7 +326,7 @@ TM_MPU6050_Result_t TM_MPU6050_ReadTemperature(TM_MPU6050_t* DataStruct) {
 	
 	/* Format temperature */
 	temp = (data[0] << 8 | data[1]);
-	DataStruct->Temperature = (double)((int16_t)temp / (double)340.0 + (double)36.53);
+	DataStruct->Temperature = (float)((int16_t)temp / (float)340.0 + (float)36.53);
 	
 	/* Return OK */
 	return TM_MPU6050_Result_Ok;
@@ -349,7 +349,7 @@ TM_MPU6050_Result_t TM_MPU6050_ReadAll(TM_MPU6050_t* DataStruct) {
 
 	/* Format temperature */
 	temp = (data[6] << 8 | data[7]);
-	DataStruct->Temperature = (double)((double)((int16_t)temp) / (double)340.0 + (double)36.53);
+	DataStruct->Temperature = (float)((float)((int16_t)temp) / (float)340.0 + (float)36.53);
 	
 	/* Format gyroscope data */
 	DataStruct->Gyroscope_Raw.x = (int16_t)(data[8] << 8 | data[9]);
@@ -390,11 +390,13 @@ TM_MPU6050_Result_t TM_MPU6050_FastCallib(TM_MPU6050_t* DataStruct) {
 
 TM_MPU6050_Result_t TM_MPU6050_GeneralCallib(TM_MPU6050_t* DataStruct){
 	//wait 5 seconds for max axis values
-
+	return TM_MPU6050_Result_Ok;
 }
 
 TM_MPU6050_Result_t TM_MPU6050_CalcMean(TM_MPU6050_t* DataStruct, uint16_t NumberOfValidSamples, uint16_t NumberOfInvalidSamples, AxesValues_t * Mean, uint8_t Device) {
 	TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
+
+	MPU6050_Interrupts.Status = 0;
 	ZeroAxes(Mean);
 	for(int i=0; i < NumberOfInvalidSamples; i++){
 		while(!MPU6050_Interrupts.F.DataReady){
@@ -440,7 +442,7 @@ void SubstractAxes(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, A
 	ResultStruct->z = (StructToAdd_1->z - StructToAdd_2->z);
 }
 
-void AddAxesWithMultiplication(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValues_t * ResultStruct, double Multiplier){
+void AddAxesWithMultiplication(AxesValues_t * StructToAdd_1, AxesValues_t * StructToAdd_2, AxesValues_t * ResultStruct, float Multiplier){
 	ResultStruct->x = (StructToAdd_1->x + StructToAdd_2->x) * Multiplier;
 	ResultStruct->y = (StructToAdd_1->y + StructToAdd_2->y) * Multiplier;
 	ResultStruct->z = (StructToAdd_1->z + StructToAdd_2->z) * Multiplier;
@@ -479,7 +481,7 @@ TM_MPU6050_Result_t TM_MPU6050_CompensateRawData(TM_MPU6050_t* DataStruct) {
 	return TM_MPU6050_Result_Ok;
 }
 
-TM_MPU6050_Result_t TM_MPU6050_CalcGyroAcc(TM_MPU6050_t* DataStruct, double Time_s) {
+TM_MPU6050_Result_t TM_MPU6050_CalcGyroAcc(TM_MPU6050_t* DataStruct, float Time_s) {
 
 	DataStruct->Gyroscope_Acceleration.x = (DataStruct->Gyroscope_Compensated.x - DataStruct->Gyroscope_Compensated_Prev.x)/Time_s;
 	DataStruct->Gyroscope_Acceleration.y = (DataStruct->Gyroscope_Compensated.y - DataStruct->Gyroscope_Compensated_Prev.y)/Time_s;

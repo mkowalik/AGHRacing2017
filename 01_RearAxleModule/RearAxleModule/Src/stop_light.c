@@ -38,3 +38,13 @@ void StopLight_Clr(void){
 	StopLight_Write(OFF);
 }
 
+
+float StopLight_can_data_calc(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size){
+
+	if(*data_ptr == 0xFF){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
