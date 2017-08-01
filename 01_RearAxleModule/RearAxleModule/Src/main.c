@@ -41,7 +41,6 @@
 #include "adc.h"
 #include "can.h"
 #include "i2c.h"
-#include "tim.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
@@ -56,17 +55,9 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-CAN_FRAME_DEF(ram_acc		, 10, 0x180, 6);
-CAN_FRAME_DEF(ram_gyr		, 10, 0x181, 6);
 CAN_FRAME_DEF(fam_acc_stop	, 10, 0x100, 7);
 
 CAN_RX_DATA_DEF(stop_light	, fam_acc_stop, 6, 1, 1		, 0, 1, &StopLight_can_data_calc	, DEFAULT_EXTRACT_FUNC	);
-CAN_TX_DATA_DEF(acc_x		, ram_acc	  , 0, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
-CAN_TX_DATA_DEF(acc_y		, ram_acc     , 2, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
-CAN_TX_DATA_DEF(acc_z		, ram_acc     , 4, 1, 100	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
-CAN_TX_DATA_DEF(gyr_x		, ram_gyr	  , 0, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
-CAN_TX_DATA_DEF(gyr_y		, ram_gyr	  , 2, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
-CAN_TX_DATA_DEF(gyr_z		, ram_gyr	  , 4, 1, 10	, 0, 2, DEFAULT_CALC_FUNC			, DEFAULT_EXTRACT_FUNC	);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -85,8 +76,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  TM_MPU6050_t 				MPU6050_Data;
-  TM_MPU6050_Interrupt_t	MPU6050_Interrupts;
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -110,30 +99,16 @@ int main(void)
   MX_CAN_Init();
   MX_I2C1_Init();
   MX_ADC_Init();
-  MX_TIM1_Init();
-  MX_TIM3_Init();
 
   /* USER CODE BEGIN 2 */
-  MPU6050_Interrupts.Status = 0;
-  TM_MPU6050_Init(&MPU6050_Data, TM_MPU6050_Device_0, TM_MPU6050_Accelerometer_8G, TM_MPU6050_Gyroscope_250s, TM_MPU6050_Bandwidth_94Hz);
-  TM_MPU6050_EnableInterrupts(&MPU6050_Data);
-  TM_MPU6050_FastCallib(&MPU6050_Data);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
   CAN_FRAME_INIT(fam_acc_stop);
-  CAN_FRAME_INIT(ram_acc);
-  CAN_FRAME_INIT(ram_gyr);
 
-  CAN_TX_DATA_INIT(stop_light);
-  CAN_TX_DATA_INIT(acc_x);
-  CAN_TX_DATA_INIT(acc_y);
-  CAN_TX_DATA_INIT(acc_z);
-  CAN_TX_DATA_INIT(gyr_x);
-  CAN_TX_DATA_INIT(gyr_y);
-  CAN_TX_DATA_INIT(gyr_z);
+  CAN_RX_DATA_INIT(stop_light);
 
   CAN_TASK_MANAGER_INIT();
 
@@ -143,34 +118,19 @@ int main(void)
 
   /* USER CODE BEGIN 3 */
 
-	// Read Accelerometer
-	TM_MPU6050_ReadInterrupts(&MPU6050_Data, &MPU6050_Interrupts);
-	if(MPU6050_Interrupts.F.DataReady){
-		TM_MPU6050_ReadGyroscope(&MPU6050_Data);
-		TM_MPU6050_ReadAccelerometer(&MPU6050_Data);
-		TM_MPU6050_CompensateRawData(&MPU6050_Data);
-
-		// Send new data to CAN structures
-		CAN_SET_DATA(acc_x, &MPU6050_Data.Accelerometer_Compensated.x);
-		CAN_SET_DATA(acc_y, &MPU6050_Data.Accelerometer_Compensated.y);
-		CAN_SET_DATA(acc_z, &MPU6050_Data.Accelerometer_Compensated.z);
-		CAN_SET_DATA(gyr_x, &MPU6050_Data.Gyroscope_Compensated.x);
-		CAN_SET_DATA(gyr_y, &MPU6050_Data.Gyroscope_Compensated.y);
-		CAN_SET_DATA(gyr_z, &MPU6050_Data.Gyroscope_Compensated.z);
-	}
 
 	// Read stop pedal
-	if(CAN_CHECK_VALIDATION(stop_light)){
+	//if(CAN_CHECK_VALIDATION(stop_light)){
 		if((bool)CAN_GET_DATA(stop_light)){
 			StopLight_Set();
 		}
 		else{
 			StopLight_Clr();
 		}
-	}
-	else{
-		StopLight_Clr();
-	}
+	//}
+	//else{
+	//	StopLight_Clr();
+	//}
 
 
 	// Handle all the receive and send of CAN data

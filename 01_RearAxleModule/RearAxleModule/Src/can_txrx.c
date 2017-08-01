@@ -132,7 +132,7 @@ void can_task_manager(void){
 	can_frame_t 	*can_frame;
 	static uint8_t	tx_frame_number;
 	static uint8_t	rx_frame_number;
-	uint32_t		time = HAL_GetTick();
+	uint32_t		time;
 
 	// Frames TX
 
@@ -141,9 +141,10 @@ void can_task_manager(void){
 	}
 	for(;(tx_frame_number < can_frame_number) && (empty_tx_mailboxes > 0); tx_frame_number ++){
 		can_frame = can_frames[tx_frame_number];
-
+		time = HAL_GetTick();
 		if(can_frame->rx_update_time + can_frame->m_can_frame->period < time){
 
+			can_frame->rx_update_time = time;
 			tx_mes.can_tx.DLC 	= can_frame->m_can_frame->dlc;
 			tx_mes.can_tx.StdId	= can_frame->m_can_frame->id;
 

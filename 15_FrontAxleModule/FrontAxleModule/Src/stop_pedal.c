@@ -36,8 +36,8 @@ bool StopPedal_Read(void){
 			return read;
 		}
 		prev_read = read;
-		return prev_return;
 	}
+	return prev_return;
 }
 
 void StopPedal_can_data_extract(const uint16_t mult, const uint16_t div, const uint16_t offs, uint8_t * data_ptr, uint8_t size, void * value){

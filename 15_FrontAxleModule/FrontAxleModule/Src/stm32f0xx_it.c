@@ -41,7 +41,6 @@
 
 /* External variables --------------------------------------------------------*/
 extern CAN_HandleTypeDef hcan;
-extern TIM_HandleTypeDef htim17;
 
 /******************************************************************************/
 /*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
@@ -124,20 +123,6 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f0xx.s).                    */
 /******************************************************************************/
-
-/**
-* @brief This function handles TIM17 global interrupt.
-*/
-void TIM17_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM17_IRQn 0 */
-
-  /* USER CODE END TIM17_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim17);
-  /* USER CODE BEGIN TIM17_IRQn 1 */
-
-  /* USER CODE END TIM17_IRQn 1 */
-}
 
 /**
 * @brief This function handles HDMI-CEC and CAN global interrupts / HDMI-CEC wake-up interrupt through EXTI line 27.
