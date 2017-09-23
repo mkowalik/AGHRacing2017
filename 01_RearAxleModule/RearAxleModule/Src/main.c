@@ -41,23 +41,21 @@
 #include "adc.h"
 #include "can.h"
 #include "i2c.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include "tm_stm32_mpu6050.h"
-#include "stop_light.h"
-#include "can_txrx.h"
-
-#include <stdbool.h>
+#include "m_acc.h"
+#include "m_gyr.h"
+#include "m_stop_light.h"
+#include "m_task_manager.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-CAN_FRAME_DEF(fam_acc_stop	, 10, 0x100, 7);
 
-CAN_RX_DATA_DEF(stop_light	, fam_acc_stop, 6, 1, 1		, 0, 1, &StopLight_can_data_calc	, DEFAULT_EXTRACT_FUNC	);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,7 +89,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  HAL_Delay(500);
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -99,43 +97,26 @@ int main(void)
   MX_CAN_Init();
   MX_I2C1_Init();
   MX_ADC_Init();
+  MX_TIM14_Init();
+  MX_TIM16_Init();
 
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&htim14);
+  HAL_TIM_Base_Start_IT(&htim16);
+
+  m_gyr_init();
+  m_acc_init();
+  m_stop_light_init();
+  m_task_manager_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  CAN_FRAME_INIT(fam_acc_stop);
-
-  CAN_RX_DATA_INIT(stop_light);
-
-  CAN_TASK_MANAGER_INIT();
-
   while (1)
   {
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
-
-	// Read stop pedal
-	//if(CAN_CHECK_VALIDATION(stop_light)){
-		if((bool)CAN_GET_DATA(stop_light)){
-			StopLight_Set();
-		}
-		else{
-			StopLight_Clr();
-		}
-	//}
-	//else{
-	//	StopLight_Clr();
-	//}
-
-
-	// Handle all the receive and send of CAN data
-	CAN_TASK_MANAGER();
-
   }
   /* USER CODE END 3 */
 
@@ -159,8 +140,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSI14CalibrationValue = 16;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL15;
-  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV3;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL6;
+  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);

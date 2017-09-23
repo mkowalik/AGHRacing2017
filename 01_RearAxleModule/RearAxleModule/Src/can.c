@@ -56,8 +56,8 @@ void MX_CAN_Init(void)
   hcan.Init.Prescaler = 8;
   hcan.Init.Mode = CAN_MODE_NORMAL;
   hcan.Init.SJW = CAN_SJW_3TQ;
-  hcan.Init.BS1 = CAN_BS1_14TQ;
-  hcan.Init.BS2 = CAN_BS2_5TQ;
+  hcan.Init.BS1 = CAN_BS1_16TQ;
+  hcan.Init.BS2 = CAN_BS2_7TQ;
   hcan.Init.TTCM = DISABLE;
   hcan.Init.ABOM = DISABLE;
   hcan.Init.AWUM = DISABLE;
@@ -80,7 +80,7 @@ void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
   /* USER CODE BEGIN CAN_MspInit 0 */
 
   /* USER CODE END CAN_MspInit 0 */
-    /* Peripheral clock enable */
+    /* CAN clock enable */
     __HAL_RCC_CAN1_CLK_ENABLE();
   
     /**CAN GPIO Configuration    

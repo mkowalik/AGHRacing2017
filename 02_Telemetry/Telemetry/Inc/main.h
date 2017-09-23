@@ -52,7 +52,6 @@
 #define nRF24_CSN_GPIO_Port GPIOA
 #define nRF24_IRQ_Pin GPIO_PIN_4
 #define nRF24_IRQ_GPIO_Port GPIOA
-#define nRF24_IRQ_EXTI_IRQn EXTI4_15_IRQn
 
 /* USER CODE BEGIN Private defines */
 

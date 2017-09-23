@@ -52,25 +52,25 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 
 		rx_mes[rx_buf_number].rec_time = HAL_GetTick();
 
-		CRITICAL_REGION_ENTER();
+		//CRITICAL_REGION_ENTER();
 
 		// Increase buffer number
 		rx_buf_number = (++ rx_buf_number == CAN_RX_SOFTWARE_BUFFER_SIZE) ? 0 : rx_buf_number;
 		hcan->pRxMsg = ( CanRxMsgTypeDef *) &(rx_mes[rx_buf_number].can_rx);
 
-		CRITICAL_REGION_EXIT();
+		//CRITICAL_REGION_EXIT();
 	}
 
-	HAL_CAN_Receive_IT(hcan, CAN_FIFO0);
+	while(HAL_CAN_Receive_IT(hcan, CAN_FIFO0)){}
 }
 
 void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef* hcan){
 
-	CRITICAL_REGION_ENTER();
+	//CRITICAL_REGION_ENTER();
 
 	empty_tx_mailboxes ++;
 
-	CRITICAL_REGION_EXIT();
+	//CRITICAL_REGION_EXIT();
 
 }
 
@@ -121,7 +121,7 @@ void can_task_manager_init(void){
 
 	for(uint8_t can_ctr = 0; can_ctr < can_frame_number; can_ctr ++){
 		if(can_frames[can_ctr]->rx_on){
-			HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
+			while(HAL_CAN_Receive_IT(&hcan, CAN_FIFO0)){}
 			return;
 		}
 	}
@@ -141,24 +141,26 @@ void can_task_manager(void){
 	}
 	for(;(tx_frame_number < can_frame_number) && (empty_tx_mailboxes > 0); tx_frame_number ++){
 		can_frame = can_frames[tx_frame_number];
-		time = HAL_GetTick();
-		if(can_frame->rx_update_time + can_frame->m_can_frame->period < time){
+		if(can_frame->tx_on){
+			time = HAL_GetTick();
+			if(can_frame->rx_update_time + can_frame->m_can_frame->period < time){
 
-			can_frame->rx_update_time = time;
-			tx_mes.can_tx.DLC 	= can_frame->m_can_frame->dlc;
-			tx_mes.can_tx.StdId	= can_frame->m_can_frame->id;
+				can_frame->rx_update_time = time;
+				tx_mes.can_tx.DLC 	= can_frame->m_can_frame->dlc;
+				tx_mes.can_tx.StdId	= can_frame->m_can_frame->id;
 
-			for(uint8_t byte_ctr = 0; byte_ctr < tx_mes.can_tx.DLC; byte_ctr++){
-				tx_mes.can_tx.Data[byte_ctr] = can_frame->tx_data[byte_ctr];
+				for(uint8_t byte_ctr = 0; byte_ctr < tx_mes.can_tx.DLC; byte_ctr++){
+					tx_mes.can_tx.Data[byte_ctr] = can_frame->tx_data[byte_ctr];
+				}
+
+				HAL_CAN_Transmit_IT(&hcan);
+
+				//CRITICAL_REGION_ENTER();
+
+				empty_tx_mailboxes --;
+
+				//CRITICAL_REGION_EXIT();
 			}
-
-			HAL_CAN_Transmit_IT(&hcan);
-
-			CRITICAL_REGION_ENTER();
-
-			empty_tx_mailboxes --;
-
-			CRITICAL_REGION_EXIT();
 		}
 	}
 

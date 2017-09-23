@@ -40,7 +40,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "gpio.h"
 /* USER CODE BEGIN 0 */
-#include "network.h"
+
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -96,22 +96,10 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
-
 }
 
 /* USER CODE BEGIN 2 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 
-	for(uint8_t networkCtr = 0; networkCtr < NETWORK_NUMBER; networkCtr++){
-		if(GPIO_Pin == network[networkCtr].nRF24device->IRQ_Pin){
-			Network_InterruptHandler(&network[networkCtr]);
-			break;
-		}
-	}
-}
 /* USER CODE END 2 */
 
 /**

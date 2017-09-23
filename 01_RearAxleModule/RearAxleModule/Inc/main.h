@@ -50,12 +50,8 @@
 #define ANALOG_B_GPIO_Port GPIOA
 #define ANALOG_A_Pin GPIO_PIN_1
 #define ANALOG_A_GPIO_Port GPIOA
-#define DRS_LEFT_Pin GPIO_PIN_7
-#define DRS_LEFT_GPIO_Port GPIOA
 #define STOP_LIGHT_Pin GPIO_PIN_0
 #define STOP_LIGHT_GPIO_Port GPIOB
-#define DRS_RIGHT_Pin GPIO_PIN_8
-#define DRS_RIGHT_GPIO_Port GPIOA
 #define DEBUG_OUT_Pin GPIO_PIN_3
 #define DEBUG_OUT_GPIO_Port GPIOB
 

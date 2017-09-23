@@ -57,6 +57,7 @@
 #define nRF24_FLAG_MAX_RT          (uint8_t)0x10 // MAX_RT bit (maximum number of TX retransmits interrupt)
 
 // Register masks definitions
+#define nRF24_MASK_RPD			   (uint8_t)0x01 // Mask for RPD bit [0]
 #define nRF24_MASK_REG_MAP         (uint8_t)0x1F // Mask bits[4:0] for CMD_RREG and CMD_WREG commands
 #define nRF24_MASK_CRC             (uint8_t)0x0C // Mask for CRC bits [3:2] in CONFIG register
 #define nRF24_MASK_STATUS_IRQ      (uint8_t)0x70 // Mask for all IRQ bits in STATUS register
@@ -73,6 +74,8 @@
 #define nRF24_MASK_ARC_CNT         (uint8_t)0x0F // Mask for ARC_CNT[3:0] bits in OBSERVE_TX register
 #define nRF24_MASK_EN_DPL		   (uint8_t)0x04 // Mask for enabling dynamic payload length
 #define nRF24_MASK_EN_ACK_PAY	   (uint8_t)0x02 // Mask for enabling payload with ack
+#define nRF24_MASK_RX_EMPTY		   (uint8_t)0x01 // Mask for reading rx fifo empty flag
+#define nRF24_MASK_EN_DYN_ACK	   (uint8_t)0x01 // Mask for enabling dynamic ack
 
 #define nRF24_TEST_ADDR            "nRF24"
 
