@@ -72,14 +72,19 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Application</name>
+			
 			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			
 		</link>
 		<link>
-			<name>Drivers</name>
+			
 			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			
+		</link>
+		<link>
+			
+			<type>2</type>
+			
 		</link>
 		<link>
 			<name>Application/TrueSTUDIO</name>
@@ -102,6 +107,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/FatFs</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>Application/TrueSTUDIO/startup_stm32f103xe.s</name>
 			<type>1</type>
 			<location>PARENT-1-PROJECT_LOC/startup_stm32f103xe.s</location>
@@ -112,65 +122,41 @@
 			<location>PARENT-2-PROJECT_LOC/Src/GPS.c</location>
 		</link>
 		<link>
-			<name>Application/User/actual_data_provider.c</name>
+			<name>Application/User/action_manager.c</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/actual_data_provider.c</locationURI>
+			<location>PARENT-2-PROJECT_LOC/Src/action_manager.c</location>
 		</link>
 		<link>
-			<name>Application/User/can.c</name>
+			<name>Application/User/actual_data_provider.c</name>
 			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/can.c</location>
+			<location>PARENT-2-PROJECT_LOC/Src/actual_data_provider.c</location>
 		</link>
+		
+		
 		<link>
 			<name>Application/User/can_receiver_driver.c</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.c</locationURI>
+			<location>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.c</location>
 		</link>
+		<link>
+			<name>Application/User/data_card_saver.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/data_card_saver.c</location>
+		</link>
+		
 		<link>
 			<name>Application/User/fifo_queue.c</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/fifo_queue.c</locationURI>
+			<location>PARENT-2-PROJECT_LOC/Src/fifo_queue.c</location>
 		</link>
-		<link>
-			<name>Application/User/gpio.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/gpio.c</location>
-		</link>
-		<link>
-			<name>Application/User/main.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/main.c</location>
-		</link>
-		<link>
-			<name>Application/User/rtc.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/rtc.c</location>
-		</link>
-		<link>
-			<name>Application/User/sdio.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/sdio.c</location>
-		</link>
-		<link>
-			<name>Application/User/stm32f1xx_hal_msp.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/stm32f1xx_hal_msp.c</location>
-		</link>
-		<link>
-			<name>Application/User/stm32f1xx_it.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/stm32f1xx_it.c</location>
-		</link>
-		<link>
-			<name>Application/User/tim.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/tim.c</location>
-		</link>
-		<link>
-			<name>Application/User/usart.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/usart.c</location>
-		</link>
+		
+		
+		
+		
+		
+		
+		
+		
 		<link>
 			<name>Drivers/CMSIS/system_stm32f1xx.c</name>
 			<type>1</type>
@@ -266,5 +252,86 @@
 			<type>1</type>
 			<location>PARENT-2-PROJECT_LOC/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_sdmmc.c</location>
 		</link>
-	</linkedResources>
+		<link>
+			<name>Middlewares/FatFs/diskio.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/diskio.c</location>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/ff.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/ff.c</location>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/ff_gen_drv.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/ff_gen_drv.c</location>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/sd_diskio.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/drivers/sd_diskio.c</location>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/syscall.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/option/syscall.c</location>
+		</link>
+	<link>
+			<name>Application</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link><link>
+			<name>Middlewares</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link><link>
+			<name>Drivers</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link><link>
+			<name>Application/User/main.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/main.c</location>
+		</link><link>
+			<name>Application/User/stm32f1xx_hal_msp.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/stm32f1xx_hal_msp.c</location>
+		</link><link>
+			<name>Application/User/usart.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/usart.c</location>
+		</link><link>
+			<name>Application/User/rtc.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/rtc.c</location>
+		</link><link>
+			<name>Application/User/bsp_driver_sd.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/bsp_driver_sd.c</location>
+		</link><link>
+			<name>Application/User/gpio.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/gpio.c</location>
+		</link><link>
+			<name>Application/User/stm32f1xx_it.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/stm32f1xx_it.c</location>
+		</link><link>
+			<name>Application/User/fatfs.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/fatfs.c</location>
+		</link><link>
+			<name>Application/User/tim.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/tim.c</location>
+		</link><link>
+			<name>Application/User/sdio.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/sdio.c</location>
+		</link><link>
+			<name>Application/User/can.c</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/Src/can.c</location>
+		</link></linkedResources>
 </projectDescription>

@@ -10,9 +10,7 @@
 #include "rtc.h"
 #include "main.h"
 
-#define DATA_CHANNELS_NUMBER	2048 // = 2^11
-
-static volatile ActualDataProvider_Data_TypeDef actualDataStorage [DATA_CHANNELS_NUMBER];
+static volatile CANData_TypeDef actualDataStorage [DATA_CHANNELS_NUMBER];
 
 static volatile RTC_DateTypeDef dummyDate;
 
@@ -58,7 +56,7 @@ void ActualDataProvider_thread(){
 
 }
 
-ActualDataProvider_Data_TypeDef ActualDataProvider_getData(uint32_t channelId){
+CANData_TypeDef ActualDataProvider_getData(uint32_t channelId){
 	return actualDataStorage[channelId];
 }
 

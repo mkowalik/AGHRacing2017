@@ -159,6 +159,24 @@ int main(void)
   HAL_RTC_SetTime(&hrtc, (RTC_TimeTypeDef*)&actualTime, RTC_FORMAT_BIN);
 
   startProcedure();
+//  RPMLeds_Driver_displayRPM(12500);
+//  GearDisplay_Driver_displayGear(5, 1);
+//  AlertLeds_Driver_displayCLT(((FixedPoint){163840, 12}));
+//  AlertLeds_Driver_displayBatt(((FixedPoint){40960, 12}));
+//  AlertLeds_Driver_displayOilPres(((FixedPoint){8190, 12}));
+//  AlertLeds_Driver_displayFuel(((FixedPoint){61430, 12}));
+//
+//  while (1){
+//	  RPMLeds_Driver_displayRPM(12500);
+//	  GearDisplay_Driver_displayGear(5, 1);
+//	  HAL_Delay(500);
+//	  AlertLeds_Driver_displayCLT(((FixedPoint){163840, 12}));
+//	  AlertLeds_Driver_displayBatt(((FixedPoint){40960, 12}));
+//	  AlertLeds_Driver_displayOilPres(((FixedPoint){8190, 12}));
+//	  AlertLeds_Driver_displayFuel(((FixedPoint){61430, 12}));
+//	  HAL_Delay(500);
+//  }
+
 
   /* USER CODE END 2 */
 
@@ -169,6 +187,17 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+//	  while (1){ //TODO Debug
+//		  GPIO_PinState tsopState = HAL_GPIO_ReadPin(TSOP_RIGHT_GPIO_Port, TSOP_LEFT_Pin);
+//
+//		  uint8_t a;
+//
+//		  if (tsopState == GPIO_PIN_RESET)
+//			  a = 1;
+//		  else
+//			  a = 0;
+//	  }
+
 
 	  HAL_RTC_GetTime(&hrtc, (RTC_TimeTypeDef*)&actualTime, RTC_FORMAT_BIN);
 	  HAL_RTC_GetDate(&hrtc, (RTC_DateTypeDef*)&dummyDate, RTC_FORMAT_BIN);
