@@ -77,6 +77,14 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 
+void TaskManager_init(){
+
+}
+
+void TaskManager_start(){
+
+}
+
 /* USER CODE END 0 */
 
 int main(void)

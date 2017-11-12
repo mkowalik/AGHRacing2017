@@ -8,6 +8,27 @@
 #include "can_receiver.h"
 #include "can.h"
 
+CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig){
+
+}
+
+CANReceiver_Status_TypeDef CANReceiver_getLastFrame(CANData_TypeDef* pRetMsg){
+
+}
+
+CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDef* pConfig){
+
+}
+
+void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
+
+}
+
+void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan){
+
+}
+
+/*
 static volatile CanRxMsgTypeDef rx_msg;
 
 static volatile FIFOQueue* pMsgQueue;
@@ -89,4 +110,4 @@ void CAN_ReceiverDriver_queueProcessedNotifier(){
 		HAL_CAN_Receive_IT(&hcan, CAN_FIFO0);
 	}
 
-}
+}*/

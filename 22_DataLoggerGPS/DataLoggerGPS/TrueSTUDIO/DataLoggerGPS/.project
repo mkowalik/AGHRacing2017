@@ -117,6 +117,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/startup_stm32f103xe.s</locationURI>
 		</link>
 		<link>
+			<name>Application/User/action_manager.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/action_manager.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/action_manager.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/action_manager.h</locationURI>
+		</link>
+		<link>
 			<name>Application/User/bsp_driver_sd.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/bsp_driver_sd.c</locationURI>
@@ -127,14 +137,29 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/can.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/can_data.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/can_data.h</locationURI>
+		</link>
+		<link>
 			<name>Application/User/can_receiver.c</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.c</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/can_receiver.h</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/can_receiver_driver.h</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/can_receiver.h</locationURI>
+		</link>
+		<link>
+			<name>Application/User/config.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/config.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/config.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/config.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/fatfs.c</name>
@@ -149,7 +174,7 @@
 		<link>
 			<name>Application/User/fifo_queue.h</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/fifo_queue.h</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/fifo_queue.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/fixed_point.c</name>
@@ -159,7 +184,7 @@
 		<link>
 			<name>Application/User/fixed_point.h</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/fixed_point.h</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/fixed_point.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/gpio.c</name>
@@ -170,6 +195,26 @@
 			<name>Application/User/main.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/main.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/memory_buffer_middleware.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/memory_buffer_middleware.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/memory_buffer_middleware.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/memory_buffer_middleware.h</locationURI>
+		</link>
+		<link>
+			<name>Application/User/precise_time_middleware.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/precise_time_middleware.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/precise_time_middleware.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/precise_time_middleware.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/rtc.c</name>

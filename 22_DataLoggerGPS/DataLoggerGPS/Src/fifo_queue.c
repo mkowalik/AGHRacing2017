@@ -6,71 +6,51 @@
  */
 
 #include "fifo_queue.h"
+#include "stdint.h"
+#include "string.h"
 
-static void FIFOQueue_sizeReduction(volatile FIFOQueue* self){
-
-	if ((self->firstElement) >= (self->size)) {
-
-		self->sizeReductionInPorgress = 1;
-
-		self->firstElement -= self->size;
-		self->afterLastElement -= self->size;
-
-		self->sizeReductionInPorgress = 0;
-
-		self->firstElementOld = self->firstElement;
-		self->afterLastElementOld = self->afterLastElement;
-
-	}
-}
-
-void FIFOQueue_init(volatile FIFOQueue* self, volatile ELEMENT_TYPE* pTabPtrArg, uint16_t size){
+void FIFOQueue_init(FIFOQueue* self, void* pTabPtrArg, uint8_t elementSize, uint16_t size){
 	self->pTabPtr = pTabPtrArg;
-	self->size = size;
-	self->firstElement = 0;
-	self->afterLastElement = 0;
-
-	self->sizeReductionInPorgress = 0;
-	self->firstElementOld = 0;
-	self->afterLastElementOld = 0;
+	self->elementSize = elementSize;
+	self->queueLength = size;
+	self->elementsNumber = 0;
+	self->headIndex = 0;
+	self->tailIndex = 0;
 }
 
-FIFOStatus FIFOQueue_enqueue(volatile FIFOQueue* pSelf, ELEMENT_TYPE element){
+FIFOStatus FIFOQueue_enqueue(FIFOQueue* pSelf,  void* pElement){
 
 	if (FIFOQueue_full(pSelf)) return FIFOStatus_Full;
 
-	uint16_t index = ((pSelf->afterLastElement)++) % (pSelf->size); // Notice, incrementing afterLastElementValue
+	pSelf->tailIndex = (pSelf->tailIndex + 1) % (pSelf->queueLength); // Notice incrementing tail value
+	pSelf->elementsNumber++;
 
-	pSelf->pTabPtr[index] = element;
-
-	return FIFOStatus_OK;
-
-}
-
-FIFOStatus FIFOQueue_dequeue(volatile FIFOQueue* self, ELEMENT_TYPE* pRetElement){
-
-	if (FIFOQueue_elementsNumber(self) == 0) return FIFOStatus_Empty;
-
-	ELEMENT_TYPE ret = self->pTabPtr[((self->firstElement)++) % (self->size)];	//Notice, incrementing firstElement value
-
-	FIFOQueue_sizeReduction(self);
-
-	(*pRetElement) = ret;
+	memcpy(pSelf->pTabPtr + (pSelf->tailIndex * pSelf->elementSize), pElement, pSelf->elementSize);
 
 	return FIFOStatus_OK;
-}
-
-uint16_t FIFOQueue_elementsNumber(volatile FIFOQueue* self){
-
-	if (self->sizeReductionInPorgress)
-		return self->afterLastElementOld - self->firstElementOld;
-	else
-		return self->afterLastElement - self->firstElement;
 
 }
 
-uint8_t FIFOQueue_full(volatile FIFOQueue* self){
+FIFOStatus FIFOQueue_dequeue(FIFOQueue* pSelf, void* pRetElement){
 
-	return ((FIFOQueue_elementsNumber(self)) >= (self->size));
+	if (FIFOQueue_elementsNumber(pSelf) == 0) return FIFOStatus_Empty;
+
+	memcpy(pRetElement, pSelf->pTabPtr + (pSelf->headIndex * pSelf->elementSize), pSelf->elementSize);
+
+	pSelf->headIndex = (pSelf->headIndex + 1) % (pSelf->queueLength); // Notice incrementing head value
+	pSelf->elementsNumber--;
+
+	return FIFOStatus_OK;
+}
+
+uint16_t FIFOQueue_elementsNumber(FIFOQueue* pSelf){
+
+	return pSelf->elementsNumber;
+
+}
+
+uint8_t FIFOQueue_full(FIFOQueue* pSelf){
+
+	return pSelf->elementsNumber >= pSelf->queueLength;
 
 }

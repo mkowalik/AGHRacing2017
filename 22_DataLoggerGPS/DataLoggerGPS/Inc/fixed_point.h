@@ -8,7 +8,7 @@
 #ifndef FIXED_POINT_H_
 #define FIXED_POINT_H_
 
-#include "stm32f0xx_hal.h"
+#include "main.h"
 
 //TODO for construction FixedPoint objects
 
