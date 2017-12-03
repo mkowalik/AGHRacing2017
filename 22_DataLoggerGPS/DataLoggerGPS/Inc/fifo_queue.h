@@ -26,7 +26,7 @@ typedef struct {
 	volatile uint16_t tailIndex;
 } FIFOQueue;
 
-void FIFOQueue_init(FIFOQueue* self, void* volatilepTabPtrArg, uint8_t elementSize, uint16_t size);
+void FIFOQueue_init(FIFOQueue* self, void* pTabPtrArg, uint8_t elementSize, uint16_t size);
 FIFOStatus FIFOQueue_enqueue(FIFOQueue* self, void* pElement);
 FIFOStatus FIFOQueue_dequeue(FIFOQueue* self, void* pRetElement);
 uint16_t FIFOQueue_elementsNumber(FIFOQueue* self);

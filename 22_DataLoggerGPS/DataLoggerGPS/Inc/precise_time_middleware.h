@@ -17,6 +17,6 @@ typedef struct {
 
 void PreciseTimeMiddleware_init();
 uint32_t PreciseTimeMiddleware_getUnixTime();
-PreciseTime_TypeDef getPreciseTime();
+PreciseTime_TypeDef PreciseTimeMiddleware_getPreciseTime();
 
 #endif /* PRECISE_TIME_MIDDLEWARE_H_ */

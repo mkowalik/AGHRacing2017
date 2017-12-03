@@ -18,15 +18,23 @@
 typedef enum {
 	CANReceiver_Status_OK = 0,
 	CANReceiver_Status_Empty,
+	CANReceiver_Status_TooManyFramesIDs,
+	CANReceiver_Status_InitError,
+	CANReceiver_Status_RunTimeError,
 	CANReceiver_Status_Error
 } CANReceiver_Status_TypeDef;
 
 typedef struct {
-	CANData_TypeDef	framesQueueTab[CAN_MSG_QUEUE_SIZE];
-	FIFOQueue		framesFIFO;
+	FIFOQueue					framesFIFO;
+	CAN_HandleTypeDef*			phcan;
+	volatile CanRxMsgTypeDef	rxHALMsg;
 } CANReceiver_TypeDef;
 
-CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig);
-CANReceiver_Status_TypeDef CANReceiver_getLastFrame(CANData_TypeDef* pRetMsg);
+/**
+ * TODO Queue should be initialized
+ *
+ */
+CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan);
+CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg);
 
 #endif /* CAN_RECEIVER_DRIVER_H_ */

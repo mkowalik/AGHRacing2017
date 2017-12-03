@@ -15,6 +15,6 @@ uint32_t PreciseTimeMiddleware_getUnixTime(){
 
 }
 
-PreciseTime_TypeDef getPreciseTime(){
+PreciseTime_TypeDef PreciseTimeMiddleware_getPreciseTime(){
 
 }
