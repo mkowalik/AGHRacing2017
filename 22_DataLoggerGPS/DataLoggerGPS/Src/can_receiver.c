@@ -9,8 +9,10 @@
 #include "can.h"
 #include "math.h"
 #include "string.h"
+#include "error_logger.h"
+#include "stdio.h"
 
-#define	CAN_FILTERS_NUMBER	14	//TODO a nie 14, a bank number to 28???
+#define	CAN_FILTERS_NUMBER	14	//TODO 14 czy 28?
 
 CANReceiver_TypeDef	canReceiver;
 CANReceiver_TypeDef* pSelf = &canReceiver;
@@ -58,7 +60,7 @@ CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg){
 
 	switch(fifoStatus){
 		case FIFOStatus_OK:
-			return FIFOStatus_OK;
+			return CANReceiver_Status_OK;
 		case FIFOStatus_Empty:
 			return CANReceiver_Status_Empty;
 		case FIFOStatus_Error:
@@ -67,7 +69,6 @@ CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg){
 	}
 
 	return CANReceiver_Status_OK;
-
 
 }
 
@@ -79,7 +80,7 @@ static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDe
 
 	CAN_FilterConfTypeDef filterConfig;
 
-	filterConfig.BankNumber = 			0;	// Must be kept 0, only 1 bank in uc
+	filterConfig.BankNumber = 			0;	// Must be kept 0, only 1 bank in uc, second bank only for sharing with slave CAN if exists
 	filterConfig.FilterActivation = 	ENABLE;
 	filterConfig.FilterScale = 			CAN_FILTERSCALE_16BIT;
 	filterConfig.FilterMode = 			CAN_FILTERMODE_IDLIST;
@@ -114,15 +115,19 @@ static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDe
 
 static CANReceiver_Status_TypeDef receiveFromFIFO0(){
 
-	if ((pSelf->phcan->pRxMsg->IDE != CAN_ID_STD) || (pSelf->phcan->pRxMsg->RTR != CAN_RTR_DATA)) {
-		return CANReceiver_Status_OK;
+	if (pSelf->phcan->pRxMsg->IDE != CAN_ID_STD){
+		return CANReceiver_Status_NotSTDFrame;
+	}
+
+	if (pSelf->phcan->pRxMsg->RTR != CAN_RTR_DATA) {
+		return CANReceiver_Status_RTRFrame;
 	}
 
 	static CANData_TypeDef tmpData;
 	tmpData.DLC = pSelf->phcan->pRxMsg->DLC;
 	memcpy(tmpData.Data, pSelf->phcan->pRxMsg->Data, 8);
 	tmpData.ID = pSelf->phcan->pRxMsg->StdId;
-//			pCanRecaiver->phcan->Instance->sFIFOMailBox[0]->RDTR & 0xFFFF;
+//	pCanRecaiver->phcan->Instance->sFIFOMailBox[0]->RDTR & 0xFFFF0000; //st¹d mo¿na wziac message timestamp linia 1595 w stm32f1xx_hal_can.c, dokumentacja str 689
 	tmpData.preciseTime = PreciseTimeMiddleware_getPreciseTime();
 
 	if (FIFOQueue_enqueue(&(pSelf->framesFIFO), &tmpData) != FIFOStatus_OK){
@@ -135,15 +140,19 @@ static CANReceiver_Status_TypeDef receiveFromFIFO0(){
 
 static CANReceiver_Status_TypeDef receiveFromFIFO1(){
 
-	if ((pSelf->phcan->pRx1Msg->IDE != CAN_ID_STD) || (pSelf->phcan->pRx1Msg->RTR != CAN_RTR_DATA)) {
-		return CANReceiver_Status_OK;
+	if (pSelf->phcan->pRxMsg->IDE != CAN_ID_STD){
+		return CANReceiver_Status_NotSTDFrame;
+	}
+
+	if (pSelf->phcan->pRxMsg->RTR != CAN_RTR_DATA) {
+		return CANReceiver_Status_RTRFrame;
 	}
 
 	static CANData_TypeDef tmpData;
 	tmpData.DLC = pSelf->phcan->pRx1Msg->DLC;
 	memcpy(tmpData.Data, pSelf->phcan->pRx1Msg->Data, 8);
 	tmpData.ID = pSelf->phcan->pRx1Msg->StdId;
-//			pCanRecaiver->phcan->Instance->sFIFOMailBox[1]->RDTR & 0xFFFF;
+//	pCanRecaiver->phcan->Instance->sFIFOMailBox[1]->RDTR & 0xFFFF0000; //st¹d mo¿na wziac message timestamp linia 1595 w stm32f1xx_hal_can.c, dokumentacja str 689
 	tmpData.preciseTime = PreciseTimeMiddleware_getPreciseTime();
 
 	if (FIFOQueue_enqueue(&(pSelf->framesFIFO), &tmpData) != FIFOStatus_OK){
@@ -155,52 +164,50 @@ static CANReceiver_Status_TypeDef receiveFromFIFO1(){
 
 void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 
-	//TODO mozna dopisac w bibliotece pRxMsg->TIME = (uint16_t)(0xFF00U & hcan->Instance->sFIFOMailBox[FIFONumber].RDTR) linia 1595 w stm32f1xx_hal_can.c, dokumentacja str 689
-
-	if (hcan != canReceiver.phcan){
-		// TODO ERROR
+	if (hcan != pSelf->phcan){
+		logError(ERROR_CAN, "hcan != pSelf->phcan");
 	}
 
 	switch (HAL_CAN_GetState(pSelf->phcan)){
 	case HAL_CAN_STATE_READY:
 	case HAL_CAN_STATE_BUSY_TX:
 		if (receiveFromFIFO0(pSelf) != CANReceiver_Status_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
 		}
 		if (receiveFromFIFO1(pSelf) != CANReceiver_Status_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
 		}
 		break;
 	case HAL_CAN_STATE_BUSY_RX0:
 	case HAL_CAN_STATE_BUSY_TX_RX0:
 		if (receiveFromFIFO1(pSelf) != CANReceiver_Status_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
 		}
 		break;
 	case HAL_CAN_STATE_BUSY_RX1:
 	case HAL_CAN_STATE_BUSY_TX_RX1:
 		if (receiveFromFIFO0(pSelf) != CANReceiver_Status_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
 		}
 		break;
 	default:
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			// TODO error
+			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
 		}
 	}
 
@@ -208,41 +215,36 @@ void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
 
 void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan){
 
-	if (hcan != canReceiver.phcan){
-		// TODO ERROR
+	static char errorTextBuffer[50];
+
+	if (hcan != pSelf->phcan){
+		logError(ERROR_CAN, "hcan != pSelf->phcan");
 	}
 
-	CANReceiver_TypeDef* pCanReceiver = &canReceiver;
-
-	switch (HAL_CAN_GetState(pCanReceiver->phcan)){
-	case HAL_CAN_STATE_READY:
-	case HAL_CAN_STATE_BUSY_TX:
-		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			// TODO error
-		}
-		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			// TODO error
-		}
-		break;
-	case HAL_CAN_STATE_BUSY_RX0:
-	case HAL_CAN_STATE_BUSY_TX_RX0:
-		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			// TODO error
-		}
-		break;
-	case HAL_CAN_STATE_BUSY_RX1:
-	case HAL_CAN_STATE_BUSY_TX_RX1:
-		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			// TODO error
-		}
-		break;
-	default:
-		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			// TODO error
-		}
-		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			// TODO error
-		}
+	if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_EPV){ // Error passive
+		logError(ERROR_CAN_EPV, "HAL_CAN_ERROR_EPV");
+	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_BOF){ // BUS Off
+		logError(ERROR_CAN_BOF, "HAL_CAN_ERROR_BOF");
+	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_ACK){ // ACK Error
+		logError(ERROR_CAN_ACK, "HAL_CAN_ERROR_ACK");
+	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_FOV0){ // FIFO 0 Overrun
+		logError(ERROR_CAN_FOV0, "HAL_CAN_ERROR_FOV0");
+	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_FOV1){ // FIFO 1 Overrun
+		logError(ERROR_CAN_FOV1, "HAL_CAN_ERROR_FOV1");
 	}
+
+	if (HAL_CAN_GetError(pSelf->phcan) != HAL_CAN_ERROR_NONE){
+		snprintf(errorTextBuffer, 50, "HAL_CAN_ERROR: 0x%x", HAL_CAN_GetError(pSelf->phcan));
+		logError(ERROR_CAN, errorTextBuffer);
+		break;
+	}
+
+	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
+		logError(ERROR_CAN_RECEIVE_FIFO0, "During ErrorCallback");
+	}
+	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
+		logError(ERROR_CAN_RECEIVE_FIFO1, "During ErrorCallback");
+	}
+
 
 }

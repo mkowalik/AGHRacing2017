@@ -162,6 +162,16 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Inc/config.h</locationURI>
 		</link>
 		<link>
+			<name>Application/User/error_logger.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/error_logger.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/error_logger.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/error_logger.h</locationURI>
+		</link>
+		<link>
 			<name>Application/User/fatfs.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/fatfs.c</locationURI>

@@ -21,6 +21,8 @@ typedef enum {
 	CANReceiver_Status_TooManyFramesIDs,
 	CANReceiver_Status_InitError,
 	CANReceiver_Status_RunTimeError,
+	CANReceiver_Status_NotSTDFrame,
+	CANReceiver_Status_RTRFrame,
 	CANReceiver_Status_Error
 } CANReceiver_Status_TypeDef;
 
