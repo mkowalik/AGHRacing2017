@@ -5,7 +5,9 @@
  *      Author: Kowalik
  */
 
+#include "stdint.h"
 
 void logError(uint32_t errorNumber, char* comment){
+
 
 }

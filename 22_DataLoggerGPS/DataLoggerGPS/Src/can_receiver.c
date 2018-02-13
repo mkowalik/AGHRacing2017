@@ -12,8 +12,6 @@
 #include "error_logger.h"
 #include "stdio.h"
 
-#define	CAN_FILTERS_NUMBER	14	//TODO 14 czy 28?
-
 CANReceiver_TypeDef	canReceiver;
 CANReceiver_TypeDef* pSelf = &canReceiver;
 
@@ -86,16 +84,16 @@ static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDe
 	filterConfig.FilterMode = 			CAN_FILTERMODE_IDLIST;
 	filterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
 
-	for(uint16_t i=0; i<pConfig->num_of_frames; i+=4){
+	for(uint16_t i=0; i<pConfig->num_of_frames; i+=CAN_FRAMES_PER_FILTER){
 
-		if (i>CAN_FILTERS_NUMBER * 4){
+		if (i>CAN_FILTERS_NUMBER * CAN_FRAMES_PER_FILTER){
 			retStatus = CANReceiver_Status_TooManyFramesIDs;
 			return retStatus;
 		}
 
 		filterConfig.FilterFIFOAssignment = i%2==0 ? CAN_FILTER_FIFO0 : CAN_FILTER_FIFO1;
 
-		filterConfig.FilterNumber = 		i/4;	//each filter houses 4 IDs
+		filterConfig.FilterNumber = 		i/CAN_FRAMES_PER_FILTER;	//each filter houses 4 IDs
 
 		filterConfig.FilterIdLow = 			(i  <pConfig->num_of_frames) ? ((pConfig->frames[i  ].ID) << 5) : 0;			// channel list 0 //TODO kropka czy strza³ka???
 		filterConfig.FilterIdHigh = 		(i+1<pConfig->num_of_frames) ? ((pConfig->frames[i+1].ID) << 5) : 0;			// channel list 1 //TODO kropka czy strza³ka???
@@ -234,9 +232,8 @@ void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan){
 	}
 
 	if (HAL_CAN_GetError(pSelf->phcan) != HAL_CAN_ERROR_NONE){
-		snprintf(errorTextBuffer, 50, "HAL_CAN_ERROR: 0x%x", HAL_CAN_GetError(pSelf->phcan));
+		snprintf(errorTextBuffer, 50, "HAL_CAN_ERROR: 0x%lx", HAL_CAN_GetError(pSelf->phcan));
 		logError(ERROR_CAN, errorTextBuffer);
-		break;
 	}
 
 	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){

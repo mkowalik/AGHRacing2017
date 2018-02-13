@@ -15,6 +15,12 @@
 //#define CAN_USED_ID		CAN_ID_STD
 #define 	CAN_MSG_QUEUE_SIZE	64
 
+#define	CAN_FILTERS_NUMBER		14	//TODO 14 czy 28?
+#define	CAN_FRAMES_PER_FILTER	4
+#define	CAN_MAX_NO_OF_FRAMES	(CAN_FILTERS_NUMBER * CAN_FRAMES_PER_FILTER)
+
+#define	CAN_MAX_CHANNELS_PER_FRAME	8
+
 typedef enum {
 	CANReceiver_Status_OK = 0,
 	CANReceiver_Status_Empty,

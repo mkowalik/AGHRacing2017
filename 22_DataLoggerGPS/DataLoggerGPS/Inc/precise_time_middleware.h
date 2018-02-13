@@ -11,6 +11,7 @@
 #include "stdint.h"
 
 typedef struct {
+	RTC_DateTypeDef date;
 	uint32_t unixTime;
 	uint16_t miliseconds;
 } PreciseTime_TypeDef;

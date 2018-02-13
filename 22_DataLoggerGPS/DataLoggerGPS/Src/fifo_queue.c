@@ -9,13 +9,20 @@
 #include "stdint.h"
 #include "string.h"
 
-void FIFOQueue_init(FIFOQueue* self, void* pTabPtrArg, uint8_t elementSize, uint16_t size){
+FIFOStatus FIFOQueue_init(FIFOQueue* self, void* pTabPtrArg, uint8_t elementSize, uint16_t size){
+
+	if (pTabPtrArg == NULL){
+		return FIFOStatus_Error;
+	}
+
 	self->pTabPtr = pTabPtrArg;
 	self->elementSize = elementSize;
 	self->queueLength = size;
 	self->elementsNumber = 0;
 	self->headIndex = 0;
 	self->tailIndex = 0;
+
+	return FIFOStatus_OK;
 }
 
 FIFOStatus FIFOQueue_enqueue(FIFOQueue* pSelf,  void* pElement){
