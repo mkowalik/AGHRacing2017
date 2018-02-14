@@ -8,9 +8,8 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#include "can_data.h"
-#include "can_receiver.h"
 #include "file_middleware.h"
+#include "can_data.h"
 
 #define	CONFIG_SIGNED_TYPE_flag		(1<<0)
 #define	CONFIG_16_BIT_TYPE_flag		(1<<1)
@@ -23,9 +22,11 @@
 #define	CONFIG_FILE_USED_VERSION		1
 #define	CONIG_FILE_USED_SUBVERSION	1
 
-#define CONFIG_MAX_ID			2048
+#define CONFIG_ID_NUMBER			2048
 
 #define	CONFIG_MAX_DLC_VALUE	8
+#define	CONFIG_MAX_NO_OF_FRAMES	(14 * 4)
+#define	CONFIG_MAX_CHANNELS_PER_FRAME	8
 
 typedef enum {
 	UNSIGNED_8BIT 	= (0x00),
@@ -49,15 +50,15 @@ typedef struct {
 typedef struct {
 	uint16_t 				ID;
 	uint8_t 				DLC;
-	ConfigChannel_TypeDef 	channels[CAN_MAX_CHANNELS_PER_FRAME];
+	ConfigChannel_TypeDef 	channels[CONFIG_MAX_CHANNELS_PER_FRAME];
 } ConfigFrame_TypeDef;
 
 typedef struct {
 	uint16_t 				version;
 	uint16_t 				subversion;
 	uint16_t 				num_of_frames;
-	ConfigFrame_TypeDef 	frames[CAN_MAX_NO_OF_FRAMES];
-	ConfigFrame_TypeDef* 	framesByID[CONFIG_MAX_ID];
+	ConfigFrame_TypeDef 	frames[CONFIG_MAX_NO_OF_FRAMES];
+	ConfigFrame_TypeDef* 	framesByID[CONFIG_ID_NUMBER];
 } Config_TypeDef;
 
 

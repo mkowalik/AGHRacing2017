@@ -9,6 +9,7 @@
 #define PRECISE_TIME_MIDDLEWARE_H_
 
 #include "stdint.h"
+#include "rtc.h"
 
 typedef struct {
 	RTC_DateTypeDef date;

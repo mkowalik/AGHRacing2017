@@ -12,19 +12,6 @@
 
 #define	FILESYSTEM_MOUNT_IMMEDIATELY	1
 
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_init();
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_open(FileSystemMiddleware_File_TypeDef* pFile, char* pName);
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_writeData(FileSystemMiddleware_File_TypeDef* pFile, const void* pBuffer, uint32_t uiBytesToWrite, uint32_t* pBytesWritten);
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_readData(FileSystemMiddleware_File_TypeDef* pFile, void* pBuffer, uint32_t uiBytesToRead, uint32_t* pBytesRead);
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_putString(FileSystemMiddleware_File_TypeDef* pFile, const char* pBuffer);
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_close(FileSystemMiddleware_File_TypeDef* pFile);
-
-
-typedef struct {
-	FileSystemMiddleware_TypeDef*	pFileSystem;
-	FIL								sFile;
-} FileSystemMiddleware_File_TypeDef;
-
 typedef enum {
 	FileSystemMiddleware_Status_OK = 0,					/* (0) Succeeded */
 	FileSystemMiddleware_Status_DISK_ERR,				/* (1) A hard error occurred in the low level disk I/O layer */
@@ -47,5 +34,22 @@ typedef enum {
 	FileSystemMiddleware_Status_TOO_MANY_OPEN_FILES,	/* (18) Number of open files > _FS_SHARE */
 	FileSystemMiddleware_Status_INVALID_PARAMETER		/* (19) Given parameter is invalid */
 } FileSystemMiddleware_Status_TypeDef;
+
+typedef struct {
+	volatile FATFS		sFatFS;
+	volatile uint8_t	bInitialized;
+} FileSystemMiddleware_TypeDef;
+
+typedef struct {
+	volatile FileSystemMiddleware_TypeDef* volatile	pFileSystem;
+	volatile FIL									sFile;
+} FileSystemMiddleware_File_TypeDef;
+
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_init();
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_open(FileSystemMiddleware_File_TypeDef* pFile, char* pName);
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_putString(FileSystemMiddleware_File_TypeDef* pFile, const char* pBuffer);
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_close(FileSystemMiddleware_File_TypeDef* pFile);
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_writeData(FileSystemMiddleware_File_TypeDef* pFile, const void* pBuffer, uint32_t uiBytesToWrite, uint32_t* pBytesWritten);
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_readData(FileSystemMiddleware_File_TypeDef* pFile, void* pBuffer, uint32_t uiBytesToRead, uint32_t* pBytesRead);
 
 #endif /* FILE_MIDDLEWARE_H_ */

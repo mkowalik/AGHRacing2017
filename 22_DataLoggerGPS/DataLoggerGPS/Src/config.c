@@ -8,9 +8,11 @@
 #include "config.h"
 #include "file_middleware.h"
 
-uint8_t assertCorrectFrame(ConfigDataManager_TypeDef* pSelf, uint8_t id, unit16_t dlc){
+#define MIN(A,B)  (((A) < (B)) ? (A) : (B))
 
-	if (id >= CONFIG_MAX_ID_NUMBER){
+uint8_t assertCorrectFrame(ConfigDataManager_TypeDef* pSelf, uint8_t id, uint16_t dlc){
+
+	if (id >= CONFIG_ID_NUMBER){
 		return 0;
 	}
 
@@ -39,7 +41,7 @@ ConfigDataManager_Status_TypeDef ConfigDataManager_init(ConfigDataManager_TypeDe
 			return ConfigDataManager_Status_Error;
 		}
 
-		status = FileSystemMiddleware_open(self->sConfigFileHandler, CONFIG_FILENAME);
+		status = FileSystemMiddleware_open(&(pSelf->sConfigFileHandler), CONFIG_FILENAME);
 
 		if (status == FileSystemMiddleware_Status_NO_FILE){
 			return ConfigDataManager_Status_NoConfigFileError;
@@ -121,29 +123,29 @@ ConfigDataManager_Status_TypeDef ConfigDataManager_getIDsList(ConfigDataManager_
 		return ConfigDataManager_Status_NotInitialised;
 	}
 
-	for (uint16_t i=0; i<min(bufferSize, pSelf->sConfig.num_of_frames); i++){
+	for (uint16_t i=0; i<MIN(bufferSize, pSelf->sConfig.num_of_frames); i++){
 
 		pRetIDsBuffer[i] = pSelf->sConfig.frames[i].ID;
 
 	}
 
-	(*pIDsWritten) = min(bufferSize, pSelf->sConfig.num_of_frames);
+	(*pIDsWritten) = MIN(bufferSize, pSelf->sConfig.num_of_frames);
 
 	return ConfigDataManager_Status_OK;
 
 }
 
-ConfigDataManager_Status_TypeDef ConfigDataManager_checkCorrectnessData(ConfigDataManager_TypeDef* self, CANData_TypeDef* pData){
+ConfigDataManager_Status_TypeDef ConfigDataManager_checkCorrectnessData(ConfigDataManager_TypeDef* pSelf, CANData_TypeDef* pData){
 
 	if (pSelf->initialised == 0){
 		return ConfigDataManager_Status_NotInitialised;
 	}
 
-	if (self->sConfig->framesByID[pData->ID] == NULL){
+	if (pSelf->sConfig.framesByID[pData->ID] == NULL){
 		return ConfigDataManager_Status_WrongID;
 	}
 
-	if (self->sConfig->framesByID[pData->ID]->DLC != pData->DLC){
+	if (pSelf->sConfig.framesByID[pData->ID]->DLC != pData->DLC){
 		return ConfigDataManager_Status_WrongDLC;
 	}
 
@@ -161,7 +163,7 @@ ConfigDataManager_Status_TypeDef ConfigDataManager_findChannel(ConfigDataManager
 		return ConfigDataManager_Status_WrongOffsetError;
 	}
 
-	static ConfigFrame_TypeDef* pFrame = pSelf->sConfig.framesByID[ID];
+	ConfigFrame_TypeDef* pFrame = pSelf->sConfig.framesByID[ID];
 
 	for (uint8_t i=0; i<pFrame->DLC; ){
 

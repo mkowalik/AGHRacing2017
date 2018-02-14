@@ -38,11 +38,7 @@ typedef struct {
 	volatile CanRxMsgTypeDef	rxHALMsg;
 } CANReceiver_TypeDef;
 
-/**
- * TODO Queue should be initialized
- *
- */
-CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan);
 CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg);
+CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan);
 
 #endif /* CAN_RECEIVER_DRIVER_H_ */

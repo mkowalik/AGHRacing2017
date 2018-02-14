@@ -164,12 +164,12 @@
 		<link>
 			<name>Application/User/data_saver_buffer.c</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/memory_buffer_middleware.c</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/data_saver_buffer.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/data_saver_buffer.h</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Inc/memory_buffer_middleware.h</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/data_saver_buffer.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/error_logger.c</name>

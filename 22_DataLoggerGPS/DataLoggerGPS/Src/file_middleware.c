@@ -5,16 +5,13 @@
  *      Author: Kowalik
  */
 
-
-typedef struct {
-	FATFS	sFatFS;
-	uint8_t	bInitialized;
-} FileSystemMiddleware_TypeDef;
+#include "file_middleware.h"
+#include "string.h"
 
 static volatile FileSystemMiddleware_TypeDef sFileSystem;
 
 static FileSystemMiddleware_Status_TypeDef remapResult(FRESULT res){
-	FileSystemMiddleware_Status_TypeDef ret = FileSystemMiddleware_Status_OK;
+
 	switch (res){
 	case FR_OK: 					return FileSystemMiddleware_Status_OK;
 	case FR_DISK_ERR:				return FileSystemMiddleware_Status_DISK_ERR;
@@ -38,6 +35,7 @@ static FileSystemMiddleware_Status_TypeDef remapResult(FRESULT res){
 	case FR_INVALID_PARAMETER:		return FileSystemMiddleware_Status_INVALID_PARAMETER;
 	default:						return FileSystemMiddleware_Status_DISK_ERR;
 	}
+
 }
 
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_init(){
@@ -45,7 +43,7 @@ FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_init(){
 		return FileSystemMiddleware_Status_OK;
 	}
 
-	FRESULT res = f_mount(&(sFileSystem.sFatFS), "", FILESYSTEM_MOUNT_IMMEDIATELY);
+	FRESULT res = f_mount( (FATFS*) &(sFileSystem.sFatFS), "", FILESYSTEM_MOUNT_IMMEDIATELY);
 	if (res == FR_OK){
 		sFileSystem.bInitialized = 1;
 	} else {
@@ -58,28 +56,28 @@ FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_open(FileSystemMiddlewa
 
 	pFile->pFileSystem = &sFileSystem;
 
-	FRESULT res = f_open(&(pFile->sFile), pFilename, FA_READ | FA_WRITE | FA_OPEN_ALWAYS);
+	FRESULT res = f_open( (FIL*) &(pFile->sFile), pFilename, FA_READ | FA_WRITE | FA_OPEN_ALWAYS);
 	return remapResult(res);
 }
 
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_writeData(FileSystemMiddleware_File_TypeDef* pFile, const void* pBuffer, uint32_t uiBytesToWrite, uint32_t* pBytesWritten){
-	FRESULT res = f_write (&(pFile->sFile), pBuffer, uiBytesToWrite, pBytesWritten);
+	FRESULT res = f_write ( (FIL*) &(pFile->sFile), pBuffer, uiBytesToWrite, (UINT*) pBytesWritten);
 	return remapResult(res);
 }
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_readData(FileSystemMiddleware_File_TypeDef* pFile, void* pBuffer, uint32_t uiBytesToRead, uint32_t* pBytesRead){
-	FRESULT res = f_read(&(pFile->sFile), pBuffer, uiBytesToRead, pBytesRead);
+	FRESULT res = f_read( (FIL*) &(pFile->sFile), pBuffer, uiBytesToRead, (UINT*) pBytesRead);
 	return remapResult(res);
 }
 
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_putString(FileSystemMiddleware_File_TypeDef* pFile, const char* pBuffer){
-	if (f_puts (pBuffer, &(pFile->sFile)) != strlen(pBuffer)){
+	if (f_puts (pBuffer, (FIL*) &(pFile->sFile)) != strlen(pBuffer)){
 		return FileSystemMiddleware_Status_DISK_ERR;
 	}
 	return FileSystemMiddleware_Status_OK;
 }
 
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_close(FileSystemMiddleware_File_TypeDef* pFile){
-	FRESULT res = f_close(&(pFile->sFile));
+	FRESULT res = f_close( (FIL*) &(pFile->sFile));
 	return remapResult(res);
 }
 

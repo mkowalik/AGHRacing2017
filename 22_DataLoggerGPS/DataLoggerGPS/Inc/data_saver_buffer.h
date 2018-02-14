@@ -1,5 +1,5 @@
 /*
- * memory_buffer_middleware.h
+ * data_buffer_middleware.h
  *
  *  Created on: 12.11.2017
  *      Author: Kowalik
@@ -18,17 +18,17 @@
 #define	LOG_FILE_SUBVERSION	0
 
 typedef enum {
-	DataSaverBuffer_State_UnInitialized 	= 0x01,
+	DataSaverBuffer_State_UnInitialized = 0x01,
 	DataSaverBuffer_State_Initialized 	= 0x01,
 	DataSaverBuffer_State_OpenedFile 	= 0x02
 } DataSaverBuffer_State_TypeDef;
 
 typedef struct {
-	CANData_TypeDef							framesQueueTab[MEMORY_MSG_QUEUE_SIZE];
-	FIFOQueue								framesFIFO;
-	FileSystemMiddleware_File_TypeDef		sDataFile;
-	DataSaverBuffer_State_TypeDef	state;
-	ConfigDataManager_TypeDef*				pConfig;
+	CANData_TypeDef						framesQueueTab[MEMORY_MSG_QUEUE_SIZE];
+	FIFOQueue							framesFIFO;
+	FileSystemMiddleware_File_TypeDef	sDataFile;
+	DataSaverBuffer_State_TypeDef		state;
+	ConfigDataManager_TypeDef*			pConfig;
 } DataSaverBuffer_TypeDef;
 
 typedef enum {

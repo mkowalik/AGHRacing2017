@@ -21,7 +21,7 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSe
 
 	FileSystemMiddleware_Status_TypeDef result1 = FileSystemMiddleware_init();
 
-	if (result != FileSystemMiddleware_Status_OK){
+	if (result1 != FileSystemMiddleware_Status_OK){
 		return DataSaverBuffer_Status_NoMemoryDeviceError;
 	}
 
@@ -47,7 +47,7 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef*
 		return DataSaverBuffer_Status_AlreadyOpenedFileError;
 	}
 
-	FileSystemMiddleware_Status_TypeDef result = FileSystemMiddleware_open(&(pSelf->sFile), pFilename);
+	FileSystemMiddleware_Status_TypeDef result = FileSystemMiddleware_open(&(pSelf->sDataFile), pFilename);
 
 	if (result != FileSystemMiddleware_Status_OK){
 		return DataSaverBuffer_Status_FileNotOpenedError;
@@ -61,8 +61,6 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef*
 
 DataSaverBuffer_Status_TypeDef DataSaverBuffer_closeFile(DataSaverBuffer_TypeDef* pSelf){
 
-	static FRESULT result;
-
 	if (pSelf->state != DataSaverBuffer_State_Initialized){
 		return DataSaverBuffer_Status_UnInitializedError;
 	}
@@ -71,7 +69,7 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_closeFile(DataSaverBuffer_TypeDef
 		return DataSaverBuffer_Status_FileNotOpenedError;
 	}
 
-	FileSystemMiddleware_Status_TypeDef result = FileSystemMiddleware_close(&(pSelf->sFile));
+	FileSystemMiddleware_Status_TypeDef result = FileSystemMiddleware_close(&(pSelf->sDataFile));
 
 	if (result != FileSystemMiddleware_Status_OK){
 		return DataSaverBuffer_Status_Error;
@@ -85,8 +83,6 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_closeFile(DataSaverBuffer_TypeDef
 
 DataSaverBuffer_Status_TypeDef DataSaverBuffer_writeData(DataSaverBuffer_TypeDef* pSelf, CANData_TypeDef* pData){
 
-	static FRESULT result;
-
 	if ((pSelf->state & DataSaverBuffer_State_Initialized) == 0){
 		return DataSaverBuffer_Status_UnInitializedError;
 	}
@@ -95,7 +91,7 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_writeData(DataSaverBuffer_TypeDef
 		return DataSaverBuffer_Status_FileNotOpenedError;
 	}
 
-	static byte buffer[16];
+	uint8_t buffer[16];
 
 	buffer[0] = (pData->preciseTime.unixTime >> 3) & 0xFF;
 	buffer[1] = (pData->preciseTime.unixTime >> 2) & 0xFF;
@@ -112,12 +108,12 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_writeData(DataSaverBuffer_TypeDef
 		buffer[8+i] = pData->Data[i];
 	}
 
-	static uint32_t	bytesToWrite = 8 + pData->DLC;
-	static uint32_t	bytesWritten = 0;
+	uint32_t	bytesToWrite = 8 + pData->DLC;
+	uint32_t	bytesWritten = 0;
 
-	result = f_write(pSelf->sFile, buffer, bytesToWrite, &bytesWritten);
+	FileSystemMiddleware_Status_TypeDef status = FileSystemMiddleware_writeData(&(pSelf->sDataFile), buffer, bytesToWrite, &bytesWritten);
 
-	if (result != FR_OK){
+	if ((bytesToWrite != bytesWritten) || (status != FileSystemMiddleware_Status_OK)){
 		return DataSaverBuffer_Status_Error;
 	}
 
@@ -125,14 +121,10 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_writeData(DataSaverBuffer_TypeDef
 
 }
 
-//static MemoryBufferMiddleware_Status_TypeDef MemoryBufferMiddleware_bufferFlush(MemoryBufferMiddleware_TypeDef* pSelf){
-//
-//}
-
 static DataSaverBuffer_Status_TypeDef MemoryBufferMiddleware_saveHeader(DataSaverBuffer_TypeDef* pSelf, PreciseTime_TypeDef preciseTime){
 
-	byte buffer[16];
-	uint32_t uiBytesWritten, uiBytesRead;
+	uint8_t buffer[16];
+	uint32_t bytesWritten, bytesRead;
 
 	buffer[0] = (LOG_FILE_VERSION << 1) & 0xFF;
 	buffer[1] = (LOG_FILE_VERSION << 0) & 0xFF;
@@ -140,23 +132,25 @@ static DataSaverBuffer_Status_TypeDef MemoryBufferMiddleware_saveHeader(DataSave
 	buffer[2] = (LOG_FILE_SUBVERSION << 1) & 0xFF;
 	buffer[3] = (LOG_FILE_SUBVERSION << 0) & 0xFF;
 
-	if (FileSystemMiddleware_writeData(pSelf->sDataFile, buffer, 4, &uiBytesWritten) != FileSystemMiddleware_Status_OK){
+	FileSystemMiddleware_Status_TypeDef status = FileSystemMiddleware_writeData(&(pSelf->sDataFile), buffer, 4, &bytesWritten);
+
+	if ((bytesWritten != 4) ||(status != FileSystemMiddleware_Status_OK)){
 		return DataSaverBuffer_Status_Error;
 	}
 
 	do {
-		if (FileSystemMiddleware_readData(&(pSelf->pConfig->sConfigFileHandler), buffer, 16, &uiBytesRead) != FileSystemMiddleware_Status_OK){
+
+		status = FileSystemMiddleware_readData(&(pSelf->pConfig->sConfigFileHandler), buffer, 16, &bytesRead);
+		if (status != FileSystemMiddleware_Status_OK){
 			return DataSaverBuffer_Status_Error;
 		}
-		if (FileSystemMiddleware_writeData(&(pSelf->sDataFile), buffer, uiBytesRead, &uiBytesWritten) != FileSystemMiddleware_Status_OK){
+
+		status = FileSystemMiddleware_writeData(&(pSelf->sDataFile), buffer, bytesRead, &bytesWritten);
+		if (status != FileSystemMiddleware_Status_OK){
 			return DataSaverBuffer_Status_Error;
 		}
-	} while (uiBytesRead == 16);
+	} while (bytesRead == 16);
 
 	return DataSaverBuffer_Status_OK;
 
 }
-
-//static MemoryBufferMiddleware_Status_TypeDef MemoryBufferMiddleware_saveToBuffer(MemoryBufferMiddleware_TypeDef* pSelf, CANData_TypeDef* pData){
-//
-//}
