@@ -8,6 +8,7 @@
 #include "fifo_queue.h"
 #include "can_data.h"
 #include "config.h"
+#include "ms_timer_middleware.h"
 
 #ifndef CAN_RECEIVER_DRIVER_H_
 #define CAN_RECEIVER_DRIVER_H_
@@ -36,9 +37,10 @@ typedef struct {
 	FIFOQueue					framesFIFO;
 	CAN_HandleTypeDef*			phcan;
 	volatile CanRxMsgTypeDef	rxHALMsg;
+	MSTimerMiddleware_TypeDef*	pMSTimerMiddlewareHandler;
 } CANReceiver_TypeDef;
 
 CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg);
-CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan);
+CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan, MSTimerMiddleware_TypeDef* pMSTimerMiddlewareHandler);
 
 #endif /* CAN_RECEIVER_DRIVER_H_ */

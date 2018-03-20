@@ -227,19 +227,29 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/main.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/precise_time_middleware.c</name>
+			<name>Application/User/ms_timer_middleware.c</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/precise_time_middleware.c</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/ms_timer_middleware.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/precise_time_middleware.h</name>
+			<name>Application/User/ms_timer_middleware.h</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Inc/precise_time_middleware.h</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/ms_timer_middleware.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/rtc.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/rtc.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/rtc_middleware.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/rtc_middleware.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/rtc_middleware.h</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Inc/rtc_middleware.h</locationURI>
 		</link>
 		<link>
 			<name>Application/User/sdio.c</name>

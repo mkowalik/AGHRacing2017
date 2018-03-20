@@ -8,13 +8,12 @@
 #ifndef CAN_DATA_H_
 #define CAN_DATA_H_
 
-#include "precise_time_middleware.h"
 #include "stdint.h"
 
 typedef struct {
 	uint16_t ID;
 	uint8_t DLC;
-	PreciseTime_TypeDef preciseTime;
+	uint32_t msTime;
 	uint8_t Data[8];
 } CANData_TypeDef;
 

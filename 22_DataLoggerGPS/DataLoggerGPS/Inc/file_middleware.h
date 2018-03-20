@@ -49,7 +49,7 @@ FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_init();
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_open(FileSystemMiddleware_File_TypeDef* pFile, char* pName);
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_putString(FileSystemMiddleware_File_TypeDef* pFile, const char* pBuffer);
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_close(FileSystemMiddleware_File_TypeDef* pFile);
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_writeData(FileSystemMiddleware_File_TypeDef* pFile, const void* pBuffer, uint32_t uiBytesToWrite, uint32_t* pBytesWritten);
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_writeBinaryData(FileSystemMiddleware_File_TypeDef* pFile, const void* pBuffer, uint32_t uiBytesToWrite, uint32_t* pBytesWritten);
 FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_readData(FileSystemMiddleware_File_TypeDef* pFile, void* pBuffer, uint32_t uiBytesToRead, uint32_t* pBytesRead);
 
 #endif /* FILE_MIDDLEWARE_H_ */

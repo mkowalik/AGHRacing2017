@@ -60,7 +60,7 @@ FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_open(FileSystemMiddlewa
 	return remapResult(res);
 }
 
-FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_writeData(FileSystemMiddleware_File_TypeDef* pFile, const void* pBuffer, uint32_t uiBytesToWrite, uint32_t* pBytesWritten){
+FileSystemMiddleware_Status_TypeDef FileSystemMiddleware_writeBinaryData(FileSystemMiddleware_File_TypeDef* pFile, const void* pBuffer, uint32_t uiBytesToWrite, uint32_t* pBytesWritten){
 	FRESULT res = f_write ( (FIL*) &(pFile->sFile), pBuffer, uiBytesToWrite, (UINT*) pBytesWritten);
 	return remapResult(res);
 }

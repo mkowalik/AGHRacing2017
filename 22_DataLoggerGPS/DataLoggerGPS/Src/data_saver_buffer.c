@@ -6,18 +6,18 @@
  */
 
 #include "data_saver_buffer.h"
-#include "precise_time_middleware.h"
 #include "stdint.h"
 
-DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfig){
+static DataSaverBuffer_Status_TypeDef DataSaverBuffer_saveHeader(DataSaverBuffer_TypeDef* pSelf, DateTime_TypeDef dateTime);
 
-	pSelf->state = DataSaverBuffer_State_UnInitialized;
+DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfig, RTCMiddleware_TypeDef* pRTCMiddlewareHandler){
 
-	if ((pSelf->state != DataSaverBuffer_State_UnInitialized) != 0){
-		return DataSaverBuffer_Status_OK;
+	if (pSelf->state != DataSaverBuffer_State_UnInitialized){
+		return DataSaverBuffer_Status_Error;
 	}
 
-	pSelf->pConfig = pConfig;
+	pSelf->pConfigHandler = pConfig;
+	pSelf->pRTCMiddlewareHandler = pRTCMiddlewareHandler;
 
 	FileSystemMiddleware_Status_TypeDef result1 = FileSystemMiddleware_init();
 
@@ -47,13 +47,23 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef*
 		return DataSaverBuffer_Status_AlreadyOpenedFileError;
 	}
 
-	FileSystemMiddleware_Status_TypeDef result = FileSystemMiddleware_open(&(pSelf->sDataFile), pFilename);
+	FileSystemMiddleware_Status_TypeDef status1 = FileSystemMiddleware_open(&(pSelf->sDataFile), pFilename);
 
-	if (result != FileSystemMiddleware_Status_OK){
+	if (status1 != FileSystemMiddleware_Status_OK){
 		return DataSaverBuffer_Status_FileNotOpenedError;
 	}
 
 	pSelf->state = DataSaverBuffer_State_OpenedFile;
+
+	DateTime_TypeDef dateTime;
+
+	RTCMiddleware_Status_TypeDef status2 = RTCMiddleware_getDateAndTime(pSelf->pRTCMiddlewareHandler, &dateTime);
+
+	if (status2 != RTCMiddleware_Status_OK){
+		return DataSaverBuffer_Status_Error;
+	}
+
+	DataSaverBuffer_saveHeader(pSelf, dateTime);
 
 	return DataSaverBuffer_Status_OK;
 
@@ -93,25 +103,22 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_writeData(DataSaverBuffer_TypeDef
 
 	uint8_t buffer[16];
 
-	buffer[0] = (pData->preciseTime.unixTime >> 3) & 0xFF;
-	buffer[1] = (pData->preciseTime.unixTime >> 2) & 0xFF;
-	buffer[2] = (pData->preciseTime.unixTime >> 1) & 0xFF;
-	buffer[3] = (pData->preciseTime.unixTime >> 0) & 0xFF;
+	buffer[0] = (pData->msTime >> 0 ) & 0xFF;
+	buffer[1] = (pData->msTime >> 8 ) & 0xFF;
+	buffer[2] = (pData->msTime >> 16) & 0xFF;
+	buffer[3] = (pData->msTime >> 24) & 0xFF;
 
-	buffer[4] = (pData->preciseTime.miliseconds >> 1) & 0xFF;
-	buffer[5] = (pData->preciseTime.miliseconds >> 0) & 0xFF;
-
-	buffer[6] = (pData->ID >> 1) & 0xFF;
-	buffer[7] = (pData->ID >> 0) & 0xFF;
+	buffer[4] = (pData->ID >> 0) & 0xFF;
+	buffer[5] = (pData->ID >> 8) & 0xFF;
 
 	for (uint8_t i=0; i<pData->DLC; i++){
-		buffer[8+i] = pData->Data[i];
+		buffer[6+i] = pData->Data[i];
 	}
 
-	uint32_t	bytesToWrite = 8 + pData->DLC;
+	uint32_t	bytesToWrite = 6 + pData->DLC;
 	uint32_t	bytesWritten = 0;
 
-	FileSystemMiddleware_Status_TypeDef status = FileSystemMiddleware_writeData(&(pSelf->sDataFile), buffer, bytesToWrite, &bytesWritten);
+	FileSystemMiddleware_Status_TypeDef status = FileSystemMiddleware_writeBinaryData(&(pSelf->sDataFile), buffer, bytesToWrite, &bytesWritten);
 
 	if ((bytesToWrite != bytesWritten) || (status != FileSystemMiddleware_Status_OK)){
 		return DataSaverBuffer_Status_Error;
@@ -121,35 +128,50 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_writeData(DataSaverBuffer_TypeDef
 
 }
 
-static DataSaverBuffer_Status_TypeDef MemoryBufferMiddleware_saveHeader(DataSaverBuffer_TypeDef* pSelf, PreciseTime_TypeDef preciseTime){
+static DataSaverBuffer_Status_TypeDef DataSaverBuffer_saveHeader(DataSaverBuffer_TypeDef* pSelf, DateTime_TypeDef dateTime){
 
 	uint8_t buffer[16];
 	uint32_t bytesWritten, bytesRead;
 
-	buffer[0] = (LOG_FILE_VERSION << 1) & 0xFF;
-	buffer[1] = (LOG_FILE_VERSION << 0) & 0xFF;
+	buffer[0] = (LOG_FILE_VERSION >> 0) & 0xFF;
+	buffer[1] = (LOG_FILE_VERSION >> 8) & 0xFF;
 
-	buffer[2] = (LOG_FILE_SUBVERSION << 1) & 0xFF;
-	buffer[3] = (LOG_FILE_SUBVERSION << 0) & 0xFF;
+	buffer[2] = (LOG_FILE_SUBVERSION >> 0) & 0xFF;
+	buffer[3] = (LOG_FILE_SUBVERSION >> 8) & 0xFF;
 
-	FileSystemMiddleware_Status_TypeDef status = FileSystemMiddleware_writeData(&(pSelf->sDataFile), buffer, 4, &bytesWritten);
+	FileSystemMiddleware_Status_TypeDef status1 = FileSystemMiddleware_writeBinaryData(&(pSelf->sDataFile), buffer, 4, &bytesWritten);
 
-	if ((bytesWritten != 4) ||(status != FileSystemMiddleware_Status_OK)){
+	if ((bytesWritten != 4) ||(status1 != FileSystemMiddleware_Status_OK)){
 		return DataSaverBuffer_Status_Error;
 	}
 
 	do {
-
-		status = FileSystemMiddleware_readData(&(pSelf->pConfig->sConfigFileHandler), buffer, 16, &bytesRead);
-		if (status != FileSystemMiddleware_Status_OK){
+		status1 = FileSystemMiddleware_readData(&(pSelf->pConfigHandler->sConfigFileHandler), buffer, 16, &bytesRead);
+		if (status1 != FileSystemMiddleware_Status_OK){
 			return DataSaverBuffer_Status_Error;
 		}
 
-		status = FileSystemMiddleware_writeData(&(pSelf->sDataFile), buffer, bytesRead, &bytesWritten);
-		if (status != FileSystemMiddleware_Status_OK){
+		status1 = FileSystemMiddleware_writeBinaryData(&(pSelf->sDataFile), buffer, bytesRead, &bytesWritten);
+		if (status1 != FileSystemMiddleware_Status_OK){
 			return DataSaverBuffer_Status_Error;
 		}
+
 	} while (bytesRead == 16);
+
+	buffer[0] = (dateTime.year >> 0) & 0xFF;
+	buffer[1] = (dateTime.year >> 8) & 0xFF;
+
+	buffer[2] = dateTime.month;
+	buffer[3] = dateTime.day;
+	buffer[4] = dateTime.hour;
+	buffer[5] = dateTime.minute;
+	buffer[6] = dateTime.second;
+
+	status1 = FileSystemMiddleware_writeBinaryData(&(pSelf->sDataFile), buffer, 7, &bytesWritten);
+
+	if ((bytesWritten != 6) || (status1 != FileSystemMiddleware_Status_OK)){
+		return DataSaverBuffer_Status_Error;
+	}
 
 	return DataSaverBuffer_Status_OK;
 

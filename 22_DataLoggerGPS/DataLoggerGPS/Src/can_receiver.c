@@ -13,7 +13,7 @@
 #include "stdio.h"
 
 CANReceiver_TypeDef	canReceiver;
-CANReceiver_TypeDef* pSelf = &canReceiver;
+CANReceiver_TypeDef* pSelf = &canReceiver;	//TODO trzeba przerobic na wersje z klasa jako pierwszy argument funkcji
 
 CANData_TypeDef pReceiverQueueBuffer [CAN_MSG_QUEUE_SIZE];
 
@@ -23,30 +23,35 @@ static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDe
 
 /** FUNCTIONS IMPLEMENTATIONS **/
 
-CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan){
+CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan, MSTimerMiddleware_TypeDef* pMSTimerMiddlewareHandler){
 
-	CANReceiver_Status_TypeDef retStatus = CANReceiver_Status_OK;
+	CANReceiver_Status_TypeDef status1;
 
 	pSelf->phcan = hcan;
-	FIFOQueue_init(&(pSelf->framesFIFO), pReceiverQueueBuffer, sizeof(CANData_TypeDef), CAN_MSG_QUEUE_SIZE);	//TODO czy alignment nie popusje sizeof
+	pSelf->pMSTimerMiddlewareHandler = pMSTimerMiddlewareHandler;
 
-	if((retStatus = CANReceiver_filtersConfiguration(pConfig)) != CANReceiver_Status_OK){
-		return retStatus;
+	FIFOStatus status2 = FIFOQueue_init(&(pSelf->framesFIFO), pReceiverQueueBuffer, sizeof(CANData_TypeDef), CAN_MSG_QUEUE_SIZE);	//TODO czy alignment nie popusje sizeof
+																											//TODO czy nie lepiej przeniesc inicjalizacje wyzej?
+
+	if (status2 != FIFOStatus_OK){
+		return CANReceiver_Status_Error;
+	}
+
+	if((status1 = CANReceiver_filtersConfiguration(pConfig)) != CANReceiver_Status_OK){
+		return status1;
 	}
 
 	hcan->pRxMsg = (CanRxMsgTypeDef*) &(pSelf->rxHALMsg);
 
 	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-		retStatus = CANReceiver_Status_Error;
-		return retStatus;
+		return CANReceiver_Status_Error;
 	}
 
 	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-		retStatus = CANReceiver_Status_Error;
-		return retStatus;
+		return CANReceiver_Status_Error;
 	}
 
-	return retStatus;
+	return CANReceiver_Status_OK;
 
 }
 
@@ -121,12 +126,16 @@ static CANReceiver_Status_TypeDef receiveFromFIFO0(){
 		return CANReceiver_Status_RTRFrame;
 	}
 
-	static CANData_TypeDef tmpData;
+	CANData_TypeDef tmpData;
+	MSTimerMiddleware_Status_TypeDef status = MSTimerMiddleware_getMSTime(pSelf->pMSTimerMiddlewareHandler, &(tmpData.msTime));
 	tmpData.DLC = pSelf->phcan->pRxMsg->DLC;
 	memcpy(tmpData.Data, pSelf->phcan->pRxMsg->Data, 8);
 	tmpData.ID = pSelf->phcan->pRxMsg->StdId;
 //	pCanRecaiver->phcan->Instance->sFIFOMailBox[0]->RDTR & 0xFFFF0000; //st¹d mo¿na wziac message timestamp linia 1595 w stm32f1xx_hal_can.c, dokumentacja str 689
-	tmpData.preciseTime = PreciseTimeMiddleware_getPreciseTime();
+
+	if (status != MSTimerMiddleware_Status_OK){
+		return CANReceiver_Status_RunTimeError;
+	}
 
 	if (FIFOQueue_enqueue(&(pSelf->framesFIFO), &tmpData) != FIFOStatus_OK){
 		return CANReceiver_Status_RunTimeError;
@@ -147,11 +156,15 @@ static CANReceiver_Status_TypeDef receiveFromFIFO1(){
 	}
 
 	static CANData_TypeDef tmpData;
+	MSTimerMiddleware_Status_TypeDef status = MSTimerMiddleware_getMSTime(pSelf->pMSTimerMiddlewareHandler, &(tmpData.msTime));
 	tmpData.DLC = pSelf->phcan->pRx1Msg->DLC;
 	memcpy(tmpData.Data, pSelf->phcan->pRx1Msg->Data, 8);
 	tmpData.ID = pSelf->phcan->pRx1Msg->StdId;
 //	pCanRecaiver->phcan->Instance->sFIFOMailBox[1]->RDTR & 0xFFFF0000; //st¹d mo¿na wziac message timestamp linia 1595 w stm32f1xx_hal_can.c, dokumentacja str 689
-	tmpData.preciseTime = PreciseTimeMiddleware_getPreciseTime();
+
+	if (status != MSTimerMiddleware_Status_OK){
+		return CANReceiver_Status_RunTimeError;
+	}
 
 	if (FIFOQueue_enqueue(&(pSelf->framesFIFO), &tmpData) != FIFOStatus_OK){
 		return CANReceiver_Status_RunTimeError;
@@ -242,6 +255,5 @@ void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan){
 	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
 		logError(ERROR_CAN_RECEIVE_FIFO1, "During ErrorCallback");
 	}
-
 
 }
