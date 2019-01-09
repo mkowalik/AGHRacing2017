@@ -12,36 +12,45 @@
 #include "error_logger.h"
 #include "stdio.h"
 
-CANReceiver_TypeDef	canReceiver;
-CANReceiver_TypeDef* pSelf = &canReceiver;	//TODO trzeba przerobic na wersje z klasa jako pierwszy argument funkcji
-
-CANData_TypeDef pReceiverQueueBuffer [CAN_MSG_QUEUE_SIZE];
-
 /** FUNCTIONS DECLARATIONS **/
 
-static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDef* pConfig);
+static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(CANReceiver_TypeDef* pSelf, Config_TypeDef* pConfig);
 
 /** FUNCTIONS IMPLEMENTATIONS **/
 
-CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan, MSTimerMiddleware_TypeDef* pMSTimerMiddlewareHandler){
+CANReceiver_Status_TypeDef CANReceiver_init(CANReceiver_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfigManager, CAN_HandleTypeDef* hcan, MSTimerMiddleware_TypeDef* pMSTimerMiddlewareHandler){
 
-	CANReceiver_Status_TypeDef status1;
-
+	pSelf->pConfigManager = pConfigManager;
 	pSelf->phcan = hcan;
 	pSelf->pMSTimerMiddlewareHandler = pMSTimerMiddlewareHandler;
 
-	FIFOStatus status2 = FIFOQueue_init(&(pSelf->framesFIFO), pReceiverQueueBuffer, sizeof(CANData_TypeDef), CAN_MSG_QUEUE_SIZE);	//TODO czy alignment nie popusje sizeof
-																											//TODO czy nie lepiej przeniesc inicjalizacje wyzej?
+	FIFOStatus status2 = FIFOQueue_init(&(pSelf->framesFIFO), pSelf->pReceiverQueueBuffer, sizeof(CANData_TypeDef), CAN_MSG_QUEUE_SIZE);	//TODO czy alignment nie popusje sizeof
 
 	if (status2 != FIFOStatus_OK){
 		return CANReceiver_Status_Error;
 	}
 
-	if((status1 = CANReceiver_filtersConfiguration(pConfig)) != CANReceiver_Status_OK){
+	Config_TypeDef* pConfig;
+	ConfigDataManager_Status_TypeDef status3 = ConfigDataManager_getConfigPointer(pConfigManager, &pConfig);
+
+	if (status3 != ConfigDataManager_Status_OK){
+		return CANReceiver_Status_Error;
+	}
+
+	CANReceiver_Status_TypeDef status1;
+	if((status1 = CANReceiver_filtersConfiguration(pSelf, pConfig)) != CANReceiver_Status_OK){
 		return status1;
 	}
 
 	hcan->pRxMsg = (CanRxMsgTypeDef*) &(pSelf->rxHALMsg);
+
+	return CANReceiver_Status_OK;
+
+}
+
+CANReceiver_Status_TypeDef CANReceiver_start(CANReceiver_TypeDef* pSelf){
+
+	MSTimerMiddleware_startCounting(pSelf->pMSTimerMiddlewareHandler);
 
 	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
 		return CANReceiver_Status_Error;
@@ -52,10 +61,10 @@ CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleT
 	}
 
 	return CANReceiver_Status_OK;
-
 }
 
-CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg){
+
+CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANReceiver_TypeDef* pSelf, CANData_TypeDef* pRetMsg){
 
 	FIFOStatus fifoStatus = FIFOStatus_OK;
 
@@ -75,7 +84,7 @@ CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg){
 
 }
 
-static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDef* pConfig){
+static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(CANReceiver_TypeDef* pSelf, Config_TypeDef* pConfig){
 
 	//TODO zrobic obsluge wiekszej ilosci filtrow niz 14*4
 
@@ -116,7 +125,7 @@ static CANReceiver_Status_TypeDef CANReceiver_filtersConfiguration(Config_TypeDe
 
 }
 
-static CANReceiver_Status_TypeDef receiveFromFIFO0(){
+static CANReceiver_Status_TypeDef receiveFromFIFO0(CANReceiver_TypeDef* pSelf){
 
 	if (pSelf->phcan->pRxMsg->IDE != CAN_ID_STD){
 		return CANReceiver_Status_NotSTDFrame;
@@ -145,7 +154,7 @@ static CANReceiver_Status_TypeDef receiveFromFIFO0(){
 }
 
 
-static CANReceiver_Status_TypeDef receiveFromFIFO1(){
+static CANReceiver_Status_TypeDef receiveFromFIFO1(CANReceiver_TypeDef* pSelf){
 
 	if (pSelf->phcan->pRxMsg->IDE != CAN_ID_STD){
 		return CANReceiver_Status_NotSTDFrame;
@@ -173,87 +182,95 @@ static CANReceiver_Status_TypeDef receiveFromFIFO1(){
 	return CANReceiver_Status_OK;
 }
 
-void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan){
-
-	if (hcan != pSelf->phcan){
-		logError(ERROR_CAN, "hcan != pSelf->phcan");
-	}
+CANReceiver_Status_TypeDef CANReceiver_RxCpltCallback(CANReceiver_TypeDef* pSelf){
 
 	switch (HAL_CAN_GetState(pSelf->phcan)){
 	case HAL_CAN_STATE_READY:
 	case HAL_CAN_STATE_BUSY_TX:
 		if (receiveFromFIFO0(pSelf) != CANReceiver_Status_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO0, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		if (receiveFromFIFO1(pSelf) != CANReceiver_Status_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO1, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO0, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO1, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		break;
 	case HAL_CAN_STATE_BUSY_RX0:
 	case HAL_CAN_STATE_BUSY_TX_RX0:
 		if (receiveFromFIFO1(pSelf) != CANReceiver_Status_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO1, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO1, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		break;
 	case HAL_CAN_STATE_BUSY_RX1:
 	case HAL_CAN_STATE_BUSY_TX_RX1:
 		if (receiveFromFIFO0(pSelf) != CANReceiver_Status_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO0, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO0, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		break;
 	default:
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO0, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO0, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 		if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-			logError(ERROR_CAN_RECEIVE_FIFO1, "During RxCpltCallback");
+			logError(ERROR_CAN_BUS_RECEIVE_FIFO1, "During RxCpltCallback", 0);
+			return CANReceiver_Status_Error;
 		}
 	}
+
+	return CANReceiver_Status_OK;
 
 }
 
-void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan){
+CANReceiver_Status_TypeDef CANReceiver_ErrorCallback(CANReceiver_TypeDef* pSelf){
 
-	static char errorTextBuffer[50];
-
-	if (hcan != pSelf->phcan){
-		logError(ERROR_CAN, "hcan != pSelf->phcan");
-	}
+	char errorTextBuffer[50];
 
 	if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_EPV){ // Error passive
-		logError(ERROR_CAN_EPV, "HAL_CAN_ERROR_EPV");
+		logError(ERROR_CAN_BUS_EPV, "HAL_CAN_ERROR_EPV", 0);
 	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_BOF){ // BUS Off
-		logError(ERROR_CAN_BOF, "HAL_CAN_ERROR_BOF");
+		logError(ERROR_CAN_BUS_BOF, "HAL_CAN_ERROR_BOF", 0);
 	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_ACK){ // ACK Error
-		logError(ERROR_CAN_ACK, "HAL_CAN_ERROR_ACK");
+		logError(ERROR_CAN_BUS_ACK, "HAL_CAN_ERROR_ACK", 0);
 	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_FOV0){ // FIFO 0 Overrun
-		logError(ERROR_CAN_FOV0, "HAL_CAN_ERROR_FOV0");
+		logError(ERROR_CAN_BUS_FOV0, "HAL_CAN_ERROR_FOV0", 0);
 	} else if (HAL_CAN_GetError(pSelf->phcan) & HAL_CAN_ERROR_FOV1){ // FIFO 1 Overrun
-		logError(ERROR_CAN_FOV1, "HAL_CAN_ERROR_FOV1");
+		logError(ERROR_CAN_BUS_FOV1, "HAL_CAN_ERROR_FOV1", 0);
 	}
 
 	if (HAL_CAN_GetError(pSelf->phcan) != HAL_CAN_ERROR_NONE){
 		snprintf(errorTextBuffer, 50, "HAL_CAN_ERROR: 0x%lx", HAL_CAN_GetError(pSelf->phcan));
-		logError(ERROR_CAN, errorTextBuffer);
+		logError(ERROR_CAN_BUS, errorTextBuffer, 0);
 	}
 
 	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO0) != HAL_OK){
-		logError(ERROR_CAN_RECEIVE_FIFO0, "During ErrorCallback");
+		logError(ERROR_CAN_BUS_RECEIVE_FIFO0, "During ErrorCallback", 0);
+		return CANReceiver_Status_Error;
 	}
 	if (HAL_CAN_Receive_IT(pSelf->phcan, CAN_FIFO1) != HAL_OK){
-		logError(ERROR_CAN_RECEIVE_FIFO1, "During ErrorCallback");
+		logError(ERROR_CAN_BUS_RECEIVE_FIFO1, "During ErrorCallback", 0);
+		return CANReceiver_Status_Error;
 	}
+
+	return CANReceiver_Status_OK;
 
 }

@@ -38,9 +38,15 @@ typedef struct {
 	CAN_HandleTypeDef*			phcan;
 	volatile CanRxMsgTypeDef	rxHALMsg;
 	MSTimerMiddleware_TypeDef*	pMSTimerMiddlewareHandler;
+	ConfigDataManager_TypeDef*	pConfigManager;
+	CANData_TypeDef 			pReceiverQueueBuffer [CAN_MSG_QUEUE_SIZE];
 } CANReceiver_TypeDef;
 
-CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANData_TypeDef* pRetMsg);
-CANReceiver_Status_TypeDef CANReceiver_init(Config_TypeDef* pConfig, CAN_HandleTypeDef* hcan, MSTimerMiddleware_TypeDef* pMSTimerMiddlewareHandler);
+CANReceiver_Status_TypeDef CANReceiver_init(CANReceiver_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfigManager, CAN_HandleTypeDef* hcan, MSTimerMiddleware_TypeDef* pMSTimerMiddlewareHandler);
+CANReceiver_Status_TypeDef CANReceiver_start(CANReceiver_TypeDef* pSelf);
+CANReceiver_Status_TypeDef CANReceiver_pullLastFrame(CANReceiver_TypeDef* pSelf, CANData_TypeDef* pRetMsg);
+
+CANReceiver_Status_TypeDef CANReceiver_RxCpltCallback(CANReceiver_TypeDef* pSelf);
+CANReceiver_Status_TypeDef CANReceiver_ErrorCallback(CANReceiver_TypeDef* pSelf);
 
 #endif /* CAN_RECEIVER_DRIVER_H_ */

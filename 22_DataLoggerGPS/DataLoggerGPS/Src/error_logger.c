@@ -7,7 +7,6 @@
 
 #include "stdint.h"
 
-void logError(uint32_t errorNumber, char* comment){
-
+void logError(uint32_t errorNumber, char* comment, uint8_t reset){
 
 }

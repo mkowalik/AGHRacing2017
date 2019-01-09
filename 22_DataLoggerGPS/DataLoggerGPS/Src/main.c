@@ -9,7 +9,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * Copyright (c) 2017 STMicroelectronics International N.V. 
+  * Copyright (c) 2018 STMicroelectronics International N.V. 
   * All rights reserved.
   *
   * Redistribution and use in source and binary forms, with or without 
@@ -58,12 +58,32 @@
 
 /* USER CODE BEGIN Includes */
 
+#include "config.h"
+#include "data_saver_buffer.h"
+
+#include "can_receiver.h"
+#include "rtc_middleware.h"
+#include "ms_timer_middleware.h"
+
+#include "action_scheduler.h"
+
+#include "error_logger.h"
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+
+ConfigDataManager_TypeDef	configDataManager;
+DataSaverBuffer_TypeDef		dataSaverBuffer;
+
+CANReceiver_TypeDef			CANReceiver;
+RTCMiddleware_TypeDef		RTCMiddleware;
+MSTimerMiddleware_TypeDef	MSTimer;
+
+ActionScheduler_TypeDef		actionScheduler;
 
 /* USER CODE END PV */
 
@@ -77,14 +97,31 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 
-void TaskManager_init(){
+void test_function(){
+
+	  FATFS ff;
+
+	  FRESULT mount_res = f_mount(&ff, "", 1);
+
+	  FIL fil;
+
+	  FRESULT open_res = f_open(&fil, "/test2.txt", FA_READ | FA_WRITE | FA_OPEN_ALWAYS);
+
+	  char text[] = "na ekierce siedzi jez i wrona i kot";
+	  uint32_t length = strlen(text);
+
+	  int write_res = f_puts(text, &fil);
+
+	  FRESULT sycc_res = f_sync(&fil);
+	  FRESULT close_res = f_close(&fil);
+
+
+	  while(close_res!=FR_OK){
+		  HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
+		  HAL_Delay(200);
+	  }
 
 }
-
-void TaskManager_start(){
-
-}
-
 /* USER CODE END 0 */
 
 int main(void)
@@ -119,27 +156,42 @@ int main(void)
   MX_USART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
-  FATFS ff;
-
-  FRESULT mount_res = f_mount(&ff, "", 1);
-
-  FIL fil;
-
-  FRESULT open_res = f_open(&fil, "/test2.txt", FA_READ | FA_WRITE | FA_OPEN_ALWAYS);
-
-  char text[] = "na ekierce siedzi jez i wrona i kot";
-  uint32_t length = strlen(text);
-
-  int write_res = f_puts(text, &fil);
-
-  FRESULT sycc_res = f_sync(&fil);
-  FRESULT close_res = f_close(&fil);
-
-
-  while(close_res!=FR_OK){
-	  HAL_GPIO_TogglePin(LED_DEBUG2_GPIO_Port, LED_DEBUG2_Pin);
-	  HAL_Delay(200);
+  FileSystemMiddleware_Status_TypeDef	status1;
+  RTCMiddleware_Status_TypeDef			status2;
+  MSTimerMiddleware_Status_TypeDef		status3;
+  if ((status1 = FileSystemMiddleware_init()) != FileSystemMiddleware_Status_OK){
+	  logError(ERROR_FILE_SYSTEM_MIDDLEWARE | status1, "File System init error", 1);
   }
+  if ((status2 = RTCMiddleware_init(&RTCMiddleware, &hrtc)) != RTCMiddleware_Status_OK){
+	  logError(ERROR_RTC_MIDDLEWARE | status2, "RTC Middleware init error", 1);
+  }
+  if ((status3 = MSTimerMiddleware_init(&MSTimer)) != MSTimerMiddleware_Status_OK){
+	  logError(ERROR_MS_TIMER_MIDDLEWARE | status3, "MS Timer Middleware init error", 1);
+  }
+
+  ConfigDataManager_Status_TypeDef		status4;
+  DataSaverBuffer_Status_TypeDef		status5;
+  CANReceiver_Status_TypeDef			status6;
+  if ((status4 = ConfigDataManager_init(&configDataManager)) != ConfigDataManager_Status_OK){
+	  logError(ERROR_CONFIG_MANAGER | status4, "Config Data Manager init error", 1);
+  }
+
+  if ((status5 = DataSaverBuffer_init(&dataSaverBuffer, &configDataManager)) != DataSaverBuffer_Status_OK){
+	  logError(ERROR_DATA_SAVER_BUFFER | status5, "Data Saver Buffer init error", 1);
+  }
+  if ((status6 = CANReceiver_init(&CANReceiver, &configDataManager, &hcan, &MSTimer)) != CANReceiver_Status_OK){
+	  logError(ERROR_CAN_RECEIVER | status6, "CAN Receiver init error", 1);
+  }
+
+  ActionScheduler_Status_TypeDef		status7;
+  if ((status7 = ActionScheduler_init(&actionScheduler, &configDataManager, &dataSaverBuffer, &CANReceiver, &RTCMiddleware)) != ActionScheduler_Status_OK){
+	  logError(ERROR_CAN_ACTION_SCHEDULER | status7, "Action scheduler init error", 1);
+  }
+
+  ActionScheduler_startScheduler(&actionScheduler);
+
+  test_function();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

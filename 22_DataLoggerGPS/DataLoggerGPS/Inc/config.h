@@ -69,7 +69,7 @@ typedef enum {
 	ConfigDataManager_Status_ConfigFileWrongVersionError,
 	ConfigDataManager_Status_ConfigFileDataError,
 	ConfigDataManager_Status_WrongOffsetError,
-	ConfigDataManager_Status_WrongID,
+	ConfigDataManager_Status_WrongIDError,
 	ConfigDataManager_Status_WrongDLC,
 	ConfigDataManager_Status_NotInitialised,
 	ConfigDataManager_Status_Error

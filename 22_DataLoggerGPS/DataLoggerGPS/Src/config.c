@@ -142,7 +142,7 @@ ConfigDataManager_Status_TypeDef ConfigDataManager_checkCorrectnessData(ConfigDa
 	}
 
 	if (pSelf->sConfig.framesByID[pData->ID] == NULL){
-		return ConfigDataManager_Status_WrongID;
+		return ConfigDataManager_Status_WrongIDError;
 	}
 
 	if (pSelf->sConfig.framesByID[pData->ID]->DLC != pData->DLC){
@@ -164,6 +164,10 @@ ConfigDataManager_Status_TypeDef ConfigDataManager_findChannel(ConfigDataManager
 	}
 
 	ConfigFrame_TypeDef* pFrame = pSelf->sConfig.framesByID[ID];
+
+	if (pFrame == NULL){
+		return ConfigDataManager_Status_WrongIDError;
+	}
 
 	for (uint8_t i=0; i<pFrame->DLC; ){
 

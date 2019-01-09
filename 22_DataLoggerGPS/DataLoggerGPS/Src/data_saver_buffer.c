@@ -7,17 +7,18 @@
 
 #include "data_saver_buffer.h"
 #include "stdint.h"
+#include "stdio.h"
+#include "string.h"
 
 static DataSaverBuffer_Status_TypeDef DataSaverBuffer_saveHeader(DataSaverBuffer_TypeDef* pSelf, DateTime_TypeDef dateTime);
 
-DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfig, RTCMiddleware_TypeDef* pRTCMiddlewareHandler){
+DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfigManagerHandler){
 
 	if (pSelf->state != DataSaverBuffer_State_UnInitialized){
 		return DataSaverBuffer_Status_Error;
 	}
 
-	pSelf->pConfigHandler = pConfig;
-	pSelf->pRTCMiddlewareHandler = pRTCMiddlewareHandler;
+	pSelf->pConfigManagerHandler = pConfigManagerHandler;
 
 	FileSystemMiddleware_Status_TypeDef result1 = FileSystemMiddleware_init();
 
@@ -37,7 +38,7 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSe
 
 }
 
-DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef* pSelf, char* pFilename){
+DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef* pSelf, DateTime_TypeDef dateTime){
 
 	if ((pSelf->state & DataSaverBuffer_State_Initialized) == 0){
 		return DataSaverBuffer_Status_UnInitializedError;
@@ -47,7 +48,20 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef*
 		return DataSaverBuffer_Status_AlreadyOpenedFileError;
 	}
 
-	FileSystemMiddleware_Status_TypeDef status1 = FileSystemMiddleware_open(&(pSelf->sDataFile), pFilename);
+	//prepare name of file
+	uint16_t offset = 0;
+	char filename[LOG_FILENAME_MAX_LENGTH];
+	strcpy(filename, LOG_FILE_PREFIX);
+	offset += strlen(LOG_FILE_PREFIX);
+	offset += sprintf(filename+offset, "_%4d-%2d-%2d_%2d_%2d.", dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute);
+	strcpy(filename+offset, LOG_FILE_EXTENSION);
+	offset += strlen(LOG_FILE_EXTENSION);
+
+	if (offset > LOG_FILENAME_MAX_LENGTH){
+		return DataSaverBuffer_Status_Error;
+	}
+
+	FileSystemMiddleware_Status_TypeDef status1 = FileSystemMiddleware_open(&(pSelf->sDataFile), filename);
 
 	if (status1 != FileSystemMiddleware_Status_OK){
 		return DataSaverBuffer_Status_FileNotOpenedError;
@@ -55,17 +69,9 @@ DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef*
 
 	pSelf->state = DataSaverBuffer_State_OpenedFile;
 
-	DateTime_TypeDef dateTime;
+	DataSaverBuffer_Status_TypeDef status2 = DataSaverBuffer_saveHeader(pSelf, dateTime);
 
-	RTCMiddleware_Status_TypeDef status2 = RTCMiddleware_getDateAndTime(pSelf->pRTCMiddlewareHandler, &dateTime);
-
-	if (status2 != RTCMiddleware_Status_OK){
-		return DataSaverBuffer_Status_Error;
-	}
-
-	DataSaverBuffer_saveHeader(pSelf, dateTime);
-
-	return DataSaverBuffer_Status_OK;
+	return status2;
 
 }
 
@@ -146,7 +152,7 @@ static DataSaverBuffer_Status_TypeDef DataSaverBuffer_saveHeader(DataSaverBuffer
 	}
 
 	do {
-		status1 = FileSystemMiddleware_readData(&(pSelf->pConfigHandler->sConfigFileHandler), buffer, 16, &bytesRead);
+		status1 = FileSystemMiddleware_readData(&(pSelf->pConfigManagerHandler->sConfigFileHandler), buffer, 16, &bytesRead);
 		if (status1 != FileSystemMiddleware_Status_OK){
 			return DataSaverBuffer_Status_Error;
 		}

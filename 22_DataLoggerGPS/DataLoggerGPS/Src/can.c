@@ -10,7 +10,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * Copyright (c) 2017 STMicroelectronics International N.V. 
+  * Copyright (c) 2018 STMicroelectronics International N.V. 
   * All rights reserved.
   *
   * Redistribution and use in source and binary forms, with or without 
@@ -142,6 +142,40 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+
+extern CANReceiver_TypeDef CANReceiver;
+
+void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef* hcan)
+{
+	if (CANReceiver_RxCpltCallback(&CANReceiver) != CANReceiver_Status_OK){
+		// TODO
+	}
+
+}
+
+void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan){
+
+	if (CANReceiver_ErrorCallback(&CANReceiver) != CANReceiver_Status_OK){
+		// TODO
+	}
+
+}
+
+/*
+rx callback
+
+
+if (hcan != pSelf->phcan){
+	logError(ERROR_CAN_BUS, "hcan != pSelf->phcan", 1);
+}
+
+error callback
+
+
+if (hcan != pSelf->phcan){
+	logError(ERROR_CAN_BUS, "hcan != pSelf->phcan", 1);
+}
+*/
 
 /* USER CODE END 1 */
 

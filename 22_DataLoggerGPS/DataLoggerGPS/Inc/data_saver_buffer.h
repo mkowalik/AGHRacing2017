@@ -18,10 +18,15 @@
 #define	LOG_FILE_VERSION	1
 #define	LOG_FILE_SUBVERSION	1
 
+#define	LOG_FILE_PREFIX			"grazyna"
+#define	LOG_FILE_EXTENSION		"aghlog"
+#define	LOG_FILENAME_MAX_LENGTH	50
+
+
 typedef enum {
-	DataSaverBuffer_State_UnInitialized = 0x00,
-	DataSaverBuffer_State_Initialized 	= 0x01,
-	DataSaverBuffer_State_OpenedFile 	= 0x02
+	DataSaverBuffer_State_UnInitialized = 0,
+	DataSaverBuffer_State_Initialized,
+	DataSaverBuffer_State_OpenedFile
 } DataSaverBuffer_State_TypeDef;
 
 typedef struct {
@@ -29,8 +34,7 @@ typedef struct {
 	FIFOQueue							framesFIFO;
 	FileSystemMiddleware_File_TypeDef	sDataFile;
 	DataSaverBuffer_State_TypeDef		state;
-	ConfigDataManager_TypeDef*			pConfigHandler;
-	RTCMiddleware_TypeDef*				pRTCMiddlewareHandler;
+	ConfigDataManager_TypeDef*			pConfigManagerHandler;
 } DataSaverBuffer_TypeDef;
 
 typedef enum {
@@ -43,8 +47,8 @@ typedef enum {
 	DataSaverBuffer_Status_Error
 } DataSaverBuffer_Status_TypeDef;
 
-DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfig, RTCMiddleware_TypeDef* pRTCMiddlewareHandler);
-DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef* pSelf, char* pFilename);
+DataSaverBuffer_Status_TypeDef DataSaverBuffer_init(DataSaverBuffer_TypeDef* pSelf, ConfigDataManager_TypeDef* pConfig);
+DataSaverBuffer_Status_TypeDef DataSaverBuffer_openFile(DataSaverBuffer_TypeDef* pSelf, DateTime_TypeDef dateTime);
 DataSaverBuffer_Status_TypeDef DataSaverBuffer_closeFile(DataSaverBuffer_TypeDef* pSelf);
 DataSaverBuffer_Status_TypeDef DataSaverBuffer_writeData(DataSaverBuffer_TypeDef* pSelf, CANData_TypeDef* pData);
 
